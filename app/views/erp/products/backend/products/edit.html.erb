@@ -1,0 +1,32 @@
+<% content_for :title do %>
+    <%= t('.edit') %>
+<% end %>
+
+<% content_for :page_title do %>    
+    <a href="<%= erp_products.backend_products_path %>">
+    <i class="fa fa-users"></i> <%= t('.products') %>
+    </a> / <%= t('.edit') %>
+<% end %>
+
+<% content_for :page_toolbar do %>
+    <div class="btn-group">
+        <div class="clearfix">
+        </div>
+    </div>
+<% end %>
+
+<div class="row">
+    <div class="col-md-6">
+        <% if @product.errors.any? %>
+            <%= erp_form_control("form_error_message") %>
+        <% end %>
+        
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-body">
+                <%= render 'form', product: @product %>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>

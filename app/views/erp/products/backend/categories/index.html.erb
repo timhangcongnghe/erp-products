@@ -1,0 +1,59 @@
+<% content_for :title do %>
+    <%= t('.categories') %>
+<% end %>
+
+<% content_for :page_title do %>
+    <i class="fa fa-bookmark-o"></i> <%= t('.categories') %>
+<% end %>
+
+<% content_for :page_toolbar do %>
+    <%= erp_component('button/create', {
+        text: t('.create'),
+        href: erp_products.new_backend_category_path,
+        class: 'btn-sm'
+    }) %>
+<% end %>
+
+<%= erp_datalist(
+    url: erp_products.list_backend_categories_path,
+    keywords: [
+        {
+            text: t('.name'), name: 'name'
+        }
+    ],
+    actions: [
+        {
+            text: '<i class="fa fa-check"></i> '+t('.archive'),
+            url: erp_products.archive_all_backend_categories_path,
+            data_method: 'PUT'
+        },
+        {
+            text: '<i class="fa fa-exclamation"></i> '+t('.unarchive'),
+            url: erp_products.unarchive_all_backend_categories_path,
+            data_method: 'PUT'
+        },
+        {
+            divider: true
+        },
+        {
+            text: '<i class="fa fa-trash"></i> '+t('.delete'),
+            url: erp_products.delete_all_backend_categories_path,
+            data_method: 'DELETE',
+            data_confirm: t('.delete_confirm')
+        }
+    ],
+    columns: [
+        {
+            text: t('.name'), name: 'name', value: true, checked: true
+        },
+        {
+            text: t('.status'), name: 'status', value: true, checked: true
+        },
+        {
+            text: t('.creator'), name: 'creator', value: true, checked: true
+        },
+        {
+            text: t('.created_at'), name: 'created_at', value: true, checked: true
+        }
+    ]
+) %>    

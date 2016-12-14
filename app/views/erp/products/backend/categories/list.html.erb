@@ -1,0 +1,75 @@
+<div class="">
+    <table class="table table-advance table-hover table-striped table-checkable order-column" id="">
+        <thead>
+            <tr>
+                <th width='1%'>
+                    <%= erp_datalist_check_all %>
+                </th>
+                <% if get_columns(params).include?("name") %>
+                    <th>
+                        <%= t('.name') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("status") %>
+                    <th>
+                        <%= t('.status') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("creator") %>
+                    <th>
+                        <%= t('.creator') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("created_at") %>
+                    <th>
+                        <%= t('.created_at') %>
+                    </th>
+                <% end %>
+                <th width="7%"><%= t('.actions') %></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if @categories.each do |category| %>
+                <tr class="odd gradeX">
+                    <td>
+                        <%= erp_datalist_check_row(id: category.id) %>
+                    </td>
+                    <% if get_columns(params).include?("name") %>
+                        <td><%= link_to category.full_name, erp_products.edit_backend_category_path(category) %></td>
+                    <% end %>
+                    <% if get_columns(params).include?("status") %>
+                    <td>
+                        <% if category.archived == true %>
+                        <span class="label label-sm label-danger"><%= t('.archived') %></span>
+                        <% else %>
+                        <span class="label label-sm label-success"><%= t('.active') %></span>
+                        <% end %> 
+                    </td>
+                    <% end %>
+                    <% if get_columns(params).include?("creator") %>
+                        <td></td>
+                    <% end %>
+                    <% if get_columns(params).include?("created_at") %>
+                        <td class="center"><%= category.created_at.strftime("%d/%m/%Y") %></td>
+                    <% end %>
+                    <td>
+                        <%= erp_datalist_row_actions(
+                            [
+                                {
+                                    text: '<i class="fa fa-edit"></i> '+t('.edit'),
+                                    href: erp_products.edit_backend_category_path(category)
+                                }
+                            ]
+                        ) %>
+                    </td>
+                </tr>
+            <% end.empty? %>
+                <tr>
+                    <td colspan="7"><%= t('.no_matching_records_found') %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+        
+<%= erp_datalist_pagination(@categories) %>

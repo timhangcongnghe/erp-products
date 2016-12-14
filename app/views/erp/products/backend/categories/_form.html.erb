@@ -1,0 +1,31 @@
+<%= form_for([erp_products, :backend, category]) do |f| %>    
+    <%= erp_form_control("text", {
+        name: 'category[name]',
+        value: category.name,                   
+        label: t('.name'),
+        required: true,
+        errors: category.errors.full_messages_for(:name)
+    }) %>
+    <%= erp_form_control("dataselect", {
+        name: 'category[parent_id]',
+        value: category.parent_id,
+        text: category.parent_name,
+        placeholder: t('.choose_parent_category'),
+        label: t('.parent_category'),
+        url: erp_products.dataselect_backend_categories_path(format: 'json'),
+        create: {
+            url: erp_products.new_backend_category_path,
+            title: t('.create'),
+            container_selector: '.new_category',
+            input_selector: 'input[name="category[name]"]'
+        }
+    }) %>
+    <hr>
+    <%= erp_component('button/save', {
+        text: t('.submit')
+    }) %>
+    <%= erp_component('button/cancel', {
+        text: t('.cancel'),
+        href: erp_products.backend_categories_path
+    }) %>
+<% end %>

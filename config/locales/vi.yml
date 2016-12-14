@@ -1,0 +1,9 @@
+vi:
+  erp:
+    products:
+      backend:
+        categories:
+          form:
+            create: "Tạo mới"
+            choose_parent_category: "Chọn chuyên mục cha"
+            parent_category: "Chuyên mục cha"
