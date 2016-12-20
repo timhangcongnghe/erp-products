@@ -8,10 +8,40 @@ vi:
     products:
       backend:
         categories:
+          index:
+            categories: "Tất cả chuyên mục"
+            create: "Thêm chuyên mục mới"
+            archive: "Ẩn khỏi danh sách"
+            unarchive: "Hiện ra danh sách"
+            delete: "Xóa sản phẩm"
+            delete_confirm: "Bạn có chắc muốn xóa?"
+            name: "Tên chuyên mục"
+            status: "Trạng thái"
+            creator: "Người tạo"
+            created_at: "Ngày tạo"
+          list:
+            name: "Tên chuyên mục"
+            status: "Trạng thái"
+            creator: "Người tạo"
+            created_at: "Ngày tạo"
+            actions: "Thao tác"
+            archived: "Đã ẩn"
+            active: "Đang hiển thị"
+            edit: "Cập nhật thông tin"
+            no_matching_records_found: "Danh sách chuyên mục hiện tại đang trống."
+          new:
+            categories: "Tất cả chuyên mục"
+            create: "Thêm chuyên mục mới"
+          edit:
+            categories: "Tất cả chuyên mục"
+            edit: "Cập nhật chuyên mục"
           form:
-            create: "Tạo mới"
+            name: "Tên chuyên mục"
+            create: "Thêm chuyên mục mới"
             choose_parent_category: "Chọn chuyên mục cha"
             parent_category: "Chuyên mục cha"
+            submit: "Lưu"
+            cancel: "Hủy"
         products:
           index:
             products: "Tất cả sản phẩm"
@@ -39,7 +69,7 @@ vi:
             create: "Thêm sản phẩm mới"
           edit:
             products: "Tất cả sản phẩm"
-            create: "Cập nhật sản phẩm"
+            edit: "Cập nhật sản phẩm"
           form:
             name: "Tên sản phẩm"
             can_be_sold: "Có thể được bán"
@@ -65,3 +95,5 @@ vi:
             description_for_pickings: "Description for Pickings"
             enter_quotations_description: "This note will be displayed on the quotations."
             enter_pickings_description: "Description for Pickings (Rack, Row and Case Information)"
+            submit: "Lưu"
+            cancel: "Hủy"
