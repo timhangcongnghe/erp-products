@@ -34,7 +34,6 @@ module Erp
         def create
           @product = Product.new(product_params)
           @product.creator = current_user
-      
           if @product.save
             if params.to_unsafe_hash['format'] == 'json'
               render json: {
@@ -140,7 +139,10 @@ module Erp
       
           # Only allow a trusted parameter "white list" through.
           def product_params
-            params.fetch(:product, {})
+            params.fetch(:product, {}).permit(:name, :can_be_sold, :can_be_purchased,
+                                              :product_type, :barcode, :sale_price, :cost, :weight, :volume,
+                                              :customer_lead_time, :internal_reference, :quotations_description,
+                                              :pickings_description, :category_id, :invoicing_policy)
           end
       end
     end

@@ -4,7 +4,7 @@
 
 <% content_for :page_title do %>    
     <a href="<%= erp_products.backend_products_path %>">
-    <i class="fa fa-users"></i> <%= t('.products') %>
+    <i class="fa fa-list"></i> <%= t('.products') %>
     </a> / <%= t('.create') %>
 <% end %>
 
@@ -16,17 +16,13 @@
 <% end %>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <% if @product.errors.any? %>
             <%= erp_form_control("form_error_message") %>
         <% end %>
         
         <!-- BEGIN SAMPLE FORM PORTLET-->
-        <div class="portlet light bordered">
-            <div class="portlet-body">
-                <%= render 'form', product: @product %>
-            </div>
-        </div>
+        <%= render 'form', product: @product %>
         <!-- END SAMPLE FORM PORTLET-->
     </div>
 </div>

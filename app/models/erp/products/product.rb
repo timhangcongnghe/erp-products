@@ -1,9 +1,27 @@
 module Erp::Products
   class Product < ApplicationRecord
-    validates :name, :presence => true
+    validates :name, :category_id, :presence => true
     
     belongs_to :creator, class_name: "Erp::User"
     belongs_to :category
+    
+    # get type options for product
+    def self.get_product_type_options()
+      [
+				{text: '',value: false},
+        {text: I18n.t('consumable'), value: 'consumable'},
+        {text: I18n.t('service'), value: 'service'},
+        {text: I18n.t('product'), value: 'product'}
+      ]
+    end
+    
+    # get invoicing policy for product
+    def self.get_invoicing_policy_options()
+      [
+        {text: I18n.t('ordered_quantities'), value: 'ordered_quantities'},
+        {text: I18n.t('delivered_quantities'), value: 'delivered_quantities'}
+      ]
+    end
     
     # Filters
     def self.filter(query, params)
@@ -51,6 +69,11 @@ module Erp::Products
     
     def self.unarchive_all
 			update_all(archived: true)
+		end
+    
+    # category name
+    def category_name
+			category.present? ? category.name : ''
 		end
   end
 end
