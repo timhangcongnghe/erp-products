@@ -97,3 +97,22 @@ vi:
             enter_pickings_description: "Description for Pickings (Rack, Row and Case Information)"
             submit: "Lưu"
             cancel: "Hủy"
+  activerecord:
+    errors:
+      models:
+        erp/products/product:
+          attributes:
+            name:
+              blank: "không được trống."
+            category_id:
+              blank: "không được trống."
+        erp/products/category:
+          attributes:
+            name:
+              blank: "không được trống."
+    attributes:
+      erp/products/product:
+        name: "Tên"
+        category_id: "Chuyên mục"
+      erp/products/category:
+        name: "Tên"
