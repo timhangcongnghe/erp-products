@@ -154,7 +154,8 @@
                                                 name: 'product[customer_tax_ids][]',
                                                 values: (product.customer_taxes.map {|tax| {text: tax.name, value: tax.id}}),
                                                 multiple: true,
-                                                label: t('.customer_tax'),
+                                                label: t('.customer_taxes'),
+                                                placeholder: t('.choose_taxes'),
                                                 url: erp_taxes.dataselect_backend_taxes_path(format: 'json', scope: 'sales'),
                                                 create: {
                                                     url: erp_taxes.new_backend_tax_path,
@@ -169,7 +170,8 @@
                                                 name: 'product[vendor_tax_ids][]',
                                                 values: (product.vendor_taxes.map {|tax| {text: tax.name, value: tax.id}}),
                                                 multiple: true,
-                                                label: t('.vendor_tax'),
+                                                label: t('.vendor_taxes'),
+                                                placeholder: t('.choose_taxes'),
                                                 url: erp_taxes.dataselect_backend_taxes_path(format: 'json', scope: 'purchases'),
                                                 create: {
                                                     url: erp_taxes.new_backend_tax_path,

@@ -4,16 +4,35 @@ vi:
   product: "Sản phẩm"
   ordered_quantities: "Ordered quantities"
   delivered_quantities: "Delivered quantities"
+  layouts:
+    erp:
+      backend:
+        sidebar:
+          inventory: "Hàng hóa"
+          products: "Tất cả sản phẩm"
+          categories: "Tất cả chuyên mục"
   erp:
     products:
       backend:
         categories:
+          create:
+            success: "Thêm chuyên mục thành công."
+          update:
+            success: "Cập nhật chuyên mục thành công."
+          destroy:
+            success: "Xóa chuyên mục thành công."
+          delete_all:
+            success: "Xóa chuyên mục được chọn thành công."
+          archive_all:
+            success: "Ẩn chuyên mục được chọn thành công."
+          unarchive_all:
+            success: "Hiện chuyên mục được chọn thành công."
           index:
             categories: "Tất cả chuyên mục"
-            create: "Thêm chuyên mục mới"
+            create: "Thêm chuyên mục"
             archive: "Ẩn khỏi danh sách"
             unarchive: "Hiện ra danh sách"
-            delete: "Xóa sản phẩm"
+            delete: "Xóa chuyên mục"
             delete_confirm: "Bạn có chắc muốn xóa?"
             name: "Tên chuyên mục"
             status: "Trạng thái"
@@ -27,46 +46,58 @@ vi:
             actions: "Thao tác"
             archived: "Đã ẩn"
             active: "Đang hiển thị"
-            edit: "Cập nhật thông tin"
+            edit: "Cập nhật"
             no_matching_records_found: "Danh sách chuyên mục hiện tại đang trống."
           new:
             categories: "Tất cả chuyên mục"
-            create: "Thêm chuyên mục mới"
+            create: "Thêm chuyên mục"
           edit:
             categories: "Tất cả chuyên mục"
             edit: "Cập nhật chuyên mục"
           form:
             name: "Tên chuyên mục"
-            create: "Thêm chuyên mục mới"
+            create: "Thêm chuyên mục cha"
             choose_parent_category: "Chọn chuyên mục cha"
             parent_category: "Chuyên mục cha"
             submit: "Lưu"
             cancel: "Hủy"
         products:
+          create:
+            success: "Thêm sản phẩm thành công."
+          update:
+            success: "Cập nhật sản phẩm thành công."
+          destroy:
+            success: "Xóa sản phẩm thành công."
+          delete_all:
+            success: "Xóa sản phẩm được chọn thành công."
+          archive_all:
+            success: "Ẩn sản phẩm được chọn thành công."
+          unarchive_all:
+            success: "Hiện sản phẩm được chọn thành công."
           index:
             products: "Tất cả sản phẩm"
-            create: "Thêm sản phẩm mới"
+            create: "Thêm sản phẩm"
             archive: "Ẩn khỏi danh sách"
             unarchive: "Hiện ra danh sách"
             delete: "Xóa sản phẩm"
             delete_confirm: "Bạn có chắc muốn xóa?"
-            name: "Tên khách hàng"
+            name: "Tên sản phẩm"
             status: "Trạng thái"
             creator: "Người tạo"
             created_at: "Ngày tạo"
           list:
-            name: "Tên khách hàng"
+            name: "Tên sản phẩm"
             status: "Trạng thái"
             creator: "Người tạo"
             created_at: "Ngày tạo"
             actions: "Thao tác"
             archived: "Đã ẩn"
             active: "Đang hiển thị"
-            edit: "Cập nhật thông tin"
+            edit: "Cập nhật"
             no_matching_records_found: "Danh sách sản phẩm hiện tại đang trống."
           new:
             products: "Tất cả sản phẩm"
-            create: "Thêm sản phẩm mới"
+            create: "Thêm sản phẩm"
           edit:
             products: "Tất cả sản phẩm"
             edit: "Cập nhật sản phẩm"
@@ -75,22 +106,26 @@ vi:
             can_be_sold: "Có thể được bán"
             can_be_purchased: "Có thể được mua"
             general_information: "Thông tin chung"
-            inventory: "Kiểm hàng hóa"
-            sales: "Bán hàng"
+            inventory: "Kiểm kê hàng hóa"
+            sales: "Điều kiện bán hàng"
             invoicing: "Hóa đơn"
             notes: "Ghi chú"
-            product_type: "Loại sản phẩm"
-            internal_reference: "Tài liệu tham khảo nội bộ"
+            product_type: "Phân loại sản phẩm"
+            internal_reference: "Tài liệu tham khảo"
             barcode: "Mã vạch"
             sale_price: "Giá bán"
             cost: "Giá nhập"
             category: "Chuyên mục"
-            weight: "Trọng lượng"
+            choose_category: "Chọn chuyên mục"
+            weight: "Cân nặng"
             volume: "Thể tích"
             sale_conditions: "Điều kiện bán hàng"
             customer_lead_time: "Thời gian chờ"
+            customer_taxes: "Thuế người mua"
+            vendor_taxes: "Thuế người bán"
+            choose_taxes: "Chọn loại thuế"
             invoicing_policy: "Chính sách hóa đơn"
-            choose_category: "Chọn chuyên mục"
+            
             description_for_quotations: "Description for Quotations"
             description_for_pickings: "Description for Pickings"
             enter_quotations_description: "This note will be displayed on the quotations."
@@ -103,16 +138,16 @@ vi:
         erp/products/product:
           attributes:
             name:
-              blank: "không được trống."
+              blank: "không được để trống."
             category_id:
-              blank: "không được trống."
+              blank: "không được để trống."
         erp/products/category:
           attributes:
             name:
-              blank: "không được trống."
+              blank: "không được để trống."
     attributes:
       erp/products/product:
-        name: "Tên"
-        category_id: "Chuyên mục"
+        name: "Tên sản phẩm"
+        category_id: "Chuyên mục sản phẩm"
       erp/products/category:
-        name: "Tên"
+        name: "Tên chuyên mục"

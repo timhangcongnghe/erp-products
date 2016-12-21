@@ -44,7 +44,7 @@ module Erp
                 value: @category.id
               }
             else
-              redirect_to erp_products.edit_backend_category_path(@category), notice: 'Category was successfully created.'
+              redirect_to erp_products.edit_backend_category_path(@category), notice: t('.success')
             end
           else
             if params.to_unsafe_hash['format'] == 'json'
@@ -65,7 +65,7 @@ module Erp
                 value: @category.id
               }
             else
-              redirect_to erp_products.edit_backend_category_path(@category), notice: 'Category was successfully updated.'
+              redirect_to erp_products.edit_backend_category_path(@category), notice: t('.success')
             end
           else
             render :edit
@@ -77,10 +77,10 @@ module Erp
           @category.destroy
           
           respond_to do |format|
-            format.html { redirect_to erp_products.backend_categories_path, notice: 'Category was successfully destroyed.' }
+            format.html { redirect_to erp_products.backend_categories_path, notice: t('.success') }
             format.json {
               render json: {
-                'message': 'Category was successfully destroyed.',
+                'message': t('.success'),
                 'type': 'success'
               }
             }
@@ -94,7 +94,7 @@ module Erp
           respond_to do |format|
             format.json {
               render json: {
-                'message': 'Categories were successfully destroyed.',
+                'message': t('.success'),
                 'type': 'success'
               }
             }
@@ -108,7 +108,7 @@ module Erp
           respond_to do |format|
             format.json {
               render json: {
-                'message': 'Categories were successfully archived.',
+                'message': t('.success'),
                 'type': 'success'
               }
             }
@@ -122,7 +122,7 @@ module Erp
           respond_to do |format|
             format.json {
               render json: {
-                'message': 'Categories were successfully active.',
+                'message': t('.success'),
                 'type': 'success'
               }
             }

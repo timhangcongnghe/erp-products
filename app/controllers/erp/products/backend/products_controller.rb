@@ -43,7 +43,7 @@ module Erp
                 value: @product.id
               }              
             else
-              redirect_to erp_products.edit_backend_product_path(@product), notice: 'Product was successfully created.'
+              redirect_to erp_products.edit_backend_product_path(@product), notice: t('.success')
             end            
           else
             puts @product.errors.to_json
@@ -61,7 +61,7 @@ module Erp
                 value: @product.id
               }              
             else
-              redirect_to erp_products.edit_backend_product_path(@product), notice: 'Product was successfully updated.'
+              redirect_to erp_products.edit_backend_product_path(@product), notice: t('.success')
             end            
           else
             render :edit
@@ -73,10 +73,10 @@ module Erp
           @product.destroy
           
           respond_to do |format|
-            format.html { redirect_to erp_products.backend_products_path, notice: 'Product was successfully destroyed.' }
+            format.html { redirect_to erp_products.backend_products_path, notice: t('.success') }
             format.json {
               render json: {
-                'message': 'Product was successfully destroyed.',
+                'message': t('.success'),
                 'type': 'success'
               }
             }
@@ -90,7 +90,7 @@ module Erp
           respond_to do |format|
             format.json {
               render json: {
-                'message': 'Products were successfully destroyed.',
+                'message': t('.success'),
                 'type': 'success'
               }
             }
@@ -104,7 +104,7 @@ module Erp
           respond_to do |format|
             format.json {
               render json: {
-                'message': 'Products were successfully archived.',
+                'message': t('.success'),
                 'type': 'success'
               }
             }
@@ -118,7 +118,7 @@ module Erp
           respond_to do |format|
             format.json {
               render json: {
-                'message': 'Products were successfully active.',
+                'message': t('.success'),
                 'type': 'success'
               }
             }

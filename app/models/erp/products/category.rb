@@ -47,11 +47,11 @@ module Erp::Products
     end
     
     def self.archive_all
-			update_all(archived: false)
+			update_all(archived: true)
 		end
     
     def self.unarchive_all
-			update_all(archived: true)
+			update_all(archived: false)
 		end
     
     # display name
