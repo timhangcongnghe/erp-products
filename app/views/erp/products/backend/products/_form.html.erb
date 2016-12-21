@@ -108,9 +108,14 @@
                                                 url: erp_products.dataselect_backend_categories_path(format: 'json'),
                                                 create: {
                                                     url: erp_products.new_backend_category_path,
-                                                    title: t('.create'),
+                                                    title: t('.create_category'),
                                                     container_selector: '.new_category',
                                                     input_selector: 'input[name="category[name]"]'
+                                                },
+                                                edit: {
+                                                    url: erp_products.edit_backend_category_path(id: ':value'),
+                                                    title: t('.edit_category'),
+                                                    container_selector: '.edit_category',
                                                 },
                                                 required: true,
                                                 errors: product.errors.full_messages_for(:category_id)
@@ -143,6 +148,38 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab_5_4">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <%= erp_form_control("dataselect", {
+                                                name: 'product[customer_tax_ids][]',
+                                                values: (product.customer_taxes.map {|tax| {text: tax.name, value: tax.id}}),
+                                                multiple: true,
+                                                label: t('.customer_tax'),
+                                                url: erp_taxes.dataselect_backend_taxes_path(format: 'json', scope: 'sales'),
+                                                create: {
+                                                    url: erp_taxes.new_backend_tax_path,
+                                                    title: t('.create'),
+                                                    container_selector: '.new_customer_tax',
+                                                    input_selector: 'input[name="tax[name]"]'
+                                                }
+                                            }) %>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <%= erp_form_control("dataselect", {
+                                                name: 'product[vendor_tax_ids][]',
+                                                values: (product.vendor_taxes.map {|tax| {text: tax.name, value: tax.id}}),
+                                                multiple: true,
+                                                label: t('.vendor_tax'),
+                                                url: erp_taxes.dataselect_backend_taxes_path(format: 'json', scope: 'purchases'),
+                                                create: {
+                                                    url: erp_taxes.new_backend_tax_path,
+                                                    title: t('.create'),
+                                                    container_selector: '.new_vendor_tax',
+                                                    input_selector: 'input[name="tax[name]"]'
+                                                }
+                                            }) %>
+                                        </div>
+                                    </div>
                                     <%= erp_form_control("radio", {
                                         name: 'product[invoicing_policy]',
                                         label: t('.invoicing_policy'),

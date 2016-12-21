@@ -4,6 +4,10 @@ module Erp::Products
     
     belongs_to :creator, class_name: "Erp::User"
     belongs_to :category
+    if Erp::Core.available?("taxes")
+      has_and_belongs_to_many :customer_taxes, class_name: 'Erp::Taxes::Tax', :join_table => 'erp_products_customer_taxes'
+			has_and_belongs_to_many :vendor_taxes, class_name: 'Erp::Taxes::Tax', :join_table => 'erp_products_vendor_taxes'
+    end
     
     # get type options for product
     def self.get_product_type_options()

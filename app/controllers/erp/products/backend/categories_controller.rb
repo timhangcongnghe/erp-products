@@ -37,7 +37,7 @@ module Erp
           @category.creator = current_user
           
           if @category.save
-            if params.to_unsafe_hash['format'] == 'json'
+            if request.xhr?
               render json: {
                 status: 'success',
                 text: @category.name,
@@ -58,7 +58,15 @@ module Erp
         # PATCH/PUT /categories/1
         def update
           if @category.update(category_params)
-            redirect_to erp_products.edit_backend_category_path(@category), notice: 'Category was successfully updated.'
+            if request.xhr?
+              render json: {
+                status: 'success',
+                text: @category.name,
+                value: @category.id
+              }
+            else
+              redirect_to erp_products.edit_backend_category_path(@category), notice: 'Category was successfully updated.'
+            end
           else
             render :edit
           end

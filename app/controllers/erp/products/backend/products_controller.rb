@@ -34,29 +34,35 @@ module Erp
         def create
           @product = Product.new(product_params)
           @product.creator = current_user
+          
           if @product.save
-            if params.to_unsafe_hash['format'] == 'json'
+            if request.xhr?
               render json: {
                 status: 'success',
                 text: @product.name,
                 value: @product.id
-              }
+              }              
             else
               redirect_to erp_products.edit_backend_product_path(@product), notice: 'Product was successfully created.'
-            end
-          else
-            if params.to_unsafe_hash['format'] == 'json'
-              render '_form', layout: nil, locals: {product: @product}
-            else
-              render :new
             end            
+          else
+            puts @product.errors.to_json
+            render :new
           end
         end
       
         # PATCH/PUT /products/1
         def update
           if @product.update(product_params)
-            redirect_to erp_products.edit_backend_product_path(@product), notice: 'Product was successfully updated.'
+            if request.xhr?
+              render json: {
+                status: 'success',
+                text: @product.name,
+                value: @product.id
+              }              
+            else
+              redirect_to erp_products.edit_backend_product_path(@product), notice: 'Product was successfully updated.'
+            end            
           else
             render :edit
           end
@@ -142,7 +148,7 @@ module Erp
             params.fetch(:product, {}).permit(:name, :can_be_sold, :can_be_purchased,
                                               :product_type, :barcode, :sale_price, :cost, :weight, :volume,
                                               :customer_lead_time, :internal_reference, :quotations_description,
-                                              :pickings_description, :category_id, :invoicing_policy)
+                                              :pickings_description, :category_id, :invoicing_policy, customer_tax_ids: [], vendor_tax_ids: [])
           end
       end
     end
