@@ -19,6 +19,14 @@
     keywords: [
         {
             text: t('.name'), name: 'name'
+        },
+        {
+            text: t('.category'),
+            name: 'erp_products_categories.name',
+            select: {
+                name: 'erp_products_categories.id',
+                data_url: erp_products.dataselect_backend_categories_path
+            }
         }
     ],
     actions: [
@@ -42,18 +50,39 @@
             data_confirm: t('.delete_confirm')
         }
     ],
+    filters: [
+        {
+            text: t('.consumable'), name: 'product_type', value: Erp::Products::Product::TYPE_CONSUMABLE, checked: false
+        },
+        {
+            text: t('.service'), name: 'product_type', value: Erp::Products::Product::TYPE_SERVICE, checked: false
+        },
+        {
+            text: t('.product'), name: 'product_type', value: Erp::Products::Product::TYPE_PRODUCT, checked: false
+        },
+        {
+            divider: true
+        },
+        {
+            text: t('.archived'), name: 'show_archived', value: true, checked: false
+        },
+    ],
     columns: [
         {
             text: t('.name'), name: 'name', value: true, checked: true
         },
         {
+            text: t('.category'), name: 'category', value: true, checked: true
+        },
+        {
             text: t('.status'), name: 'status', value: true, checked: true
         },
         {
-            text: t('.creator'), name: 'creator', value: true, checked: true
+            text: t('.creator'), name: 'creator', value: true, checked: false
         },
         {
-            text: t('.created_at'), name: 'created_at', value: true, checked: true
+            text: t('.created_at'), name: 'created_at', value: true, checked: false
         }
-    ]
+    ],
+    sort: { sort_by: 'erp_products_products.created_at', sort_direction: 'desc' }
 ) %>    

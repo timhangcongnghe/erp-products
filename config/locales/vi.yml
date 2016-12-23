@@ -28,6 +28,7 @@ vi:
           unarchive_all:
             success: "Hiện chuyên mục được chọn thành công."
           index:
+            parent_category: "Chuyên mục cha"
             categories: "Tất cả chuyên mục"
             create: "Thêm chuyên mục"
             archive: "Ẩn khỏi danh sách"
@@ -39,6 +40,8 @@ vi:
             creator: "Người tạo"
             created_at: "Ngày tạo"
           list:
+            delete: "Xóa chuyên mục"
+            delete_confirm: "Bạn có chắc muốn xóa?"
             name: "Tên chuyên mục"
             status: "Trạng thái"
             creator: "Người tạo"
@@ -75,6 +78,7 @@ vi:
           unarchive_all:
             success: "Hiện sản phẩm được chọn thành công."
           index:
+            category: "Chuyên mục"
             products: "Tất cả sản phẩm"
             create: "Thêm sản phẩm"
             archive: "Ẩn khỏi danh sách"
@@ -86,6 +90,8 @@ vi:
             creator: "Người tạo"
             created_at: "Ngày tạo"
           list:
+            delete: "Xóa sản phẩm"
+            delete_confirm: "Bạn có chắc muốn xóa?"
             name: "Tên sản phẩm"
             status: "Trạng thái"
             creator: "Người tạo"

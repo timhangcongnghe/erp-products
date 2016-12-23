@@ -8,6 +8,8 @@ Erp::Products::Engine.routes.draw do
           delete 'delete_all'
           put 'archive_all'
           put 'unarchive_all'
+          put 'archive'
+          put 'unarchive'
         end
       end
       resources :products do
@@ -17,6 +19,8 @@ Erp::Products::Engine.routes.draw do
           delete 'delete_all'
           put 'archive_all'
           put 'unarchive_all'
+          put 'archive'
+          put 'unarchive'
         end
       end
     end

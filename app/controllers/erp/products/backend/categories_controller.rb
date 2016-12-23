@@ -4,7 +4,7 @@ module Erp
   module Products
     module Backend
       class CategoriesController < Erp::Backend::BackendController
-        before_action :set_category, only: [:edit, :update, :destroy]
+        before_action :set_category, only: [:archive, :unarchive, :edit, :update, :destroy]
         before_action :set_categories, only: [:delete_all, :archive_all, :unarchive_all]
         
         # GET /categories
@@ -85,6 +85,34 @@ module Erp
               }
             }
           end
+        end
+        
+        # Archive /categories/archive?id=1
+        def archive      
+          @category.archive
+          
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end          
+        end
+        
+        # Unarchive /categories/unarchive?id=1
+        def unarchive
+          @category.unarchive
+          
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end          
         end
         
         # DELETE /categories/delete_all?ids=1,2,3

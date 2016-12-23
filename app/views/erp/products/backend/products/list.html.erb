@@ -6,8 +6,13 @@
                     <%= erp_datalist_check_all %>
                 </th>
                 <% if get_columns(params).include?("name") %>
-                    <th>
+                    <th class="sortable" sort-by='erp_products_products.name'>
                         <%= t('.name') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("category") %>
+                    <th>
+                        <%= t('.category') %>
                     </th>
                 <% end %>
                 <% if get_columns(params).include?("status") %>
@@ -21,7 +26,7 @@
                     </th>
                 <% end %>
                 <% if get_columns(params).include?("created_at") %>
-                    <th>
+                    <th class="sortable" sort-by='erp_products_products.created_at'>
                         <%= t('.created_at') %>
                     </th>
                 <% end %>
@@ -37,6 +42,9 @@
                     <% if get_columns(params).include?("name") %>
                         <td><%= link_to product.name, erp_products.edit_backend_product_path(product) %></td>
                     <% end %>
+                    <% if get_columns(params).include?("category") %>
+                        <td><%= product.category_name %></td>
+                    <% end %>
                     <% if get_columns(params).include?("status") %>
                     <td>
                         <% if product.archived == true %>
@@ -50,7 +58,7 @@
                         <td></td>
                     <% end %>
                     <% if get_columns(params).include?("created_at") %>
-                        <td class="center"><%= product.created_at.strftime("%d/%m/%Y") %></td>
+                        <td><%= product.created_at.strftime("%d/%m/%Y") %></td>
                     <% end %>
                     <td>
                         <%= erp_datalist_row_actions(
@@ -58,6 +66,28 @@
                                 {
                                     text: '<i class="fa fa-edit"></i> '+t('.edit'),
                                     href: erp_products.edit_backend_product_path(product)
+                                },
+                                {
+                                    text: '<i class="fa fa-eye-slash"></i> '+t('.archive'),
+                                    url: erp_products.archive_backend_products_path(id: product),
+                                    data_method: 'PUT',
+                                    class: 'ajax-link'
+                                },
+                                {
+                                    text: '<i class="fa fa-eye"></i> '+t('.unarchive'),
+                                    url: erp_products.unarchive_backend_products_path(id: product),
+                                    data_method: 'PUT',
+                                    class: 'ajax-link'
+                                },
+                                {
+                                    divider: true
+                                },
+                                {
+                                    text: '<i class="fa fa-trash"></i> '+t('.delete'),
+                                    url: erp_products.backend_product_path(product),
+                                    data_method: 'DELETE',
+                                    class: 'ajax-link',
+                                    data_confirm: t('.delete_confirm')
                                 }
                             ]
                         ) %>

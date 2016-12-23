@@ -4,7 +4,7 @@ module Erp
   module Products
     module Backend
       class ProductsController < Erp::Backend::BackendController
-        before_action :set_product, only: [:show, :edit, :update, :destroy]
+        before_action :set_product, only: [:archive, :unarchive, :show, :edit, :update, :destroy]
         before_action :set_products, only: [:delete_all, :archive_all, :unarchive_all]
         # GET /products
         def index
@@ -81,6 +81,34 @@ module Erp
               }
             }
           end
+        end
+        
+        # Archive /products/archive?id=1
+        def archive      
+          @product.archive
+          
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end          
+        end
+        
+        # Unarchive /products/unarchive?id=1
+        def unarchive
+          @product.unarchive
+          
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end          
         end
         
         # DELETE /products/delete_all?ids=1,2,3
