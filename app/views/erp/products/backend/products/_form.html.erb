@@ -37,12 +37,14 @@
                             <div class="col-md-7">
                                 <%= erp_form_control("images", {
                                     name: 'product[product_images_attributes][__index__][image_url]',
+                                    name_cache: 'product[product_images_attributes][__index__][image_url_cache]',
                                     id_name: 'product[product_images_attributes][__index__][id]',
                                     destroy_name: 'product[product_images_attributes][__index__][_destroy]',
                                     label: 'Images',
                                     width: 130,
                                     height: 130,
                                     images: @product.product_images,
+                                    origin_attribute: 'image_url',
                                     image_attribute: 'image_url.small',
                                     image_thumb: :small,
                                     hidden_params: [
