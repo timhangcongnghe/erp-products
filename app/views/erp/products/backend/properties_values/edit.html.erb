@@ -1,0 +1,29 @@
+<% content_for :title do %>
+    <%= @properties_value.name %>
+<% end %>
+
+<% content_for :page_title do %>    
+    <a href="<%= erp_products.backend_categories_path %>">
+    <i class="fa fa-list"></i> <%= t('.properties_values') %>
+    </a> / <%= @properties_value.name %>
+<% end %>
+
+<% content_for :page_toolbar do %>
+    <%= erp_component('button/create', {
+        text: t('.create'),
+        href: erp_products.new_backend_properties_value_path,
+        class: 'btn-sm'
+    }) %>
+<% end %>
+
+<div class="row">
+    <div class="col-md-6">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-body">
+                <%= render 'form', properties_value: @properties_value %>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>

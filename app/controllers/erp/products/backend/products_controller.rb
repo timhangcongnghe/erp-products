@@ -24,17 +24,26 @@ module Erp
         # GET /products/new
         def new
           @product = Product.new
+          @product.products_properties << ProductsProperty.new
+          
+          # default product images
+          6.times do
+            @product.product_images.build
+          end
         end
       
         # GET /products/1/edit
         def edit
+          # default product images
+          (6 - @product.product_images.count).times do
+            @product.product_images.build
+          end
         end
       
         # POST /products
         def create
           @product = Product.new(product_params)
           @product.creator = current_user
-          
           if @product.save
             if request.xhr?
               render json: {
@@ -46,6 +55,7 @@ module Erp
               redirect_to erp_products.edit_backend_product_path(@product), notice: t('.success')
             end            
           else
+            # default product images
             puts @product.errors.to_json
             render :new
           end
@@ -160,6 +170,11 @@ module Erp
             }
           end
         end
+        
+        def form_property
+          @products_property = ProductsProperty.new
+          render partial: params[:partial], locals: { products_property: @products_property, uid: helpers.unique_id() }
+        end
       
         private
           # Use callbacks to share common setup or constraints between actions.
@@ -176,7 +191,8 @@ module Erp
             params.fetch(:product, {}).permit(:name, :can_be_sold, :can_be_purchased,
                                               :product_type, :barcode, :sale_price, :cost, :weight, :volume,
                                               :customer_lead_time, :internal_reference, :quotations_description,
-                                              :pickings_description, :category_id, :invoicing_policy, customer_tax_ids: [], vendor_tax_ids: [])
+                                              :pickings_description, :category_id, :invoicing_policy, customer_tax_ids: [], vendor_tax_ids: [],
+                                              :product_images_attributes => [ :id, :image_url, :product_id, :_destroy ])
           end
       end
     end

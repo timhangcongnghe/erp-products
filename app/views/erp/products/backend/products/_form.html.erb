@@ -5,7 +5,7 @@
                 <div class="portlet light bordered">
                     <div class="portlet-body form">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <%= erp_form_control("text", {
                                     name: 'product[name]',
                                     value: product.name,
@@ -14,7 +14,7 @@
                                     errors: product.errors.full_messages_for(:name)
                                 }) %>
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <%= erp_form_control('checkbox', {
                                             name: 'product[can_be_sold]',
                                             id: 'product_can_be_sold',
@@ -23,7 +23,7 @@
                                             options: [{value: 'true', text: t('.can_be_sold')}]
                                         }) %>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <%= erp_form_control('checkbox', {
                                             name: 'product[can_be_purchased]',
                                             id: 'product_can_be_purchased',
@@ -33,6 +33,22 @@
                                         }) %>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-7">
+                                <%= erp_form_control("images", {
+                                    name: 'product[product_images_attributes][__index__][image_url]',
+                                    id_name: 'product[product_images_attributes][__index__][id]',
+                                    destroy_name: 'product[product_images_attributes][__index__][_destroy]',
+                                    label: 'Images',
+                                    width: 120,
+                                    height: 120,
+                                    images: @product.product_images,
+                                    image_attribute: 'image_url.small',
+                                    image_thumb: :small,
+                                    hidden_params: [
+                                        {name: 'product[product_images_attributes][__index__][product_id]', value: @product.id}
+                                    ]
+                                }) %>
                             </div>
                         </div>
                     </div>
@@ -56,6 +72,9 @@
                                 </li>
                                 <li>
                                     <a href="#tab_5_4" data-toggle="tab"> <%= t('.notes') %> </a>
+                                </li>
+                                <li>
+                                    <a href="#tab_5_5" data-toggle="tab"> <%= t('.properties') %> </a>
                                 </li>
                             </ul>
                             <div class="tab-content">
@@ -175,6 +194,15 @@
                                         name: 'product[pickings_description]',
                                         value: product.pickings_description,
                                         placeholder: t('.enter_pickings_description')
+                                    }) %>
+                                </div>
+                                <div class="tab-pane" id="tab_5_5">
+                                    <%= erp_form_control("addableform", {
+                                        add_button: t('.add'),
+                                        partial: 'erp/products/backend/products/form_property',
+                                        partial_url: erp_products.form_property_backend_products_path,
+                                        items: @product.products_properties,
+                                        item: :products_property
                                     }) %>
                                 </div>
                             </div>

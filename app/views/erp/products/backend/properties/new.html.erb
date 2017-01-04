@@ -1,0 +1,28 @@
+<% content_for :title do %>
+    <%= t('.create') %>
+<% end %>
+
+<% content_for :page_title do %>    
+    <a href="<%= erp_products.backend_properties_path %>">
+    <i class="fa fa-list"></i> <%= t('.properties') %>
+    </a> / <%= t('.create') %>
+<% end %>
+
+<% content_for :page_toolbar do %>
+    <div class="btn-group">
+        <div class="clearfix">
+        </div>
+    </div>
+<% end %>
+
+<div class="row">
+    <div class="col-md-6">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-body">
+                <%= render 'form', property: @property %>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>

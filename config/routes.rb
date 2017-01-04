@@ -21,6 +21,17 @@ Erp::Products::Engine.routes.draw do
           put 'unarchive_all'
           put 'archive'
           put 'unarchive'
+          get 'form_property'
+        end
+      end
+      resources :properties do
+        collection do
+          get 'dataselect'
+        end
+      end
+      resources :properties_values do
+        collection do
+          get 'dataselect'
         end
       end
     end

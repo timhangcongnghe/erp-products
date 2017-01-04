@@ -13,6 +13,11 @@ vi:
           categories: "Tất cả chuyên mục"
   erp:
     products:
+      property: "Thuộc tính"
+      choose_property: "Chọn thuộc tính"
+      create_property: "Thêm thuộc tính"
+      values_of_property: "Các giá trị của thuộc tính"
+      property_values: "Giá trị thuộc tính"
       backend:
         categories:
           create:
@@ -62,6 +67,52 @@ vi:
             create: "Thêm chuyên mục cha"
             choose_parent_category: "Chọn chuyên mục cha"
             parent_category: "Chuyên mục cha"
+            submit: "Lưu"
+            cancel: "Hủy"
+        properties:
+          create:
+            success: "Thêm thuộc tính thành công."
+          update:
+            success: "Cập nhật thuộc tính thành công."
+          destroy:
+            success: "Xóa thuộc tính thành công."
+          delete_all:
+            success: "Xóa thuộc tính được chọn thành công."
+          archive_all:
+            success: "Ẩn thuộc tính được chọn thành công."
+          unarchive_all:
+            success: "Hiện thuộc tính được chọn thành công."
+          index:
+            categories: "Tất cả thuộc tính"
+            create: "Thêm thuộc tính"
+            archive: "Ẩn khỏi danh sách"
+            unarchive: "Hiện ra danh sách"
+            delete: "Xóa thuộc tính"
+            delete_confirm: "Bạn có chắc muốn xóa?"
+            name: "Tên thuộc tính"
+            status: "Trạng thái"
+            creator: "Người tạo"
+            created_at: "Ngày tạo"
+          list:
+            delete: "Xóa thuộc tính"
+            delete_confirm: "Bạn có chắc muốn xóa?"
+            name: "Tên thuộc tính"
+            status: "Trạng thái"
+            creator: "Người tạo"
+            created_at: "Ngày tạo"
+            actions: "Thao tác"
+            archived: "Đã ẩn"
+            active: "Đang hiển thị"
+            edit: "Cập nhật"
+            no_matching_records_found: "Danh sách chuyên mục hiện tại đang trống."
+          new:
+            categories: "Tất cả thuộc tính"
+            create: "Thêm thuộc tính"
+          edit:
+            categories: "Tất cả thuộc tính"
+            edit: "Cập nhật thuộc tính"
+          form:
+            name: "Tên thuộc tính"
             submit: "Lưu"
             cancel: "Hủy"
         products:
@@ -137,7 +188,7 @@ vi:
             enter_quotations_description: "This note will be displayed on the quotations."
             enter_pickings_description: "Description for Pickings (Rack, Row and Case Information)"
             submit: "Lưu"
-            cancel: "Hủy"
+            cancel: "Hủy"      
   activerecord:
     errors:
       models:
@@ -151,9 +202,15 @@ vi:
           attributes:
             name:
               blank: "không được để trống."
+        erp/products/property:
+          attributes:
+            name:
+              blank: "không được để trống."
     attributes:
       erp/products/product:
         name: "Tên sản phẩm"
         category_id: "Chuyên mục sản phẩm"
       erp/products/category:
         name: "Tên chuyên mục"
+      erp/products/property:
+        name: "Tên thuộc tính"

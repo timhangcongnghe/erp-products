@@ -9,6 +9,10 @@ module Erp::Products
 			has_and_belongs_to_many :vendor_taxes, class_name: 'Erp::Taxes::Tax', :join_table => 'erp_products_vendor_taxes'
     end
     
+    has_many :products_properties, class_name: 'Erp::Products::ProductsProperty'
+    has_many :product_images, class_name: 'Erp::Products::ProductImage'
+    accepts_nested_attributes_for :product_images, :reject_if => lambda { |a| a[:image_url].blank? }, :allow_destroy => true
+    
     # class const
     TYPE_CONSUMABLE = 'consumable'
     TYPE_SERVICE = 'service'
