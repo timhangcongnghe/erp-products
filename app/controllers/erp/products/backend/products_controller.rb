@@ -160,7 +160,7 @@ module Erp
                 'type': 'success'
               }
             }
-          end          
+          end
         end
         
         def dataselect
