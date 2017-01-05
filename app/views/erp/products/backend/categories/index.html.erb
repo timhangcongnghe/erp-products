@@ -31,12 +31,12 @@
     ],
     actions: [
         {
-            text: '<i class="fa fa-eye-slash"></i> '+t('.archive'),
+            text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
             url: erp_products.archive_all_backend_categories_path,
             data_method: 'PUT'
         },
         {
-            text: '<i class="fa fa-eye"></i> '+t('.unarchive'),
+            text: '<i class="fa fa-eye"></i> '+t('unarchive'),
             url: erp_products.unarchive_all_backend_categories_path,
             data_method: 'PUT'
         },
@@ -47,12 +47,12 @@
             text: '<i class="fa fa-trash"></i> '+t('.delete'),
             url: erp_products.delete_all_backend_categories_path,
             data_method: 'DELETE',
-            data_confirm: t('.delete_confirm')
+            data_confirm: t('delete_confirm')
         }
     ],
     filters: [
         {
-            text: t('.archived'), name: 'show_archived', value: true, checked: false
+            text: t('archived'), name: 'show_archived', value: true, checked: false
         },
     ],
     columns: [
@@ -63,13 +63,13 @@
             text: t('.product_count'), name: 'product_count', value: true, checked: true
         },
         {
-            text: t('.status'), name: 'status', value: true, checked: true
+            text: t('status'), name: 'status', value: true, checked: true
         },
         {
-            text: t('.creator'), name: 'creator', value: true, checked: false
+            text: t('creator'), name: 'creator', value: true, checked: false
         },
         {
-            text: t('.created_at'), name: 'created_at', value: true, checked: false
+            text: t('created_at'), name: 'created_at', value: true, checked: false
         }
     ],
     sort: { sort_by: 'erp_products_categories.created_at', sort_direction: 'desc' }

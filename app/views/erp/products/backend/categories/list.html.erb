@@ -17,20 +17,20 @@
                 <% end %>
                 <% if get_columns(params).include?("status") %>
                     <th>
-                        <%= t('.status') %>
+                        <%= t('status') %>
                     </th>
                 <% end %>
                 <% if get_columns(params).include?("creator") %>
                     <th>
-                        <%= t('.creator') %>
+                        <%= t('creator') %>
                     </th>
                 <% end %>
                 <% if get_columns(params).include?("created_at") %>
                     <th class="sortable" sort-by='erp_products_categories.created_at'>
-                        <%= t('.created_at') %>
+                        <%= t('created_at') %>
                     </th>
                 <% end %>
-                <th width="7%"><%= t('.actions') %></th>
+                <th width="7%"><%= t('actions') %></th>
             </tr>
         </thead>
         <tbody>
@@ -48,9 +48,9 @@
                     <% if get_columns(params).include?("status") %>
                     <td>
                         <% if category.archived == true %>
-                        <span class="label label-sm label-danger"><%= t('.archived') %></span>
+                        <span class="label label-sm label-danger"><%= t('archived') %></span>
                         <% else %>
-                        <span class="label label-sm label-success"><%= t('.active') %></span>
+                        <span class="label label-sm label-success"><%= t('active') %></span>
                         <% end %> 
                     </td>
                     <% end %>
@@ -64,17 +64,17 @@
                         <%= erp_datalist_row_actions(
                             [
                                 {
-                                    text: '<i class="fa fa-edit"></i> '+t('.edit'),
+                                    text: '<i class="fa fa-edit"></i> '+t('edit'),
                                     href: erp_products.edit_backend_category_path(category)
                                 },
                                 {
-                                    text: '<i class="fa fa-eye-slash"></i> '+t('.archive'),
+                                    text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
                                     url: erp_products.archive_backend_categories_path(id: category),
                                     data_method: 'PUT',
                                     class: 'ajax-link'
                                 },
                                 {
-                                    text: '<i class="fa fa-eye"></i> '+t('.unarchive'),
+                                    text: '<i class="fa fa-eye"></i> '+t('unarchive'),
                                     url: erp_products.unarchive_backend_categories_path(id: category),
                                     data_method: 'PUT',
                                     class: 'ajax-link'
@@ -87,7 +87,7 @@
                                     url: erp_products.backend_category_path(category),
                                     data_method: 'DELETE',
                                     class: 'ajax-link',
-                                    data_confirm: t('.delete_confirm')
+                                    data_confirm: t('delete_confirm')
                                 }
                             ]
                         ) %>

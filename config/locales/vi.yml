@@ -36,39 +36,25 @@ vi:
             parent_category: "Chuyên mục cha"
             categories: "Tất cả chuyên mục"
             create: "Thêm chuyên mục"
-            archive: "Ẩn khỏi danh sách"
-            unarchive: "Hiện ra danh sách"
+            product_count: "Số sản phẩm"
             delete: "Xóa chuyên mục"
-            delete_confirm: "Bạn có chắc muốn xóa?"
             name: "Tên chuyên mục"
-            status: "Trạng thái"
-            creator: "Người tạo"
-            created_at: "Ngày tạo"
           list:
             delete: "Xóa chuyên mục"
-            delete_confirm: "Bạn có chắc muốn xóa?"
+            product_count: "Số sản phẩm"
             name: "Tên chuyên mục"
-            status: "Trạng thái"
-            creator: "Người tạo"
-            created_at: "Ngày tạo"
-            actions: "Thao tác"
-            archived: "Đã ẩn"
-            active: "Đang hiển thị"
-            edit: "Cập nhật"
             no_matching_records_found: "Danh sách chuyên mục hiện tại đang trống."
           new:
             categories: "Tất cả chuyên mục"
             create: "Thêm chuyên mục"
           edit:
             categories: "Tất cả chuyên mục"
-            edit: "Cập nhật chuyên mục"
+            create: "Thêm chuyên mục"
           form:
             name: "Tên chuyên mục"
             create: "Thêm chuyên mục cha"
             choose_parent_category: "Chọn chuyên mục cha"
             parent_category: "Chuyên mục cha"
-            submit: "Lưu"
-            cancel: "Hủy"
         properties:
           create:
             success: "Thêm thuộc tính thành công."
@@ -113,8 +99,6 @@ vi:
             edit: "Cập nhật thuộc tính"
           form:
             name: "Tên thuộc tính"
-            submit: "Lưu"
-            cancel: "Hủy"
         products:
           create:
             success: "Thêm sản phẩm thành công."
@@ -132,25 +116,11 @@ vi:
             category: "Chuyên mục"
             products: "Tất cả sản phẩm"
             create: "Thêm sản phẩm"
-            archive: "Ẩn khỏi danh sách"
-            unarchive: "Hiện ra danh sách"
-            delete: "Xóa sản phẩm"
-            delete_confirm: "Bạn có chắc muốn xóa?"
             name: "Tên sản phẩm"
-            status: "Trạng thái"
-            creator: "Người tạo"
-            created_at: "Ngày tạo"
+            product_count: "Số sản phẩm"
           list:
             delete: "Xóa sản phẩm"
-            delete_confirm: "Bạn có chắc muốn xóa?"
             name: "Tên sản phẩm"
-            status: "Trạng thái"
-            creator: "Người tạo"
-            created_at: "Ngày tạo"
-            actions: "Thao tác"
-            archived: "Đã ẩn"
-            active: "Đang hiển thị"
-            edit: "Cập nhật"
             no_matching_records_found: "Danh sách sản phẩm hiện tại đang trống."
           new:
             products: "Tất cả sản phẩm"
@@ -186,9 +156,7 @@ vi:
             description_for_quotations: "Description for Quotations"
             description_for_pickings: "Description for Pickings"
             enter_quotations_description: "This note will be displayed on the quotations."
-            enter_pickings_description: "Description for Pickings (Rack, Row and Case Information)"
-            submit: "Lưu"
-            cancel: "Hủy"      
+            enter_pickings_description: "Description for Pickings (Rack, Row and Case Information)"   
   activerecord:
     errors:
       models:
