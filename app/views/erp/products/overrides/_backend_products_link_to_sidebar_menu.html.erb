@@ -1,4 +1,4 @@
-<li class="nav-item <%= "active open" if ["erp/products/backend/products","erp/products/backend/categories"].include?(params[:controller]) %>">
+<li class="nav-item <%= "active open" if ["erp/products/backend/products","erp/products/backend/categories","erp/products/backend/manufacturings"].include?(params[:controller]) %>">
     <a href="javascript:;" class="nav-link nav-toggle">
         <i class="fa fa-list"></i>
         <span class="title"><%= t('.inventory') %></span>
@@ -18,6 +18,11 @@
         <li class="nav-item">
             <a href="<%= erp_products.backend_categories_path %>" class="nav-link">
                 <span class="title"><%= t('.categories') %></span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="<%= erp_products.backend_manufacturings_path %>" class="nav-link">
+                <span class="title"><%= t('.manufacturings') %></span>
             </a>
         </li>
     </ul>
