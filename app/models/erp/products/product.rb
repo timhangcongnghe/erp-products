@@ -16,7 +16,7 @@ module Erp::Products
     after_initialize :init
     
     def init
-			6.times do
+			4.times do
 				self.product_images.build
 			end
 		end
