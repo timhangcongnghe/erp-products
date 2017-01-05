@@ -34,6 +34,12 @@ Erp::Products::Engine.routes.draw do
           get 'dataselect'
         end
       end
+      resources :manufacturings do
+				collection do
+					post 'list'
+          delete 'delete_all'
+				end
+			end
     end
 	end
 end
