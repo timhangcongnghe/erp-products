@@ -5,6 +5,11 @@
                 <th width='1%'>
                     <%= erp_datalist_check_all %>
                 </th>
+                <% if get_columns(params).include?("code") %>
+                    <th>
+                        <%= t('.code') %>
+                    </th>
+                <% end %>
                 <% if get_columns(params).include?("name") %>
                     <th class="sortable" sort-by='erp_products_products.name'>
                         <%= t('.name') %>
@@ -13,6 +18,30 @@
                 <% if get_columns(params).include?("category") %>
                     <th>
                         <%= t('.category') %>
+                    </th>
+                <% if get_columns(params).include?("price") %>
+                    <th>
+                        <%= t('.price') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("cost") %>
+                    <th>
+                        <%= t('.cost') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("on_hand") %>
+                    <th>
+                        <%= t('.on_hand') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("stock_min") %>
+                    <th>
+                        <%= t('.stock_min') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("stock_max") %>
+                    <th>
+                        <%= t('.stock_max') %>
                     </th>
                 <% end %>
                 <% if get_columns(params).include?("status") %>
@@ -39,11 +68,29 @@
                     <td>
                         <%= erp_datalist_check_row(id: product.id) %>
                     </td>
+                    <% if get_columns(params).include?("code") %>
+                        <td><%= product.code %></td>
+                    <% end %>
                     <% if get_columns(params).include?("name") %>
                         <td><%= link_to product.name, erp_products.edit_backend_product_path(product) %></td>
                     <% end %>
                     <% if get_columns(params).include?("category") %>
                         <td><%= product.category_name %></td>
+                    <% end %>
+                    <% if get_columns(params).include?("price") %>
+                        <td><%= product.price %></td>
+                    <% end %>
+                    <% if get_columns(params).include?("cost") %>
+                        <td><%= product.cost %></td>
+                    <% end %>
+                    <% if get_columns(params).include?("on_hand") %>
+                        <td><%= product.on_hand %></td>
+                    <% end %>
+                    <% if get_columns(params).include?("stock_min") %>
+                        <td><%= product.stock_min %></td>
+                    <% end %>
+                    <% if get_columns(params).include?("stock_max") %>
+                        <td><%= product.stock_max %></td>
                     <% end %>
                     <% if get_columns(params).include?("status") %>
                     <td>
