@@ -20,7 +20,7 @@ class CreateErpProductsProducts < ActiveRecord::Migration[5.0]
       t.boolean :point_enabled, default: true
       t.boolean :archived, default: false
       t.references :category, index: true, references: :erp_products_categories
-      #t.references :unit, index: true, references: :erp_products_units
+      t.references :unit, index: true, references: :erp_products_units
       t.references :creator, index: true, references: :erp_users
 
       t.timestamps
