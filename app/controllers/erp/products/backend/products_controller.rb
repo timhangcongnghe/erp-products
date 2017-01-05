@@ -6,6 +6,7 @@ module Erp
       class ProductsController < Erp::Backend::BackendController
         before_action :set_product, only: [:archive, :unarchive, :show, :edit, :update, :destroy]
         before_action :set_products, only: [:delete_all, :archive_all, :unarchive_all]
+        
         # GET /products
         def index
         end
@@ -183,12 +184,12 @@ module Erp
           # Only allow a trusted parameter "white list" through.
           def product_params
             params.fetch(:product, {}).permit(
-              :name, :can_be_sold, :can_be_purchased,
-              :product_type, :barcode, :sale_price, :cost, :weight, :volume,
-              :customer_lead_time, :internal_reference, :quotations_description,
-              :pickings_description, :category_id, :invoicing_policy, customer_tax_ids: [], vendor_tax_ids: [],
+              :name, :can_be_sold, :can_be_purchased, :product_type, :barcode,
+              :price, :cost, :on_hand, :weight, :volume, :is_for_pos, :unit_id,
+              :stock_min, :stock_max, :description, :internal_note, :point_enabled, :category_id,
+              customer_tax_ids: [], vendor_tax_ids: [],
               :product_images_attributes => [ :id, :image_url, :image_url_cache, :product_id, :_destroy ]
-            )
+              )
           end
       end
     end
