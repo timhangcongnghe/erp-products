@@ -25,11 +25,6 @@ module Erp
         def new
           @product = Product.new
           @product.products_properties << ProductsProperty.new
-          
-          # default product images
-          6.times do
-            @product.product_images.build
-          end
         end
       
         # GET /products/1/edit
@@ -56,10 +51,6 @@ module Erp
             end            
           else
             # default product images
-            times = 6 - @product.product_images.count
-            times.times do
-              @product.product_images.build
-            end
             render :new
           end
         end
@@ -77,10 +68,6 @@ module Erp
               redirect_to erp_products.edit_backend_product_path(@product), notice: t('.success')
             end            
           else
-            times = 6 - @product.product_images.count
-            times.times do
-              @product.product_images.build
-            end
             render :edit
           end
         end

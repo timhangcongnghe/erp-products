@@ -13,6 +13,14 @@ module Erp::Products
     has_many :product_images, class_name: 'Erp::Products::ProductImage'
     accepts_nested_attributes_for :product_images, :reject_if => lambda { |a| a[:image_url].blank? and a[:image_url_cache].blank? }, :allow_destroy => true
     
+    after_initialize :init
+    
+    def init
+			6.times do
+				self.product_images.build
+			end
+		end
+    
     # class const
     TYPE_CONSUMABLE = 'consumable'
     TYPE_SERVICE = 'service'
