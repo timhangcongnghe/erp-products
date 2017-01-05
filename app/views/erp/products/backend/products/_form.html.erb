@@ -166,10 +166,24 @@
                                     <h4>Đơn vị tính</h4>
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <%= erp_form_control("text", {
+                                            <%= erp_form_control("dataselect", {
                                                 name: 'product[unit_id]',
-                                                value: '',
-                                                label: t('.unit_base')
+                                                value: product.unit_id,
+                                                text: '',
+                                                placeholder: t('.choose_unit_base'),
+                                                label: t('.unit_base'),
+                                                url: erp_products.dataselect_backend_units_path(format: 'json'),
+                                                create: {
+                                                    url: erp_products.new_backend_unit_path,
+                                                    title: t('.create_unit'),
+                                                    container_selector: '.new_unit',
+                                                    input_selector: 'input[name="unit[name]"]'
+                                                },
+                                                edit: {
+                                                    url: erp_products.edit_backend_unit_path(id: ':value'),
+                                                    title: t('.edit_unit'),
+                                                    container_selector: '.edit_unit',
+                                                }
                                             }) %>
                                         </div>
                                     </div>
