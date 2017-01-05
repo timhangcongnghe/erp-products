@@ -1,0 +1,116 @@
+<%= form_for([erp_products, :backend, manufacturing], html: {multipart: true}) do |f| %>
+    <div class="form-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <%= erp_form_control("text", {
+                                    name: 'manufacturing[code]',
+                                    value: manufacturing.code,
+                                    label: t('.code'),
+                                    help: "Mã phiếu sản xuất sẽ tạo tự động nếu bỏ trống.",
+                                    placeholder: "Mã phiếu tự động"
+                                }) %>
+                                <%= erp_form_control("datetime", {
+                                    name: 'manufacturing[manufacturing_date]',
+                                    value: manufacturing.display_date_time,
+                                    label: t('.date')
+                                }) %>
+                                <%= erp_form_control("dataselect", {
+                                    name: 'manufacturing[product_id]',
+                                    value: manufacturing.product_id,
+                                    text: manufacturing.product_name,
+                                    placeholder: t('.choose_product'),
+                                    label: t('.product'),
+                                    url: erp_products.dataselect_backend_products_path(format: 'json'),
+                                    required: true,
+                                    errors: manufacturing.errors.full_messages_for(:product_id)
+                                }) %>
+                                <%= erp_form_control("number", {
+                                    name: 'manufacturing[quantity]',
+                                    value: manufacturing.quantity,
+                                    label: t('.quantity'),
+                                    help: "Chọn số lượng cần sản xuất",
+                                    placeholder: "Số lượng mặt hàng",
+                                    required: true,
+                                    errors: manufacturing.errors.full_messages_for(:quantity)
+                                }) %>
+                            </div>
+                            <div class="col-md-6">
+                                <%= erp_form_control("dataselect", {
+                                    name: 'manufacturing[responsible_id]',
+                                    value: manufacturing.responsible_id,
+                                    text: manufacturing.responsible_name,
+                                    placeholder: t('.choose_responsible'),
+                                    label: t('.responsible'),
+                                    url: erp_contacts.dataselect_backend_contacts_path(format: 'json'),
+                                    create: {
+                                        url: erp.new_backend_user_url,
+                                        title: t('.create'),
+                                        container_selector: '.new_user',
+                                        input_selector: 'input[name="user[name]"]'
+                                    }
+                                }) %>
+                                <%= erp_form_control("textarea", {
+                                    name: 'manufacturing[note]',
+                                    value: manufacturing.note,
+                                    label: t('.internal_note'),
+                                    placeholder: "Ghi chú..."
+                                }) %>
+                                <%= erp_form_control('checkbox', {
+                                    name: 'product[is_auto_reduce_part_quantity]',
+                                    id: 'is_auto_reduce_part_quantity',
+                                    value: manufacturing.is_auto_reduce_part_quantity,
+                                    not_selected_value: 'false',
+                                    options: [{value: 'true', text: t('.is_auto_reduce_part_quantity')}]
+                                }) %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">
+                        <div class="tabbable-custom ">
+                            <ul class="nav nav-tabs ">
+                                <li class="active">
+                                    <a href="#tab_5_1" data-toggle="tab"> <%= t('.general_information') %> </a>
+                                </li>
+                                <li>
+                                    <a href="#tab_5_2" data-toggle="tab"> <%= t('.inventory') %> </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_5_1">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            tab 1 - left
+                                        </div>
+                                        <div class="col-md-6">
+                                            tab 1 - right
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab_5_2">
+                                    tab 2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%= erp_component('button/save', {
+        text: t('.submit')
+    }) %>
+    <%= erp_component('button/cancel', {
+        text: t('.cancel'),
+        href: erp_products.backend_manufacturings_path
+    }) %>
+<% end %>

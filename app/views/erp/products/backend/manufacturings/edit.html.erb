@@ -1,0 +1,29 @@
+<% content_for :title do %>
+    <%= t('.edit') %>
+<% end %>
+
+<% content_for :page_title do %>    
+    <a href="<%= erp_products.backend_manufacturings_path %>">
+    <i class="fa fa-list"></i> <%= t('.manufacturings') %>
+    </a> / <%= @manufacturing.code %>
+<% end %>
+
+<% content_for :page_toolbar do %>
+    <%= erp_component('button/create', {
+        text: t('.create'),
+        href: erp_products.new_backend_manufacturing_path,
+        class: 'btn-sm'
+    }) %>
+<% end %>
+
+<div class="row">
+    <div class="col-md-12">
+        <% if @manufacturing.errors.any? %>
+            <%= erp_form_control("form_error_message") %>
+        <% end %>
+        
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <%= render 'form', manufacturing: @manufacturing %>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>

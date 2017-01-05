@@ -1,0 +1,109 @@
+<div class="">
+    <table class="table table-advance table-hover table-striped table-checkable order-column" id="">
+        <thead>
+            <tr>
+                <th width='1%'>
+                    <%= erp_datalist_check_all %>
+                </th>
+                <% if get_columns(params).include?("manufacturing_code") %>
+                    <th>
+                        <%= t('.manufacturing_code') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("manufacturing_date") %>
+                    <th>
+                        <%= t('.manufacturing_date') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("product_code") %>
+                    <th>
+                        <%= t('.product_code') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("product") %>
+                    <th>
+                        <%= t('.product') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("quantity") %>
+                    <th>
+                        <%= t('.quantity') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("responsible") %>
+                    <th>
+                        <%= t('.responsible') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("status") %>
+                    <th>
+                        <%= t('.status') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("creator") %>
+                    <th>
+                        <%= t('.creator') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("created_at") %>
+                    <th>
+                        <%= t('.created_at') %>
+                    </th>
+                <% end %>
+                <th width="7%"><%= t('.actions') %></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if @manufacturings.each do |manufacturing| %>
+                <tr class="odd gradeX">
+                    <td>
+                        <%= erp_datalist_check_row(id: manufacturing.id) %>
+                    </td>
+                    <% if get_columns(params).include?("manufacturing_code") %>
+                        <td><%= manufacturing.code %></td>
+                    <% end %>
+                    <% if get_columns(params).include?("manufacturing_date") %>
+                        <td><%= manufacturing.manufacturing_date.present? ? manufacturing.manufacturing_date.in_time_zone("Asia/Bangkok").strftime("%d/%m/%Y %I:%M") : '' %></td>
+                    <% end %>
+                    <% if get_columns(params).include?("product_code") %>
+                        <td></td>
+                    <% end %>
+                    <% if get_columns(params).include?("product") %>
+                        <td><%= manufacturing.product_name %></td>
+                    <% end %>
+                    <% if get_columns(params).include?("quantity") %>
+                        <td><%= manufacturing.quantity %></td>
+                    <% end %>
+                    <% if get_columns(params).include?("responsible") %>
+                        <td><%= link_to manufacturing.responsible_name,'' %></td>
+                    <% end %>
+                    <% if get_columns(params).include?("status") %>
+                        <td></td>
+                    <% end %>
+                    <% if get_columns(params).include?("creator") %>
+                        <td></td>
+                    <% end %>
+                    <% if get_columns(params).include?("created_at") %>
+                        <td class="center"><%= manufacturing.created_at.strftime("%d/%m/%Y") %></td>
+                    <% end %>
+                    <td>
+                        <%= erp_datalist_row_actions(
+                            [
+                                {
+                                    text: '<i class="fa fa-edit"></i> '+t('.edit'),
+                                    href: erp_products.edit_backend_manufacturing_path(manufacturing)
+                                }
+                            ]
+                        ) %>
+                    </td>
+                </tr>
+            <% end.empty? %>
+                <tr>
+                    <td colspan="7"><%= t('.no_matching_records_found') %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+        
+<%= erp_datalist_pagination(@manufacturings) %>

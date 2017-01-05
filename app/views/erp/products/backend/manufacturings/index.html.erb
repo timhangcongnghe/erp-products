@@ -1,0 +1,74 @@
+<% content_for :title do %>
+    <%= t('.manufacturings') %>
+<% end %>
+
+<% content_for :page_title do %>
+    <i class="fa fa-list"></i> <%= t('.manufacturings') %>
+<% end %>
+
+<% content_for :page_toolbar do %>
+    <%= erp_component('button/create', {
+        text: t('.create'),
+        href: erp_products.new_backend_manufacturing_path,
+        class: 'btn-sm'
+    }) %>
+<% end %>
+
+<%= erp_datalist(
+    url: erp_products.list_backend_manufacturings_path,
+    keywords: [
+        {
+            text: t('.manufacturing_code'), name: 'code'
+        }
+    ],
+    actions: [
+        {
+            text: '<i class="fa fa-eye-slash"></i> '+t('.archive'),
+            url: '',
+            data_method: 'PUT'
+        },
+        {
+            text: '<i class="fa fa-eye"></i> '+t('.unarchive'),
+            url: '',
+            data_method: 'PUT'
+        },
+        {
+            divider: true
+        },
+        {
+            text: '<i class="fa fa-trash"></i> '+t('.delete'),
+            url: erp_products.delete_all_backend_manufacturings_path,
+            data_method: 'DELETE',
+            data_confirm: t('.delete_confirm')
+        }
+    ],
+    columns: [
+        {
+            text: t('.manufacturing_code'), name: 'manufacturing_code', value: true, checked: true
+        },
+        {
+            text: t('.manufacturing_date'), name: 'manufacturing_date', value: true, checked: true
+        },
+        {
+            text: t('.product_code'), name: 'product_code', value: true, checked: false
+        },
+        {
+            text: t('.product'), name: 'product', value: true, checked: true
+        },
+        {
+            text: t('.quantity'), name: 'quantity', value: true, checked: true
+        },
+        {
+            text: t('.responsible'), name: 'responsible', value: true, checked: false
+        },
+        {
+            text: t('.status'), name: 'status', value: true, checked: true
+        },
+        {
+            text: t('.creator'), name: 'creator', value: true, checked: false
+        },
+        {
+            text: t('.created_at'), name: 'created_at', value: true, checked: false
+        }
+    ]
+) %>
