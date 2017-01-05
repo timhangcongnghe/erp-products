@@ -1,0 +1,21 @@
+<%= form_for([erp_products, :backend, unit]) do |f| %>
+    <% if @unit.errors.any? %>
+        <%= erp_form_control("form_error_message") %>
+    <% end %>
+        
+    <%= erp_form_control("text", {
+        name: 'unit[name]',
+        value: unit.name,                   
+        label: t('.name'),
+        required: true,
+        errors: unit.errors.full_messages_for(:name)
+    }) %>
+    <hr>
+    <%= erp_component('button/save', {
+        text: t('.submit')
+    }) %>
+    <%= erp_component('button/cancel', {
+        text: t('.cancel'),
+        href: erp_products.backend_units_path
+    }) %>
+<% end %>
