@@ -73,7 +73,7 @@ module Erp
     
           # Only allow a trusted parameter "white list" through.
           def products_unit_params
-            params.fetch(:products_unit, {}).permit(:conversion_value)
+            params.fetch(:products_unit, {}).permit(:unit_id, :product_id, :conversion_value, :price, :code)
           end
       end
     end
