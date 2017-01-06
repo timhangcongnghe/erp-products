@@ -14,8 +14,9 @@ module Erp::Products
     end
     
     has_many :products_properties, class_name: 'Erp::Products::ProductsProperty'
-    has_many :products_units, class_name: 'Erp::Products::ProductsUnit'
     has_and_belongs_to_many :properties, class_name: 'Erp::Products::Property', :join_table => 'erp_products_products_properties'
+    has_many :products_units, class_name: 'Erp::Products::ProductsUnit'
+    accepts_nested_attributes_for :products_units, :reject_if => lambda { |a| a[:unit_id].blank? or a[:conversion_value].blank? }, :allow_destroy => true
     has_many :product_images, class_name: 'Erp::Products::ProductImage'
     accepts_nested_attributes_for :product_images, :reject_if => lambda { |a| a[:image_url].blank? and a[:image_url_cache].blank? }, :allow_destroy => true
     
@@ -148,6 +149,11 @@ module Erp::Products
     # category name
     def category_name
 			category.present? ? category.name : ''
+		end
+    
+    # unit name
+    def unit_name
+			unit.present? ? unit.name : ''
 		end
     
     # safe properties values from hash
