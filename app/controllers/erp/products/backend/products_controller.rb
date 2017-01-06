@@ -82,6 +82,8 @@ module Erp
           else
             render :edit
           end
+          puts "==============="
+          puts @product.errors.to_json
         end
       
         # DELETE /products/1
@@ -198,7 +200,8 @@ module Erp
               :price, :cost, :on_hand, :weight, :volume, :is_for_pos, :unit_id,
               :stock_min, :stock_max, :description, :internal_note, :point_enabled, :category_id,              
               customer_tax_ids: [], vendor_tax_ids: [],
-              :product_images_attributes => [ :id, :image_url, :image_url_cache, :product_id, :_destroy ]
+              :product_images_attributes => [ :id, :image_url, :image_url_cache, :product_id, :_destroy ],
+              :products_units_attributes => [ :id, :unit_id, :conversion_value, :price, :code, :product_id, :_destroy ],
               )
           end
       end
