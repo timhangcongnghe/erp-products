@@ -48,7 +48,9 @@
     <div class="col-md-2">
         <%= erp_form_control("text", {
             name: '',
-            value: @products_unit.code
+            value: @products_unit.code,
+            help: t('.help_product_code'),
+            placeholder: t('.placeholder_product_code')
         }) %>
     </div>
     <div class="col-md-2">        
