@@ -109,6 +109,10 @@ vi:
             success: "Xóa sản phẩm thành công."
           delete_all:
             success: "Xóa sản phẩm được chọn thành công."
+          archive:
+            success: "Sản phẩm đã được ẩn"
+          unarchive:
+            success: "Sản phẩm đã được hiển thị"
           archive_all:
             success: "Ẩn sản phẩm được chọn thành công."
           unarchive_all:
@@ -128,9 +132,11 @@ vi:
             status: "Trạng thái"
             creator: "Người tạo"
             created_at: "Ngày tạo"
+            archived: "Sản phẩm đang ẩn"
           list:
             delete: "Xóa sản phẩm"
             name: "Tên sản phẩm"
+            category: "Chuyên mục"
             code: "Mã sản phẩm"
             price: "Giá bán"
             cost: "Giá vốn"
@@ -144,6 +150,9 @@ vi:
             archived: "Đã ẩn"
             active: "Đang hiển thị"
             edit: "Cập nhật"
+            archive: "Ẩn thông tin"
+            unarchive: "Hiện thông tin"
+            delete_confirm: "Bạn có chắc muốn xóa?"
             no_matching_records_found: "Danh sách sản phẩm hiện tại đang trống."
           new:
             products: "Tất cả sản phẩm"
@@ -151,8 +160,12 @@ vi:
           edit:
             products: "Tất cả sản phẩm"
             edit: "Cập nhật sản phẩm"
+            create: "Thêm sản phẩm"
           form:
             name: "Tên sản phẩm"
+            placeholder_product_code: "Mã hàng tự động"
+            help_product_code: "Mã hàng hóa là thông tin duy nhất. Nếu bạn bỏ trống, mã sẽ được tạo tự động"
+            images: "Hình ảnh sản phẩm"
             can_be_sold: "Có thể được bán"
             can_be_purchased: "Có thể được mua"
             general_information: "Thông tin chung"
@@ -185,15 +198,15 @@ vi:
             enter_internal_note: "Mẫu ghi chú (dùng cho hóa đơn, đặt hàng)"
             create_category: "Thêm chuyên mục"
             code: "Mã sản phẩm"
-            unit_base: "Đơn vị cơ bản"
-            choose_unit_base: "Chọn đơn vị (VD: hộp, lốc, thùng,...)"
+            base_unit: "Đơn vị cơ bản"
+            choose_base_unit: "Chọn đơn vị (VD: hộp, lốc, thùng,...)"
             create_unit: "Thêm đơn vị tính"
             edit_unit: "Cập nhật đơn vị tính"
             help_stock_min: "Số lượng tồn tối thiểu của 1 sản phẩm (Hệ thống sẽ dựa vào thông tin này để cảnh báo tồn kho tối thiểu)"
             help_stock_max: "Số lượng tồn tối đa của 1 sản phẩm (Hệ thống sẽ dựa vào thông tin này để cảnh báo khi hàng hóa vượt mức tồn cho phép)"
             help_weight: "Sử dụng để tính trọng lượng khi giao hàng"
             help_volume: "Sử dụng để tính trọng lượng khi giao hàng"
-            is_for_pos: "Bán hàng trực tiếp - POS"
+            is_for_pos: "Được bán trực tiếp trên POS"
             point_enabled: "Tích điểm"
             
             description_for_quotations: "Description for Quotations"
@@ -202,6 +215,9 @@ vi:
             enter_pickings_description: "Description for Pickings (Rack, Row and Case Information)"
             submit: "Lưu"
             cancel: "Hủy"
+            add_unit: "Thêm đơn vị"
+            add_property: "Thêm thuộc tính"
+            add_part: "Thêm thành phần"
         manufacturings:
           create:
             success: "Thêm phiếu sản xuất thành công."
@@ -287,6 +303,8 @@ vi:
             price: "Giá bán"
             product_code: "Mã hàng hóa"
             choose_unit: "Chọn đơn vị quy đổi"
+            placeholder_product_code: "Mã hàng tự động"
+            help_product_code: "Là mã của sản phẩm đã được quy đổi"
   activerecord:
     errors:
       models:
