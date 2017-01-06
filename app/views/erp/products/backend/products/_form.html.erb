@@ -200,8 +200,8 @@
                                         add_button: t('.add'),
                                         partial: 'erp/products/backend/products/form_property',
                                         partial_url: erp_products.form_property_backend_products_path,
-                                        items: @product.products_properties,
-                                        item: :products_property
+                                        items: @product.products_values_attributes,
+                                        item: :products_values_attribute
                                     }) %>
                                 </div>
                                 <div class="tab-pane" id="tab_5_3">

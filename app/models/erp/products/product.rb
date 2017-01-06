@@ -1,5 +1,7 @@
 module Erp::Products
   class Product < ApplicationRecord
+		attr_accessor :products_values_attributes
+		
     validates :name, :category_id, :presence => true
     
     belongs_to :creator, class_name: "Erp::User"
@@ -13,8 +15,30 @@ module Erp::Products
     
     has_many :products_properties, class_name: 'Erp::Products::ProductsProperty'
     has_many :products_units, class_name: 'Erp::Products::ProductsUnit'
+    has_and_belongs_to_many :properties, class_name: 'Erp::Products::Property', :join_table => 'erp_products_products_properties'
     has_many :product_images, class_name: 'Erp::Products::ProductImage'
     accepts_nested_attributes_for :product_images, :reject_if => lambda { |a| a[:image_url].blank? and a[:image_url_cache].blank? }, :allow_destroy => true
+    
+    has_many :products_values, through: :products_properties
+    
+    after_initialize :set_attr
+
+		def set_attr
+			@products_values_attributes = []
+			if !self.properties.empty?
+				self.properties.each do |property|
+					@products_values_attributes << {1 => {
+							:property_id => property.id,
+							:ids => self.values_by_property(property).map {|pv| pv.properties_value_id},
+							:names => []
+					}}
+				end
+			end
+		end
+		
+		def values_by_property(property)
+			self.products_properties.where(property_id: property.id).first.products_values #values.joins(:products_property).where(erp_products_products_properties: {property_id: property.id})
+		end
     
     # class const
     TYPE_CONSUMABLE = 'consumable'
@@ -125,5 +149,33 @@ module Erp::Products
     def category_name
 			category.present? ? category.name : ''
 		end
+    
+    # safe properties values from hash
+    def update_products_values
+      # save new properties values
+      self.products_values_attributes.each do |pv|
+				pv = pv[1]
+        properties_value_ids = pv['ids'].select {|id| id.to_i > 0} if pv['ids'].present?
+        if pv['names'].present?
+					pv['names'].each do |name|
+						name = name.strip
+						if name.present?
+							properties_value = PropertiesValue.create_if_not_exists(pv['property_id'], name)
+							properties_value_ids << properties_value.id
+						end
+					end
+				end
+        
+        # add values to product properties
+        properties_value_ids.each do |pv_id|
+					property = Property.find(pv['property_id'])
+          self.properties << property if !self.properties.include?(property)
+          products_property = self.products_properties.where(property_id: property.id).first
+          products_value = ProductsValue.create(properties_value_id: pv_id, products_property_id: products_property.id)
+        end
+      end
+    end
+    
+    # get products values names array
   end
 end

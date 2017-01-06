@@ -43,7 +43,11 @@ module Erp
         def create
           @product = Product.new(product_params)
           @product.creator = current_user
+          @product.products_values_attributes = params.to_unsafe_hash[:products_values_attributes]
+          
           if @product.save
+            @product.update_products_values
+            
             if request.xhr?
               render json: {
                 status: 'success',
@@ -61,7 +65,11 @@ module Erp
       
         # PATCH/PUT /products/1
         def update
+          @product.products_values_attributes = params.to_unsafe_hash[:products_values_attributes]
+          
           if @product.update(product_params)
+            @product.update_products_values
+            
             if request.xhr?
               render json: {
                 status: 'success',
@@ -170,8 +178,7 @@ module Erp
         end
         
         def form_property
-          @products_property = ProductsProperty.new
-          render partial: params[:partial], locals: { products_property: @products_property, uid: helpers.unique_id() }
+          render partial: params[:partial], locals: { products_values_attribute: {1 => {}}, uid: helpers.unique_id() }
         end
       
         private
@@ -189,7 +196,7 @@ module Erp
             params.fetch(:product, {}).permit(
               :name, :can_be_sold, :can_be_purchased, :product_type, :barcode,
               :price, :cost, :on_hand, :weight, :volume, :is_for_pos, :unit_id,
-              :stock_min, :stock_max, :description, :internal_note, :point_enabled, :category_id,
+              :stock_min, :stock_max, :description, :internal_note, :point_enabled, :category_id,              
               customer_tax_ids: [], vendor_tax_ids: [],
               :product_images_attributes => [ :id, :image_url, :image_url_cache, :product_id, :_destroy ]
               )
