@@ -119,12 +119,14 @@
                                     text: '<i class="fa fa-eye-slash"></i> '+t('.archive'),
                                     url: erp_products.archive_backend_products_path(id: product),
                                     data_method: 'PUT',
+                                    hide: product.archived,
                                     class: 'ajax-link'
                                 },
                                 {
                                     text: '<i class="fa fa-eye"></i> '+t('.unarchive'),
                                     url: erp_products.unarchive_backend_products_path(id: product),
                                     data_method: 'PUT',
+                                    hide: !product.archived,
                                     class: 'ajax-link'
                                 },
                                 {
