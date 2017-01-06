@@ -156,6 +156,7 @@ vi:
             can_be_sold: "Có thể được bán"
             can_be_purchased: "Có thể được mua"
             general_information: "Thông tin chung"
+            properties: "Thuộc tính"
             inventory: "Kiểm kê hàng hóa"
             sales: "Điều kiện bán hàng"
             invoicing: "Hóa đơn"
@@ -184,6 +185,10 @@ vi:
             enter_internal_note: "Mẫu ghi chú (dùng cho hóa đơn, đặt hàng)"
             create_category: "Thêm chuyên mục"
             code: "Mã sản phẩm"
+            unit_base: "Đơn vị cơ bản"
+            choose_unit_base: "Chọn đơn vị (VD: hộp, lốc, thùng,...)"
+            create_unit: "Thêm đơn vị tính"
+            edit_unit: "Cập nhật đơn vị tính"
             help_stock_min: "Số lượng tồn tối thiểu của 1 sản phẩm (Hệ thống sẽ dựa vào thông tin này để cảnh báo tồn kho tối thiểu)"
             help_stock_max: "Số lượng tồn tối đa của 1 sản phẩm (Hệ thống sẽ dựa vào thông tin này để cảnh báo khi hàng hóa vượt mức tồn cho phép)"
             help_weight: "Sử dụng để tính trọng lượng khi giao hàng"
@@ -258,6 +263,24 @@ vi:
             responsible: "Chịu trách nhiệm"
             choose_responsible: "Chọn người phụ trách chính công việc sản xuất"
             choose_product: "Chọn hàng hóa cần sản xuất"
+        units:
+          create:
+            success: "Thêm đơn vị thành công."
+          update:
+            success: "Cập nhật đơn vị thành công."
+          destroy:
+            success: "Xóa đơn vị thành công."
+          form:
+            name: "Tên đơn vị"
+            submit: "Lưu"
+            cancel: "Hủy"
+        products_units:
+          form_line:
+            unit_name: "Tên đơn vị"
+            conversion_value: "Giá trị quy đổi"
+            price: "Giá bán"
+            product_code: "Mã hàng hóa"
+            choose_unit: "Chọn đơn vị quy đổi"
   activerecord:
     errors:
       models:
