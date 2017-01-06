@@ -13,7 +13,7 @@
                                     help: "Mã phiếu sản xuất sẽ tạo tự động nếu bỏ trống.",
                                     placeholder: "Mã phiếu tự động"
                                 }) %>
-                                <%= erp_form_control("datetime", {
+                                <%= erp_form_control("date", {
                                     name: 'manufacturing[manufacturing_date]',
                                     value: manufacturing.display_date_time,
                                     label: t('.date')
@@ -79,25 +79,31 @@
                         <div class="tabbable-custom ">
                             <ul class="nav nav-tabs ">
                                 <li class="active">
-                                    <a href="#tab_5_1" data-toggle="tab"> <%= t('.general_information') %> </a>
+                                    <a href="#tab_5_1" data-toggle="tab"> <%= t('.consumed_materials') %> </a>
                                 </li>
                                 <li>
-                                    <a href="#tab_5_2" data-toggle="tab"> <%= t('.inventory') %> </a>
+                                    <a href="#tab_5_2" data-toggle="tab"> <%= t('.finished_products') %> </a>
+                                </li>
+                                <li>
+                                    <a href="#tab_5_3" data-toggle="tab"> <%= t('.miscellaneous') %> </a>
                                 </li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tab_5_1">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            tab 1 - left
-                                        </div>
-                                        <div class="col-md-6">
-                                            tab 1 - right
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                                 <div class="tab-pane" id="tab_5_2">
-                                    tab 2
+                                    
+                                </div>
+                                <div class="tab-pane" id="tab_5_3">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label><%= t('.availability') %></label>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>None</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
