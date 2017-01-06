@@ -14,10 +14,11 @@
 </div>
 <div class="row">
     <div class="col-md-4">
+        <input type="hidden" name="product[products_units_attributes][<%= uid %>][id]" value="<%= products_unit.id %>">        
         <%= erp_form_control("dataselect", {
-            name: 'product[unit_id]',
-            value: '',
-            text: '',
+            name: 'product[products_units_attributes][' + uid + '][unit_id]',
+            value: products_unit.unit_id,
+            text: products_unit.unit_name,
             placeholder: t('.choose_unit'),
             url: erp_products.dataselect_backend_units_path(format: 'json'),
             create: {
@@ -35,20 +36,23 @@
     </div>
     <div class="col-md-2">
         <%= erp_form_control("text", {
-            name: '',
-            value: @products_unit.conversion_value
+            name: 'product[products_units_attributes][' + uid + '][conversion_value]',
+            value: products_unit.conversion_value,
+            text: products_unit.conversion_value
         }) %>
     </div>
     <div class="col-md-2">
         <%= erp_form_control("text", {
-            name: '',
-            value: @products_unit.price
+            name: 'products_units_attributes[' + uid + '][price]',
+            value: products_unit.price,
+            text: products_unit.price
         }) %>
     </div>
     <div class="col-md-2">
         <%= erp_form_control("text", {
-            name: '',
-            value: @products_unit.code,
+            name: 'product[products_units_attributes][' + uid + '][code]',
+            value: products_unit.code,
+            text: products_unit.code,
             help: t('.help_product_code'),
             placeholder: t('.placeholder_product_code')
         }) %>
