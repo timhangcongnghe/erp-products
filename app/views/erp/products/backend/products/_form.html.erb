@@ -187,11 +187,13 @@
                                             }) %>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            
-                                        </div>
-                                    </div>
+                                    <%= erp_form_control("addableform", {
+                                        add_button: t('.add_unit'),
+                                        partial: 'erp/products/backend/products_units/form_line',
+                                        partial_url: erp_products.form_line_backend_products_units_path,
+                                        items: @product.products_units,
+                                        item: :products_unit
+                                    }) %>
                                 </div>
                                 <div class="tab-pane" id="tab_5_2">
                                     <%= erp_form_control("addableform", {
