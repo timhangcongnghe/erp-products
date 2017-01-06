@@ -12,6 +12,7 @@ module Erp::Products
     end
     
     has_many :products_properties, class_name: 'Erp::Products::ProductsProperty'
+    has_many :products_units, class_name: 'Erp::Products::ProductsUnit'
     has_many :product_images, class_name: 'Erp::Products::ProductImage'
     accepts_nested_attributes_for :product_images, :reject_if => lambda { |a| a[:image_url].blank? and a[:image_url_cache].blank? }, :allow_destroy => true
     
