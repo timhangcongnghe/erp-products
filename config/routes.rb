@@ -40,6 +40,16 @@ Erp::Products::Engine.routes.draw do
           delete 'delete_all'
 				end
 			end
+      resources :units do
+        collection do
+          get 'dataselect'
+        end
+      end
+      resources :products_units do
+				collection do
+          get 'form_line'
+				end
+			end
     end
 	end
 end
