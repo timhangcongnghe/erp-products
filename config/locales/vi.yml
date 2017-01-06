@@ -263,6 +263,12 @@ vi:
             responsible: "Chịu trách nhiệm"
             choose_responsible: "Chọn người phụ trách chính công việc sản xuất"
             choose_product: "Chọn hàng hóa cần sản xuất"
+            consumed_materials: "Nguyên liệu tiêu thụ"
+            finished_products: "Sản phẩm hoàn thành"
+            miscellaneous: "Linh tinh khác"
+            availability: "Có thể dùng được"
+            submit: "Lưu"
+            cancel: "Hủy"
         units:
           create:
             success: "Thêm đơn vị thành công."
