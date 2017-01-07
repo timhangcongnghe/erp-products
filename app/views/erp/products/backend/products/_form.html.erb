@@ -114,6 +114,26 @@
                                 <div class="tab-pane active" id="tab_5_1">
                                     <div class="row">
                                         <div class="col-md-6">
+                                            <%= erp_form_control("number", {
+                                                name: 'product[price]',
+                                                value: product.price,
+                                                label: t('.sale_price'),
+                                                help: t('.help_price')
+                                            }) %>
+                                            <%= erp_form_control("number", {
+                                                name: 'product[cost]',
+                                                value: product.cost,
+                                                label: t('.cost'),
+                                                help: t('.help_cost')
+                                            }) %>
+                                            <%= erp_form_control("number", {
+                                                name: 'product[on_hand]',
+                                                value: product.on_hand,
+                                                label: t('.on_hand'),
+                                                help: t('.help_on_hand')
+                                            }) %>
+                                        </div>
+                                        <div class="col-md-6">
                                             <%= erp_form_control("dataselect", {
                                                 name: 'product[category_id]',
                                                 value: product.category_id,
@@ -138,24 +158,8 @@
                                             <%= erp_form_control("text", {
                                                 name: 'product[barcode]',
                                                 value: product.barcode,
-                                                label: t('.barcode')
-                                            }) %>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <%= erp_form_control("text", {
-                                                name: 'product[price]',
-                                                value: product.price,
-                                                label: t('.sale_price')
-                                            }) %>
-                                            <%= erp_form_control("number", {
-                                                name: 'product[cost]',
-                                                value: product.cost,
-                                                label: t('.cost')
-                                            }) %>
-                                            <%= erp_form_control("text", {
-                                                name: 'product[on_hand]',
-                                                value: product.on_hand,
-                                                label: t('.on_hand')
+                                                label: t('.barcode'),
+                                                help: t('.help_barcode')
                                             }) %>
                                         </div>
                                     </div>
