@@ -98,13 +98,16 @@
                                     <a href="#tab_5_2" data-toggle="tab"> <%= t('.properties') %> </a>
                                 </li>
                                 <li>
-                                    <a href="#tab_5_3" data-toggle="tab"> <%= t('.inventory') %> </a>
+                                    <a href="#tab_5_3" data-toggle="tab"> <%= t('.products_units') %> </a>
                                 </li>
                                 <li>
-                                    <a href="#tab_5_4" data-toggle="tab"> <%= t('.invoicing') %> </a>
+                                    <a href="#tab_5_4" data-toggle="tab"> <%= t('.inventory') %> </a>
                                 </li>
                                 <li>
-                                    <a href="#tab_5_5" data-toggle="tab"> <%= t('.notes') %> </a>
+                                    <a href="#tab_5_5" data-toggle="tab"> <%= t('.invoicing') %> </a>
+                                </li>
+                                <li>
+                                    <a href="#tab_5_6" data-toggle="tab"> <%= t('.notes') %> </a>
                                 </li>
                             </ul>
                             <div class="tab-content">
@@ -162,8 +165,17 @@
                                             }) %>
                                         </div>
                                     </div>
-                                    
-                                    <h4>Đơn vị tính</h4>
+                                </div>
+                                <div class="tab-pane" id="tab_5_2">
+                                    <%= erp_form_control("addableform", {
+                                        add_button: t('.add_property'),
+                                        partial: 'erp/products/backend/products/form_property',
+                                        partial_url: erp_products.form_property_backend_products_path,
+                                        items: @product.products_values_attributes,
+                                        item: :products_values_attribute
+                                    }) %>
+                                </div>
+                                <div class="tab-pane" id="tab_5_3">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <%= erp_form_control("dataselect", {
@@ -195,16 +207,7 @@
                                         item: :products_unit
                                     }) %>
                                 </div>
-                                <div class="tab-pane" id="tab_5_2">
-                                    <%= erp_form_control("addableform", {
-                                        add_button: t('.add_property'),
-                                        partial: 'erp/products/backend/products/form_property',
-                                        partial_url: erp_products.form_property_backend_products_path,
-                                        items: @product.products_values_attributes,
-                                        item: :products_values_attribute
-                                    }) %>
-                                </div>
-                                <div class="tab-pane" id="tab_5_3">
+                                <div class="tab-pane" id="tab_5_4">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <%= erp_form_control("number", {
@@ -222,7 +225,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane" id="tab_5_4">
+                                <div class="tab-pane" id="tab_5_5">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <%= erp_form_control("dataselect", {
@@ -258,7 +261,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane" id="tab_5_5">
+                                <div class="tab-pane" id="tab_5_6">
                                     <h4>Định mức tồn</h4>
                                     <div class="row">
                                         <div class="col-md-6">
