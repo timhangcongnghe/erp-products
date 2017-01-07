@@ -170,6 +170,7 @@ vi:
             can_be_purchased: "Có thể được mua"
             general_information: "Thông tin chung"
             properties: "Thuộc tính"
+            products_units: "Đơn vị tính"
             inventory: "Kiểm kê hàng hóa"
             sales: "Điều kiện bán hàng"
             invoicing: "Hóa đơn"
@@ -206,6 +207,10 @@ vi:
             help_stock_max: "Số lượng tồn tối đa của 1 sản phẩm (Hệ thống sẽ dựa vào thông tin này để cảnh báo khi hàng hóa vượt mức tồn cho phép)"
             help_weight: "Sử dụng để tính trọng lượng khi giao hàng"
             help_volume: "Sử dụng để tính trọng lượng khi giao hàng"
+            help_price: "Giá bán của sản phẩm"
+            help_cost: "Giá vốn là giá nhập từ nhà cung cấp"
+            help_on_hand: "Số lượng tồn kho của sản phẩm"
+            help_barcode: "Số mã vạch in trên bao bì sản phẩm (Dùng cho máy quét mã vạch)"
             is_for_pos: "Được bán trực tiếp trên POS"
             point_enabled: "Tích điểm"
             
