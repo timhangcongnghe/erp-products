@@ -46,16 +46,6 @@ module Erp::Products
     TYPE_SERVICE = 'service'
     TYPE_PRODUCT = 'product'
     
-    # get type options for product
-    def self.get_product_type_options()
-      [
-				{text: '',value: false},
-        {text: I18n.t('.consumable'), value: 'consumable'},
-        {text: I18n.t('.service'), value: 'service'},
-        {text: I18n.t('.product'), value: 'product'}
-      ]
-    end
-    
     # Filters
     def self.filter(query, params)
       params = params.to_unsafe_hash

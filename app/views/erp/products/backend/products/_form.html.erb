@@ -135,12 +135,6 @@
                                                 required: true,
                                                 errors: product.errors.full_messages_for(:category_id)
                                             }) %>
-                                            <%= erp_form_control('select', {
-                                                label: t('.product_type'),
-                                                name: 'product[product_type]',
-                                                value: product.product_type,
-                                                options: Erp::Products::Product.get_product_type_options()
-                                            }) %>
                                             <%= erp_form_control("text", {
                                                 name: 'product[barcode]',
                                                 value: product.barcode,

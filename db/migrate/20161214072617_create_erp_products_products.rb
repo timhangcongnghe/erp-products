@@ -3,7 +3,6 @@ class CreateErpProductsProducts < ActiveRecord::Migration[5.0]
     create_table :erp_products_products do |t|
       t.string :name
       t.string :code
-      t.string :product_type
       t.string :barcode
       t.decimal :price, default: 1.0
       t.decimal :cost, default: 0.0
