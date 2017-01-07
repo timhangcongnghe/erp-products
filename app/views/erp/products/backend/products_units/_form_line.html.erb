@@ -14,7 +14,8 @@
 </div>
 <div class="row">
     <div class="col-md-4">
-        <input type="hidden" name="product[products_units_attributes][<%= uid %>][id]" value="<%= products_unit.id %>">        
+        <input type="hidden" name="product[products_units_attributes][<%= uid %>][id]" value="<%= products_unit.id %>">
+        <input type="hidden" name="product[products_units_attributes][<%= uid %>][_destroy]" value="">
         <%= erp_form_control("dataselect", {
             name: 'product[products_units_attributes][' + uid + '][unit_id]',
             value: products_unit.unit_id,
@@ -59,6 +60,7 @@
     </div>
     <div class="col-md-2">        
         <%= erp_form_control("addableform_remove_button", {
+            is_nested_form: true
         }) %>
     </div>
 </div>
