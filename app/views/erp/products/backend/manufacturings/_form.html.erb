@@ -45,6 +45,7 @@
                                     text: manufacturing.responsible_name,
                                     placeholder: t('.choose_responsible'),
                                     label: t('.responsible'),
+                                    help: t('.help_responsible'),
                                     url: erp_contacts.dataselect_backend_contacts_path(format: 'json'),
                                     create: {
                                         url: erp.new_backend_user_url,
@@ -64,7 +65,8 @@
                                     id: 'is_auto_reduce_part_quantity',
                                     value: manufacturing.is_auto_reduce_part_quantity,
                                     not_selected_value: 'false',
-                                    options: [{value: 'true', text: t('.is_auto_reduce_part_quantity')}]
+                                    options: [{value: 'true', text: t('.is_auto_reduce_part_quantity')}],
+                                    help: t('.help_is_auto_reduce_part_quantity')
                                 }) %>
                             </div>
                         </div>
