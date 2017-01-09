@@ -17,7 +17,8 @@
                                     name: 'product[name]',
                                     value: product.name,
                                     label: t('.name'),
-                                    placeholder: "Nhập tên sản phẩm",
+                                    help: t('.help_product_name'),
+                                    placeholder: t('.placeholder_product_name'),
                                     required: true,
                                     errors: product.errors.full_messages_for(:name)
                                 }) %>
@@ -66,7 +67,8 @@
                                             id: 'product_is_for_pos',
                                             value: product.is_for_pos,
                                             not_selected_value: 'false',
-                                            options: [{value: 'true', text: t('.is_for_pos')}]
+                                            options: [{value: 'true', text: t('.is_for_pos')}],
+                                            help: t('.help_is_for_pos')
                                         }) %>
                                     </div>
                                     <div class="col-md-6">
@@ -140,6 +142,7 @@
                                                 text: product.category_name,
                                                 placeholder: t('.choose_category'),
                                                 label: t('.category'),
+                                                help: t('.help_category'),
                                                 url: erp_products.dataselect_backend_categories_path(format: 'json'),
                                                 create: {
                                                     url: erp_products.new_backend_category_path,
@@ -182,6 +185,7 @@
                                                 text: product.unit_name,
                                                 placeholder: t('.choose_base_unit'),
                                                 label: t('.base_unit'),
+                                                help: t('.help_base_unit'),
                                                 url: erp_products.dataselect_backend_units_path(format: 'json'),
                                                 create: {
                                                     url: erp_products.new_backend_unit_path,
@@ -231,6 +235,7 @@
                                                 values: (product.customer_taxes.map {|tax| {text: tax.name, value: tax.id}}),
                                                 multiple: true,
                                                 label: t('.customer_taxes'),
+                                                help: t('.help_customer_taxes'),
                                                 placeholder: t('.choose_taxes'),
                                                 url: erp_taxes.dataselect_backend_taxes_path(format: 'json', scope: 'sales'),
                                                 create: {
@@ -247,6 +252,7 @@
                                                 values: (product.vendor_taxes.map {|tax| {text: tax.name, value: tax.id}}),
                                                 multiple: true,
                                                 label: t('.vendor_taxes'),
+                                                help: t('.help_vendor_taxes'),
                                                 placeholder: t('.choose_taxes'),
                                                 url: erp_taxes.dataselect_backend_taxes_path(format: 'json', scope: 'purchases'),
                                                 create: {
