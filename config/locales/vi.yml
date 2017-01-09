@@ -201,6 +201,7 @@ vi:
             choose_base_unit: "Chọn đơn vị (VD: hộp, lốc, thùng,...)"
             create_unit: "Thêm đơn vị tính"
             edit_unit: "Cập nhật đơn vị tính"
+            create_tax: "Thêm thông tin thuế"
             placeholder_product_code: "Nhập mã sản phẩm"
             placeholder_product_name: "Nhập tên sản phẩm"
             help_product_code: "Mã sản phẩm là duy nhất. Mã sẽ tạo tự động nếu bỏ trống"
