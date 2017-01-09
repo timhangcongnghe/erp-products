@@ -239,9 +239,9 @@
                                                 placeholder: t('.choose_taxes'),
                                                 url: erp_taxes.dataselect_backend_taxes_path(format: 'json', scope: 'sales'),
                                                 create: {
-                                                    url: erp_taxes.new_backend_tax_path,
-                                                    title: t('.create'),
-                                                    container_selector: '.new_customer_tax',
+                                                    url: erp_taxes.new_backend_tax_path(scope: 'sales'),
+                                                    title: t('.create_tax'),
+                                                    container_selector: '.new_tax',
                                                     input_selector: 'input[name="tax[name]"]'
                                                 }
                                             }) %>
@@ -256,9 +256,9 @@
                                                 placeholder: t('.choose_taxes'),
                                                 url: erp_taxes.dataselect_backend_taxes_path(format: 'json', scope: 'purchases'),
                                                 create: {
-                                                    url: erp_taxes.new_backend_tax_path,
-                                                    title: t('.create'),
-                                                    container_selector: '.new_vendor_tax',
+                                                    url: erp_taxes.new_backend_tax_path(scope: 'purchases'),
+                                                    title: t('.create_tax'),
+                                                    container_selector: '.new_tax',
                                                     input_selector: 'input[name="tax[name]"]'
                                                 }
                                             }) %>
