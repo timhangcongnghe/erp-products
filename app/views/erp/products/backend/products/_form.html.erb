@@ -22,7 +22,7 @@
                                     required: true,
                                     errors: product.errors.full_messages_for(:name)
                                 }) %>
-                                <div class="row">
+                                <div class="row form-control-mb-0">
                                     <div class="col-md-6">
                                         <%= erp_form_control('checkbox', {
                                             name: 'product[can_be_sold]',
@@ -42,24 +42,6 @@
                                         }) %>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-7">
-                                <%= erp_form_control("images", {
-                                    name: 'product[product_images_attributes][__index__][image_url]',
-                                    name_cache: 'product[product_images_attributes][__index__][image_url_cache]',
-                                    id_name: 'product[product_images_attributes][__index__][id]',
-                                    destroy_name: 'product[product_images_attributes][__index__][_destroy]',
-                                    label: t('.images'),
-                                    width: 130,
-                                    height: 130,
-                                    images: @product.product_images,
-                                    origin_attribute: 'image_url',
-                                    image_attribute: 'image_url.small',
-                                    image_thumb: :small,
-                                    hidden_params: [
-                                        {name: 'product[product_images_attributes][__index__][product_id]', value: @product.id}
-                                    ]
-                                }) %>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <%= erp_form_control('checkbox', {
@@ -82,6 +64,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-7">
+                                <%= erp_form_control("images", {
+                                    name: 'product[product_images_attributes][__index__][image_url]',
+                                    name_cache: 'product[product_images_attributes][__index__][image_url_cache]',
+                                    id_name: 'product[product_images_attributes][__index__][id]',
+                                    destroy_name: 'product[product_images_attributes][__index__][_destroy]',
+                                    label: t('.images'),
+                                    width: 130,
+                                    height: 130,
+                                    images: @product.product_images,
+                                    origin_attribute: 'image_url',
+                                    image_attribute: 'image_url.small',
+                                    image_thumb: :small,
+                                    hidden_params: [
+                                        {name: 'product[product_images_attributes][__index__][product_id]', value: @product.id}
+                                    ]
+                                }) %>                                
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -89,216 +89,212 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="portlet light bordered">
-                    <div class="portlet-body form">
-                        <div class="tabbable-custom ">
-                            <ul class="nav nav-tabs ">
-                                <li class="active">
-                                    <a href="#tab_5_1" data-toggle="tab"> <%= t('.general_information') %> </a>
-                                </li>
-                                <li>
-                                    <a href="#tab_5_2" data-toggle="tab"> <%= t('.properties') %> </a>
-                                </li>
-                                <li>
-                                    <a href="#tab_5_3" data-toggle="tab"> <%= t('.products_units') %> </a>
-                                </li>
-                                <li>
-                                    <a href="#tab_5_4" data-toggle="tab"> <%= t('.inventory') %> </a>
-                                </li>
-                                <li>
-                                    <a href="#tab_5_5" data-toggle="tab"> <%= t('.invoicing') %> </a>
-                                </li>
-                                <li>
-                                    <a href="#tab_5_6" data-toggle="tab"> <%= t('.notes') %> </a>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="tab_5_1">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <%= erp_form_control("number", {
-                                                name: 'product[price]',
-                                                value: product.price,
-                                                label: t('.sale_price'),
-                                                help: t('.help_price')
-                                            }) %>
-                                            <%= erp_form_control("number", {
-                                                name: 'product[cost]',
-                                                value: product.cost,
-                                                label: t('.cost'),
-                                                help: t('.help_cost')
-                                            }) %>
-                                            <%= erp_form_control("number", {
-                                                name: 'product[on_hand]',
-                                                value: product.on_hand,
-                                                label: t('.on_hand'),
-                                                help: t('.help_on_hand')
-                                            }) %>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <%= erp_form_control("dataselect", {
-                                                name: 'product[category_id]',
-                                                value: product.category_id,
-                                                text: product.category_name,
-                                                placeholder: t('.choose_category'),
-                                                label: t('.category'),
-                                                help: t('.help_category'),
-                                                url: erp_products.dataselect_backend_categories_path(format: 'json'),
-                                                create: {
-                                                    url: erp_products.new_backend_category_path,
-                                                    title: t('.create_category'),
-                                                    container_selector: '.new_category',
-                                                    input_selector: 'input[name="category[name]"]'
-                                                },
-                                                edit: {
-                                                    url: erp_products.edit_backend_category_path(id: ':value'),
-                                                    title: t('.edit_category'),
-                                                    container_selector: '.edit_category',
-                                                },
-                                                required: true,
-                                                errors: product.errors.full_messages_for(:category_id)
-                                            }) %>
-                                            <%= erp_form_control("text", {
-                                                name: 'product[barcode]',
-                                                value: product.barcode,
-                                                label: t('.barcode'),
-                                                help: t('.help_barcode')
-                                            }) %>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="tab_5_2">
-                                    <%= erp_form_control("addableform", {
-                                        add_button: t('.add_property'),
-                                        partial: 'erp/products/backend/products/form_property',
-                                        partial_url: erp_products.form_property_backend_products_path,
-                                        items: @product.products_values_attributes,
-                                        item: :products_values_attribute
+                <div class="tabbable-custom ">
+                    <ul class="nav nav-tabs ">
+                        <li class="active">
+                            <a href="#tab_5_1" data-toggle="tab"> <%= t('.general_information') %> </a>
+                        </li>
+                        <li>
+                            <a href="#tab_5_2" data-toggle="tab"> <%= t('.properties') %> </a>
+                        </li>
+                        <li>
+                            <a href="#tab_5_3" data-toggle="tab"> <%= t('.products_units') %> </a>
+                        </li>
+                        <li>
+                            <a href="#tab_5_4" data-toggle="tab"> <%= t('.inventory') %> </a>
+                        </li>
+                        <li>
+                            <a href="#tab_5_5" data-toggle="tab"> <%= t('.invoicing') %> </a>
+                        </li>
+                        <li>
+                            <a href="#tab_5_6" data-toggle="tab"> <%= t('.notes') %> </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_5_1">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <%= erp_form_control("number", {
+                                        name: 'product[price]',
+                                        value: product.price,
+                                        label: t('.sale_price'),
+                                        help: t('.help_price')
+                                    }) %>
+                                    <%= erp_form_control("number", {
+                                        name: 'product[cost]',
+                                        value: product.cost,
+                                        label: t('.cost'),
+                                        help: t('.help_cost')
+                                    }) %>
+                                    <%= erp_form_control("number", {
+                                        name: 'product[on_hand]',
+                                        value: product.on_hand,
+                                        label: t('.on_hand'),
+                                        help: t('.help_on_hand')
                                     }) %>
                                 </div>
-                                <div class="tab-pane" id="tab_5_3">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <%= erp_form_control("dataselect", {
-                                                name: 'product[unit_id]',
-                                                value: product.unit_id,
-                                                text: product.unit_name,
-                                                placeholder: t('.choose_base_unit'),
-                                                label: t('.base_unit'),
-                                                help: t('.help_base_unit'),
-                                                url: erp_products.dataselect_backend_units_path(format: 'json'),
-                                                create: {
-                                                    url: erp_products.new_backend_unit_path,
-                                                    title: t('.create_unit'),
-                                                    container_selector: '.new_unit',
-                                                    input_selector: 'input[name="unit[name]"]'
-                                                },
-                                                edit: {
-                                                    url: erp_products.edit_backend_unit_path(id: ':value'),
-                                                    title: t('.edit_unit'),
-                                                    container_selector: '.edit_unit',
-                                                }
-                                            }) %>
-                                        </div>
-                                    </div>
-                                    <%= erp_form_control("addableform", {
-                                        add_button: t('.add_unit'),
-                                        partial: 'erp/products/backend/products_units/form_line',
-                                        partial_url: erp_products.form_line_backend_products_units_path,
-                                        items: @product.products_units,
-                                        item: :products_unit
+                                <div class="col-md-6">
+                                    <%= erp_form_control("dataselect", {
+                                        name: 'product[category_id]',
+                                        value: product.category_id,
+                                        text: product.category_name,
+                                        placeholder: t('.choose_category'),
+                                        label: t('.category'),
+                                        help: t('.help_category'),
+                                        url: erp_products.dataselect_backend_categories_path(format: 'json'),
+                                        create: {
+                                            url: erp_products.new_backend_category_path,
+                                            title: t('.create_category'),
+                                            container_selector: '.new_category',
+                                            input_selector: 'input[name="category[name]"]'
+                                        },
+                                        edit: {
+                                            url: erp_products.edit_backend_category_path(id: ':value'),
+                                            title: t('.edit_category'),
+                                            container_selector: '.edit_category',
+                                        },
+                                        required: true,
+                                        errors: product.errors.full_messages_for(:category_id)
                                     }) %>
-                                </div>
-                                <div class="tab-pane" id="tab_5_4">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <%= erp_form_control("number", {
-                                                name: 'product[weight]',
-                                                value: product.weight,
-                                                label: t('.weight'),
-                                                help: t('.help_weight')
-                                            }) %>
-                                            <%= erp_form_control("number", {
-                                                name: 'product[volume]',
-                                                value: product.volume,
-                                                label: t('.volume'),
-                                                help: t('.help_volume')
-                                            }) %>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="tab_5_5">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <%= erp_form_control("dataselect", {
-                                                name: 'product[customer_tax_ids][]',
-                                                values: (product.customer_taxes.map {|tax| {text: tax.name, value: tax.id}}),
-                                                multiple: true,
-                                                label: t('.customer_taxes'),
-                                                help: t('.help_customer_taxes'),
-                                                placeholder: t('.choose_taxes'),
-                                                url: erp_taxes.dataselect_backend_taxes_path(format: 'json', scope: 'sales'),
-                                                create: {
-                                                    url: erp_taxes.new_backend_tax_path(scope: 'sales'),
-                                                    title: t('.create_tax'),
-                                                    container_selector: '.new_tax',
-                                                    input_selector: 'input[name="tax[name]"]'
-                                                }
-                                            }) %>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <%= erp_form_control("dataselect", {
-                                                name: 'product[vendor_tax_ids][]',
-                                                values: (product.vendor_taxes.map {|tax| {text: tax.name, value: tax.id}}),
-                                                multiple: true,
-                                                label: t('.vendor_taxes'),
-                                                help: t('.help_vendor_taxes'),
-                                                placeholder: t('.choose_taxes'),
-                                                url: erp_taxes.dataselect_backend_taxes_path(format: 'json', scope: 'purchases'),
-                                                create: {
-                                                    url: erp_taxes.new_backend_tax_path(scope: 'purchases'),
-                                                    title: t('.create_tax'),
-                                                    container_selector: '.new_tax',
-                                                    input_selector: 'input[name="tax[name]"]'
-                                                }
-                                            }) %>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="tab_5_6">
-                                    <h4>Định mức tồn</h4>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <%= erp_form_control("number", {
-                                                name: 'product[stock_min]',
-                                                value: product.stock_min,
-                                                label: t('.stock_min'),
-                                                help: t('.help_stock_min')
-                                            }) %>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <%= erp_form_control("number", {
-                                                name: 'product[stock_max]',
-                                                value: product.stock_max,
-                                                label: t('.stock_max'),
-                                                help: t('.help_stock_max')
-                                            }) %>
-                                        </div>
-                                    </div>
-                                    <h4><%= t('.description') %></h4>
-                                    <%= erp_form_control("textarea", {
-                                        name: 'product[description]',
-                                        value: product.description,
-                                        placeholder: t('.enter_description')
-                                    }) %>
-                                    <h4><%= t('.internal_note') %></h4>
-                                    <%= erp_form_control("textarea", {
-                                        name: 'product[internal_note]',
-                                        value: product.internal_note,
-                                        placeholder: t('.enter_internal_note')
+                                    <%= erp_form_control("text", {
+                                        name: 'product[barcode]',
+                                        value: product.barcode,
+                                        label: t('.barcode'),
+                                        help: t('.help_barcode')
                                     }) %>
                                 </div>
                             </div>
+                        </div>
+                        <div class="tab-pane" id="tab_5_2">
+                            <%= erp_form_control("addableform", {
+                                add_button: t('.add_property'),
+                                partial: 'erp/products/backend/products/form_property',
+                                partial_url: erp_products.form_property_backend_products_path,
+                                items: @product.products_values_attributes,
+                                item: :products_values_attribute
+                            }) %>
+                        </div>
+                        <div class="tab-pane" id="tab_5_3">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <%= erp_form_control("dataselect", {
+                                        name: 'product[unit_id]',
+                                        value: product.unit_id,
+                                        text: product.unit_name,
+                                        placeholder: t('.choose_base_unit'),
+                                        label: t('.base_unit'),
+                                        help: t('.help_base_unit'),
+                                        url: erp_products.dataselect_backend_units_path(format: 'json'),
+                                        create: {
+                                            url: erp_products.new_backend_unit_path,
+                                            title: t('.create_unit'),
+                                            container_selector: '.new_unit',
+                                            input_selector: 'input[name="unit[name]"]'
+                                        },
+                                        edit: {
+                                            url: erp_products.edit_backend_unit_path(id: ':value'),
+                                            title: t('.edit_unit'),
+                                            container_selector: '.edit_unit',
+                                        }
+                                    }) %>
+                                </div>
+                            </div>
+                            <%= erp_form_control("addableform", {
+                                add_button: t('.add_unit'),
+                                partial: 'erp/products/backend/products_units/form_line',
+                                partial_url: erp_products.form_line_backend_products_units_path,
+                                items: @product.products_units,
+                                item: :products_unit
+                            }) %>
+                        </div>
+                        <div class="tab-pane" id="tab_5_4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <%= erp_form_control("number", {
+                                        name: 'product[weight]',
+                                        value: product.weight,
+                                        label: t('.weight'),
+                                        help: t('.help_weight')
+                                    }) %>
+                                    <%= erp_form_control("number", {
+                                        name: 'product[volume]',
+                                        value: product.volume,
+                                        label: t('.volume'),
+                                        help: t('.help_volume')
+                                    }) %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_5_5">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <%= erp_form_control("dataselect", {
+                                        name: 'product[customer_tax_ids][]',
+                                        values: (product.customer_taxes.map {|tax| {text: tax.name, value: tax.id}}),
+                                        multiple: true,
+                                        label: t('.customer_taxes'),
+                                        help: t('.help_customer_taxes'),
+                                        placeholder: t('.choose_taxes'),
+                                        url: erp_taxes.dataselect_backend_taxes_path(format: 'json', scope: 'sales'),
+                                        create: {
+                                            url: erp_taxes.new_backend_tax_path(scope: 'sales'),
+                                            title: t('.create_tax'),
+                                            container_selector: '.new_tax',
+                                            input_selector: 'input[name="tax[name]"]'
+                                        }
+                                    }) %>
+                                </div>
+                                <div class="col-md-6">
+                                    <%= erp_form_control("dataselect", {
+                                        name: 'product[vendor_tax_ids][]',
+                                        values: (product.vendor_taxes.map {|tax| {text: tax.name, value: tax.id}}),
+                                        multiple: true,
+                                        label: t('.vendor_taxes'),
+                                        help: t('.help_vendor_taxes'),
+                                        placeholder: t('.choose_taxes'),
+                                        url: erp_taxes.dataselect_backend_taxes_path(format: 'json', scope: 'purchases'),
+                                        create: {
+                                            url: erp_taxes.new_backend_tax_path(scope: 'purchases'),
+                                            title: t('.create_tax'),
+                                            container_selector: '.new_tax',
+                                            input_selector: 'input[name="tax[name]"]'
+                                        }
+                                    }) %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_5_6">
+                            <h4>Định mức tồn</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <%= erp_form_control("number", {
+                                        name: 'product[stock_min]',
+                                        value: product.stock_min,
+                                        label: t('.stock_min'),
+                                        help: t('.help_stock_min')
+                                    }) %>
+                                </div>
+                                <div class="col-md-6">
+                                    <%= erp_form_control("number", {
+                                        name: 'product[stock_max]',
+                                        value: product.stock_max,
+                                        label: t('.stock_max'),
+                                        help: t('.help_stock_max')
+                                    }) %>
+                                </div>
+                            </div>
+                            <h4><%= t('.description') %></h4>
+                            <%= erp_form_control("textarea", {
+                                name: 'product[description]',
+                                value: product.description,
+                                placeholder: t('.enter_description')
+                            }) %>
+                            <h4><%= t('.internal_note') %></h4>
+                            <%= erp_form_control("textarea", {
+                                name: 'product[internal_note]',
+                                value: product.internal_note,
+                                placeholder: t('.enter_internal_note')
+                            }) %>
                         </div>
                     </div>
                 </div>

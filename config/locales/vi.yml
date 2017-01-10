@@ -219,7 +219,7 @@ vi:
             help_customer_taxes: "Là thuế phải nộp, áp dụng cho người mua"
             help_vendor_taxes: "Là thuế được khấu trừ, áp dụng cho người bán, đại lý hoặc đối tác khác.."
             help_is_for_pos: "Sản phẩm sẽ xuất hiện trên màn hình bán hàng (màn hình có sử dụng máy POS)"
-            is_for_pos: "Được bán trực tiếp trên POS"
+            is_for_pos: "Bán trên POS"
             point_enabled: "Tích điểm"
             
             description_for_quotations: "Description for Quotations"

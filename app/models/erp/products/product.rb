@@ -13,11 +13,11 @@ module Erp::Products
 			has_and_belongs_to_many :vendor_taxes, class_name: 'Erp::Taxes::Tax', :join_table => 'erp_products_vendor_taxes'
     end
     
-    has_many :products_properties, class_name: 'Erp::Products::ProductsProperty'
+    has_many :products_properties, dependent: :destroy
     has_and_belongs_to_many :properties, class_name: 'Erp::Products::Property', :join_table => 'erp_products_products_properties'
-    has_many :products_units, class_name: 'Erp::Products::ProductsUnit'
+    has_many :products_units, dependent: :destroy
     accepts_nested_attributes_for :products_units, :reject_if => lambda { |a| a[:unit_id].blank? or a[:conversion_value].blank? }, :allow_destroy => true
-    has_many :product_images, class_name: 'Erp::Products::ProductImage'
+    has_many :product_images, dependent: :destroy
     accepts_nested_attributes_for :product_images, :reject_if => lambda { |a| a[:image_url].blank? and a[:image_url_cache].blank? }, :allow_destroy => true
     
     has_many :products_values, through: :products_properties
