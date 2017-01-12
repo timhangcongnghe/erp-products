@@ -2,6 +2,8 @@ vi:
   consumable: "Hàng tiêu dùng"
   service: "Dịch vụ"
   product: "Sản phẩm"
+  active: "Kích hoạt"
+  inactive: "Chưa kích hoạt"
   ordered_quantities: "Ordered quantities"
   delivered_quantities: "Delivered quantities"
   layouts:
@@ -11,6 +13,7 @@ vi:
           inventory: "Hàng hóa"
           products: "Tất cả sản phẩm"
           categories: "Tất cả chuyên mục"
+          price_lists: "Cấu hình bảng giá"
           manufacturings: "Sản xuất hàng hóa"
   erp:
     products:
@@ -320,6 +323,71 @@ vi:
             choose_unit: "Chọn đơn vị quy đổi"
             placeholder_product_code: "Mã hàng tự động"
             help_product_code: "Là mã của sản phẩm đã được quy đổi"
+        price_lists:
+          create:
+            success: "Thêm bảng giá thành công."
+          update:
+            success: "Cập nhật bảng giá thành công."
+          destroy:
+            success: "Xóa bảng giá thành công."
+          delete_all:
+            success: "Xóa bảng giá đã chọn thành công."
+          archive_all:
+            success: "Ẩn bảng giá đã chọn thành công."
+          unarchive_all:
+            success: "Hiện bảng giá đã chọn thành công."
+          index:
+            price_lists: "Danh sách bảng giá"
+            name: "Tên bảng giá"
+            valid_from: "Bắt đầu hiệu lực"
+            valid_to: "Hết hiệu lực"
+            warehouses: "Chi nhánh"
+            users: "Nhân viên bán hàng"
+            contact_groups: "Nhóm khách hàng"
+            create: "Thêm bảng giá"
+            enable: "Bật kích hoạt"
+            disable: "Hủy kích hoạt"
+            delete: "Xóa bảng giá"
+          list:
+            price_lists: "Danh sách bảng giá"
+            name: "Tên bảng giá"
+            valid_datetime: "Thời gian hiệu lực"
+            valid_from: "Áp dụng từ ngày"
+            valid_to: "Áp dụng đến ngày"
+            is_to: "đến"
+            warehouses: "Chi nhánh"
+            users: "Nhân viên bán hàng"
+            contact_groups: "Nhóm khách hàng"
+            create: "Thêm bảng giá"
+            no_matching_records_found: "Danh sách bảng giá hiện tại đang trống."
+            enable: "Bật kích hoạt"
+            disable: "Hủy kích hoạt"
+            delete: "Xóa bảng giá"
+          new:
+            price_lists: "Bảng giá"
+            create: "Thêm bảng giá"
+          edit: 
+            price_lists: "Bảng giá"
+            create: "Thêm bảng giá"
+          form:
+            price_lists: "Danh sách bảng giá"
+            name: "Tên bảng giá"
+            valid_from: "Hiệu lực từ"
+            valid_to: "Hiệu lực đến"
+            warehouses: "Chi nhánh"
+            users: "Nhân viên bán hàng"
+            contact_groups: "Nhóm khách hàng"
+            status: "Trạng thái"
+            help_valid_from: "Thời gian hiệu lực của bảng giá được bắt đầu áp dụng"
+            help_valid_to: "Thời gian hiệu lực của bảng giá kết thúc"
+            information_detail: "Thông tin chi tiết"
+            scope_of_use: "Phạm vi sử dụng"
+            warehouses: "Chi nhánh"
+            sales: "Bán hàng"
+            contact_groups: "Mua hàng"
+            list_warehouses: "Danh sách chi nhánh"
+            list_users: "Danh sách người bán"
+            list_contact_groups: "Danh sách nhóm khách hàng"
   activerecord:
     errors:
       models:
