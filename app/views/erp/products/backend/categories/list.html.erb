@@ -40,7 +40,7 @@
                         <%= erp_datalist_check_row(id: category.id) %>
                     </td>
                     <% if get_columns(params).include?("name") %>
-                        <td><%= link_to category.full_name, erp_products.edit_backend_category_path(category) %></td>
+                        <td><%= link_to category.full_name, erp_products.edit_backend_category_path(category), class: 'title' %></td>
                     <% end %>
                     <% if get_columns(params).include?("product_count") %>
                         <td><%= category.product_count %></td>
@@ -48,9 +48,13 @@
                     <% if get_columns(params).include?("status") %>
                     <td>
                         <% if category.archived == true %>
-                        <span class="label label-sm label-danger"><%= t('archived') %></span>
+                            <%= erp_component('label/danger', {
+                                text: t('archived')
+                            }) %>                            
                         <% else %>
-                        <span class="label label-sm label-success"><%= t('active') %></span>
+                            <%= erp_component('label/success', {
+                                text: t('active')
+                            }) %>
                         <% end %> 
                     </td>
                     <% end %>
@@ -60,7 +64,7 @@
                     <% if get_columns(params).include?("created_at") %>
                         <td><%= category.created_at.strftime("%d/%m/%Y") %></td>
                     <% end %>
-                    <td>
+                    <td class="text-right">
                         <%= erp_datalist_row_actions(
                             [
                                 {

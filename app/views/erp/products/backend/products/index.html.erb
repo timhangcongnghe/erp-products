@@ -9,7 +9,8 @@
 <% content_for :page_toolbar do %>
     <%= erp_component('button/create', {
         text: t('.create'),
-        href: erp_products.new_backend_product_path
+        href: erp_products.new_backend_product_path,
+        class: 'btn-noborder'
     }) %>
 <% end %>
 

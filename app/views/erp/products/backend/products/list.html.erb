@@ -64,7 +64,7 @@
             </tr>
         </thead>
         <tbody>
-            <% if @products.each do |product| %>
+            <% @products.each do |product| %>
                 <tr class="odd gradeX">
                     <td>
                         <%= erp_datalist_check_row(id: product.id) %>
@@ -142,14 +142,13 @@
                             ]
                         ) %>
                     </td>
-                </tr>
-            <% end.empty? %>
-                <tr>
-                    <td colspan="7"><%= t('.no_matching_records_found') %></td>
-                </tr>
+                </tr>            
             <% end %>
         </tbody>
     </table>
+    <% if @products.empty? %>
+        <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
+    <% end %>
 </div>
         
 <%= erp_datalist_pagination(@products) %>
