@@ -9,7 +9,6 @@ module Erp
     
         # GET /price_lists
         def index
-          @price_lists = PriceList.all
         end
         
         # POST /price_lists/list
@@ -18,7 +17,13 @@ module Erp
           
           render layout: nil
         end
-    
+        
+        # GET /price_lists/1
+        # GET /price_lists/1.json
+        def show
+          @products = Product.search(params).paginate(:page => params[:page], :per_page => 10)
+        end
+        
         # GET /price_lists/new
         def new
           @price_list = PriceList.new
@@ -28,7 +33,7 @@ module Erp
             render '_form', layout: nil, locals: {price_list: @price_list}
           end
         end
-    
+        
         # GET /price_lists/1/edit
         def edit
         end
@@ -55,9 +60,6 @@ module Erp
               render :new
             end            
           end
-          
-          puts "-------------------"
-          puts @price_list.errors.to_json
         end
     
         # PATCH/PUT /price_lists/1
@@ -75,8 +77,6 @@ module Erp
           else
             render :edit
           end
-          puts "-------------------"
-          puts @price_list.errors.to_json
         end
     
         # DELETE /price_lists/1
