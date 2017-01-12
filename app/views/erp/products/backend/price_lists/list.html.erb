@@ -49,13 +49,53 @@
             </tr>
         </thead>
         <tbody>
+            <tr class="odd gradeX">
+                <td></td>
+                <% if get_columns(params).include?("name") %>
+                    <td><%= link_to t('.general_price_list'), '', class: "tooltips", 'data-original-title': t('.view_detail'), 'data-container': "body" %></td>
+                <% end %>
+                <% if get_columns(params).include?("valid_datetime") %>
+                    <td></td>
+                <% end %>
+                <% if get_columns(params).include?("warehouses") %>
+                    <td><%= t('all') %></td>
+                <% end %>
+                <% if get_columns(params).include?("users") %>
+                    <td><%= t('all') %></td>
+                <% end %>
+                <% if get_columns(params).include?("contact_groups") %>
+                    <td><%= t('all') %></td>
+                <% end %>
+                <% if get_columns(params).include?("status") %>
+                <td><span class="label label-sm label-success"><%= t('active') %></span></td>
+                <% end %>
+                <% if get_columns(params).include?("creator") %>
+                    <td></td>
+                <% end %>
+                <% if get_columns(params).include?("created_at") %>
+                    <td></td>
+                <% end %>
+                <td>
+                    <%= erp_datalist_row_actions(
+                        [
+                            {
+                                text: '<i class="glyphicon glyphicon-list-alt"></i> '+t('.view_detail'),
+                                href: ''
+                            },
+                        ]
+                    ) %>
+                </td>
+            </tr>
             <% if @price_lists.each do |price_list| %>
                 <tr class="odd gradeX">
                     <td>
                         <%= erp_datalist_check_row(id: price_list.id) %>
                     </td>
                     <% if get_columns(params).include?("name") %>
-                        <td><%= link_to price_list.name, erp_products.edit_backend_price_list_path(price_list) %></td>
+                        <td>
+                            <%= link_to price_list.name, erp_products.backend_price_list_path(price_list),
+                            class: "tooltips", 'data-original-title': t('.view_detail'), 'data-container': "body" %>
+                        </td>
                     <% end %>
                     <% if get_columns(params).include?("valid_datetime") %>
                         <td><%= price_list.valid_from_date %>
