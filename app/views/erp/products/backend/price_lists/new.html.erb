@@ -1,0 +1,32 @@
+<% content_for :title do %>
+    <%= t('.create') %>
+<% end %>
+
+<% content_for :page_title do %>    
+    <a href="<%= erp_products.backend_price_lists_path %>">
+    <i class="fa fa-list"></i> <%= t('.price_lists') %>
+    </a> / <%= t('.create') %>
+<% end %>
+
+<% content_for :page_toolbar do %>
+    <div class="btn-group">
+        <div class="clearfix">
+        </div>
+    </div>
+<% end %>
+
+<div class="row">
+    <div class="col-md-12">
+        <% if @price_list.errors.any? %>
+            <%= erp_form_control("form_error_message") %>
+        <% end %>
+        
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-body">
+                <%= render 'form', price_list: @price_list %>
+            </div>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>

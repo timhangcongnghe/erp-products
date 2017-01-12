@@ -1,0 +1,133 @@
+<div class="">
+    <table class="table table-advance table-hover table-striped table-checkable order-column" id="">
+        <thead>
+            <tr>
+                <th width='1%'>
+                    <%= erp_datalist_check_all %>
+                </th>
+                <% if get_columns(params).include?("name") %>
+                    <th class="sortable" sort-by='erp_products_price_lists.name'>
+                        <%= t('.name') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("valid_datetime") %>
+                    <th>
+                        <%= t('.valid_datetime') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("warehouses") %>
+                    <th>
+                        <%= t('.warehouses') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("users") %>
+                    <th>
+                        <%= t('.users') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("contact_groups") %>
+                    <th>
+                        <%= t('.contact_groups') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("status") %>
+                    <th>
+                        <%= t('status') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("creator") %>
+                    <th>
+                        <%= t('creator') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("created_at") %>
+                    <th class="sortable" sort-by='erp_products_price_lists.created_at'>
+                        <%= t('created_at') %>
+                    </th>
+                <% end %>
+                <th width="7%"><%= t('actions') %></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if @price_lists.each do |price_list| %>
+                <tr class="odd gradeX">
+                    <td>
+                        <%= erp_datalist_check_row(id: price_list.id) %>
+                    </td>
+                    <% if get_columns(params).include?("name") %>
+                        <td><%= link_to price_list.name, erp_products.edit_backend_price_list_path(price_list) %></td>
+                    <% end %>
+                    <% if get_columns(params).include?("valid_datetime") %>
+                        <td><%= price_list.valid_from_date %>
+                        <%= price_list.valid_to.present? ? t('.is_to') : "" %>
+                        <%= price_list.valid_to_date %></td>
+                    <% end %>
+                    <% if get_columns(params).include?("warehouses") %>
+                        <td></td>
+                    <% end %>
+                    <% if get_columns(params).include?("users") %>
+                        <td></td>
+                    <% end %>
+                    <% if get_columns(params).include?("contact_groups") %>
+                        <td></td>
+                    <% end %>
+                    <% if get_columns(params).include?("status") %>
+                    <td>
+                        <% if price_list.active == false %>
+                        <span class="label label-sm label-danger"><%= t('inactive') %></span>
+                        <% else %>
+                        <span class="label label-sm label-success"><%= t('active') %></span>
+                        <% end %> 
+                    </td>
+                    <% end %>
+                    <% if get_columns(params).include?("creator") %>
+                        <td></td>
+                    <% end %>
+                    <% if get_columns(params).include?("created_at") %>
+                        <td><%= price_list.created_at.strftime("%d/%m/%Y") %></td>
+                    <% end %>
+                    <td>
+                        <%= erp_datalist_row_actions(
+                            [
+                                {
+                                    text: '<i class="fa fa-edit"></i> '+t('edit'),
+                                    href: erp_products.edit_backend_price_list_path(price_list)
+                                },
+                                {
+                                    text: '<i class="fa fa-toggle-on"></i> '+t('.enable'),
+                                    url: erp_products.enable_backend_price_lists_path(id: price_list),
+                                    data_method: 'PUT',
+                                    hide: price_list.active,
+                                    class: 'ajax-link'
+                                },
+                                {
+                                    text: '<i class="fa fa-toggle-off"></i> '+t('.disable'),
+                                    url: erp_products.disable_backend_price_lists_path(id: price_list),
+                                    data_method: 'PUT',
+                                    hide: !price_list.active,
+                                    class: 'ajax-link'
+                                },
+                                {
+                                    divider: true
+                                },
+                                {
+                                    text: '<i class="fa fa-trash"></i> '+t('.delete'),
+                                    url: erp_products.backend_price_list_path(price_list),
+                                    data_method: 'DELETE',
+                                    class: 'ajax-link',
+                                    data_confirm: t('delete_confirm')
+                                }
+                            ]
+                        ) %>
+                    </td>
+                </tr>
+            <% end.empty? %>
+                <tr>
+                    <td colspan="7"><%= t('.no_matching_records_found') %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+        
+<%= erp_datalist_pagination(@price_lists) %>

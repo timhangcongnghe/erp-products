@@ -1,0 +1,128 @@
+<%= form_for([erp_products, :backend, price_list]) do |f| %>    
+<div class="form-body">
+    <div class="row">
+        <div class="col-md-6">
+            <h4><%= t('.information_detail') %></h4>
+            <%= erp_form_control("text", {
+              name: 'price_list[name]',
+              value: price_list.name,                   
+              label: t('.name'),
+              required: true,
+              errors: price_list.errors.full_messages_for(:name)
+            }) %>
+            <div class="row">
+              <div class="col-md-6">
+                <%= erp_form_control("date", {
+                    name: 'price_list[valid_from]',
+                    value: price_list.valid_from,                   
+                    label: t('.valid_from'),
+                    help: t('.help_valid_from')
+                }) %>
+              </div>
+              <div class="col-md-6">
+                <%= erp_form_control("date", {
+                    name: 'price_list[valid_to]',
+                    value: price_list.valid_to,                   
+                    label: t('.valid_to'),
+                    help: t('.help_valid_to')
+                }) %>
+              </div>
+            </div>
+            <%= erp_form_control("radio", {
+                id: 'is_status',
+                name: 'price_list[active]',
+                label: t('.status'),
+                value: @price_list.active,
+                options: Erp::Products::PriceList.get_status_options()
+            }) %>
+        </div>
+        
+        <div class="col-md-6">
+            <h4><%= t('.scope_of_use') %></h4>
+            <div class="tabbable-custom ">
+                <ul class="nav nav-tabs ">
+                    <li class="active">
+                        <a href="#tab_5_1" data-toggle="tab"> <%= t('.warehouses') %> </a>
+                    </li>
+                    <li>
+                        <a href="#tab_5_2" data-toggle="tab"> <%= t('.sales') %> </a>
+                    </li>
+                    <li>
+                        <a href="#tab_5_3" data-toggle="tab"> <%= t('.contact_groups') %> </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_5_1">
+                        <%= erp_form_control("radio", {
+                            id: "is_warehouse",
+                            name: 'price_list[all_warehouses]',
+                            value: price_list.all_warehouses,
+                            options: [{text: "Toàn hệ thống",value: 'true'},{text: "Chi nhánh",value: 'false'}]
+                        }) %>
+                        <%= erp_form_control("dataselect", {
+                            name: 'price_list[warehouse_ids][]',
+                            values: (price_list.warehouses.map {|wh| {text: wh.name, value: wh.id}}),
+                            multiple: true,
+                            label: t('.list_warehouses'),
+                            url: erp_warehouses.dataselect_backend_warehouses_path(format: 'json'),
+                            create: {
+                                url: erp_warehouses.new_backend_warehouse_path(),
+                                title: t('.create_tax'),
+                                container_selector: '.new_warehouse',
+                                input_selector: 'input[name="warehouse[name]"]'
+                            }
+                        }) %>
+                    </div>
+                    <div class="tab-pane" id="tab_5_2">
+                        <%= erp_form_control("radio", {
+                            id: 'is_user',
+                            name: 'price_list[all_users]',
+                            value: @price_list.all_users,
+                            options: [{text: "Toàn bộ người bán",value: 'true'}, {text: "Người bán",value: 'false'}]
+                        }) %>
+                        <%= erp_form_control("dataselect", {
+                            name: 'price_list[price_lists_user_ids][]',
+                            values: (price_list.price_lists_users.map {|u| {text: u.name, value: u.id}}),
+                            multiple: true,
+                            label: t('.list_users'),
+                            url: erp.dataselect_backend_users_path(format: 'json'),
+                            create: {
+                                url: erp.new_backend_user_path(),
+                                title: t('.create_user'),
+                                container_selector: '.new_user',
+                                input_selector: 'input[name="user[name]"]'
+                            }
+                        }) %>
+                    </div>
+                    <div class="tab-pane" id="tab_5_3">
+                        <%= erp_form_control("radio", {
+                            id: "is_contact_group",
+                            name: 'price_list[all_contact_groups]',
+                            value: '',
+                            options: [{text: "Toàn bộ khách hàng",value: "true"},{text: "Nhóm khách hàng",value: "false"}]
+                        }) %>
+                        <%= erp_form_control("dataselect", {
+                            name: '',
+                            values: '',
+                            multiple: true,
+                            label: t('.list_contact_groups'),
+                            url: ''
+                        }) %>
+                    </div>
+                </div>
+            </div>    
+        </div>
+        
+        <div class="col-md-12">
+            
+            <%= erp_component('button/save', {
+                text: t('submit')
+            }) %>
+            <%= erp_component('button/cancel', {
+                text: t('cancel'),
+                href: erp_products.backend_price_lists_path
+            }) %>
+        </div>
+    </div>
+</div>
+<% end %>
