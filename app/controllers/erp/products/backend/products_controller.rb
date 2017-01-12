@@ -82,8 +82,6 @@ module Erp
           else
             render :edit
           end
-          puts "==============="
-          puts @product.errors.to_json
         end
       
         # DELETE /products/1
