@@ -1,4 +1,5 @@
 vi:
+  all: "Tất cả"
   consumable: "Hàng tiêu dùng"
   service: "Dịch vụ"
   product: "Sản phẩm"
@@ -339,6 +340,7 @@ vi:
           index:
             price_lists: "Danh sách bảng giá"
             name: "Tên bảng giá"
+            valid_datetime: "Thời gian hiệu lực"
             valid_from: "Bắt đầu hiệu lực"
             valid_to: "Hết hiệu lực"
             warehouses: "Chi nhánh"
@@ -360,6 +362,8 @@ vi:
             contact_groups: "Nhóm khách hàng"
             create: "Thêm bảng giá"
             no_matching_records_found: "Danh sách bảng giá hiện tại đang trống."
+            general_price_list: "Bảng giá chung"
+            view_detail: "Xem chi tiết bảng giá"
             enable: "Bật kích hoạt"
             disable: "Hủy kích hoạt"
             delete: "Xóa bảng giá"
@@ -367,6 +371,9 @@ vi:
             price_lists: "Bảng giá"
             create: "Thêm bảng giá"
           edit: 
+            price_lists: "Bảng giá"
+            create: "Thêm bảng giá"
+          show:
             price_lists: "Bảng giá"
             create: "Thêm bảng giá"
           form:
@@ -388,6 +395,12 @@ vi:
             list_warehouses: "Danh sách chi nhánh"
             list_users: "Danh sách người bán"
             list_contact_groups: "Danh sách nhóm khách hàng"
+          price_list:
+            product_code: "Mã sản phẩm"
+            name: "Tên sản phẩm"
+            cost: "Giá vốn"
+            last_price: "Giá nhập cuối"
+            new_price: "Giá mới"
   activerecord:
     errors:
       models:
