@@ -50,6 +50,17 @@ Erp::Products::Engine.routes.draw do
           get 'form_line'
 				end
 			end
+      resources :price_lists do
+				collection do
+					post 'list'
+					get 'dataselect'
+					delete 'delete_all'
+          put 'enable_all'
+          put 'disable_all'
+          put 'enable'
+          put 'disable'
+				end
+			end
     end
 	end
 end
