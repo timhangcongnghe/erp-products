@@ -3,14 +3,14 @@
 <% end %>
 
 <% content_for :page_title do %>
-    <i class="fa fa-list"></i> <%= t('.manufacturings') %>
+    <i class="fa fa-cogs"></i> <%= t('.manufacturings') %>
 <% end %>
 
 <% content_for :page_toolbar do %>
     <%= erp_component('button/create', {
         text: t('.create'),
         href: erp_products.new_backend_manufacturing_path,
-        class: 'btn-sm'
+        class: 'btn-noborder'
     }) %>
 <% end %>
 

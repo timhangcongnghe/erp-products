@@ -34,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            <% if @categories.each do |category| %>
+            <% @categories.each do |category| %>
                 <tr class="odd gradeX">
                     <td>
                         <%= erp_datalist_check_row(id: category.id) %>
@@ -97,13 +97,12 @@
                         ) %>
                     </td>
                 </tr>
-            <% end.empty? %>
-                <tr>
-                    <td colspan="7"><%= t('.no_matching_records_found') %></td>
-                </tr>
             <% end %>
         </tbody>
     </table>
+    <% if @categories.empty? %>
+        <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
+    <% end %>
 </div>
         
 <%= erp_datalist_pagination(@categories) %>

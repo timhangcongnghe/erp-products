@@ -3,13 +3,14 @@
 <% end %>
 
 <% content_for :page_title do %>
-    <i class="fa fa-list"></i> <%= t('.categories') %>
+    <i class="fa fa-folder"></i> <%= t('.categories') %>
 <% end %>
 
 <% content_for :page_toolbar do %>
     <%= erp_component('button/create', {
         text: t('.create'),
-        href: erp_products.new_backend_category_path
+        href: erp_products.new_backend_category_path,
+        class: 'btn-noborder'
     }) %>
 <% end %>
 
