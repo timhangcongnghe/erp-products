@@ -1,0 +1,44 @@
+<div class="">
+    <table class="table table-advance table-hover table-striped table-checkable order-column" id="">
+        <thead>
+            <tr>
+                <th width='1%'>
+                    <%= erp_datalist_check_all %>
+                </th>
+                <th>
+                    <%= t('.product_code') %>
+                </th>
+                <th>
+                    <%= t('.name') %>
+                </th>
+                <th>
+                    <%= t('.cost') %>
+                </th>
+                <th>
+                    <%= t('.last_price') %>
+                </th>
+                <th>
+                    <%= t('.new_price') %>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <%= if @products.each do |product| %>
+            <tr class="odd gradeX">
+                <td><%= erp_datalist_check_row() %></td>
+                <td><%= product.code %></td>
+                <td><%= product.name %></td>
+                <td><%= product.cost %></td>
+                <td></td>
+                <td>
+                    <input class="form-control input-small" type="text" name="" id="" value="<%= product.price %>">
+                </td>
+            </tr>
+            <% end.empty? %>
+                <tr>
+                    <td colspan="7"><%= t('.no_matching_records_found') %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
