@@ -31,14 +31,16 @@
     ],
     actions: [
         {
-            text: '<i class="fa fa-eye-slash"></i> '+t('.archive'),
+            text: '<i class="fa fa-ban"></i> '+t('.archive'),
             url: erp_products.archive_all_backend_products_path,
-            data_method: 'PUT'
+            data_method: 'PUT',
+            data_confirm: t('.archive_confirm')
         },
         {
-            text: '<i class="fa fa-eye"></i> '+t('.unarchive'),
+            text: '<i class="fa fa-check"></i> '+t('.unarchive'),
             url: erp_products.unarchive_all_backend_products_path,
-            data_method: 'PUT'
+            data_method: 'PUT',
+            data_confirm: t('.unarchive_confirm')
         },
         {
             divider: true
@@ -51,18 +53,6 @@
         }
     ],
     filters: [
-        {
-            text: t('.consumable'), name: 'product_type', value: Erp::Products::Product::TYPE_CONSUMABLE, checked: false
-        },
-        {
-            text: t('.service'), name: 'product_type', value: Erp::Products::Product::TYPE_SERVICE, checked: false
-        },
-        {
-            text: t('.product'), name: 'product_type', value: Erp::Products::Product::TYPE_PRODUCT, checked: false
-        },
-        {
-            divider: true
-        },
         {
             text: t('.archived'), name: 'show_archived', value: true, checked: false
         },
@@ -93,7 +83,7 @@
             text: t('.stock_max'), name: 'stock_max', value: true, checked: false
         },
         {
-            text: t('.status'), name: 'status', value: true, checked: false
+            text: t('.status'), name: 'status', value: true, checked: true
         },
         {
             text: t('.creator'), name: 'creator', value: true, checked: false
