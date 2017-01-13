@@ -75,13 +75,17 @@
                                     text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
                                     url: erp_products.archive_backend_categories_path(id: category),
                                     data_method: 'PUT',
-                                    class: 'ajax-link'
+                                    hide: category.archived,
+                                    class: 'ajax-link',
+                                    data_confirm: t('.archive_confirm')
                                 },
                                 {
                                     text: '<i class="fa fa-eye"></i> '+t('unarchive'),
                                     url: erp_products.unarchive_backend_categories_path(id: category),
                                     data_method: 'PUT',
-                                    class: 'ajax-link'
+                                    hide: !category.archived,
+                                    class: 'ajax-link',
+                                    data_confirm: t('.unarchive_confirm')
                                 },
                                 {
                                     divider: true
