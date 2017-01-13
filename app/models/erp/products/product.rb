@@ -41,11 +41,6 @@ module Erp::Products
 			self.products_properties.where(property_id: property.id).first.products_values #values.joins(:products_property).where(erp_products_products_properties: {property_id: property.id})
 		end
     
-    # class const
-    TYPE_CONSUMABLE = 'consumable'
-    TYPE_SERVICE = 'service'
-    TYPE_PRODUCT = 'product'
-    
     # Filters
     def self.filter(query, params)
       params = params.to_unsafe_hash
