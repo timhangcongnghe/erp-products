@@ -22,6 +22,7 @@ Erp::Products::Engine.routes.draw do
           put 'archive'
           put 'unarchive'
           get 'form_property'
+          get 'part_form'
         end
       end
       resources :properties do

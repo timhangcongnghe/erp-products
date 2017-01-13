@@ -109,6 +109,9 @@
                         <li>
                             <a href="#tab_5_6" data-toggle="tab"> <%= t('.notes') %> </a>
                         </li>
+                        <li>
+                            <a href="#tab_5_7" data-toggle="tab"> <%= t('.parts') %> </a>
+                        </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_5_1">
@@ -294,6 +297,42 @@
                                 name: 'product[internal_note]',
                                 value: product.internal_note,
                                 placeholder: t('.enter_internal_note')
+                            }) %>
+                        </div>
+                        <div class="tab-pane" id="tab_5_7">
+                            <%= erp_form_control("addableform", {
+                                type: 'table',
+                                add_button: t('.add'),
+                                partial: 'erp/products/backend/products/part_form',
+                                partial_url: erp_products.part_form_backend_products_path,
+                                items: [],
+                                item: :product_part,
+                                add_control_selector: "input[name='product_part_id']",
+                                add_control: erp_form_control("dataselect", {
+                                    name: 'product_part_id',
+                                    value: product.category_id,
+                                    text: product.category_name,
+                                    placeholder: t('.choose_category'),
+                                    label: t('.category'),
+                                    help: t('.help_category'),
+                                    url: erp_products.dataselect_backend_categories_path(format: 'json'),
+                                    create: {
+                                        url: erp_products.new_backend_category_path,
+                                        title: t('.create_category'),
+                                        container_selector: '.new_category',
+                                        input_selector: 'input[name="category[name]"]'
+                                    },
+                                    edit: {
+                                        url: erp_products.edit_backend_category_path(id: ':value'),
+                                        title: t('.edit_category'),
+                                        container_selector: '.edit_category',
+                                    },
+                                    required: true,
+                                    errors: product.errors.full_messages_for(:category_id)
+                                }),
+                                thead: '<th>Name</th>
+                                        <th>Quantity</th>
+                                        <th>Action</th>'
                             }) %>
                         </div>
                     </div>

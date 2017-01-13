@@ -169,6 +169,10 @@ module Erp
           end
         end
         
+        def part_form
+          render partial: params.to_unsafe_hash['partial'], locals: {}
+        end
+        
         def dataselect
           respond_to do |format|
             format.json {
