@@ -4,7 +4,7 @@
 
 <% content_for :page_title do %>    
     <a href="<%= erp_products.backend_price_lists_path %>">
-    <i class="fa fa-list"></i> <%= t('.price_lists') %>
+    <i class="fa fa-usd"></i> <%= t('.price_lists') %>
     </a> / <%= @price_list.name %>
 <% end %>
 
@@ -12,7 +12,7 @@
     <%= erp_component('button/create', {
         text: t('.create'),
         href: erp_products.new_backend_price_list_path,
-        class: 'btn-sm'
+        class: 'btn-noborder'
     }) %>
 <% end %>
 
