@@ -3,14 +3,14 @@
 <% end %>
 
 <% content_for :page_title do %>
-    <i class="fa fa-list"></i> <%= t('.price_lists') %>
+    <i class="fa fa-usd"></i> <%= t('.price_lists') %>
 <% end %>
 
 <% content_for :page_toolbar do %>
     <%= erp_component('button/create', {
         text: t('.create'),
         href: erp_products.new_backend_price_list_path,
-        class: 'btn-sm'
+        class: 'btn-noborder'
     }) %>
 <% end %>
 
