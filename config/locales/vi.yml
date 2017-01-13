@@ -33,6 +33,10 @@ vi:
             success: "Xóa chuyên mục thành công."
           delete_all:
             success: "Xóa chuyên mục được chọn thành công."
+          archive:
+            success: "Ẩn chuyên mục thành công."
+          unarchive:
+            success: "Hiện chuyên mục thành công."
           archive_all:
             success: "Ẩn chuyên mục được chọn thành công."
           unarchive_all:
@@ -44,10 +48,14 @@ vi:
             product_count: "Số sản phẩm"
             delete: "Xóa chuyên mục"
             name: "Tên chuyên mục"
+            archive_confirm: "Bạn có chắc chắn muốn ẩn chuyên mục này khỏi danh sách các lựa chọn sau này?"
+            unarchive_confirm: "Bạn có chắc chắn muốn khôi phục hiển thị cho chuyên mục?"
           list:
             delete: "Xóa chuyên mục"
             product_count: "Số sản phẩm"
             name: "Tên chuyên mục"
+            archive_confirm: "Bạn có chắc chắn muốn ẩn chuyên mục này khỏi danh sách các lựa chọn sau này?"
+            unarchive_confirm: "Bạn có chắc chắn muốn khôi phục hiển thị cho chuyên mục?"
             no_matching_records_found: "Danh sách chuyên mục hiện tại đang trống."
           new:
             categories: "Tất cả chuyên mục"
@@ -114,13 +122,13 @@ vi:
           delete_all:
             success: "Xóa sản phẩm được chọn thành công."
           archive:
-            success: "Sản phẩm đã được ẩn"
+            success: "Sản phẩm đã ngừng kinh doanh."
           unarchive:
-            success: "Sản phẩm đã được hiển thị"
+            success: "Sản phẩm đã được kinh doanh trở lại."
           archive_all:
-            success: "Ẩn sản phẩm được chọn thành công."
+            success: "Sản phẩm đã ngừng kinh doanh."
           unarchive_all:
-            success: "Hiện sản phẩm được chọn thành công."
+            success: "Sản phẩm đã được kinh doanh trở lại."
           index:
             category: "Chuyên mục"
             products: "Tất cả sản phẩm"
@@ -136,7 +144,13 @@ vi:
             status: "Trạng thái"
             creator: "Người tạo"
             created_at: "Ngày tạo"
-            archived: "Sản phẩm đang ẩn"
+            archived: "Sản phẩm ngừng kinh doanh"
+            archive: "Ngừng kinh doanh"
+            unarchive: "Cho phép kinh doanh"
+            archive_confirm: "Mọi thông tin tồn kho và các lịch sử giao dịch vẫn được giữ lại. <br>Bạn có chắc chắn muốn ngừng kinh doanh sản phẩm này?"
+            unarchive_confirm: "Bạn có chắc chắn muốn kinh doanh trở lại sản phẩm này?"
+            delete_confirm: "Thông tin sản phẩm sẽ bị xóa vĩnh viễn. Bạn có chắc muốn xóa?"
+            delete: "Xóa sản phẩm"
           list:
             delete: "Xóa sản phẩm"
             name: "Tên sản phẩm"
@@ -151,11 +165,13 @@ vi:
             creator: "Người tạo"
             created_at: "Ngày tạo"
             actions: "Thao tác"
-            archived: "Đã ẩn"
-            active: "Đang hiển thị"
+            archived: "Ngừng kinh doanh"
+            active: "Đang kinh doanh"
             edit: "Cập nhật"
-            archive: "Ẩn thông tin"
-            unarchive: "Hiện thông tin"
+            archive: "Ngừng kinh doanh"
+            unarchive: "Cho phép kinh doanh"
+            archive_confirm: "Mọi thông tin tồn kho và các lịch sử giao dịch vẫn được giữ lại. <br>Bạn có chắc chắn muốn ngừng kinh doanh sản phẩm này?"
+            unarchive_confirm: "Bạn có chắc chắn muốn kinh doanh trở lại sản phẩm này?"
             delete_confirm: "Bạn có chắc muốn xóa?"
             no_matching_records_found: "Danh sách sản phẩm hiện tại đang trống."
           new:
@@ -332,13 +348,13 @@ vi:
           destroy:
             success: "Xóa bảng giá thành công."
           delete_all:
-            success: "Xóa bảng giá đã chọn thành công."
-          archive_all:
-            success: "Ẩn bảng giá đã chọn thành công."
-          unarchive_all:
-            success: "Hiện bảng giá đã chọn thành công."
+            success: "Xóa bảng giá thành công."
+          enable_all:
+            success: "Bảng giá kích hoạt thành công."
+          disable_all:
+            success: "Bảng giá ngừng kích hoạt thành công."
           index:
-            price_lists: "Danh sách bảng giá"
+            price_lists: "Bảng giá"
             name: "Tên bảng giá"
             valid_datetime: "Thời gian hiệu lực"
             valid_from: "Bắt đầu hiệu lực"
@@ -351,7 +367,7 @@ vi:
             disable: "Hủy kích hoạt"
             delete: "Xóa bảng giá"
           list:
-            price_lists: "Danh sách bảng giá"
+            price_lists: "Bảng giá"
             name: "Tên bảng giá"
             valid_datetime: "Thời gian hiệu lực"
             valid_from: "Áp dụng từ ngày"
