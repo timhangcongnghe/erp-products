@@ -3,8 +3,8 @@ vi:
   consumable: "Hàng tiêu dùng"
   service: "Dịch vụ"
   product: "Sản phẩm"
-  active: "Kích hoạt"
-  inactive: "Chưa kích hoạt"
+  #active: "Kích hoạt"
+  #inactive: "Chưa kích hoạt"
   ordered_quantities: "Ordered quantities"
   delivered_quantities: "Delivered quantities"
   layouts:
