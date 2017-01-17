@@ -3,8 +3,14 @@ vi:
   consumable: "Hàng tiêu dùng"
   service: "Dịch vụ"
   product: "Sản phẩm"
-  #active: "Kích hoạt"
-  #inactive: "Chưa kích hoạt"
+  erp_products_price_lists_active: "Kích hoạt"
+  erp_products_price_lists_inactive: "Chưa kích hoạt"
+  erp_products_price_lists_all_warehouse: "Toàn hệ thống"
+  erp_products_price_lists_warehouses: "Chi nhánh"
+  erp_products_price_lists_all_user: "Toàn bộ người bán"
+  erp_products_price_lists_users: "Người bán"
+  erp_products_price_lists_all_contact_group: "Toàn bộ khách hàng"
+  erp_products_price_lists_contact_groups: "Nhóm khách hàng"
   ordered_quantities: "Ordered quantities"
   delivered_quantities: "Delivered quantities"
   layouts:
@@ -359,6 +365,10 @@ vi:
             success: "Xóa bảng giá thành công."
           delete_all:
             success: "Xóa bảng giá thành công."
+          enable:
+            success: "Bảng giá kích hoạt thành công."
+          disable:
+            success: "Bảng giá ngừng kích hoạt thành công."
           enable_all:
             success: "Bảng giá kích hoạt thành công."
           disable_all:
@@ -376,6 +386,7 @@ vi:
             enable: "Bật kích hoạt"
             disable: "Hủy kích hoạt"
             delete: "Xóa bảng giá"
+            inactive: "Bảng giá chưa kích hoạt"
           list:
             price_lists: "Bảng giá"
             name: "Tên bảng giá"
@@ -393,6 +404,8 @@ vi:
             enable: "Bật kích hoạt"
             disable: "Hủy kích hoạt"
             delete: "Xóa bảng giá"
+            active: "Kích hoạt"
+            inactive: "Không kích hoạt"
           new:
             price_lists: "Bảng giá"
             create: "Thêm bảng giá"
