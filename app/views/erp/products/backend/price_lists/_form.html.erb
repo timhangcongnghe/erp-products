@@ -32,7 +32,7 @@
                 id: 'is_status',
                 name: 'price_list[active]',
                 label: t('.status'),
-                value: @price_list.active,
+                value: @price_list.active.to_s,
                 options: Erp::Products::PriceList.get_status_options()
             }) %>
         </div>
@@ -56,12 +56,12 @@
                         <%= erp_form_control("radio", {
                             id: "is_warehouse",
                             name: 'price_list[all_warehouses]',
-                            value: price_list.all_warehouses,
-                            options: [{text: "Toàn hệ thống",value: 'true'},{text: "Chi nhánh",value: 'false'}]
+                            value: price_list.all_warehouses.to_s,
+                            options: Erp::Products::PriceList::get_all_warehouses_options()
                         }) %>
                         <%= erp_form_control("dataselect", {
                             name: 'price_list[warehouse_ids][]',
-                            values: (price_list.warehouses.map {|wh| {text: wh.name, value: wh.id}}),
+                            values: (price_list.warehouses.map {|wh| {text: wh.warehouse_name, value: wh.id}}),
                             multiple: true,
                             label: t('.list_warehouses'),
                             url: erp_warehouses.dataselect_backend_warehouses_path(format: 'json'),
@@ -77,8 +77,8 @@
                         <%= erp_form_control("radio", {
                             id: 'is_user',
                             name: 'price_list[all_users]',
-                            value: @price_list.all_users,
-                            options: [{text: "Toàn bộ người bán",value: 'true'}, {text: "Người bán",value: 'false'}]
+                            value: @price_list.all_users.to_s,
+                            options: Erp::Products::PriceList::get_all_users_options()
                         }) %>
                         <%= erp_form_control("dataselect", {
                             name: 'price_list[price_lists_user_ids][]',
@@ -98,8 +98,8 @@
                         <%= erp_form_control("radio", {
                             id: "is_contact_group",
                             name: 'price_list[all_contact_groups]',
-                            value: '',
-                            options: [{text: "Toàn bộ khách hàng",value: "true"},{text: "Nhóm khách hàng",value: "false"}]
+                            value: @price_list.all_contact_groups.to_s,
+                            options: Erp::Products::PriceList::get_all_contact_groups_options()
                         }) %>
                         <%= erp_form_control("dataselect", {
                             name: '',
