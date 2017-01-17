@@ -241,6 +241,16 @@ vi:
             help_is_for_pos: "Sản phẩm sẽ xuất hiện trên màn hình bán hàng (màn hình có sử dụng máy POS)"
             is_for_pos: "Bán trên POS"
             point_enabled: "Tích điểm"
+            part_code: "Mã thành phần"
+            part_name: "Tên thành phần"
+            quantity: "Số lượng"
+            total: "Tổng cộng"
+            action: "Hành động"
+            parts: "Thành phần"
+            product_part: "Sản phẩm thành phần"
+            help_product_part: "Sản phẩm này được cấu thành từ các sản phẩm thành phần"
+            choose_product_part: "Chọn sản phẩm thành phần"
+            
             
             description_for_quotations: "Description for Quotations"
             description_for_pickings: "Description for Pickings"
