@@ -34,9 +34,10 @@ module Erp::Products
       return query
     end
     
-    # display manufacturing date
-    def display_date_time
-			manufacturing_date.present? ? manufacturing_date.strftime("%d/%m/%Y") : Time.now.in_time_zone("Asia/Bangkok").strftime("%d/%m/%Y")
+    def products_parts
+			if self.product.present?
+				self.product.products_parts
+			end
 		end
     
     # responsible name
