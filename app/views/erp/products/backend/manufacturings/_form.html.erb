@@ -15,7 +15,7 @@
                                 }) %>
                                 <%= erp_form_control("date", {
                                     name: 'manufacturing[manufacturing_date]',
-                                    value: manufacturing.display_date_time,
+                                    value: manufacturing.manufacturing_date,
                                     label: t('.date')
                                 }) %>
                                 <%= erp_form_control("dataselect", {
@@ -76,38 +76,37 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="portlet light bordered">
-                    <div class="portlet-body form">
-                        <div class="tabbable-custom ">
-                            <ul class="nav nav-tabs ">
-                                <li class="active">
-                                    <a href="#tab_5_1" data-toggle="tab"> <%= t('.consumed_materials') %> </a>
-                                </li>
-                                <li>
-                                    <a href="#tab_5_2" data-toggle="tab"> <%= t('.finished_products') %> </a>
-                                </li>
-                                <li>
-                                    <a href="#tab_5_3" data-toggle="tab"> <%= t('.miscellaneous') %> </a>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="tab_5_1">
-                                    
-                                </div>
-                                <div class="tab-pane" id="tab_5_2">
-                                    
-                                </div>
-                                <div class="tab-pane" id="tab_5_3">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label><%= t('.availability') %></label>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label>None</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                
+                <div class="tabbable-custom ">
+                    <ul class="nav nav-tabs ">
+                        <li class="active">
+                            <a href="#tab_5_1" data-toggle="tab"> <%= t('.consumed_materials') %> </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_5_1">
+                            <table class="table table-advance table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th><%= t('.part_code') %></th>
+                                        <th><%= t('.part_name') %></th>
+                                        <th><%= t('.part_on_hand') %></th>
+                                        <th><%= t('.part_use') %></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if manufacturing.products_parts.present? %>
+                                        <% manufacturing.products_parts.each do |part| %>
+                                            <tr>
+                                                <td><%= part.part_code %></td>
+                                                <td><%= part.part_name %></td>
+                                                <td><%= part.part_on_hand %></td>
+                                                <td></td>
+                                            </tr>
+                                        <% end %>
+                                    <% end %>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
