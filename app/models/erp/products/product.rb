@@ -15,10 +15,15 @@ module Erp::Products
     
     has_many :products_properties, dependent: :destroy
     has_and_belongs_to_many :properties, class_name: 'Erp::Products::Property', :join_table => 'erp_products_products_properties'
+    
     has_many :products_units, dependent: :destroy
     accepts_nested_attributes_for :products_units, :reject_if => lambda { |a| a[:unit_id].blank? or a[:conversion_value].blank? }, :allow_destroy => true
+    
     has_many :product_images, dependent: :destroy
     accepts_nested_attributes_for :product_images, :reject_if => lambda { |a| a[:image_url].blank? and a[:image_url_cache].blank? }, :allow_destroy => true
+    
+    has_many :products_parts, dependent: :destroy
+    accepts_nested_attributes_for :products_parts, :reject_if => lambda { |a| a[:part_id].blank? }, :allow_destroy => true
     
     has_many :products_values, through: :products_properties
     
