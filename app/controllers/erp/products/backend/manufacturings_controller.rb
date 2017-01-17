@@ -13,7 +13,7 @@ module Erp
     
         # GET /manufacturings/1
         def list
-          @manufacturings = Manufacturing.search(params).paginate(:page => params[:page], :per_page => 5)
+          @manufacturings = Manufacturing.search(params).paginate(:page => params[:page], :per_page => 10)
           
           render layout: nil
         end
@@ -21,10 +21,12 @@ module Erp
         # GET /manufacturings/new
         def new
           @manufacturing = Manufacturing.new
+          @manufacturing.manufacturing_date = Time.now
         end
     
         # GET /manufacturings/1/edit
         def edit
+          
         end
     
         # POST /manufacturings
@@ -98,6 +100,7 @@ module Erp
           # Use callbacks to share common setup or constraints between actions.
           def set_manufacturing
             @manufacturing = Manufacturing.find(params[:id])
+            
           end
           
           def set_manufacturings
