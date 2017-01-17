@@ -121,7 +121,11 @@
                     </td>
                     <% end %>
                     <% if get_columns(params).include?("creator") %>
-                        <td></td>
+                        <td>
+                            <%= erp_component('avatar', {
+                                user: price_list.creator
+                            }) %>
+                        </td>
                     <% end %>
                     <% if get_columns(params).include?("created_at") %>
                         <td><%= price_list.created_at.strftime("%d/%m/%Y") %></td>
