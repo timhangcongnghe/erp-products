@@ -302,37 +302,38 @@
                         <div class="tab-pane" id="tab_5_7">
                             <%= erp_form_control("addableform", {
                                 type: 'table',
-                                add_button: t('.add'),
-                                partial: 'erp/products/backend/products/part_form',
-                                partial_url: erp_products.part_form_backend_products_path,
-                                items: [],
-                                item: :product_part,
-                                add_control_selector: "input[name='product_part_id']",
+                                add_button: t('.add_part'),
+                                partial: 'erp/products/backend/products_parts/part_form',
+                                partial_url: erp_products.part_form_backend_products_parts_path,
+                                items: @product.products_parts,
+                                item: :products_part,
+                                add_control_selector: "input[name='product_id']",
                                 add_control: erp_form_control("dataselect", {
-                                    name: 'product_part_id',
-                                    value: product.category_id,
-                                    text: product.category_name,
-                                    placeholder: t('.choose_category'),
-                                    label: t('.category'),
-                                    help: t('.help_category'),
-                                    url: erp_products.dataselect_backend_categories_path(format: 'json'),
+                                    name: 'product_id',
+                                    value: product.id,
+                                    text: '',
+                                    placeholder: t('.choose_product_part'),
+                                    label: t('.product_part'),
+                                    help: t('.help_product_part'),
+                                    url: erp_products.dataselect_backend_products_path(format: 'json'),
                                     create: {
-                                        url: erp_products.new_backend_category_path,
-                                        title: t('.create_category'),
-                                        container_selector: '.new_category',
-                                        input_selector: 'input[name="category[name]"]'
+                                        url: erp_products.new_backend_product_path,
+                                        title: t('.create_product_part'),
+                                        container_selector: '.new_product',
+                                        input_selector: 'input[name="product[name]"]'
                                     },
                                     edit: {
-                                        url: erp_products.edit_backend_category_path(id: ':value'),
-                                        title: t('.edit_category'),
-                                        container_selector: '.edit_category',
-                                    },
-                                    required: true,
-                                    errors: product.errors.full_messages_for(:category_id)
+                                        url: erp_products.edit_backend_product_path(id: ':value'),
+                                        title: t('.edit_product_part'),
+                                        container_selector: '.edit_product',
+                                    }
                                 }),
-                                thead: '<th>Name</th>
-                                        <th>Quantity</th>
-                                        <th>Action</th>'
+                                thead: "<th>#{t('.part_code')}</th>
+                                        <th>#{t('.part_name')}</th>
+                                        <th>#{t('.quantity')}</th>
+                                        <th>#{t('.cost')}</th>
+                                        <th>#{t('.total')}</th>
+                                        <th>#{t('.action')}</th>"
                             }) %>
                         </div>
                     </div>
