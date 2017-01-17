@@ -1,0 +1,24 @@
+<input type="hidden" name="product[products_parts_attributes][<%= uid %>][id]" value="<%= products_part.id %>">
+<input type="hidden" name="product[products_parts_attributes][<%= uid %>][part_id]" value="<%= products_part.part_id %>">
+<input type="hidden" name="product[products_parts_attributes][<%= uid %>][_destroy]" value="">
+
+<td><%= products_part.part_code %></td>
+<td><%= products_part.part_name %></td>
+<td>
+    <%= erp_form_control("text", {
+        name: 'product[products_parts_attributes][' + uid + '][quantity]',
+        value: products_part.quantity,
+        text: products_part.quantity
+    }) %>
+</td>
+<td>
+    <%= products_part.part_cost %>
+</td>
+<td>
+    <%= products_part.total %>
+</td>
+<td>
+    <%= erp_form_control("addableform_remove_button", {
+        is_nested_form: true
+    }) %>
+</td>
