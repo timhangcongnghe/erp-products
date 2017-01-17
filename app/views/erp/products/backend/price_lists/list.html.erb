@@ -67,7 +67,7 @@
                     <td><%= t('all') %></td>
                 <% end %>
                 <% if get_columns(params).include?("status") %>
-                <td><span class="label label-sm label-success"><%= t('active') %></span></td>
+                <td><span class="label label-sm label-success"><%= t('.active') %></span></td>
                 <% end %>
                 <% if get_columns(params).include?("creator") %>
                     <td></td>
@@ -114,9 +114,9 @@
                     <% if get_columns(params).include?("status") %>
                     <td>
                         <% if price_list.active == false %>
-                        <span class="label label-sm label-danger"><%= t('inactive') %></span>
+                        <span class="label label-sm label-danger"><%= t('.inactive') %></span>
                         <% else %>
-                        <span class="label label-sm label-success"><%= t('active') %></span>
+                        <span class="label label-sm label-success"><%= t('.active') %></span>
                         <% end %> 
                     </td>
                     <% end %>
