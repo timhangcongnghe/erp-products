@@ -12,11 +12,35 @@ module Erp::Products
     
     has_and_belongs_to_many :price_lists_users, class_name: 'Erp::User', :join_table => 'erp_products_price_lists_users'
     
-    # get type options for contact
+    # get status options for price lists
     def self.get_status_options()
       [
-        {text: I18n.t('.active'),value: true},
-        {text: I18n.t('.inactive'),value: false}
+        {text: I18n.t('.erp_products_price_lists_active'),value: 'true'},
+        {text: I18n.t('.erp_products_price_lists_inactive'),value: 'false'}
+      ]
+    end
+    
+    # get all_warehouses options for price lists
+    def self.get_all_warehouses_options()
+      [
+        {text: I18n.t('.erp_products_price_lists_all_warehouse'),value: 'true'},
+        {text: I18n.t('.erp_products_price_lists_warehouses'),value: 'false'}
+      ]
+    end
+    
+    # get all_users options for price lists
+    def self.get_all_users_options()
+      [
+        {text: I18n.t('.erp_products_price_lists_all_user'),value: 'true'},
+        {text: I18n.t('.erp_products_price_lists_users'),value: 'false'}
+      ]
+    end
+    
+    # get all_contact_groups options for price lists
+    def self.get_all_contact_groups_options()
+      [
+        {text: I18n.t('.erp_products_price_lists_all_contact_group'),value: 'true'},
+        {text: I18n.t('.erp_products_price_lists_contact_groups'),value: 'false'}
       ]
     end
     
