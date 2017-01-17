@@ -169,10 +169,6 @@ module Erp
           end
         end
         
-        def part_form
-          render partial: params.to_unsafe_hash['partial'], locals: {}
-        end
-        
         def dataselect
           respond_to do |format|
             format.json {
@@ -198,12 +194,13 @@ module Erp
           # Only allow a trusted parameter "white list" through.
           def product_params
             params.fetch(:product, {}).permit(
-              :name, :can_be_sold, :can_be_purchased, :product_type, :barcode,
+              :code, :name, :can_be_sold, :can_be_purchased, :product_type, :barcode,
               :price, :cost, :on_hand, :weight, :volume, :is_for_pos, :unit_id,
               :stock_min, :stock_max, :description, :internal_note, :point_enabled, :category_id,              
               customer_tax_ids: [], vendor_tax_ids: [],
               :product_images_attributes => [ :id, :image_url, :image_url_cache, :product_id, :_destroy ],
               :products_units_attributes => [ :id, :unit_id, :conversion_value, :price, :code, :product_id, :_destroy ],
+              :products_parts_attributes => [ :id, :part_id, :quantity, :total, :product_id, :_destroy ]
               )
           end
       end
