@@ -22,7 +22,6 @@ Erp::Products::Engine.routes.draw do
           put 'archive'
           put 'unarchive'
           get 'form_property'
-          get 'part_form'
         end
       end
       resources :properties do
@@ -49,6 +48,11 @@ Erp::Products::Engine.routes.draw do
       resources :products_units do
 				collection do
           get 'form_line'
+				end
+			end
+      resources :products_parts do
+				collection do
+          get 'part_form'
 				end
 			end
       resources :price_lists do
