@@ -14,5 +14,8 @@ module Erp::Products
     def part_code
       part.nil? ? '' : part.code
     end
+    def part_on_hand
+      part.nil? ? '' : part.on_hand
+    end
   end
 end
