@@ -465,6 +465,12 @@ vi:
           attributes:
             name:
               blank: "không được để trống."
+        erp/products/manufacturing:
+          attributes:
+            product_id:
+              blank: "không được để trống."
+            quantity:
+              blank: "không được để trống."
     attributes:
       erp/products/product:
         name: "Tên sản phẩm"
@@ -473,3 +479,6 @@ vi:
         name: "Tên chuyên mục"
       erp/products/property:
         name: "Tên thuộc tính"
+      erp/products/manufacturing:
+        product_id: "Mặt hàng sản xuất"
+        quantity: "Số lượng"
