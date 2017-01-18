@@ -283,8 +283,9 @@ vi:
           index:
             manufacturings: "Sản xuất hàng hóa"
             create: "Tạo phiếu sản xuất"
-            archive: "Ẩn khỏi danh sách"
-            unarchive: "Hiện ra danh sách"
+            draft: "Phiếu tạm"
+            manufacturing: "Đang sản xuất"
+            finished: "Hoàn thành"
             delete: "Xóa phiếu sản xuất"
             delete_confirm: "Bạn có chắc muốn xóa?"
             manufacturing_code: "Mã sản xuất"
@@ -328,7 +329,7 @@ vi:
             responsible: "Chịu trách nhiệm"
             choose_responsible: "Chọn người phụ trách chính công việc sản xuất"
             choose_product: "Chọn hàng hóa cần sản xuất"
-            consumed_materials: "Nguyên liệu tiêu thụ"
+            consumed_materials: "Thành phần tiêu thụ"
             finished_products: "Sản phẩm hoàn thành"
             miscellaneous: "Linh tinh khác"
             availability: "Có thể dùng được"
@@ -440,6 +441,13 @@ vi:
             cost: "Giá vốn"
             last_price: "Giá nhập cuối"
             new_price: "Giá mới"
+        products_parts:
+          list:
+            part_code: "Mã thành phần"
+            part_name: "Tên thành phần"
+            part_on_hand: "Tồn kho"
+            part_use: "Sử dụng"
+            no_matching_records_found: "Danh sách thành phần tiêu thụ hiện tại đang trống."
   activerecord:
     errors:
       models:
