@@ -38,6 +38,12 @@ Erp::Products::Engine.routes.draw do
 				collection do
 					post 'list'
           delete 'delete_all'
+          put 'draft'
+          put 'draft_all'
+          put 'manufacturing'
+          put 'manufacturing_all'
+          put 'finished'
+          put 'finished_all'
 				end
 			end
       resources :units do

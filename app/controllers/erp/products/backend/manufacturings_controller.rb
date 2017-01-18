@@ -4,8 +4,8 @@ module Erp
   module Products
     module Backend
       class ManufacturingsController < Erp::Backend::BackendController
-        before_action :set_manufacturing, only: [:show, :edit, :update, :destroy]
-        before_action :set_manufacturings, only: [:delete_all]
+        before_action :set_manufacturing, only: [:draft, :manufacturing, :finished, :show, :edit, :update, :destroy]
+        before_action :set_manufacturings, only: [:delete_all, :draft_all, :manufacturing_all, :finished_all]
     
         # GET /manufacturings
         def index
@@ -95,6 +95,90 @@ module Erp
             }
           end          
         end
+        
+        # Draft /manufacturings/draft?id=1
+        def draft      
+          @manufacturing.draft
+          
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end          
+        end
+        
+        # Draft /manufacturings/draft_all?ids=1,2,3
+        def draft_all      
+          @manufacturings.draft_all
+          
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end          
+        end
+        
+        # Manufacturing /manufacturings/manufacturing?id=1
+        def manufacturing      
+          @manufacturing.manufacturing
+          
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end          
+        end
+        
+        # Manufacturing /manufacturings/manufacturing_all?ids=1,2,3
+        def manufacturing_all      
+          @manufacturings.manufacturing_all
+          
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end          
+        end
+        
+        # Finished /manufacturings/finished?id=1
+        def finished      
+          @manufacturing.finished
+          
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end          
+        end
+        
+        # Finished /manufacturings/finished_all?ids=1,2,3
+        def finished_all      
+          @manufacturings.finished_all
+          
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end          
+        end
     
         private
           # Use callbacks to share common setup or constraints between actions.
@@ -109,7 +193,7 @@ module Erp
     
           # Only allow a trusted parameter "white list" through.
           def manufacturing_params
-            params.fetch(:manufacturing, {}).permit(:code, :manufacturing_date, :product_id, :quantity,
+            params.fetch(:manufacturing, {}).permit(:code, :manufacturing_date, :product_id, :quantity, :status,
                                                     :is_auto_reduce_part_quantity, :note, :responsible_id)
           end
       end

@@ -78,7 +78,15 @@
                         <td><%= link_to manufacturing.responsible_name,'' %></td>
                     <% end %>
                     <% if get_columns(params).include?("status") %>
-                        <td></td>
+                        <td>
+                            <% if manufacturing.status == Erp::Products::Manufacturing::STATUS_DRAFT %>
+                            <span class="label label-sm label-default"><%= t('.draft') %></span>
+                            <% elsif manufacturing.status == Erp::Products::Manufacturing::STATUS_MANUFACTURING %>
+                            <span class="label label-sm label-info"><%= t('.manufacturing') %></span>
+                            <% else %>
+                            <span class="label label-sm label-success"><%= t('.finished') %></span>
+                            <% end %> 
+                        </td>
                     <% end %>
                     <% if get_columns(params).include?("creator") %>
                         <td>
@@ -88,7 +96,7 @@
                         </td>
                     <% end %>
                     <% if get_columns(params).include?("created_at") %>
-                        <td class="center"><%= manufacturing.created_at.strftime("%d/%m/%Y") %></td>
+                        <td><%= manufacturing.created_at.strftime("%d/%m/%Y") %></td>
                     <% end %>
                     <td>
                         <%= erp_datalist_row_actions(
@@ -96,6 +104,37 @@
                                 {
                                     text: '<i class="fa fa-edit"></i> '+t('.edit'),
                                     href: erp_products.edit_backend_manufacturing_path(manufacturing)
+                                },
+                                {
+                                    text: '<i class="fa fa-clipboard"></i> '+t('.btn_draft'),
+                                    url: erp_products.draft_backend_manufacturings_path(id: manufacturing),
+                                    data_method: 'PUT',
+                                    class: 'ajax-link',
+                                    data_confirm: t('.draft_confirm')
+                                },
+                                {
+                                    text: '<i class="fa fa-gears"></i> '+t('.btn_manufacturing'),
+                                    url: erp_products.manufacturing_backend_manufacturings_path(id: manufacturing),
+                                    data_method: 'PUT',
+                                    class: 'ajax-link',
+                                    data_confirm: t('.manufacturing_confirm')
+                                },
+                                {
+                                    text: '<i class="fa fa-check"></i> '+t('.btn_finished'),
+                                    url: erp_products.finished_backend_manufacturings_path(id: manufacturing),
+                                    data_method: 'PUT',
+                                    class: 'ajax-link',
+                                    data_confirm: t('.finished_confirm')
+                                },
+                                {
+                                    divider: true
+                                },
+                                {
+                                    text: '<i class="fa fa-trash"></i> '+t('.delete'),
+                                    url: erp_products.backend_manufacturing_path(manufacturing),
+                                    data_method: 'DELETE',
+                                    class: 'ajax-link',
+                                    data_confirm: t('.delete_confirm')
                                 }
                             ]
                         ) %>

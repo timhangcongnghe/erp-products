@@ -23,14 +23,22 @@
     ],
     actions: [
         {
-            text: '<i class="fa fa-eye-slash"></i> '+t('.archive'),
-            url: '',
-            data_method: 'PUT'
+            text: '<i class="fa fa-clipboard"></i> '+t('.btn_draft'),
+            url: erp_products.draft_all_backend_manufacturings_path,
+            data_method: 'PUT',
+            data_confirm: t('.draft_confirm')
         },
         {
-            text: '<i class="fa fa-eye"></i> '+t('.unarchive'),
-            url: '',
-            data_method: 'PUT'
+            text: '<i class="fa fa-gears"></i> '+t('.btn_manufacturing'),
+            url: erp_products.manufacturing_all_backend_manufacturings_path,
+            data_method: 'PUT',
+            data_confirm: t('.manufacturing_confirm')
+        },
+        {
+            text: '<i class="fa fa-check"></i> '+t('.btn_finished'),
+            url: erp_products.finished_all_backend_manufacturings_path,
+            data_method: 'PUT',
+            data_confirm: t('.finished_confirm')
         },
         {
             divider: true

@@ -54,6 +54,12 @@
                                         input_selector: 'input[name="user[name]"]'
                                     }
                                 }) %>
+                                <%= erp_form_control('select', {
+                                    label: t('.status'),
+                                    name: 'manufacturing[status]',
+                                    value: manufacturing.status,
+                                    options: Erp::Products::Manufacturing.get_status_options()
+                                }) %>
                                 <%= erp_form_control("textarea", {
                                     name: 'manufacturing[note]',
                                     value: manufacturing.note,
