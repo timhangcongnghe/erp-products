@@ -11,6 +11,9 @@ vi:
   erp_products_price_lists_users: "Người bán"
   erp_products_price_lists_all_contact_group: "Toàn bộ khách hàng"
   erp_products_price_lists_contact_groups: "Nhóm khách hàng"
+  erp_products_manufacturings_draft: "Phiếu tạm"
+  erp_products_manufacturings_manufacturing: "Đang sản xuất"
+  erp_products_manufacturings_finished: "Hoàn thành"
   ordered_quantities: "Ordered quantities"
   delivered_quantities: "Delivered quantities"
   layouts:
@@ -276,16 +279,24 @@ vi:
             success: "Xóa phiếu sản xuất thành công."
           delete_all:
             success: "Xóa phiếu sản xuất đã chọn thành công."
-          archive_all:
-            success: "Ẩn phiếu sản xuất đã chọn thành công."
-          unarchive_all:
-            success: "Hiện phiếu sản xuất đã chọn thành công."
+          draft:
+            success: "Phiếu sản xuất đã được lưu tạm"
+          manufacturing:
+            success: "Phiếu sản xuất đang được sản xuất"
+          finished:
+            success: "Phiếu sản xuất đã được hoàn thành"
+          draft_all:
+            success: "Phiếu sản xuất đã được lưu tạm"
+          manufacturing_all:
+            success: "Phiếu sản xuất đang được sản xuất"
+          finished_all:
+            success: "Phiếu sản xuất đã được hoàn thành"
           index:
             manufacturings: "Sản xuất hàng hóa"
             create: "Tạo phiếu sản xuất"
-            draft: "Phiếu tạm"
-            manufacturing: "Đang sản xuất"
-            finished: "Hoàn thành"
+            btn_draft: "Lưu phiếu tạm"
+            btn_manufacturing: "Đang sản xuất"
+            btn_finished: "Hoàn thành"
             delete: "Xóa phiếu sản xuất"
             delete_confirm: "Bạn có chắc muốn xóa?"
             manufacturing_code: "Mã sản xuất"
@@ -297,6 +308,10 @@ vi:
             status: "Trạng thái"
             creator: "Người tạo"
             created_at: "Ngày tạo"
+            draft_confirm: "Trạng thái của phiếu sản xuất sẽ là 'Phiếu tạm'.<br>Bạn có muốn tiếp tục?"
+            manufacturing_confirm: "Trạng thái của phiếu sản xuất sẽ là 'Đang sản xuất'.<br>Bạn có muốn tiếp tục?"
+            finished_confirm: "Trạng thái của phiếu sản xuất sẽ là 'Hoàn thành'.<br>Bạn có muốn tiếp tục?"
+            delete_confirm: "Dữ liệu bạn chọn sẽ bị xóa vĩnh viễn.<br>Bạn có muốn tiếp tục?"
           list:
             manufacturing_code: "Mã sản xuất"
             manufacturing_date: "Thời gian"
@@ -310,8 +325,19 @@ vi:
             actions: "Thao tác"
             archived: "Đã ẩn"
             active: "Đang hiển thị"
-            edit: "Cập nhật"
+            edit: "Cập nhật phiếu"
             no_matching_records_found: "Danh sách chuyên mục hiện tại đang trống."
+            draft: "Phiếu tạm"
+            manufacturing: "Đang sản xuất"
+            finished: "Hoàn thành"
+            btn_draft: "Lưu phiếu tạm"
+            btn_manufacturing: "Đang sản xuất"
+            btn_finished: "Hoàn thành"
+            delete: "Xóa phiếu sản xuất"
+            draft_confirm: "Trạng thái của phiếu sản xuất sẽ là 'Phiếu tạm'.<br>Bạn có muốn tiếp tục?"
+            manufacturing_confirm: "Trạng thái của phiếu sản xuất sẽ là 'Đang sản xuất'.<br>Bạn có muốn tiếp tục?"
+            finished_confirm: "Trạng thái của phiếu sản xuất sẽ là 'Hoàn thành'.<br>Bạn có muốn tiếp tục?"
+            delete_confirm: "Dữ liệu này sẽ bị xóa vĩnh viễn.<br>Bạn có muốn tiếp tục?"
           new:
             manufacturings: "Sản xuất hàng hóa"
             create: "Tạo phiếu sản xuất"
@@ -326,6 +352,7 @@ vi:
             quantity: "Số lượng"
             is_auto_reduce_part_quantity: "Tự động trừ các hàng hóa thành phần"
             internal_note: "Ghi chú"
+            status: "Trạng thái"
             responsible: "Chịu trách nhiệm"
             choose_responsible: "Chọn người phụ trách chính công việc sản xuất"
             choose_product: "Chọn hàng hóa cần sản xuất"
