@@ -103,9 +103,11 @@
                         <li>
                             <a href="#tab_5_4" data-toggle="tab"> <%= t('.inventory') %> </a>
                         </li>
+                        <% if Erp::Core.available?("taxes") %>
                         <li>
                             <a href="#tab_5_5" data-toggle="tab"> <%= t('.invoicing') %> </a>
                         </li>
+                        <% end %>
                         <li>
                             <a href="#tab_5_6" data-toggle="tab"> <%= t('.notes') %> </a>
                         </li>
@@ -228,6 +230,7 @@
                                 </div>
                             </div>
                         </div>
+                        <% if Erp::Core.available?("taxes") %>
                         <div class="tab-pane" id="tab_5_5">
                             <div class="row">
                                 <div class="col-md-6">
@@ -266,6 +269,7 @@
                                 </div>
                             </div>
                         </div>
+                        <% end %>
                         <div class="tab-pane" id="tab_5_6">
                             <h4>Định mức tồn</h4>
                             <div class="row">
