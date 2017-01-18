@@ -11,8 +11,11 @@ module Erp
           @products_parts = ProductsPart.all
         end
     
-        # GET /products_parts/1
-        def show
+        # POST /products_parts/list
+        def list
+          @products_parts = ProductsPart.search(params).paginate(:page => params[:page], :per_page => 5)
+          
+          render layout: nil
         end
     
         # GET /products_parts/new
