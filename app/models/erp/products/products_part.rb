@@ -3,6 +3,12 @@ module Erp::Products
     belongs_to :product
     belongs_to :part, class_name: 'Erp::Products::Product'#, optional: true
     
+    def self.search(params)
+      query = self.all
+      query = query.where(product_id: params[:product_id])
+      return query
+    end
+    
     def part_name
       part.nil? ? '' : part.name
     end
