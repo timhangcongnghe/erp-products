@@ -52,6 +52,7 @@ Erp::Products::Engine.routes.draw do
 			end
       resources :products_parts do
 				collection do
+					post 'list'
           get 'part_form'
 				end
 			end
