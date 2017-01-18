@@ -1,0 +1,36 @@
+<div class="">
+    <table class="table table-advance table-hover table-striped order-column" id="">
+        <thead>
+            <tr>
+                <th>
+                    <%= t('.part_code') %>
+                </th>
+                <th class="sortable" sort-by='erp_products_products.name'>
+                    <%= t('.part_name') %>
+                </th>
+                <th>
+                    <%= t('.part_on_hand') %>
+                </th>
+                <th>
+                    <%= t('.part_use') %>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @products_parts.each do |part| %>
+                <tr>
+                    <td><%= part.part_code %></td>
+                    <td><%= part.part_name %></td>
+                    <td><%= part.part_on_hand %></td>
+                    <td></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+    <% if @products_parts.empty? %>
+    <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
+    <% end %>
+</div>
+<% if !@products_parts.empty? %>
+<%= erp_datalist_pagination(@products_parts) %>
+<% end %>
