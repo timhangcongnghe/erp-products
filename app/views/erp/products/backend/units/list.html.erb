@@ -1,0 +1,107 @@
+<div class="">
+    <table class="table table-advance table-hover table-striped table-checkable order-column" id="">
+        <thead>
+            <tr>
+                <th width='1%'>
+                    <%= erp_datalist_check_all %>
+                </th>
+                <% if get_columns(params).include?("name") %>
+                    <th class="sortable" sort-by='erp_products_units.name'>
+                        <%= t('.name') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("status") %>
+                    <th>
+                        <%= t('status') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("creator") %>
+                    <th>
+                        <%= t('creator') %>
+                    </th>
+                <% end %>
+                <% if get_columns(params).include?("created_at") %>
+                    <th class="sortable" sort-by='erp_products_units.created_at'>
+                        <%= t('created_at') %>
+                    </th>
+                <% end %>
+                <th width="7%"><%= t('actions') %></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if @units.each do |unit| %>
+                <tr class="odd gradeX">
+                    <td>
+                        <%= erp_datalist_check_row(id: unit.id) %>
+                    </td>
+                    <% if get_columns(params).include?("name") %>
+                        <td>
+                            <%= link_to unit.name, erp_products.edit_backend_unit_path(unit) %>
+                        </td>
+                    <% end %>
+                    <% if get_columns(params).include?("status") %>
+                    <td>
+                        <% if unit.archived == true %>
+                        <span class="label label-sm label-danger"><%= t('.archived') %></span>
+                        <% else %>
+                        <span class="label label-sm label-success"><%= t('.active') %></span>
+                        <% end %>
+                    </td>
+                    <% end %>
+                    <% if get_columns(params).include?("creator") %>
+                        <td>
+                            <%= erp_component('avatar', {
+                                user: unit.creator
+                            }) %>
+                        </td>
+                    <% end %>
+                    <% if get_columns(params).include?("created_at") %>
+                        <td><%= unit.created_at.strftime("%d/%m/%Y") %></td>
+                    <% end %>
+                    <td>
+                        <%= erp_datalist_row_actions(
+                            [
+                                {
+                                    text: '<i class="fa fa-edit"></i> '+t('edit'),
+                                    href: erp_products.edit_backend_unit_path(unit)
+                                },
+                                {
+                                    text: '<i class="fa fa-eye-slash"></i> '+t('.archive'),
+                                    url: erp_products.archive_backend_units_path(id: unit),
+                                    data_method: 'PUT',
+                                    hide: unit.archived,
+                                    class: 'ajax-link',
+                                    data_confirm: t('.archive_confirm')
+                                },
+                                {
+                                    text: '<i class="fa fa-eye"></i> '+t('.unarchive'),
+                                    url: erp_products.unarchive_backend_units_path(id: unit),
+                                    data_method: 'PUT',
+                                    hide: !unit.archived,
+                                    class: 'ajax-link',
+                                    data_confirm: t('.unarchive_confirm')
+                                },
+                                {
+                                    divider: true
+                                },
+                                {
+                                    text: '<i class="fa fa-trash"></i> '+t('.delete'),
+                                    url: erp_products.backend_unit_path(unit),
+                                    data_method: 'DELETE',
+                                    class: 'ajax-link',
+                                    data_confirm: t('delete_confirm')
+                                }
+                            ]
+                        ) %>
+                    </td>
+                </tr>
+            <% end.empty? %>
+                <tr>
+                    <td colspan="7"><%= t('.no_matching_records_found') %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+        
+<%= erp_datalist_pagination(@units) %>
