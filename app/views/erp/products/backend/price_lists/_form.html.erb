@@ -59,19 +59,23 @@
                             value: price_list.all_warehouses.to_s,
                             options: Erp::Products::PriceList::get_all_warehouses_options()
                         }) %>
-                        <%= erp_form_control("dataselect", {
-                            name: 'price_list[warehouse_ids][]',
-                            values: (price_list.warehouses.map {|wh| {text: wh.warehouse_name, value: wh.id}}),
-                            multiple: true,
-                            label: t('.list_warehouses'),
-                            url: erp_warehouses.dataselect_backend_warehouses_path(format: 'json'),
-                            create: {
-                                url: erp_warehouses.new_backend_warehouse_path(),
-                                title: t('.create_tax'),
-                                container_selector: '.new_warehouse',
-                                input_selector: 'input[name="warehouse[name]"]'
-                            }
-                        }) %>
+                        <div class="hiddable-control"
+                            data-cond-item="input[name='price_list[all_warehouses]']"
+                            data-cond-value="<%= false %>">
+                            <%= erp_form_control("dataselect", {
+                                name: 'price_list[warehouse_ids][]',
+                                values: (price_list.warehouses.map {|wh| {text: wh.warehouse_name, value: wh.id}}),
+                                multiple: true,
+                                label: t('.list_warehouses'),
+                                url: erp_warehouses.dataselect_backend_warehouses_path(format: 'json'),
+                                create: {
+                                    url: erp_warehouses.new_backend_warehouse_path(),
+                                    title: t('.create_tax'),
+                                    container_selector: '.new_warehouse',
+                                    input_selector: 'input[name="warehouse[name]"]'
+                                }
+                            }) %>
+                        </div>
                     </div>
                     <div class="tab-pane" id="tab_5_2">
                         <%= erp_form_control("radio", {
@@ -80,19 +84,23 @@
                             value: @price_list.all_users.to_s,
                             options: Erp::Products::PriceList::get_all_users_options()
                         }) %>
-                        <%= erp_form_control("dataselect", {
-                            name: 'price_list[price_lists_user_ids][]',
-                            values: (price_list.price_lists_users.map {|u| {text: u.name, value: u.id}}),
-                            multiple: true,
-                            label: t('.list_users'),
-                            url: erp.dataselect_backend_users_path(format: 'json'),
-                            create: {
-                                url: erp.new_backend_user_path(),
-                                title: t('.create_user'),
-                                container_selector: '.new_user',
-                                input_selector: 'input[name="user[name]"]'
-                            }
-                        }) %>
+                        <div class="hiddable-control"
+                            data-cond-item="input[name='price_list[all_users]']"
+                            data-cond-value="<%= false %>">
+                            <%= erp_form_control("dataselect", {
+                                name: 'price_list[price_lists_user_ids][]',
+                                values: (price_list.price_lists_users.map {|u| {text: u.name, value: u.id}}),
+                                multiple: true,
+                                label: t('.list_users'),
+                                url: erp.dataselect_backend_users_path(format: 'json'),
+                                create: {
+                                    url: erp.new_backend_user_path(),
+                                    title: t('.create_user'),
+                                    container_selector: '.new_user',
+                                    input_selector: 'input[name="user[name]"]'
+                                }
+                            }) %>
+                        </div>
                     </div>
                     <div class="tab-pane" id="tab_5_3">
                         <%= erp_form_control("radio", {
@@ -101,13 +109,17 @@
                             value: @price_list.all_contact_groups.to_s,
                             options: Erp::Products::PriceList::get_all_contact_groups_options()
                         }) %>
-                        <%= erp_form_control("dataselect", {
-                            name: '',
-                            values: '',
-                            multiple: true,
-                            label: t('.list_contact_groups'),
-                            url: ''
-                        }) %>
+                        <div class="hiddable-control"
+                            data-cond-item="input[name='price_list[all_contact_groups]']"
+                            data-cond-value="<%= false %>">
+                            <%= erp_form_control("dataselect", {
+                                name: '',
+                                values: '',
+                                multiple: true,
+                                label: t('.list_contact_groups'),
+                                url: ''
+                            }) %>
+                        </div>
                     </div>
                 </div>
             </div>    
