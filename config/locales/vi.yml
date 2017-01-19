@@ -371,6 +371,42 @@ vi:
             success: "Cập nhật đơn vị thành công."
           destroy:
             success: "Xóa đơn vị thành công."
+          delete_all:
+            success: "Các đơn vị đã được xóa thành công."
+          archive:
+            success: "Đơn vị đã được ẩn thành công."
+          unarchive:
+            success: "Đơn vị đã được hiện ra thành công."
+          archive_all:
+            success: "Các đơn vị đã được ẩn thành công."
+          unarchive_all:
+            success: "Các đơn vị đã được hiện ra thành công."
+          index:
+            units: "Đơn vị tính"
+            create: "Thêm đơn vị"
+            name: "Tên đơn vị"
+            archived: "Không kích hoạt"
+            delete: "Xóa đơn vị"
+            archive: "Ẩn khỏi danh sách"
+            unarchive: "Hiện ra danh sách"
+            archive_confirm: "Bạn có chắc muốn ẩn các đơn vị này?"
+            unarchive_confirm: "Bạn muốn hiển thị lại các đơn vị này?"
+          list:
+            name: "Tên đơn vị"
+            active: "Kích hoạt"
+            archived: "Không kích hoạt"
+            delete: "Xóa đơn vị"
+            archive: "Ẩn khỏi danh sách"
+            unarchive: "Hiện ra danh sách"
+            archive_confirm: "Bạn có chắc muốn ẩn đơn vị này?"
+            unarchive_confirm: "Bạn muốn hiển thị lại đơn vị này?"
+            no_matching_records_found: "Danh sách đơn vị hiện tại đang trống."
+          new:
+            units: "Đơn vị tính"
+            create: "Thêm đơn vị"
+          edit:
+            units: "Đơn vị tính"
+            create: "Thêm đơn vị"
           form:
             name: "Tên đơn vị"
             submit: "Lưu"
