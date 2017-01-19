@@ -187,7 +187,7 @@ module Erp
           def price_list_params
             params.fetch(:price_list, {}).permit(:name, :valid_from, :valid_to, :active,
                                                  :all_warehouses, :all_users, :all_contact_groups,
-                                                 warehouse_ids: [], price_lists_user_ids: [])
+                                                 warehouse_ids: [], price_lists_user_ids: [], contact_group_ids: [])
           end
       end
     end
