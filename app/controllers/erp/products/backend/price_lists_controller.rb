@@ -27,7 +27,8 @@ module Erp
         # GET /price_lists/new
         def new
           @price_list = PriceList.new
-          #@price_list.active = params[:active].present? ? params[:active] : true
+          @price_list.valid_from = Time.now
+          @price_list.valid_to = Time.now
           
           if request.xhr?
             render '_form', layout: nil, locals: {price_list: @price_list}
