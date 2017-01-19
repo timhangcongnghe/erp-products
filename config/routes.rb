@@ -49,6 +49,12 @@ Erp::Products::Engine.routes.draw do
       resources :units do
         collection do
           get 'dataselect'
+          post 'list'
+          delete 'delete_all'
+          put 'archive_all'
+          put 'unarchive_all'
+          put 'archive'
+          put 'unarchive'
         end
       end
       resources :products_units do
