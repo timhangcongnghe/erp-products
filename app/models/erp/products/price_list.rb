@@ -6,9 +6,9 @@ module Erp::Products
     if Erp::Core.available?("warehouses")
       has_and_belongs_to_many :warehouses, class_name: 'Erp::Warehouses::Warehouse', :join_table => 'erp_products_price_lists_warehouses'
     end
-    #if Erp::Core.available?("contacts")
-    #  has_and_belongs_to_many :contact_groups, class_name: 'Erp::Contacts::ContactGroup', :join_table => 'erp_contact_groups_price_lists'
-    #end
+    if Erp::Core.available?("contacts")
+      has_and_belongs_to_many :contact_groups, class_name: 'Erp::Contacts::ContactGroup', :join_table => 'erp_contact_groups_price_lists'
+    end
     
     has_and_belongs_to_many :price_lists_users, class_name: 'Erp::User', :join_table => 'erp_products_price_lists_users'
     

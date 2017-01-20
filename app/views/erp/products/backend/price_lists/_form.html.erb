@@ -70,7 +70,7 @@
                                 url: erp_warehouses.dataselect_backend_warehouses_path(format: 'json'),
                                 create: {
                                     url: erp_warehouses.new_backend_warehouse_path(),
-                                    title: t('.create_tax'),
+                                    title: t('.create_warehouse'),
                                     container_selector: '.new_warehouse',
                                     input_selector: 'input[name="warehouse[name]"]'
                                 }
@@ -113,11 +113,17 @@
                             data-cond-item="input[name='price_list[all_contact_groups]']"
                             data-cond-value="<%= false %>">
                             <%= erp_form_control("dataselect", {
-                                name: '',
-                                values: '',
+                                name: 'price_list[contact_group_ids][]',
+                                values: (price_list.contact_groups.map {|cg| {text: cg.name, value: cg.id}}),
                                 multiple: true,
                                 label: t('.list_contact_groups'),
-                                url: ''
+                                url: erp_contacts.dataselect_backend_contact_groups_path(format: 'json'),
+                                create: {
+                                    url: erp_contacts.new_backend_contact_group_path(),
+                                    title: t('.create_contact_group'),
+                                    container_selector: '.new_contact_group',
+                                    input_selector: 'input[name="contact_group[name]"]'
+                                }
                             }) %>
                         </div>
                     </div>
