@@ -438,7 +438,7 @@ vi:
           disable_all:
             success: "Bảng giá ngừng kích hoạt thành công."
           index:
-            price_lists: "Bảng giá"
+            price_lists: "Cấu hình bảng giá"
             name: "Tên bảng giá"
             valid_datetime: "Thời gian hiệu lực"
             valid_from: "Bắt đầu hiệu lực"
@@ -452,7 +452,7 @@ vi:
             delete: "Xóa bảng giá"
             inactive: "Bảng giá chưa kích hoạt"
           list:
-            price_lists: "Bảng giá"
+            price_lists: "Cấu hình bảng giá"
             name: "Tên bảng giá"
             valid_datetime: "Thời gian hiệu lực"
             valid_from: "Áp dụng từ ngày"
@@ -471,16 +471,16 @@ vi:
             active: "Kích hoạt"
             inactive: "Không kích hoạt"
           new:
-            price_lists: "Bảng giá"
+            price_lists: "Cấu hình bảng giá"
             create: "Thêm bảng giá"
           edit: 
-            price_lists: "Bảng giá"
+            price_lists: "Cấu hình bảng giá"
             create: "Thêm bảng giá"
           show:
-            price_lists: "Bảng giá"
+            price_lists: "Cấu hình bảng giá"
             create: "Thêm bảng giá"
           form:
-            price_lists: "Danh sách bảng giá"
+            price_lists: "Cấu hình bảng giá"
             name: "Tên bảng giá"
             valid_from: "Hiệu lực từ"
             valid_to: "Hiệu lực đến"
