@@ -21,6 +21,7 @@ vi:
       backend:
         sidebar:
           inventory: "Hàng hóa"
+          deliveries: "Xuất nhập kho"
           products: "Tất cả sản phẩm"
           categories: "Tất cả chuyên mục"
           price_lists: "Cấu hình bảng giá"

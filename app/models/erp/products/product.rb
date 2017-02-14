@@ -28,6 +28,9 @@ module Erp::Products
     has_many :products_values, through: :products_properties
     
     after_initialize :set_attr
+    
+    OUT_OF_STOCK = 'out_of_stock'
+    IN_TOCK = 'in_stock'
 
 		def set_attr
 			@products_values_attributes = []
@@ -144,6 +147,27 @@ module Erp::Products
     # unit name
     def unit_name
 			unit.present? ? unit.name : ''
+		end
+    
+    # remain stock
+    def stock
+			result = Erp::Deliveries::DeliveryDetail.joins(:delivery).joins(:order_detail)
+			.where(erp_deliveries_deliveries: {delivery_type: Erp::Deliveries::Delivery::TYPE_IMPORT})
+			.where(erp_sales_order_details: {product_id: self.id})
+			.sum("erp_deliveries_delivery_details.quantity") - Erp::Deliveries::DeliveryDetail.joins(:delivery).joins(:order_detail)
+			.where(erp_deliveries_deliveries: {delivery_type: Erp::Deliveries::Delivery::TYPE_EXPORT})
+			.where(erp_sales_order_details: {product_id: self.id})
+			.sum("erp_deliveries_delivery_details.quantity")
+			return result
+		end
+    
+    # stock status
+    def stock_status
+			if stock <= 0
+				return OUT_OF_STOCK
+			else
+				return IN_TOCK
+			end
 		end
     
     # safe properties values from hash
