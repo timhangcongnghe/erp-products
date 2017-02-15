@@ -153,10 +153,10 @@ module Erp::Products
     def stock
 			result = Erp::Deliveries::DeliveryDetail.joins(:delivery).joins(:order_detail)
 			.where(erp_deliveries_deliveries: {delivery_type: Erp::Deliveries::Delivery::TYPE_IMPORT})
-			.where(erp_sales_order_details: {product_id: self.id})
+			.where(erp_orders_order_details: {product_id: self.id})
 			.sum("erp_deliveries_delivery_details.quantity") - Erp::Deliveries::DeliveryDetail.joins(:delivery).joins(:order_detail)
 			.where(erp_deliveries_deliveries: {delivery_type: Erp::Deliveries::Delivery::TYPE_EXPORT})
-			.where(erp_sales_order_details: {product_id: self.id})
+			.where(erp_orders_order_details: {product_id: self.id})
 			.sum("erp_deliveries_delivery_details.quantity")
 			return result
 		end
