@@ -79,10 +79,10 @@
                         <td><%= product.category_name %></td>
                     <% end %>
                     <% if get_columns(params).include?("price") %>
-                        <td><%= product.price %></td>
+                        <td><%= format_number(product.price) %></td>
                     <% end %>
                     <% if get_columns(params).include?("cost") %>
-                        <td><%= product.cost %></td>
+                        <td><%= format_number(product.cost) %></td>
                     <% end %>
                     <% if get_columns(params).include?("on_hand") %>
                         <td><%= product.on_hand %></td>
