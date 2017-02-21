@@ -25,7 +25,7 @@ module Erp::Products
     has_many :products_parts, dependent: :destroy
     accepts_nested_attributes_for :products_parts, :reject_if => lambda { |a| a[:part_id].blank? }, :allow_destroy => true
     
-    has_many :products_values, through: :products_properties
+    has_many :products_values, through: :products_properties, dependent: :destroy
     
     after_initialize :set_attr
     
@@ -173,10 +173,19 @@ module Erp::Products
     # safe properties values from hash
     def update_products_values
 			if self.products_values_attributes.present?
+				products_value_ids = []
+				
 				# save new properties values
 				self.products_values_attributes.each do |pv|
 					pv = pv[1]
+					
+					# Collect all exist and new product values properties
+					properties_value_ids = []
+					
+					# exist products values properties
 					properties_value_ids = pv['ids'].select {|id| id.to_i > 0} if pv['ids'].present?
+					
+					# create if not exist
 					if pv['names'].present?
 						pv['names'].each do |name|
 							name = name.strip
@@ -192,8 +201,19 @@ module Erp::Products
 						property = Property.find(pv['property_id'])
 						self.properties << property if !self.properties.include?(property)
 						products_property = self.products_properties.where(property_id: property.id).first
-						products_value = ProductsValue.create(properties_value_id: pv_id, products_property_id: products_property.id)
+						products_value = ProductsValue.create_if_not_exists(properties_value_id: pv_id, products_property_id: products_property.id)
+						
+						# stack product value ids
+						products_value_ids << products_value.id
 					end
+				end
+				
+				# Delete products values if not exist
+				self.products_values.where.not(id: products_value_ids).destroy_all
+				
+				# Delete products properties not have value
+				self.products_properties.each do |pp|
+					pp.destroy if self.products_values.where(products_property_id: pp.id).empty?
 				end
 			end
     end

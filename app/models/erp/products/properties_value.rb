@@ -1,6 +1,6 @@
 module Erp::Products
   class PropertiesValue < ApplicationRecord
-    belongs_to :property, dependent: :destroy
+    belongs_to :property
     
     validates :value, :presence => true, uniqueness: true
     
@@ -31,11 +31,11 @@ module Erp::Products
     end
     
     def self.create_if_not_exists(prop_id, name)
-        exist = PropertiesValue.where(property_id: prop_id).where(value: name).first
-        if !exist.present?
-            exist = PropertiesValue.create(property_id: prop_id, value: name)
-        end
-        return exist
+			exist = self.where(property_id: prop_id).where(value: name).first
+			if !exist.present?
+				exist = PropertiesValue.create(property_id: prop_id, value: name)
+			end
+			return exist
     end
   end
 end

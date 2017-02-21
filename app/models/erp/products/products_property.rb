@@ -1,9 +1,9 @@
 module Erp::Products
   class ProductsProperty < ApplicationRecord
-    belongs_to :product, dependent: :destroy
-    belongs_to :property, dependent: :destroy
+    belongs_to :product
+    belongs_to :property
     
-    has_many :products_values
+    has_many :products_values, dependent: :destroy
     
     # Get property name
     def property_name
