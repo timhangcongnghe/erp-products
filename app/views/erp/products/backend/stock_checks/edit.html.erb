@@ -1,0 +1,28 @@
+<% content_for :title do %>
+    <%= @stock_check.code %>
+<% end %>
+
+<% content_for :page_title do %>    
+    <a href="<%= erp_products.backend_stock_checks_path %>">
+    <i class="fa fa-file-text-o"></i> <%= t('.stock_checks') %>
+    </a> / <%= @stock_check.code %>
+<% end %>
+
+<% content_for :page_toolbar do %>
+    <%= erp_component('button/create', {
+        text: t('.create'),
+        href: erp_products.new_backend_stock_check_path
+    }) %>
+<% end %>
+
+<div class="row">
+    <div class="col-md-12">
+        <% if @stock_check.errors.any? %>
+            <%= erp_form_control("form_error_message") %>
+        <% end %>
+        
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <%= render 'form', stock_check: @stock_check %>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>

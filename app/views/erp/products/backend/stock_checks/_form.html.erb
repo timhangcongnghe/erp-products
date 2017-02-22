@@ -1,0 +1,115 @@
+<%= form_for([erp_products, :backend, stock_check], html: {multipart: true}) do |f| %>
+    <div class="form-body">        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">
+                        <%= erp_form_control("text", {
+                            name: 'stock_check[code]',
+                            value: stock_check.code,                   
+                            label: t('.code'),
+                            required: true,
+                            errors: stock_check.errors.full_messages_for(:code)
+                        }) %>
+                        <%= erp_form_control('date', {
+                            label: t('.adjustment_date'),
+                            name: 'stock_check[adjustment_date]',
+                            value: stock_check.adjustment_date,
+                            placeholder: t('.choose_adjustment_date'),
+                            required: true,
+                            errors: stock_check.errors.full_messages_for(:adjustment_date)
+                        }) %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">
+                        <% if Erp::Core.available?("warehouses") %>
+                            <%= erp_form_control("dataselect", {
+                                name: 'stock_check[warehouse_id]',
+                                value: stock_check.warehouse_id,
+                                text: stock_check.warehouse_name,
+                                placeholder: t('.choose_warehouse'),
+                                label: t('.warehouse'),
+                                url: erp_warehouses.dataselect_backend_warehouses_path(format: 'json'),
+                                required: true,
+                                errors: stock_check.errors.full_messages_for(:warehouse_id)
+                            }) %>
+                        <% end %>
+                        <%= erp_form_control("textarea", {
+                            name: 'stock_check[description]',
+                            value: stock_check.description,
+                            placeholder: t('.description')
+                        }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tabbable-custom ">
+                    <ul class="nav nav-tabs ">
+                        <li class="active">
+                            <a href="#tab_5_1" data-toggle="tab"> <%= t('.stock_check_details') %> </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content order-details">
+                        <div class="tab-pane addableform-table active" id="tab_5_1">
+                            <%= erp_form_control("addableform", {
+                                type: 'table',
+                                add_button: t('.add'),
+                                partial: 'erp/products/backend/stock_check_details/stock_check_line_form',
+                                partial_url: erp_products.stock_check_line_form_backend_stock_check_details_path,
+                                items: @stock_check.stock_check_details,
+                                item: :stock_check_detail,
+                                add_control_selector: "input[name='product_id']",
+                                add_control: erp_form_control("dataselect", {
+                                    name: 'product_id',
+                                    placeholder: t('.choose_product'),
+                                    label: t('.product'),
+                                    help: t('.help_product'),
+                                    url: erp_products.dataselect_backend_products_path(format: 'json'),
+                                    create: {
+                                        url: erp_products.new_backend_product_path,
+                                        title: t('.create_product'),
+                                        container_selector: '.new_product',
+                                        input_selector: 'input[name="product[name]"]'
+                                    },
+                                    edit: {
+                                        url: erp_products.edit_backend_product_path(id: ':value'),
+                                        title: t('.edit_product'),
+                                        container_selector: '.edit_product',
+                                    }
+                                }),
+                                thead: "<th>#{t('.product_code')}</th>
+                                        <th>#{t('.product_name')}</th>                                        
+                                        <th>#{t('.quantity')}</th>
+                                        <th>#{t('.note')}</th>
+                                        <th class='text-right'>#{t('.action')}</th>"
+                            }) %>
+                            
+                            <table class="table">
+                                <tr>
+                                    <td width="90%" class="text-right text-semibold"><%= t(".quantity_total") %>:</td>
+                                    <td class="text-right">
+                                        <h4>
+                                            <span class="quantity_total text-bold"></span>
+                                        </h4>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%= erp_component('button/save', {
+        text: t('submit')
+    }) %>
+    <%= erp_component('button/cancel', {
+        text: t('cancel'),
+        href: erp_products.backend_stock_checks_path
+    }) %>
+<% end %>

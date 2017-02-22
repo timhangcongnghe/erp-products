@@ -512,6 +512,128 @@ vi:
             part_on_hand: "Tồn kho"
             part_use: "Sử dụng"
             no_matching_records_found: "Danh sách thành phần tiêu thụ hiện tại đang trống."
+        damage_records:
+          create:
+            success: "Thêm phiếu xuất hủy thành công."
+          update:
+            success: "Cập nhật phiếu xuất hủy thành công."
+          destroy:
+            success: "Xóa phiếu xuất hủy thành công."
+          delete_all:
+            success: "Xóa phiếu xuất hủy được chọn thành công."
+          archive:
+            success: "Phiếu xuất hủy đã được ẩn thành công."
+          unarchive:
+            success: "Phiếu xuất hủy đã được hiện ra thành công."
+          archive_all:
+            success: "Các phiếu xuất hủy đã được ẩn thành công."
+          unarchive_all:
+            success: "Các phiếu xuất hủy đã được hiện ra thành công."
+          damage_record_confirm:
+            success: "Phiếu xuất hủy được duyệt thành công"
+          index:
+            damage_records: "Phiếu xuất hủy"
+            create: "Thêm phiếu xuất hủy"
+            code: "Mã xuất hủy"
+            date: "Thời gian"
+            warehouse: "Kho/Chi nhánh"
+            status: "Trạng thái"
+            delete: "Xóa phiếu xuất hủy"
+          list:
+            code: "Mã xuất hủy"
+            date: "Thời gian"
+            warehouse: "Kho/Chi nhánh"
+            status: "Trạng thái"
+            pending: "Chưa xác nhận"
+            done: "Đã xác nhận"
+            delete: "Xóa phiếu xuất hủy"
+            no_matching_records_found: "Danh sách phiếu xuất hủy hiện tại đang trống."
+          new:
+            damage_records: "Phiếu xuất hủy"
+            create: "Thêm phiếu xuất hủy"
+          edit:
+            damage_records: "Phiếu xuất hủy"
+            create: "Thêm phiếu xuất hủy"
+          form:
+            code: "Mã xuất hủy"
+            date: "Thời gian"
+            warehouse: "Kho/Chi nhánh"
+            status: "Trạng thái"
+            choose_date: "Chọn ngày tạo phiếu"
+            choose_warehouse: "Chọn kho/chi nhánh"
+            description: "Mô tả cho phiếu xuất hủy....."
+            note: "Ghi chú"
+            damage_record_details: "Chi tiết sản phẩm cần hủy"
+            product: "Sản phẩm"
+            help_product: "Chọn sản phẩm cần hủy và thêm vào phiếu"
+            choose_product: "Chọn sản phẩm cần thêm vào danh sách hủy"
+            add: "Thêm"
+            product_code: "Mã sản phẩm"
+            product_name: "Tên sản phẩm"
+            quantity: "Số lượng"
+            action: "Thao tác"
+            quantity_total: "Tổng số lượng hủy"
+        stock_checks:
+          create:
+            success: "Thêm phiếu kiểm kho thành công."
+          update:
+            success: "Cập nhật phiếu kiểm kho thành công."
+          destroy:
+            success: "Xóa phiếu kiểm kho thành công."
+          delete_all:
+            success: "Xóa phiếu kiểm kho được chọn thành công."
+          archive:
+            success: "Phiếu kiểm kho đã được ẩn thành công."
+          unarchive:
+            success: "Phiếu kiểm kho đã được hiện ra thành công."
+          archive_all:
+            success: "Các phiếu kiểm kho đã được ẩn thành công."
+          unarchive_all:
+            success: "Các phiếu kiểm kho đã được hiện ra thành công."
+          stock_check_confirm:
+            success: "Phiếu kiểm kho được duyệt thành công"
+          index:
+            stock_checks: "Phiếu kiểm kho"
+            create: "Thêm phiếu kiểm kho"
+            code: "Mã kiểm kho"
+            adjustment_date: "Ngày cân bằng kho"
+            warehouse: "Kho/Chi nhánh"
+            status: "Trạng thái"
+            delete_confirm: "Xóa phiếu kiểm kho"
+          list:
+            code: "Mã kiểm kho"
+            adjustment_date: "Thời gian"
+            warehouse: "Kho/Chi nhánh"
+            status: "Trạng thái"
+            pending: "Chưa xác nhận"
+            done: "Đã xác nhận"
+            delete: "Xóa phiếu kiểm kho"
+            no_matching_records_found: "Danh sách phiếu kiểm kho hiện tại đang trống."
+          new:
+            stock_checks: "Phiếu kiểm kho"
+            create: "Thêm phiếu kiểm kho"
+          edit:
+            stock_checks: "Phiếu kiểm kho"
+            create: "Thêm phiếu kiểm kho"
+          form:
+            code: "Mã kiểm kho"
+            adjustment_date: "Ngày cân bằng"
+            warehouse: "Kho/Chi nhánh"
+            status: "Trạng thái"
+            choose_adjustment_date: "Chọn ngày cân bằng kho"
+            choose_warehouse: "Chọn kho/chi nhánh"
+            description: "Mô tả cho phiếu kiểm kho....."
+            note: "Ghi chú"
+            stock_check_details: "Chi tiết kiểm kho"
+            product: "Sản phẩm"
+            help_product: "Chọn sản phẩm cần thêm để kiểm tra và cân bằng kho"
+            choose_product: "Chọn sản phẩm"
+            add: "Thêm"
+            product_code: "Mã sản phẩm"
+            product_name: "Tên sản phẩm"
+            quantity: "Số lượng"
+            action: "Thao tác"
+            quantity_total: "Tổng số lượng sản phẩm kiểm"
   activerecord:
     errors:
       models:
@@ -535,6 +657,22 @@ vi:
               blank: "không được để trống."
             quantity:
               blank: "không được để trống."
+        erp/products/damage_record:
+          attributes:
+            code:
+              blank: "không được để trống."
+            date:
+              blank: "không được để trống."
+            warehouse_id:
+              blank: "không được để trống."
+        erp/products/stock_check:
+          attributes:
+            code:
+              blank: "không được để trống."
+            adjustment_date:
+              blank: "không được để trống."
+            warehouse_id:
+              blank: "không được để trống."
     attributes:
       erp/products/product:
         name: "Tên sản phẩm"
@@ -546,3 +684,11 @@ vi:
       erp/products/manufacturing:
         product_id: "Mặt hàng sản xuất"
         quantity: "Số lượng"
+      erp/products/damage_record:
+        code: "Mã xuất hủy"
+        date: "Thời gian"
+        warehouse_id: "Kho/Chi nhánh"
+      erp/products/stock_check:
+        code: "Mã xuất hủy"
+        adjustment_date: "Thời gian"
+        warehouse_id: "Kho/Chi nhánh"

@@ -1,0 +1,124 @@
+<table class="table table-advance table-hover table-striped table-checkable order-column">
+    <thead>
+        <tr>
+            <th width='1%'>
+                <%= erp_datalist_check_all %>
+            </th>
+            <% if get_columns(params).include?("code") %>
+                <th class="sortable" sort-by='erp_products_stock_checks.code'>
+                    <%= t('.code') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("adjustment_date") %>
+                <th>
+                    <%= t('.adjustment_date') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("warehouse") %>
+                <th>
+                    <%= t('.warehouse') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("status") %>
+                <th>
+                    <%= t('status') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("creator") %>
+                <th>
+                    <%= t('creator') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("created_at") %>
+                <th class="sortable" sort-by='erp_products_stock_checks.created_at'>
+                    <%= t('created_at') %>
+                </th>
+            <% end %>
+            <th width="7%"><%= t('actions') %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if @stock_checks.each do |stock_check| %>
+            <tr class="odd gradeX">
+                <td>
+                    <%= erp_datalist_check_row(id: stock_check.id) %>
+                </td>
+                <% if get_columns(params).include?("code") %>
+                    <td><%= link_to stock_check.code, erp_products.edit_backend_stock_check_path(stock_check) %></td>
+                <% end %>
+                <% if get_columns(params).include?("adjustment_date") %>
+                    <td><%= stock_check.adjustment_date.strftime("%H:%M %d-%m-%Y") %></td>
+                <% end %>
+                <% if get_columns(params).include?("warehouse") %>
+                    <td><%= stock_check.warehouse_name %></td>
+                <% end %>
+                <% if get_columns(params).include?("status") %>
+                <td>
+                    <% if stock_check.status == Erp::Products::StockCheck::STOCK_CHECK_STATUS_PENDING %>
+                    <span class="label label-sm label-warning"><%= t('.'+stock_check.status) %></span>
+                    <% else %>
+                    <span class="label label-sm label-success"><%= t('.'+stock_check.status) %></span>
+                    <% end %>
+                </td>
+                <% end %>
+                <% if get_columns(params).include?("creator") %>
+                    <td>
+                        <%= erp_component('avatar', {
+                            user: stock_check.creator
+                        }) %>
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("created_at") %>
+                    <td><%= stock_check.created_at.strftime("%d/%m/%Y") %></td>
+                <% end %>
+                <td>
+                    <%= erp_datalist_row_actions(
+                        [
+                            {
+                                text: '<i class="fa fa-edit"></i> '+t('edit'),
+                                href: erp_products.edit_backend_stock_check_path(stock_check)
+                            },
+                            {
+                                text: '<i class="fa fa-check"></i> '+t('confirm'),
+                                url: erp_products.stock_check_confirm_backend_stock_checks_path(id: stock_check),
+                                data_method: 'PUT',
+                                hide: stock_check.status != 'pending',
+                                class: 'ajax-link'
+                            },
+                            {
+                                text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
+                                url: erp_products.archive_backend_stock_checks_path(id: stock_check),
+                                data_method: 'PUT',
+                                hide: stock_check.archived,
+                                class: 'ajax-link'
+                            },
+                            {
+                                text: '<i class="fa fa-eye"></i> '+t('unarchive'),
+                                url: erp_products.unarchive_backend_stock_checks_path(id: stock_check),
+                                data_method: 'PUT',
+                                hide: !stock_check.archived,
+                                class: 'ajax-link'
+                            },
+                            {
+                                divider: true
+                            },
+                            {
+                                text: '<i class="fa fa-trash"></i> '+t('.delete'),
+                                url: erp_products.backend_stock_check_path(stock_check),
+                                data_method: 'DELETE',
+                                class: 'ajax-link',
+                                data_confirm: t('delete_confirm')
+                            }
+                        ]
+                    ) %>
+                </td>
+            </tr>
+        <% end.empty? %>
+            <tr>
+                <td colspan="7"><%= t('.no_matching_records_found') %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+        
+<%= erp_datalist_pagination(@stock_checks) %>

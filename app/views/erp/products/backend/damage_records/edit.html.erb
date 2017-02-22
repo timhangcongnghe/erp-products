@@ -1,0 +1,28 @@
+<% content_for :title do %>
+    <%= @damage_record.code %>
+<% end %>
+
+<% content_for :page_title do %>    
+    <a href="<%= erp_products.backend_damage_records_path %>">
+    <i class="fa fa-file-text-o"></i> <%= t('.damage_records') %>
+    </a> / <%= @damage_record.code %>
+<% end %>
+
+<% content_for :page_toolbar do %>
+    <%= erp_component('button/create', {
+        text: t('.create'),
+        href: erp_products.new_backend_damage_record_path
+    }) %>
+<% end %>
+
+<div class="row">
+    <div class="col-md-12">
+        <% if @damage_record.errors.any? %>
+            <%= erp_form_control("form_error_message") %>
+        <% end %>
+        
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <%= render 'form', damage_record: @damage_record %>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>

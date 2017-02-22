@@ -1,0 +1,124 @@
+<table class="table table-advance table-hover table-striped table-checkable order-column">
+    <thead>
+        <tr>
+            <th width='1%'>
+                <%= erp_datalist_check_all %>
+            </th>
+            <% if get_columns(params).include?("code") %>
+                <th class="sortable" sort-by='erp_products_damage_records.code'>
+                    <%= t('.code') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("date") %>
+                <th>
+                    <%= t('.date') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("warehouse") %>
+                <th>
+                    <%= t('.warehouse') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("status") %>
+                <th>
+                    <%= t('status') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("creator") %>
+                <th>
+                    <%= t('creator') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("created_at") %>
+                <th class="sortable" sort-by='erp_product_damage_records.created_at'>
+                    <%= t('created_at') %>
+                </th>
+            <% end %>
+            <th width="7%"><%= t('actions') %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if @damage_records.each do |damage_record| %>
+            <tr class="odd gradeX">
+                <td>
+                    <%= erp_datalist_check_row(id: damage_record.id) %>
+                </td>
+                <% if get_columns(params).include?("code") %>
+                    <td><%= link_to damage_record.code, erp_products.edit_backend_damage_record_path(damage_record) %></td>
+                <% end %>
+                <% if get_columns(params).include?("date") %>
+                    <td><%= damage_record.date.strftime("%H:%M %d-%m-%Y") %></td>
+                <% end %>
+                <% if get_columns(params).include?("warehouse") %>
+                    <td><%= damage_record.warehouse_name %></td>
+                <% end %>
+                <% if get_columns(params).include?("status") %>
+                <td>
+                    <% if damage_record.status == Erp::Products::DamageRecord::DAMAGE_RECORD_STATUS_PENDING %>
+                    <span class="label label-sm label-warning"><%= t('.'+damage_record.status) %></span>
+                    <% else %>
+                    <span class="label label-sm label-success"><%= t('.'+damage_record.status) %></span>
+                    <% end %> 
+                </td>
+                <% end %>
+                <% if get_columns(params).include?("creator") %>
+                    <td>
+                        <%= erp_component('avatar', {
+                            user: damage_record.creator
+                        }) %>
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("created_at") %>
+                    <td><%= damage_record.created_at.strftime("%d/%m/%Y") %></td>
+                <% end %>
+                <td>
+                    <%= erp_datalist_row_actions(
+                        [
+                            {
+                                text: '<i class="fa fa-edit"></i> '+t('edit'),
+                                href: erp_products.edit_backend_damage_record_path(damage_record)
+                            },
+                            {
+                                text: '<i class="fa fa-check"></i> '+t('confirm'),
+                                url: erp_products.damage_record_confirm_backend_damage_records_path(id: damage_record),
+                                data_method: 'PUT',
+                                hide: damage_record.status != 'pending',
+                                class: 'ajax-link'
+                            },
+                            {
+                                text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
+                                url: erp_products.archive_backend_damage_records_path(id: damage_record),
+                                data_method: 'PUT',
+                                hide: damage_record.archived,
+                                class: 'ajax-link'
+                            },
+                            {
+                                text: '<i class="fa fa-eye"></i> '+t('unarchive'),
+                                url: erp_products.unarchive_backend_damage_records_path(id: damage_record),
+                                data_method: 'PUT',
+                                hide: !damage_record.archived,
+                                class: 'ajax-link'
+                            },
+                            {
+                                divider: true
+                            },
+                            {
+                                text: '<i class="fa fa-trash"></i> '+t('.delete'),
+                                url: erp_products.backend_damage_record_path(damage_record),
+                                data_method: 'DELETE',
+                                class: 'ajax-link',
+                                data_confirm: t('delete_confirm')
+                            }
+                        ]
+                    ) %>
+                </td>
+            </tr>
+        <% end.empty? %>
+            <tr>
+                <td colspan="8"><%= t('.no_matching_records_found') %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+        
+<%= erp_datalist_pagination(@damage_records) %>

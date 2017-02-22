@@ -79,6 +79,40 @@ Erp::Products::Engine.routes.draw do
           put 'disable'
 				end
 			end
+      resources :damage_records do
+        collection do
+          post 'list'
+          get 'dataselect'
+          delete 'delete_all'
+          put 'damage_record_confirm'
+          put 'archive'
+          put 'unarchive'
+          put 'archive_all'
+          put 'unarchive_all'
+        end
+      end
+      resources :damage_record_details do
+				collection do
+          get 'damage_record_line_form'
+				end
+			end
+      resources :stock_checks do
+        collection do
+          post 'list'
+          get 'dataselect'
+          delete 'delete_all'
+          put 'stock_check_confirm'
+          put 'archive'
+          put 'unarchive'
+          put 'archive_all'
+          put 'unarchive_all'
+        end
+      end
+      resources :stock_check_details do
+				collection do
+          get 'stock_check_line_form'
+				end
+			end
     end
 	end
 end
