@@ -31,6 +31,5 @@
     <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
     <% end %>
 </div>
-<% if !@products_parts.empty? %>
+
 <%= erp_datalist_pagination(@products_parts) %>
-<% end %>
