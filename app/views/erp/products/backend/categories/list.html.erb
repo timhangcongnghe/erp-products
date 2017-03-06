@@ -1,116 +1,115 @@
-<div class="">
-    <table class="table table-advance table-hover table-striped table-checkable order-column">
-        <thead>
-            <tr>
-                <th width='1%'>
-                    <%= erp_datalist_check_all %>
+
+<table class="table table-advance table-hover table-striped table-checkable order-column">
+    <thead>
+        <tr>
+            <th width='1%'>
+                <%= erp_datalist_check_all %>
+            </th>
+            <% if get_columns(params).include?("name") %>
+                <th class="sortable" sort-by='erp_products_categories.name'>
+                    <%= t('.name') %>
                 </th>
+            <% end %>
+            <% if get_columns(params).include?("product_count") %>
+                <th>
+                    <%= t('.product_count') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("status") %>
+                <th>
+                    <%= t('status') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("creator") %>
+                <th>
+                    <%= t('creator') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("created_at") %>
+                <th class="sortable" sort-by='erp_products_categories.created_at'>
+                    <%= t('created_at') %>
+                </th>
+            <% end %>
+            <th width="7%"><%= t('actions') %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @categories.each do |category| %>
+            <tr class="odd gradeX">
+                <td>
+                    <%= erp_datalist_check_row(id: category.id) %>
+                </td>
                 <% if get_columns(params).include?("name") %>
-                    <th class="sortable" sort-by='erp_products_categories.name'>
-                        <%= t('.name') %>
-                    </th>
+                    <td><%= link_to category.full_name, erp_products.edit_backend_category_path(category), class: 'title' %></td>
                 <% end %>
                 <% if get_columns(params).include?("product_count") %>
-                    <th>
-                        <%= t('.product_count') %>
-                    </th>
+                    <td><%= category.product_count %></td>
                 <% end %>
                 <% if get_columns(params).include?("status") %>
-                    <th>
-                        <%= t('status') %>
-                    </th>
+                <td>
+                    <% if category.archived == true %>
+                        <%= erp_component('label/danger', {
+                            text: t('archived')
+                        }) %>                            
+                    <% else %>
+                        <%= erp_component('label/success', {
+                            text: t('active')
+                        }) %>
+                    <% end %> 
+                </td>
                 <% end %>
                 <% if get_columns(params).include?("creator") %>
-                    <th>
-                        <%= t('creator') %>
-                    </th>
+                    <td>
+                        <%= erp_component('avatar', {
+                            user: category.creator
+                        }) %>
+                    </td>
                 <% end %>
                 <% if get_columns(params).include?("created_at") %>
-                    <th class="sortable" sort-by='erp_products_categories.created_at'>
-                        <%= t('created_at') %>
-                    </th>
+                    <td><%= category.created_at.strftime("%d/%m/%Y") %></td>
                 <% end %>
-                <th width="7%"><%= t('actions') %></th>
+                <td class="text-right">
+                    <%= erp_datalist_row_actions(
+                        [
+                            {
+                                text: '<i class="fa fa-edit"></i> '+t('edit'),
+                                href: erp_products.edit_backend_category_path(category)
+                            },
+                            {
+                                text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
+                                url: erp_products.archive_backend_categories_path(id: category),
+                                data_method: 'PUT',
+                                hide: category.archived,
+                                class: 'ajax-link',
+                                data_confirm: t('.archive_confirm')
+                            },
+                            {
+                                text: '<i class="fa fa-eye"></i> '+t('unarchive'),
+                                url: erp_products.unarchive_backend_categories_path(id: category),
+                                data_method: 'PUT',
+                                hide: !category.archived,
+                                class: 'ajax-link',
+                                data_confirm: t('.unarchive_confirm')
+                            },
+                            {
+                                divider: true
+                            },
+                            {
+                                text: '<i class="fa fa-trash"></i> '+t('.delete'),
+                                url: erp_products.backend_category_path(category),
+                                data_method: 'DELETE',
+                                class: 'ajax-link',
+                                data_confirm: t('delete_confirm')
+                            }
+                        ]
+                    ) %>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            <% @categories.each do |category| %>
-                <tr class="odd gradeX">
-                    <td>
-                        <%= erp_datalist_check_row(id: category.id) %>
-                    </td>
-                    <% if get_columns(params).include?("name") %>
-                        <td><%= link_to category.full_name, erp_products.edit_backend_category_path(category), class: 'title' %></td>
-                    <% end %>
-                    <% if get_columns(params).include?("product_count") %>
-                        <td><%= category.product_count %></td>
-                    <% end %>
-                    <% if get_columns(params).include?("status") %>
-                    <td>
-                        <% if category.archived == true %>
-                            <%= erp_component('label/danger', {
-                                text: t('archived')
-                            }) %>                            
-                        <% else %>
-                            <%= erp_component('label/success', {
-                                text: t('active')
-                            }) %>
-                        <% end %> 
-                    </td>
-                    <% end %>
-                    <% if get_columns(params).include?("creator") %>
-                        <td>
-                            <%= erp_component('avatar', {
-                                user: category.creator
-                            }) %>
-                        </td>
-                    <% end %>
-                    <% if get_columns(params).include?("created_at") %>
-                        <td><%= category.created_at.strftime("%d/%m/%Y") %></td>
-                    <% end %>
-                    <td class="text-right">
-                        <%= erp_datalist_row_actions(
-                            [
-                                {
-                                    text: '<i class="fa fa-edit"></i> '+t('edit'),
-                                    href: erp_products.edit_backend_category_path(category)
-                                },
-                                {
-                                    text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
-                                    url: erp_products.archive_backend_categories_path(id: category),
-                                    data_method: 'PUT',
-                                    hide: category.archived,
-                                    class: 'ajax-link',
-                                    data_confirm: t('.archive_confirm')
-                                },
-                                {
-                                    text: '<i class="fa fa-eye"></i> '+t('unarchive'),
-                                    url: erp_products.unarchive_backend_categories_path(id: category),
-                                    data_method: 'PUT',
-                                    hide: !category.archived,
-                                    class: 'ajax-link',
-                                    data_confirm: t('.unarchive_confirm')
-                                },
-                                {
-                                    divider: true
-                                },
-                                {
-                                    text: '<i class="fa fa-trash"></i> '+t('.delete'),
-                                    url: erp_products.backend_category_path(category),
-                                    data_method: 'DELETE',
-                                    class: 'ajax-link',
-                                    data_confirm: t('delete_confirm')
-                                }
-                            ]
-                        ) %>
-                    </td>
-                </tr>
-            <% end %>
-        </tbody>
-    </table>
-    <% if @categories.empty? %>
-        <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
-    <% end %>
-</div>
+        <% end %>
+    </tbody>
+</table>
+<% if @categories.empty? %>
+    <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
+<% end %>
         
 <%= erp_datalist_pagination(@categories) %>
