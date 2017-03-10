@@ -4,6 +4,7 @@ module Erp::Products
     belongs_to :creator, class_name: "Erp::User"
     belongs_to :parent, class_name: "Erp::Products::Category", optional: true
     has_many :children, class_name: "Erp::Products::Category", foreign_key: "parent_id"
+    has_many :related_categories, dependent: :destroy
     validates :name, :presence => true
     
     # Filters
