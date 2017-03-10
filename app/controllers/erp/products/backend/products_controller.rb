@@ -26,7 +26,7 @@ module Erp
         def new
           @product = Product.new
           @product.products_properties << ProductsProperty.new
-          4.times do
+          8.times do
             @product.product_images.build
           end
         end
@@ -34,7 +34,7 @@ module Erp
         # GET /products/1/edit
         def edit
           # default product images
-          (4 - @product.product_images.count).times do
+          (8 - @product.product_images.count).times do
             @product.product_images.build
           end
         end
