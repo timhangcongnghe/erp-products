@@ -177,7 +177,9 @@ module Erp
     
           # Only allow a trusted parameter "white list" through.
           def category_params
-            params.fetch(:category, {}).permit(:name, :parent_id)
+            params.fetch(:category, {}).permit(:image_url, :name, :description, :parent_id,
+                                               :meta_keywords, :meta_description,
+                                               :related_categories_attributes => [:id, :category_id, :_destroy],)
           end
       end
     end
