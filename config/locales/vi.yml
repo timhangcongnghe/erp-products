@@ -75,9 +75,18 @@ vi:
             create: "Thêm chuyên mục"
           form:
             name: "Tên chuyên mục"
+            description: "Mô tả"
+            enter_description: "Nhập mô tả cho chuyên mục"
+            meta_keywords: "Từ khóa - SEO"
+            meta_description: "Mô tả - SEO"
+            enter_meta_keywords: "Nhập những từ khóa"
+            enter_meta_description: "Nhập nội dung miêu tả"
             create: "Thêm chuyên mục cha"
             choose_parent_category: "Chọn chuyên mục cha"
             parent_category: "Chuyên mục cha"
+            related_category: "Chuyên mục liên quan"
+            help_category: "Thêm những chuyên mục liên quan"
+            choose_related_category: "Chọn chuyên mục liên quan"
         properties:
           create:
             success: "Thêm thuộc tính thành công."

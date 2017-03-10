@@ -12,6 +12,11 @@ Erp::Products::Engine.routes.draw do
           put 'unarchive'
         end
       end
+      resources :related_categories do
+				collection do
+          get 'related_category_line_form'
+				end
+			end
       resources :products do
         collection do
           post 'list'
