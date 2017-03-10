@@ -93,6 +93,15 @@ module Erp::Products
 
       query = query.where(and_conds.join(' AND ')) if !and_conds.empty?
       
+      # single keyword
+      if params[:keyword].present?
+				keyword = params[:keyword].strip.downcase
+				keyword.split(' ').each do |q|
+					q = q.strip
+					query = query.where('LOWER(erp_products_products.name) LIKE ?', '%'+q+'%')
+				end				
+			end
+      
       return query
     end
     
@@ -218,6 +227,9 @@ module Erp::Products
 			end
     end
     
-    # get products values names array
+    # get product main images
+    def main_image
+			product_images.first
+		end
   end
 end
