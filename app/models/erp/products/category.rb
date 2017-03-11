@@ -12,6 +12,25 @@ module Erp::Products
     has_many :related_categories, foreign_key: "parent_id", inverse_of: :parent, dependent: :destroy
     accepts_nested_attributes_for :related_categories, :reject_if => lambda { |a| a[:category_id].blank? }
     
+    after_create :init_custom_order
+    after_save :update_level
+    
+    # update level
+    def update_level
+			level = 1
+			parent = self.parent
+			while parent.present?
+				level += 1
+			end
+			
+			level
+		end
+    
+    # init custom order
+    def init_custom_order
+			self.update_column(:custom_order, self.class.maximum("custom_order").to_i + 1)
+		end
+    
     # Filters
     def self.filter(query, params)
       params = params.to_unsafe_hash
@@ -121,6 +140,41 @@ module Erp::Products
 				p = p.parent
 			end
 			names.reverse.join(" >> ")
+		end
+    
+    # Get get all archive
+    def self.all_unarchive
+			self.where(archived: false)
+		end
+    
+    # get prev item
+    def prev
+			Category.where(parent_id: self.parent_id).where('custom_order < ?', self.custom_order).first
+		end
+    
+    # get next item
+    def next
+			Category.where(parent_id: self.parent_id).where('custom_order > ?', self.custom_order).first
+		end
+    
+    # move up item
+    def move_up
+			prev_category = self.prev
+			if prev_category.present?
+				current_order = self.custom_order
+				self.update_column(:custom_order, prev_category.custom_order)
+				prev_category.update_column(:custom_order, current_order)
+			end
+		end
+    
+    # move down item
+    def move_down
+			next_category = self.next
+			if next_category.present?
+				current_order = self.custom_order
+				self.update_column(:custom_order, next_category.custom_order)
+				next_category.update_column(:custom_order, current_order)
+			end
 		end
     
   end

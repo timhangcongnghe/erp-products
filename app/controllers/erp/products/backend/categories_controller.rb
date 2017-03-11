@@ -2,7 +2,7 @@ module Erp
   module Products
     module Backend
       class CategoriesController < Erp::Backend::BackendController
-        before_action :set_category, only: [:archive, :unarchive, :edit, :update, :destroy]
+        before_action :set_category, only: [:archive, :unarchive, :edit, :update, :destroy, :move_up, :move_down]
         before_action :set_categories, only: [:delete_all, :archive_all, :unarchive_all]
         
         # GET /categories
@@ -161,6 +161,34 @@ module Erp
               render json: Category.dataselect(params[:keyword])
             }
           end
+        end
+        
+        # Move up /categories/up?id=1
+        def move_up      
+          @category.move_up
+          
+          respond_to do |format|
+          format.json {
+            render json: {
+            #'message': t('.success'),
+            #'type': 'success'
+            }
+          }
+          end          
+        end
+        
+        # Move down /categories/up?id=1
+        def move_down     
+          @category.move_down
+          
+          respond_to do |format|
+          format.json {
+            render json: {
+            #'message': t('.success'),
+            #'type': 'success'
+            }
+          }
+          end          
         end
     
         private

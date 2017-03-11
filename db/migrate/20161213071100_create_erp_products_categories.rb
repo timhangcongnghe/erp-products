@@ -9,6 +9,7 @@ class CreateErpProductsCategories < ActiveRecord::Migration[5.0]
       t.text :meta_description
       t.boolean :archived, default: false
       t.references :creator, index: true, references: :erp_users
+      t.integer :custom_order
 
       t.timestamps
     end
