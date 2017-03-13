@@ -205,7 +205,7 @@ module Erp
           def category_params
             params.fetch(:category, {}).permit(:image_url, :name, :description, :parent_id,
                                                :meta_keywords, :meta_description,
-                                               :related_categories_attributes => [:id, :category_id, :_destroy],)
+                                               :related_categories_attributes => [:id, :category_id, :_destroy])
           end
       end
     end
