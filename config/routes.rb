@@ -120,6 +120,17 @@ Erp::Products::Engine.routes.draw do
           get 'stock_check_line_form'
 				end
 			end
+      resources :brands do
+        collection do
+          get 'dataselect'
+          post 'list'
+          delete 'delete_all'
+          put 'archive_all'
+          put 'unarchive_all'
+          put 'archive'
+          put 'unarchive'
+        end
+      end
     end
 	end
 end

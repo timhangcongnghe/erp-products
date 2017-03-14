@@ -12,6 +12,15 @@ class CreateErpProductsProducts < ActiveRecord::Migration[5.0]
       t.decimal :stock_min, default: 0.0
       t.decimal :stock_max, default: 999999.0
       t.text :description
+      # frontend
+      t.text :short_description
+      t.boolean :is_sales, default: false
+      t.boolean :is_new, default: false
+      t.decimal :sales_price
+      t.integer :sales_percent
+      t.references :brand, index: true, references: :erp_products_brands
+      t.text :events_note
+      # end frontend
       t.text :internal_note
       t.boolean :can_be_sold, default: true
       t.boolean :can_be_purchased, default: true

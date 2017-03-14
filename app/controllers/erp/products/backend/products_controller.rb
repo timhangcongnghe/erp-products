@@ -193,8 +193,8 @@ module Erp
           def product_params
             params.fetch(:product, {}).permit(
               :code, :name, :can_be_sold, :can_be_purchased, :product_type, :barcode,
-              :price, :cost, :on_hand, :weight, :volume, :is_for_pos, :unit_id,
-              :stock_min, :stock_max, :description, :internal_note, :point_enabled, :category_id,              
+              :price, :sales_price, :sales_percent, :cost, :on_hand, :weight, :volume, :is_sales, :is_new, :is_for_pos, :unit_id,
+              :stock_min, :stock_max, :description, :short_description, :internal_note, :point_enabled, :category_id, :brand_id,              
               customer_tax_ids: [], vendor_tax_ids: [],
               :product_images_attributes => [ :id, :image_url, :image_url_cache, :product_id, :_destroy ],
               :products_units_attributes => [ :id, :unit_id, :conversion_value, :price, :code, :product_id, :_destroy ],

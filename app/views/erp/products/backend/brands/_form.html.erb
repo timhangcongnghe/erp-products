@@ -1,0 +1,30 @@
+<%= form_for([erp_products, :backend, brand], html: {multipart: true}) do |f| %>
+    <div class="form-body">
+        <div class="portlet light bordered">
+            <div class="portlet-body form">
+                <%= erp_form_control("text", {
+                    name: 'brand[name]',
+                    value: brand.name,                   
+                    label: t('.name'),
+                    placeholder: t('.enter_name'),
+                    required: true,
+                    errors: brand.errors.full_messages_for(:name)
+                }) %>
+                <%= erp_form_control("editor", {
+                    name: 'brand[description]',
+                    value: brand.description,                   
+                    label: t('.description'),
+                    placeholder: t('.enter_description'),
+                    type: "tiny"
+                }) %>
+            </div>
+        </div>
+    </div>
+    <%= erp_component('button/save', {
+        text: t('submit')
+    }) %>
+    <%= erp_component('button/cancel', {
+        text: t('cancel'),
+        href: erp_products.backend_brands_path
+    }) %>
+<% end %>

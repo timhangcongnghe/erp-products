@@ -6,6 +6,7 @@ module Erp::Products
     
     belongs_to :creator, class_name: "Erp::User"
     belongs_to :category
+    belongs_to :brand
     belongs_to :unit, class_name: 'Erp::Products::Unit', optional: true
     
     if Erp::Core.available?("taxes")
@@ -156,6 +157,16 @@ module Erp::Products
     # unit name
     def unit_name
 			unit.present? ? unit.name : ''
+		end
+    
+    # brand name
+    def brand_name
+			brand.present? ? brand.name : ''
+		end
+    
+    # color name
+    def color_name
+			brand.present? ? brand.name : ''
 		end
     
     # remain stock

@@ -269,14 +269,30 @@ vi:
             product_part: "Sản phẩm thành phần"
             help_product_part: "Sản phẩm này được cấu thành từ các sản phẩm thành phần"
             choose_product_part: "Chọn sản phẩm thành phần"
-            
-            
+            # frontend
+            brand: "Thương hiệu"
+            choose_brand: "Chọn thương hiệu"
+            help_brand: "Thương hiệu của sản phẩm"
+            create_brand: "Thêm thương hiệu"
+            short_description: "Mô tản ngắn"
+            enter_short_description: "Nhập mô tả ngắn"
+            product_is_sales: "Sản phẩm khuyến mãi"
+            product_is_new: "Sản phẩm mới"
+            is_sales: "Đang khuyến mãi"
+            help_is_sales: "Chọn đây là sản phẩm khuyến mãi"
+            is_new: "Sản phẩm mới"
+            help_is_new: "Chọn đây là sản phẩm mới"
+            sales_price: "Giá bán khuyến mãi"
+            placeholder_sales_price: "Nhập giá bán khuyến mãi"
+            help_sales_price: "Nhập giá bán khuyến mãi (Lưu ý: Phải chọn sản phẩm là khuyến mãi)"
+            sales_percent: "Phần trăm khuyến mãi"
+            placeholder_sales_percent: "Nhập phần trăm khuyến mãi"
+            help_sales_percent: "Nhập phần trăm khuyến mãi (Lưu ý: Phải chọn sản phẩm là khuyến mãi)"
+            # end frontend
             description_for_quotations: "Description for Quotations"
             description_for_pickings: "Description for Pickings"
             enter_quotations_description: "This note will be displayed on the quotations."
             enter_pickings_description: "Description for Pickings (Rack, Row and Case Information)"
-            submit: "Lưu"
-            cancel: "Hủy"
             add_unit: "Thêm đơn vị"
             add_property: "Thêm thuộc tính"
             add_part: "Thêm thành phần"
@@ -421,6 +437,45 @@ vi:
             name: "Tên đơn vị"
             submit: "Lưu"
             cancel: "Hủy"
+        brands:
+          create:
+            success: "Thêm thương hiệu thành công."
+          update:
+            success: "Cập nhật thương hiệu thành công."
+          destroy:
+            success: "Xóa thương hiệu thành công."
+          delete_all:
+            success: "Các thương hiệu đã được xóa thành công."
+          archive:
+            success: "Thương hiệu đã được ẩn thành công."
+          unarchive:
+            success: "Thương hiệu đã được hiện ra thành công."
+          archive_all:
+            success: "Các thương hiệu đã được ẩn thành công."
+          unarchive_all:
+            success: "Các thương hiệu đã được hiện ra thành công."
+          index:
+            brands: "Thương hiệu"
+            create: "Thêm thương hiệu"
+            name: "Tên thương hiệu"
+            delete: "Xóa thương hiệu"
+          list:
+            name: "Tên thương hiệu"
+            delete: "Xóa thương hiệu"
+            archive_confirm: "Bạn có chắc muốn ẩn thương hiệu này?"
+            unarchive_confirm: "Bạn muốn hiển thị lại thương hiệu này?"
+            no_matching_records_found: "Danh sách thương hiệu hiện tại đang trống."
+          new:
+            brands: "Thương hiệu"
+            create: "Thêm thương hiệu"
+          edit:
+            brands: "Thương hiệu"
+            create: "Thêm thương hiệu"
+          form:
+            name: "Tên thương hiệu"
+            enter_name: "Nhập tên thương hiệu..."
+            description: "Mô tả"
+            enter_description: "Nhập mô tả..."
         products_units:
           form_line:
             unit_name: "Tên đơn vị"
@@ -682,10 +737,16 @@ vi:
               blank: "không được để trống."
             warehouse_id:
               blank: "không được để trống."
+        erp/products/brand:
+          attributes:
+            name:
+              blank: "không được để trống."
     attributes:
       erp/products/product:
         name: "Tên sản phẩm"
         category_id: "Chuyên mục sản phẩm"
+      erp/products/brand:
+        name: "Tên thương hiệu"
       erp/products/category:
         name: "Tên chuyên mục"
       erp/products/property:
