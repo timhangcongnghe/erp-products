@@ -32,6 +32,10 @@ module Erp::Products
     
     OUT_OF_STOCK = 'out_of_stock'
     IN_TOCK = 'in_stock'
+    
+    def self.get_active
+			self.where(archived: false).order("created_at DESC")
+		end
 
 		def set_attr
 			@products_values_attributes = []

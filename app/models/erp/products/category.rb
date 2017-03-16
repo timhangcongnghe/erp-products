@@ -15,6 +15,25 @@ module Erp::Products
     after_create :init_custom_order
     after_save :update_level
     
+    # get self and children ids
+    def get_self_and_children_ids
+      ids = [self.id]
+      ids += get_children_ids_recursive
+      return ids
+		end
+    
+    # get children ids recursive
+    def get_children_ids_recursive
+      ids = []
+      children.each do |c|
+				if !c.children.empty?
+					ids += c.get_children_ids_recursive
+				end
+				ids << c.id
+			end
+      return ids
+		end
+    
     # update level
     def update_level
 			level = 1
