@@ -1,110 +1,30 @@
-<%= form_for([erp_products, :backend, category], html: {multipart: true}) do |f| %>
+<%= form_for([erp_products, :backend, category]) do |f| %>
     <div class="form-body">        
         <div class="row">
             <div class="col-md-6">
                 <div class="portlet light bordered">
                     <div class="portlet-body form">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <%= erp_form_control('image', {
-                                    img_src: category.image_url.medium,
-                                    name: 'category[image_url]',
-                                    width: 150,
-                                    height: 150
-                                }) %>
-                            </div>
-                            <div class="col-md-8">
-                                <%= erp_form_control("text", {
-                                    name: 'category[name]',
-                                    value: category.name,                   
-                                    label: t('.name'),
-                                    required: true,
-                                    errors: category.errors.full_messages_for(:name)
-                                }) %>
-                                <%= erp_form_control("dataselect", {
-                                    name: 'category[parent_id]',
-                                    value: category.parent_id,
-                                    text: category.parent_name,
-                                    placeholder: t('.choose_parent_category'),
-                                    label: t('.parent_category'),
-                                    url: erp_products.dataselect_backend_categories_path(format: 'json'),
-                                    create: {
-                                        url: erp_products.new_backend_category_path,
-                                        title: t('.create'),
-                                        container_selector: '.new_category',
-                                        input_selector: 'input[name="category[name]"]'
-                                    }
-                                }) %>
-                            </div>
-                        </div>
-                        <%= erp_form_control("textarea", {
-                            name: 'category[description]',
-                            value: category.description,                   
-                            label: t('.description'),
-                            placeholder: t('.enter_description')
+                        <%= erp_form_control("text", {
+                            name: 'category[name]',
+                            value: category.name,                   
+                            label: t('.name'),
+                            required: true,
+                            errors: category.errors.full_messages_for(:name)
                         }) %>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="portlet light bordered">
-                    <div class="portlet-body form">
-                        <%= erp_form_control("textarea", {
-                            name: 'category[meta_keywords]',
-                            value: category.meta_keywords,                   
-                            label: t('.meta_keywords'),
-                            placeholder: t('.enter_meta_keywords')
+                        <%= erp_form_control("dataselect", {
+                            name: 'category[parent_id]',
+                            value: category.parent_id,
+                            text: category.parent_name,
+                            placeholder: t('.choose_parent_category'),
+                            label: t('.parent_category'),
+                            url: erp_products.dataselect_backend_categories_path(format: 'json'),
+                            create: {
+                                url: erp_products.new_backend_category_path,
+                                title: t('.create'),
+                                container_selector: '.new_category',
+                                input_selector: 'input[name="category[name]"]'
+                            }
                         }) %>
-                        <%= erp_form_control("textarea", {
-                            name: 'category[meta_description]',
-                            value: category.meta_description,                   
-                            label: t('.meta_description'),
-                            placeholder: t('.enter_meta_description')
-                        }) %>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="tabbable-custom ">
-                    <ul class="nav nav-tabs ">
-                        <li class="active">
-                            <a href="#tab_5_1" data-toggle="tab"> <%= t('.related_category') %> </a>
-                        </li>
-                    </ul>
-                    <div class="tab-content order-details">
-                        <div class="tab-pane addableform-table active" id="tab_5_1">
-                            <%= erp_form_control("addableform", {
-                                type: 'table',
-                                add_button: t('.add'),
-                                partial: 'erp/products/backend/related_categories/related_category_line_form',
-                                partial_url: erp_products.related_category_line_form_backend_related_categories_path,
-                                items: @category.related_categories,
-                                item: :related_category,
-                                add_control_selector: "input[name='category_id']",
-                                add_control: erp_form_control("dataselect", {
-                                    name: 'category_id',
-                                    placeholder: t('.choose_related_category'),
-                                    label: t('.related_category'),
-                                    help: t('.help_category'),
-                                    url: erp_products.dataselect_backend_categories_path(format: 'json'),
-                                    create: {
-                                        url: erp_products.new_backend_category_path,
-                                        title: t('.create_category'),
-                                        container_selector: '.new_category',
-                                        input_selector: 'input[name="category[name]"]'
-                                    },
-                                    edit: {
-                                        url: erp_products.edit_backend_category_path(id: ':value'),
-                                        title: t('.edit_category'),
-                                        container_selector: '.edit_category',
-                                    }
-                                }),
-                                thead: "<th>#{t('.name')}</th>
-                                        <th class='text-right'>#{t('.action')}</th>"
-                            }) %>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -1,15 +1,11 @@
 module Erp::Products
   class Category < ApplicationRecord
-		mount_uploader :image_url, Erp::Products::CategoryImageUploader
 		validates :name, :presence => true
 		
 		has_many :products
     belongs_to :creator, class_name: "Erp::User"
     belongs_to :parent, class_name: "Erp::Products::Category", optional: true
     has_many :children, class_name: "Erp::Products::Category", foreign_key: "parent_id"
-    
-    has_many :related_categories, foreign_key: "parent_id", inverse_of: :parent, dependent: :destroy
-    accepts_nested_attributes_for :related_categories, :reject_if => lambda { |a| a[:category_id].blank? }
     has_and_belongs_to_many :menus, class_name: "Erp::Menus::Menu"
     
     after_create :init_custom_order
