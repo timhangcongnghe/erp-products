@@ -28,6 +28,11 @@ module Erp::Products
     
     has_many :products_values, through: :products_properties, dependent: :destroy
     
+    if Erp::Core.available?("carts")
+			has_many :cart_items, class_name: 'Erp::Carts::CartItem'
+			before_destroy :ensure_not_referenced_by_any_cart_item
+		end
+    
     after_initialize :set_attr
     
     OUT_OF_STOCK = 'out_of_stock'
@@ -245,6 +250,20 @@ module Erp::Products
     # get product main images
     def main_image
 			product_images.first
+		end
+    
+    if Erp::Core.available?("carts")
+			private
+    
+			# ensure that there are no cart items referencing this product
+			def ensure_not_referenced_by_any_cart_item
+				if cart_items.empty?
+					return true
+				else
+					errors.add(:base, "Cart Items present")
+					return false
+				end
+			end
 		end
   end
 end
