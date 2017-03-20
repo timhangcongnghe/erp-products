@@ -252,6 +252,11 @@ module Erp::Products
 			product_images.first
 		end
     
+    # get product sub images
+    def sub_images
+			product_images.second
+		end
+    
     if Erp::Core.available?("carts")
 			private
     
