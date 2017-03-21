@@ -113,7 +113,7 @@
                         </li>
                         <% end %>
                         <li>
-                            <a href="#tab_5_6" data-toggle="tab"> <%= t('.notes') %> </a>
+                            <a href="#tab_5_6" data-toggle="tab"> <%= t('.notes_description') %> </a>
                         </li>
                         <li>
                             <a href="#tab_5_7" data-toggle="tab"> <%= t('.parts') %> </a>
@@ -199,13 +199,13 @@
                                 <div class="col-md-6">
                                     <div class="col-md-6">
                                         <%= erp_form_control('checkbox', {
-                                            name: 'product[is_sales]',
-                                            id: 'product_is_sales',
-                                            value: product.is_sales,
+                                            name: 'product[is_deal]',
+                                            id: 'product_is_deal',
+                                            value: product.is_deal,
                                             not_selected_value: 'false',
-                                            label: t('.product_is_sales'),
-                                            options: [{value: 'true', text: t('.is_sales')}],
-                                            help: t('.help_is_sales')
+                                            label: t('.product_is_deal'),
+                                            options: [{value: 'true', text: t('.is_deal')}],
+                                            help: t('.help_is_deal')
                                         }) %>
                                     </div>
                                     <div class="col-md-6">
@@ -224,20 +224,58 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <%= erp_form_control("number", {
-                                        name: 'product[sales_price]',
-                                        value: product.sales_price,
-                                        label: t('.sales_price'),
-                                        help: t('.help_sales_price'),
-                                        placeholder: t('.placeholder_sales_price')
+                                        name: 'product[deal_price]',
+                                        value: product.deal_price,
+                                        label: t('.deal_price'),
+                                        help: t('.help_deal_price'),
+                                        placeholder: t('.placeholder_deal_price')
                                     }) %>
                                 </div>
                                 <div class="col-md-6">
                                     <%= erp_form_control("number", {
-                                        name: 'product[sales_percent]',
-                                        value: product.sales_percent,
-                                        label: t('.sales_percent'),
-                                        help: t('.help_sales_percent'),
-                                        placeholder: t('.placeholder_sales_percent')
+                                        name: 'product[deal_percent]',
+                                        value: product.deal_percent,
+                                        label: t('.deal_percent'),
+                                        help: t('.help_deal_percent'),
+                                        placeholder: t('.placeholder_deal_percent')
+                                    }) %>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <%= erp_form_control('date', {
+                                        label: t('.deal_from_date'),
+                                        name: 'product[deal_from_date]',
+                                        value: product.deal_from_date,
+                                        placeholder: t('.choose_deal_from_date')
+                                    }) %>
+                                </div>
+                                <div class="col-md-6">
+                                    <%= erp_form_control('date', {
+                                        label: t('.deal_to_date'),
+                                        name: 'product[deal_to_date]',
+                                        value: product.deal_to_date,
+                                        placeholder: t('.choose_deal_to_date')
+                                    }) %>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <%= erp_form_control("editor", {
+                                        name: 'product[meta_keywords]',
+                                        value: product.meta_keywords,
+                                        placeholder: t('.enter_meta_keywords'),
+                                        label: t('.meta_keywords'),
+                                        type: "tiny"
+                                    }) %>
+                                </div>
+                                <div class="col-md-6">
+                                    <%= erp_form_control("editor", {
+                                        name: 'product[meta_description]',
+                                        value: product.meta_description,
+                                        placeholder: t('.enter_meta_description'),
+                                        label: t('.meta_description'),
+                                        type: "tiny"
                                     }) %>
                                 </div>
                             </div>

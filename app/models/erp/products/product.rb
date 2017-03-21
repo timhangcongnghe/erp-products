@@ -257,6 +257,19 @@ module Erp::Products
 			product_images.second
 		end
     
+    def product_price
+			# product is not deal
+			return self.price if !self.is_deal
+			# product is deal
+			from_conds = !self.deal_from_date.present? || (self.deal_from_date.present? && Time.now >= self.deal_from_date.beginning_of_day)
+			to_conds = !self.deal_to_date.present? || (self.deal_to_date.present? && Time.now >= self.deal_to_date.end_of_day)
+			if from_conds && to_conds
+				return self.deal_price
+			else
+				return self.price
+			end
+		end
+    
     if Erp::Core.available?("carts")
 			private
     
