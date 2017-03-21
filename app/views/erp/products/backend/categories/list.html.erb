@@ -71,7 +71,8 @@
                 <% if get_columns(params).include?("created_at") %>
                     <td><%= category.created_at.strftime("%d/%m/%Y") %></td>
                 <% end %>
-                <td class="text-center text-semibold">                    
+                <td class="text-center text-semibold">
+                    <%= category.custom_order %>
                     <% if params[:sort_by] == 'erp_products_categories.custom_order' %>
                         <a data-method="PUT"
                             href="<%=
@@ -91,8 +92,6 @@
                             class="ajax-link">
                                 <i class="fa fa-caret-square-o-down icon-big"></i>
                         </a>
-                    <% else %>
-                        <%= category.custom_order %>
                     <% end %>
                 </td>
                 <td class="text-right">

@@ -1,5 +1,7 @@
 module Erp::Products
   class Category < ApplicationRecord
+		include Erp::CustomOrder
+		
 		validates :name, :presence => true
 		
 		has_many :products
@@ -8,7 +10,6 @@ module Erp::Products
     has_many :children, class_name: "Erp::Products::Category", foreign_key: "parent_id"
     has_and_belongs_to_many :menus, class_name: "Erp::Menus::Menu"
     
-    after_create :init_custom_order
     after_save :update_level
     
     # get self and children ids
@@ -36,6 +37,7 @@ module Erp::Products
 			parent = self.parent
 			while parent.present?
 				level += 1
+				parent = parent.parent
 			end
 			
 			level
@@ -160,36 +162,6 @@ module Erp::Products
     # Get get all archive
     def self.all_unarchive
 			self.where(archived: false)
-		end
-    
-    # get prev item
-    def prev
-			Category.where(parent_id: self.parent_id).where('custom_order < ?', self.custom_order).first
-		end
-    
-    # get next item
-    def next
-			Category.where(parent_id: self.parent_id).where('custom_order > ?', self.custom_order).first
-		end
-    
-    # move up item
-    def move_up
-			prev_category = self.prev
-			if prev_category.present?
-				current_order = self.custom_order
-				self.update_column(:custom_order, prev_category.custom_order)
-				prev_category.update_column(:custom_order, current_order)
-			end
-		end
-    
-    # move down item
-    def move_down
-			next_category = self.next
-			if next_category.present?
-				current_order = self.custom_order
-				self.update_column(:custom_order, next_category.custom_order)
-				next_category.update_column(:custom_order, current_order)
-			end
 		end
     
   end
