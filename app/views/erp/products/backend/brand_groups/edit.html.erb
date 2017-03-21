@@ -1,0 +1,29 @@
+<% content_for :title do %>
+    <%= @brand_group.name %>
+<% end %>
+
+<% content_for :page_title do %>    
+    <a href="<%= erp_products.backend_brand_groups_path %>">
+    <i class="fa fa-th-list"></i> <%= t('.brand_groups') %>
+    </a> / <%= @brand_group.name %>
+<% end %>
+
+<% content_for :page_toolbar do %>
+    <%= erp_component('button/create', {
+        text: t('.create'),
+        href: erp_products.new_backend_brand_group_path,
+        class: 'btn-noborder'
+    }) %>
+<% end %>
+
+<div class="row">
+    <div class="col-md-12">
+        <% if @brand_group.errors.any? %>
+            <%= erp_form_control("form_error_message") %>
+        <% end %>
+        
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <%= render 'form', brand_group: @brand_group %>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>

@@ -126,6 +126,22 @@ Erp::Products::Engine.routes.draw do
           put 'unarchive'
         end
       end
+      resources :brand_groups do
+        collection do
+          get 'dataselect'
+          post 'list'
+          delete 'delete_all'
+          put 'archive_all'
+          put 'unarchive_all'
+          put 'archive'
+          put 'unarchive'
+        end
+      end
+      resources :brand_group_details do
+				collection do
+          get 'brand_group_detail_line_form'
+				end
+			end
     end
 	end
 end

@@ -1,0 +1,9 @@
+<input type="hidden" name="brand_group[brand_group_details_attributes][<%= uid %>][id]" value="<%= brand_group_detail.id %>">
+<input type="hidden" name="brand_group[brand_group_details_attributes][<%= uid %>][brand_id]" value="<%= brand_group_detail.brand_id %>">
+<input type="hidden" name="brand_group[brand_group_details_attributes][<%= uid %>][_destroy]" value="">
+<td><%= brand_group_detail.brand.name %></td>
+<td class="text-right">
+    <%= erp_form_control("addableform_remove_button", {
+        is_nested_form: true
+    }) %>
+</td>

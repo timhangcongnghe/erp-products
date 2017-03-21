@@ -485,6 +485,50 @@ vi:
             enter_name: "Nhập tên thương hiệu..."
             description: "Mô tả"
             enter_description: "Nhập mô tả..."
+        brand_groups:
+          create:
+            success: "Thêm nhóm thương hiệu thành công."
+          update:
+            success: "Cập nhật nhóm thương hiệu thành công."
+          destroy:
+            success: "Xóa nhóm thương hiệu thành công."
+          delete_all:
+            success: "Các nhóm thương hiệu đã được xóa thành công."
+          archive:
+            success: "Nhóm thương hiệu đã được ẩn thành công."
+          unarchive:
+            success: "Nhóm thương hiệu đã được hiện ra thành công."
+          archive_all:
+            success: "Các nhóm thương hiệu đã được ẩn thành công."
+          unarchive_all:
+            success: "Các nhóm thương hiệu đã được hiện ra thành công."
+          index:
+            brand_groups: "Nhóm thương hiệu"
+            create: "Thêm nhóm thương hiệu"
+            name: "Tên nhóm"
+            delete: "Xóa nhóm thương hiệu"
+          list:
+            name: "Tên nhóm"
+            delete: "Xóa nhóm thương hiệu"
+            archive_confirm: "Bạn có chắc muốn ẩn nhóm này?"
+            unarchive_confirm: "Bạn muốn hiển thị lại nhóm này?"
+            no_matching_records_found: "Danh sách nhóm hiện tại đang trống."
+          new:
+            brand_groups: "Nhóm thương hiệu"
+            create: "Thêm nhóm thương hiệu"
+          edit:
+            brand_groups: "Nhóm thương hiệu"
+            create: "Thêm nhóm thương hiệu"
+          form:
+            name: "Tên nhóm"
+            enter_name: "Nhập tên nhóm thương hiệu..."
+            description: "Mô tả"
+            enter_description: "Nhập mô tả..."
+            brand: "Thương hiệu"
+            add: "Thêm"
+            choose_brand: "Chọn thương hiệu"
+            help_brand: "Chọn thương hiệu để tạo thành nhóm"
+            action: "Thao tác"
         products_units:
           form_line:
             unit_name: "Tên đơn vị"

@@ -1,0 +1,77 @@
+<%= form_for([erp_products, :backend, brand_group], html: {multipart: true}) do |f| %>
+    <div class="form-body">        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">
+                        <%= erp_form_control("text", {
+                            name: 'brand_group[name]',
+                            value: brand_group.name,                   
+                            label: t('.name'),
+                            placeholder: t('.enter_name'),
+                            required: true,
+                            errors: brand_group.errors.full_messages_for(:name)
+                        }) %>
+                        <%= erp_form_control("textarea", {
+                            name: 'brand_group[description]',
+                            value: brand_group.description,                   
+                            label: t('.description'),
+                            placeholder: t('.enter_description')
+                        }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tabbable-custom ">
+                    <ul class="nav nav-tabs ">
+                        <li class="active">
+                            <a href="#tab_brand" data-toggle="tab"> <%= t('.brand') %> </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content order-details">
+                        <div class="tab-pane addableform-table active" id="tab_brand">
+                            <%= erp_form_control("addableform", {
+                                type: 'table',
+                                add_button: t('.add'),
+                                partial: 'erp/products/backend/brand_group_details/brand_group_detail_line_form',
+                                partial_url: erp_products.brand_group_detail_line_form_backend_brand_group_details_path,
+                                items: @brand_group.brand_group_details,
+                                item: :brand_group_detail,
+                                add_control_selector: "input[name='brand_id']",
+                                add_control: erp_form_control("dataselect", {
+                                    name: 'brand_id',
+                                    placeholder: t('.choose_brand'),
+                                    label: t('.brand'),
+                                    help: t('.help_brand'),
+                                    url: erp_products.dataselect_backend_brands_path(format: 'json'),
+                                    create: {
+                                        url: erp_products.new_backend_brand_path,
+                                        title: t('.create_brand'),
+                                        container_selector: '.new_brand',
+                                        input_selector: 'input[name="brand[name]"]'
+                                    },
+                                    edit: {
+                                        url: erp_products.edit_backend_brand_path(id: ':value'),
+                                        title: t('.edit_brand'),
+                                        container_selector: '.edit_brand',
+                                    }
+                                }),
+                                thead: "<th>#{t('.name')}</th>
+                                        <th class='text-right'>#{t('.action')}</th>"
+                            }) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%= erp_component('button/save', {
+        text: t('submit')
+    }) %>
+    <%= erp_component('button/cancel', {
+        text: t('cancel'),
+        href: erp_products.backend_brand_groups_path
+    }) %>
+<% end %>

@@ -1,3 +1,4 @@
+<% if !Erp::Core.available?("online_store") %>
 <li class="nav-item <%= "active open" if ["erp/products/backend/manufacturings","erp/products/backend/price_lists"].include?(params[:controller]) %>">
     <a href="javascript:;" class="nav-link nav-toggle">
         <i class="fa fa-archive"></i>
@@ -22,3 +23,4 @@
         </li>
     </ul>
 </li>
+<% end %>
