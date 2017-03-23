@@ -1,0 +1,73 @@
+<% content_for :title do %>
+    <%= t('.comments') %>
+<% end %>
+
+<% content_for :page_title do %>
+    <i class="fa fa-folder"></i> <%= t('.comments') %>
+<% end %>
+
+<%= erp_datalist(
+    url: erp_products.list_backend_comments_path,
+    keywords: [
+        {
+            text: t('.name'), name: 'erp_products_comments.name'
+        },
+        {
+            text: t('.message'), name: 'erp_products_comments.message'
+        },
+        {
+            text: t('.product'),
+            name: 'erp_products_products.name',
+            select: {
+                name: 'erp_products_products.id',
+                data_url: erp_products.dataselect_backend_products_path
+            }
+        }
+    ],
+    actions: [
+        {
+            text: '<i class="fa fa-eye-slash"></i> '+t('.archive'),
+            url: erp_products.archive_all_backend_comments_path,
+            data_method: 'PUT',
+            data_confirm: t('.archive_confirm')
+        },
+        {
+            text: '<i class="fa fa-eye"></i> '+t('.unarchive'),
+            url: erp_products.unarchive_all_backend_comments_path,
+            data_method: 'PUT',
+            data_confirm: t('.unarchive_confirm')
+        },
+        {
+            divider: true
+        },
+        {
+            text: '<i class="fa fa-trash"></i> '+t('.delete'),
+            url: erp_products.delete_all_backend_comments_path,
+            data_method: 'DELETE',
+            data_confirm: t('delete_confirm')
+        }
+    ],
+    filters: [
+        {
+            text: t('archived'), name: 'show_archived', value: true, checked: false
+        },
+    ],
+    columns: [
+        {
+            text: t('.name'), name: 'name', value: true, checked: true
+        },
+        {
+            text: t('.product'), name: 'product', value: true, checked: true
+        },
+        {
+            text: t('.message'), name: 'message', value: true, checked: true
+        },
+        {
+            text: t('status'), name: 'status', value: true, checked: true
+        },
+        {
+            text: t('created_at'), name: 'created_at', value: true, checked: false
+        }
+    ],
+    sort: { sort_by: 'erp_products_comments.created_at', sort_direction: 'desc' }
+) %>    

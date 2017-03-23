@@ -1,0 +1,124 @@
+
+<table class="table table-advance table-hover table-striped table-checkable order-column">
+    <thead>
+        <tr>
+            <th width='1%'>
+                <%= erp_datalist_check_all %>
+            </th>
+            <th></th>
+            <% if get_columns(params).include?("name") %>
+                <th class="sortable" sort-by='erp_products_comments.name'>
+                    <%= t('.name') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("product") %>
+                <th>
+                    <%= t('.product') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("message") %>
+                <th>
+                    <%= t('.message') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("status") %>
+                <th>
+                    <%= t('status') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("created_at") %>
+                <th class="sortable" sort-by='erp_products_comments.created_at'>
+                    <%= t('created_at') %>
+                </th>
+            <% end %>
+            <th width="7%"><%= t('actions') %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @comments.each do |comment| %>
+            <tr class="odd gradeX has-child-table" data-url="<%= erp_products.children_comments_backend_comments_path(id: comment.id) %>">
+                <td>
+                    <%= erp_datalist_check_row(id: comment.id) %>
+                </td>
+                <% if get_columns(params).include?("name") %>
+                    <td><i class="fa fa-plus expand tr-expand-button"></i></td>
+                    <td>
+                        <span class="title"><%= comment.name %></span>
+                        <br /><%= comment.email %>
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("product") %>
+                    <td>
+                        <span class="tooltips",
+                              data-original-title="<%= comment.product_name %>",
+                              data-container="body">
+                              <%= truncate(comment.product_name, length: 30) %>
+                        </span>
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("message") %>
+                    <td>
+                        <span class="tooltips",
+                              data-original-title="<%= comment.message %>",
+                              data-container="body">
+                              <%= truncate(comment.message, length: 30) %>
+                        </span>
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("status") %>
+                <td>
+                    <% if comment.archived == true %>
+                        <%= erp_component('label/danger', {
+                            text: t('archived')
+                        }) %>
+                    <% else %>
+                        <%= erp_component('label/success', {
+                            text: t('active')
+                        }) %>
+                    <% end %> 
+                </td>
+                <% end %>
+                <% if get_columns(params).include?("created_at") %>
+                    <td><%= comment.created_at.strftime("%d/%m/%Y") %></td>
+                <% end %>
+                <td class="text-right">
+                    <%= erp_datalist_row_actions(
+                        [
+                            {
+                                text: '<i class="fa fa-eye-slash"></i> '+t('.archive'),
+                                url: erp_products.archive_backend_comments_path(id: comment),
+                                data_method: 'PUT',
+                                hide: comment.archived,
+                                class: 'ajax-link',
+                                data_confirm: t('.archive_confirm')
+                            },
+                            {
+                                text: '<i class="fa fa-eye"></i> '+t('.unarchive'),
+                                url: erp_products.unarchive_backend_comments_path(id: comment),
+                                data_method: 'PUT',
+                                hide: !comment.archived,
+                                class: 'ajax-link',
+                                data_confirm: t('.unarchive_confirm')
+                            },
+                            {
+                                divider: true
+                            },
+                            {
+                                text: '<i class="fa fa-trash"></i> '+t('.delete'),
+                                url: erp_products.backend_comment_path(comment),
+                                data_method: 'DELETE',
+                                class: 'ajax-link',
+                                data_confirm: t('delete_confirm')
+                            }
+                        ]
+                    ) %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+<% if @comments.empty? %>
+    <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
+<% end %>
+        
+<%= erp_datalist_pagination(@comments) %>

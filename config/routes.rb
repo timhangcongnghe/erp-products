@@ -142,6 +142,17 @@ Erp::Products::Engine.routes.draw do
           get 'brand_group_detail_line_form'
 				end
 			end
+      resources :comments do
+        collection do
+          post 'list'
+          delete 'delete_all'
+          put 'archive_all'
+          put 'unarchive_all'
+          put 'archive'
+          put 'unarchive'
+          get 'children_comments'
+        end
+      end
     end
 	end
 end

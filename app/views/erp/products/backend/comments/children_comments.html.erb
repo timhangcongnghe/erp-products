@@ -1,0 +1,77 @@
+<table class="table table-bordered table-striped flip-content">
+    <thead class="flip-content">
+        <tr>
+            <th class="numeric">
+                <%= t('.name') %>
+            </th>
+            <th class="numeric">
+                <%= t('.message') %>
+            </th>
+            <th class="numeric">
+                <%= t('.status') %>
+            </th>
+            <th class="numeric">
+                <%= t('.created_at') %>
+            </th>
+            <th width="7%"><%= t('.actions') %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @comment.children.each do |children| %>
+            <tr class="odd gradeX">
+                <td class="text-left"><%= children.name %></td>
+                <td class="text-left">
+                    <span class="tooltips",
+                        data-original-title="<%= children.message %>",
+                        data-container="body">
+                        <%= truncate(children.message, length: 40) %>
+                    </span>
+                </td>
+                <td class="text-left">
+                    <% if children.archived == true %>
+                        <%= erp_component('label/danger', {
+                            text: t('.archived')
+                        }) %>                            
+                    <% else %>
+                        <%= erp_component('label/success', {
+                            text: t('.active')
+                        }) %>
+                    <% end %>
+                </td>
+                <td class="text-left"><%= children.created_at.strftime("%d/%m/%Y") %></td>
+                <td class="text-right">
+                    <%= erp_datalist_row_actions(
+                        [
+                            {
+                                text: '<i class="fa fa-eye-slash"></i> '+t('.archive'),
+                                url: erp_products.archive_backend_comments_path(id: children),
+                                data_method: 'PUT',
+                                hide: children.archived,
+                                class: 'ajax-link',
+                                data_confirm: t('.archive_confirm')
+                            },
+                            {
+                                text: '<i class="fa fa-eye"></i> '+t('.unarchive'),
+                                url: erp_products.unarchive_backend_comments_path(id: children),
+                                data_method: 'PUT',
+                                hide: !children.archived,
+                                class: 'ajax-link',
+                                data_confirm: t('.unarchive_confirm')
+                            },
+                            {
+                                divider: true
+                            },
+                            {
+                                text: '<i class="fa fa-trash"></i> '+t('.delete'),
+                                url: erp_products.backend_comment_path(children),
+                                data_method: 'DELETE',
+                                class: 'ajax-link',
+                                data_confirm: t('delete_confirm')
+                            }
+                        ]
+                    ) %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

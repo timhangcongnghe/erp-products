@@ -751,6 +751,51 @@ vi:
             quantity: "Số lượng"
             action: "Thao tác"
             quantity_total: "Tổng số lượng sản phẩm kiểm"
+        comments:
+          archive: 
+            success: "Bình luận đã được ẩn thành công."
+          unarchive: 
+            success: "Bình luận đã được hiển thị thành công."
+          archive_all: 
+            success: "Bình luận đã được ẩn thành công."
+          unarchive_all: 
+            success: "Bình luận đã được hiển thị thành công."
+          destroy: 
+            success: "Bình luận đã được xóa thành công."
+          delete_all:
+            success: "Bình luận đã được xóa thành công."
+          index:
+            comments: "Bình luận sản phẩm"
+            name: "Người bình luận"
+            product: "Sản phẩm"
+            message: "Nội dung"
+            archive: "Ẩn bình luận"
+            archive_confirm: "Bạn chắc muốn ẩn bình luận khỏi giao diện người dùng?"
+            unarchive: "Hiện bình luận"
+            unarchive_confirm: "Bạn chắc chắn muốn hiển thị bình luận trên giao diện người dùng?"
+            delete: "Xóa bình luận"
+          list:
+            name: "Người bình luận"
+            product: "Sản phẩm"
+            message: "Nội dung"
+            archive: "Ẩn bình luận"
+            archive_confirm: "Bạn chắc muốn ẩn bình luận khỏi giao diện người dùng?"
+            unarchive: "Hiện bình luận"
+            unarchive_confirm: "Bạn chắc chắn muốn hiển thị bình luận trên giao diện người dùng?"
+            delete: "Xóa bình luận"
+          children_comments:
+            name: "Người trả lời"
+            message: "Nội dung"
+            status: "Trạng thái"
+            created_at: "Ngày trả lời"
+            actions: "Thao tác"
+            archive: "Ẩn bình luận"
+            archive_confirm: "Bạn chắc muốn ẩn bình luận khỏi giao diện người dùng?"
+            unarchive: "Hiện bình luận"
+            unarchive_confirm: "Bạn chắc chắn muốn hiển thị bình luận trên giao diện người dùng?"
+            delete: "Xóa bình luận"
+            archived: "Không hiển thị"
+            active: "Đang hiển thị"
   activerecord:
     errors:
       models:
