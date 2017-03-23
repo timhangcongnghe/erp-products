@@ -278,10 +278,13 @@ module Erp::Products
 			self.products_properties.each do |product_property|
 				row = {
 					name: product_property.property.name,
-					values: product_property.product_values.map(&:value)
+					values: product_property.products_values.map {|products_value|
+						products_value.properties_value.value
+					}
 				}
 				arr << row
 			end
+			arr
 		end
     
     # count stars
