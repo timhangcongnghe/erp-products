@@ -27,6 +27,8 @@ module Erp::Products
     accepts_nested_attributes_for :products_parts, :reject_if => lambda { |a| a[:part_id].blank? }, :allow_destroy => true
     
     has_many :products_values, through: :products_properties, dependent: :destroy
+    has_many :comments, class_name: 'Erp::Products::Comment', dependent: :destroy
+    has_many :ratings, class_name: 'Erp::Products::Rating', dependent: :destroy
     
     if Erp::Core.available?("carts")
 			has_many :cart_items, class_name: 'Erp::Carts::CartItem'
@@ -282,6 +284,27 @@ module Erp::Products
 			end
 		end
     
+    # count stars
+		def count_stars
+			arr = []
+			self.ratings.each do |item|
+				arr << item.star
+			end
+			
+			return arr
+		end
+		
+		# average stars
+		def average_stars
+			if count_stars.length > 0
+				sum = 0
+				total_stars = count_stars.each { |b| sum += b }
+				average = sum / count_stars.length
+			end
+			
+			return average
+		end
+    
     if Erp::Core.available?("carts")
 			private
     
@@ -294,6 +317,6 @@ module Erp::Products
 					return false
 				end
 			end
-		end
+		end		
   end
 end
