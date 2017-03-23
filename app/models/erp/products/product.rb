@@ -270,6 +270,18 @@ module Erp::Products
 			end
 		end
     
+    # get product properties array
+    def get_product_property_array
+			arr = []
+			self.products_properties.each do |product_property|
+				row = {
+					name: product_property.property.name,
+					values: product_property.product_values.map(&:value)
+				}
+				arr << row
+			end
+		end
+    
     if Erp::Core.available?("carts")
 			private
     
