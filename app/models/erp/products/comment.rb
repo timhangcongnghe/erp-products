@@ -2,9 +2,8 @@ module Erp::Products
   class Comment < ApplicationRecord
     belongs_to :product, class_name: 'Erp::Products::Product'
     belongs_to :parent, class_name: "Erp::Products::Comment", optional: true
+    belongs_to :user, class_name: "Erp::User"
     has_many :children, class_name: "Erp::Products::Comment", foreign_key: "parent_id"
-    validates :name, :email, :message, :presence => true
-    validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create
     
     # Filters
     def self.filter(query, params)
@@ -86,6 +85,11 @@ module Erp::Products
     
     def product_name
 			product.present? ? product.name : ''
+		end
+    
+    # display user name
+    def user_name
+			user.present? ? user.name : ''
 		end
   end
 end
