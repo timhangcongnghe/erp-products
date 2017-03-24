@@ -47,6 +47,21 @@
             divider: true
         },
         {
+            text: '<i class="fa fa-check-square-o"></i> '+t('.check_is_bestseller'),
+            url: erp_products.check_is_bestseller_all_backend_products_path,
+            data_method: 'PUT',
+            data_confirm: t('.check_is_bestseller_confirm')
+        },
+        {
+            text: '<i class="fa fa-square-o"></i> '+t('.uncheck_is_bestseller'),
+            url: erp_products.uncheck_is_bestseller_all_backend_products_path,
+            data_method: 'PUT',
+            data_confirm: t('.uncheck_is_bestseller_confirm')
+        },
+        {
+            divider: true
+        },
+        {
             text: '<i class="fa fa-trash"></i> '+t('.delete'),
             url: erp_products.delete_all_backend_products_path,
             data_method: 'DELETE',
@@ -56,6 +71,9 @@
     filters: [
         {
             text: t('.archived'), name: 'show_archived', value: true, checked: false
+        },
+        {
+            text: t('.is_bestseller'), name: 'erp_products_products.is_bestseller', value: true, checked: false
         },
     ],
     columns: [

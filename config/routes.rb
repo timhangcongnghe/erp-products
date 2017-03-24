@@ -23,6 +23,10 @@ Erp::Products::Engine.routes.draw do
           put 'unarchive_all'
           put 'archive'
           put 'unarchive'
+          put 'check_is_bestseller'
+          put 'uncheck_is_bestseller'
+          put 'check_is_bestseller_all'
+          put 'uncheck_is_bestseller_all'
           get 'form_property'          
         end
       end

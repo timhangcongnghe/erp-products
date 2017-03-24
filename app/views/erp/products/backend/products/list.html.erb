@@ -136,6 +136,22 @@
                                     data_confirm: t('.unarchive_confirm')
                                 },
                                 {
+                                    text: '<i class="fa fa-check-square-o"></i> '+t('.check_is_bestseller'),
+                                    url: erp_products.check_is_bestseller_backend_products_path(id: product),
+                                    data_method: 'PUT',
+                                    hide: product.is_bestseller,
+                                    class: 'ajax-link',
+                                    data_confirm: t('.check_is_bestseller_confirm')
+                                },
+                                {
+                                    text: '<i class="fa fa-square-o"></i> '+t('.uncheck_is_bestseller'),
+                                    url: erp_products.uncheck_is_bestseller_backend_products_path(id: product),
+                                    data_method: 'PUT',
+                                    hide: !product.is_bestseller,
+                                    class: 'ajax-link',
+                                    data_confirm: t('.uncheck_is_bestseller_confirm')
+                                },
+                                {
                                     divider: true
                                 },
                                 {

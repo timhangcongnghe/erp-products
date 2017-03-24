@@ -2,8 +2,8 @@ module Erp
   module Products
     module Backend
       class ProductsController < Erp::Backend::BackendController
-        before_action :set_product, only: [:archive, :unarchive, :show, :edit, :update, :destroy]
-        before_action :set_products, only: [:delete_all, :archive_all, :unarchive_all]
+        before_action :set_product, only: [:check_is_bestseller, :uncheck_is_bestseller, :archive, :unarchive, :show, :edit, :update, :destroy]
+        before_action :set_products, only: [:delete_all, :archive_all, :unarchive_all, :check_is_bestseller_all, :uncheck_is_bestseller_all]
         
         # GET /products
         def index
@@ -161,6 +161,62 @@ module Erp
         # Unarchive /products/unarchive_all?ids=1,2,3
         def unarchive_all
           @products.unarchive_all
+          
+          respond_to do |format|
+            format.json {
+              render json: {
+                'message': t('.success'),
+                'type': 'success'
+              }
+            }
+          end
+        end
+        
+        # Check_is_bestseller /products/bestseller?id=1
+        def check_is_bestseller
+          @product.check_is_bestseller
+          
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end
+        end
+        
+        # Uncheck_is_bestseller /products/bestseller?id=1
+        def uncheck_is_bestseller
+          @product.uncheck_is_bestseller
+          
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end
+        end
+        
+        # Check_is_bestseller_all /products/bestseller?ids=1,2,3
+        def check_is_bestseller_all
+          @products.check_is_bestseller_all
+          
+          respond_to do |format|
+            format.json {
+              render json: {
+                'message': t('.success'),
+                'type': 'success'
+              }
+            }
+          end
+        end
+        
+        # Check_is_bestseller_all /products/bestseller?ids=1,2,3
+        def uncheck_is_bestseller_all
+          @products.uncheck_is_bestseller_all
           
           respond_to do |format|
             format.json {

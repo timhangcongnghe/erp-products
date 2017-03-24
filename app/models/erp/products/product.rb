@@ -144,6 +144,7 @@ module Erp::Products
       query = query.limit(8).map{|product| {value: product.id, text: product.name} }
     end
     
+    # set archived
     def archive
 			update_columns(archived: true)
 		end
@@ -158,6 +159,23 @@ module Erp::Products
     
     def self.unarchive_all
 			update_all(archived: false)
+		end
+    
+    # set is best seller
+    def check_is_bestseller
+			update_columns(is_bestseller: true)
+		end
+    
+    def uncheck_is_bestseller
+			update_columns(is_bestseller: false)
+		end
+    
+    def self.check_is_bestseller_all
+			update_all(is_bestseller: true)
+		end
+    
+    def self.uncheck_is_bestseller_all
+			update_all(is_bestseller: false)
 		end
     
     # category name

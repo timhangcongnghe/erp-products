@@ -148,6 +148,14 @@ vi:
             success: "Sản phẩm đã ngừng kinh doanh."
           unarchive_all:
             success: "Sản phẩm đã được kinh doanh trở lại."
+          check_is_bestseller:
+            success: "Sản phẩm đã được thêm vào danh sách bán chạy."
+          uncheck_is_bestseller:
+            success: "Sản phẩm đã hủy khỏi danh sách bán chạy."
+          check_is_bestseller_all:
+            success: "Sản phẩm đã được thêm vào danh sách bán chạy."
+          uncheck_is_bestseller_all:
+            success: "Sản phẩm đã hủy khỏi danh sách bán chạy."
           index:
             category: "Chuyên mục"
             products: "Tất cả sản phẩm"
@@ -170,6 +178,11 @@ vi:
             unarchive_confirm: "Bạn có chắc chắn muốn kinh doanh trở lại sản phẩm này?"
             delete_confirm: "Thông tin sản phẩm sẽ bị xóa vĩnh viễn. Bạn có chắc muốn xóa?"
             delete: "Xóa sản phẩm"
+            check_is_bestseller: "Sản phẩm bán chạy"
+            uncheck_is_bestseller: "Sản phẩm bán chạy"
+            check_is_bestseller_confirm: "Bạn muốn thêm sản phẩm vào danh sách bán chạy?"
+            uncheck_is_bestseller_confirm: "Bạn muốn hủy sản phẩm khỏi danh sách bán chạy?"
+            is_bestseller: "Sản phẩm bán chạy"
           list:
             delete: "Xóa sản phẩm"
             name: "Tên sản phẩm"
@@ -193,6 +206,10 @@ vi:
             unarchive_confirm: "Bạn có chắc chắn muốn kinh doanh trở lại sản phẩm này?"
             delete_confirm: "Bạn có chắc muốn xóa?"
             no_matching_records_found: "Danh sách sản phẩm hiện tại đang trống."
+            check_is_bestseller: "Sản phẩm bán chạy"
+            uncheck_is_bestseller: "Sản phẩm bán chạy"
+            check_is_bestseller_confirm: "Bạn muốn thêm sản phẩm vào danh sách bán chạy?"
+            uncheck_is_bestseller_confirm: "Bạn muốn hủy sản phẩm khỏi danh sách bán chạy?"
           new:
             products: "Tất cả sản phẩm"
             create: "Thêm sản phẩm"
