@@ -197,27 +197,37 @@
                                     }) %>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="col-md-6">
-                                        <%= erp_form_control('checkbox', {
-                                            name: 'product[is_deal]',
-                                            id: 'product_is_deal',
-                                            value: product.is_deal,
-                                            not_selected_value: 'false',
-                                            label: t('.product_is_deal'),
-                                            options: [{value: 'true', text: t('.is_deal')}],
-                                            help: t('.help_is_deal')
-                                        }) %>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <%= erp_form_control('checkbox', {
-                                            name: 'product[is_new]',
-                                            id: 'product_is_new',
-                                            value: product.is_new,
-                                            not_selected_value: 'false',
-                                            label: t('.product_is_new'),
-                                            options: [{value: 'true', text: t('.is_new')}],
-                                            help: t('.help_is_new')
-                                        }) %>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <%= erp_form_control('checkbox', {
+                                                name: 'product[is_deal]',
+                                                id: 'product_is_deal',
+                                                value: product.is_deal,
+                                                not_selected_value: 'false',
+                                                label: t('.product_is_deal'),
+                                                options: [{value: 'true', text: t('.is_deal')}]
+                                            }) %>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <%= erp_form_control('checkbox', {
+                                                name: 'product[is_new]',
+                                                id: 'product_is_new',
+                                                value: product.is_new,
+                                                not_selected_value: 'false',
+                                                label: t('.product_is_new'),
+                                                options: [{value: 'true', text: t('.is_new')}]
+                                            }) %>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <%= erp_form_control('checkbox', {
+                                                name: 'product[is_bestseller]',
+                                                id: 'product_is_bestseller',
+                                                value: product.is_bestseller,
+                                                not_selected_value: 'false',
+                                                label: t('.product_is_bestseller'),
+                                                options: [{value: 'true', text: t('.is_bestseller')}]
+                                            }) %>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
