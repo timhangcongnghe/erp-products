@@ -4,6 +4,7 @@ module Erp::Products
     belongs_to :parent, class_name: "Erp::Products::Comment", optional: true
     belongs_to :user, class_name: "Erp::User"
     has_many :children, class_name: "Erp::Products::Comment", foreign_key: "parent_id"
+    validates :message, :presence => true
     
     # Filters
     def self.filter(query, params)
