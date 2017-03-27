@@ -96,5 +96,10 @@ module Erp::Products
     def self.unarchive_all
 			update_all(archived: false)
 		end
+    
+    def self.get_brands
+			self.where(archived: false).order('created_at DESC')
+		end
+    
   end
 end
