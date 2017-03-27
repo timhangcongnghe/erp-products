@@ -288,11 +288,16 @@ vi:
             choose_product_part: "Chọn sản phẩm thành phần"
             notes_description: "Ghi chú - Mô tả"
             # frontend
+            website_frontend: "Tìm Hàng Công Nghệ"
             brand: "Thương hiệu"
             choose_brand: "Chọn thương hiệu"
             help_brand: "Thương hiệu của sản phẩm"
             create_brand: "Thêm thương hiệu"
-            short_description: "Mô tản ngắn"
+            accessory: "Nhóm phụ kiện"
+            choose_accessory: "Chọn nhóm phụ kiện"
+            help_accessory: "Chọn nhóm phụ kiện cho sản phẩm"
+            create_accessory: "Tạo nhóm phụ kiện"
+            short_description: "Mô tả ngắn"
             enter_short_description: "Nhập mô tả ngắn"
             product_is_deal: "Sản phẩm khuyến mãi"
             product_is_new: "Sản phẩm mới"
@@ -548,6 +553,51 @@ vi:
             add: "Thêm"
             choose_brand: "Chọn thương hiệu"
             help_brand: "Chọn thương hiệu để tạo thành nhóm"
+            action: "Thao tác"
+        accessories:
+          create:
+            success: "Thêm nhóm phụ kiện thành công."
+          update:
+            success: "Cập nhật nhóm phụ kiện thành công."
+          destroy:
+            success: "Xóa nhóm phụ kiện thành công."
+          delete_all:
+            success: "Các nhóm phụ kiện đã được xóa thành công."
+          archive:
+            success: "Nhóm phụ kiện đã được ẩn thành công."
+          unarchive:
+            success: "Nhóm phụ kiện đã được hiện ra thành công."
+          archive_all:
+            success: "Các nhóm phụ kiện đã được ẩn thành công."
+          unarchive_all:
+            success: "Các nhóm phụ kiện đã được hiện ra thành công."
+          index:
+            accessories: "Nhóm phụ kiện"
+            create: "Thêm nhóm phụ kiện"
+            name: "Tên nhóm"
+            delete: "Xóa nhóm phụ kiện"
+          list:
+            name: "Tên nhóm"
+            delete: "Xóa nhóm phụ kiện"
+            archive_confirm: "Bạn có chắc muốn ẩn nhóm này?"
+            unarchive_confirm: "Bạn muốn hiển thị lại nhóm này?"
+            no_matching_records_found: "Danh sách nhóm hiện tại đang trống."
+          new:
+            accessories: "Nhóm phụ kiện"
+            create: "Thêm nhóm phụ kiện"
+          edit:
+            accessories: "Nhóm phụ kiện"
+            create: "Thêm nhóm phụ kiện"
+          form:
+            name: "Tên nhóm"
+            enter_name: "Nhập tên nhóm phụ kiện..."
+            description: "Mô tả"
+            enter_description: "Nhập mô tả..."
+            product: "Sản phẩm"
+            add: "Thêm"
+            add_products: "Thêm sản phẩm"
+            choose_product: "Chọn sản phẩm"
+            help_product: "Chọn sản phẩm để thêm vào nhóm"
             action: "Thao tác"
         products_units:
           form_line:
@@ -825,6 +875,8 @@ vi:
               blank: "không được để trống."
             category_id:
               blank: "không được để trống."
+            brand_id:
+              blank: "không được để trống."
         erp/products/category:
           attributes:
             name:
@@ -859,12 +911,25 @@ vi:
           attributes:
             name:
               blank: "không được để trống."
+        erp/products/brand_group:
+          attributes:
+            name:
+              blank: "không được để trống."
+        erp/products/accessory:
+          attributes:
+            name:
+              blank: "không được để trống."
     attributes:
       erp/products/product:
         name: "Tên sản phẩm"
         category_id: "Chuyên mục sản phẩm"
+        brand_id: "Thương hiệu"
       erp/products/brand:
         name: "Tên thương hiệu"
+      erp/products/brand_group:
+        name: "Tên nhóm"
+      erp/products/accessory:
+        name: "Tên nhóm"      
       erp/products/category:
         name: "Tên chuyên mục"
       erp/products/property:

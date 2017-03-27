@@ -1,9 +1,9 @@
 module Erp::Products
-  class BrandGroup < ApplicationRecord
+  class Accessory < ApplicationRecord
     validates :name, :presence => true
     belongs_to :creator, class_name: "Erp::User"
-    has_many :brand_group_details, class_name: "Erp::Products::BrandGroupDetail", dependent: :destroy
-    accepts_nested_attributes_for :brand_group_details, :reject_if => lambda { |a| a[:brand_id].blank? }, :allow_destroy => true
+    has_many :accessory_details, class_name: "Erp::Products::AccessoryDetail", dependent: :destroy
+    accepts_nested_attributes_for :accessory_details, :reject_if => lambda { |a| a[:product_id].blank? }, :allow_destroy => true
     
     # Filters
     def self.filter(query, params)
@@ -76,7 +76,7 @@ module Erp::Products
         query = query.where('LOWER(name) LIKE ?', "%#{keyword}%")
       end
       
-      query = query.limit(8).map{|brand_group| {value: brand_group.id, text: brand_group.name} }
+      query = query.limit(8).map{|accessory| {value: accessory.id, text: accessory.name} }
     end
     
     def archive

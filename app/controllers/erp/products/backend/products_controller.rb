@@ -256,7 +256,7 @@ module Erp
               :code, :name, :can_be_sold, :can_be_purchased, :product_type, :barcode,
               :price, :cost, :on_hand, :weight, :volume, :is_for_pos, :unit_id,
               # frontend
-              :is_deal, :deal_price, :deal_percent, :short_description, :brand_id, :is_new,
+              :is_deal, :deal_price, :deal_percent, :short_description, :brand_id, :is_new, :accessory_id,
               :deal_from_date, :deal_to_date, :meta_keywords, :meta_description, :is_bestseller,
               # end frontend
               :stock_min, :stock_max, :description, :internal_note, :point_enabled, :category_id,              

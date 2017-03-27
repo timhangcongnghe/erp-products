@@ -146,6 +146,22 @@ Erp::Products::Engine.routes.draw do
           get 'brand_group_detail_line_form'
 				end
 			end
+      resources :accessories do
+        collection do
+          get 'dataselect'
+          post 'list'
+          put 'archive'
+          put 'unarchive'
+          delete 'delete_all'
+          put 'archive_all'
+          put 'unarchive_all'          
+        end
+      end
+      resources :accessory_details do
+				collection do
+          get 'accessory_detail_line_form'
+				end
+			end
       resources :comments do
         collection do
           post 'list'

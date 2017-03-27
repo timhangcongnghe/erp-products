@@ -20,6 +20,7 @@ class CreateErpProductsProducts < ActiveRecord::Migration[5.0]
       t.decimal :deal_price
       t.integer :deal_percent
       t.references :brand, index: true, references: :erp_products_brands
+      t.references :accessory, index: true, references: :erp_products_accessories
       t.text :events_note
       t.text :meta_keywords
       t.text :meta_description

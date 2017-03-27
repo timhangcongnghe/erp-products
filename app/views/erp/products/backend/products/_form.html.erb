@@ -233,6 +233,23 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
+                                    <%= erp_form_control("dataselect", {
+                                        name: 'product[accessory_id]',
+                                        value: product.accessory_id,
+                                        text: product.accessory_name,
+                                        placeholder: t('.choose_accessory'),
+                                        label: t('.accessory'),
+                                        help: t('.help_accessory'),
+                                        url: erp_products.dataselect_backend_accessories_path(format: 'json'),
+                                        create: {
+                                            url: erp_products.new_backend_accessory_path,
+                                            title: t('.create_accessory'),
+                                            container_selector: '.new_accessory',
+                                            input_selector: 'input[name="accessory[name]"]'
+                                        }
+                                    }) %>
+                                </div>
+                                <div class="col-md-3">
                                     <%= erp_form_control("number", {
                                         name: 'product[deal_price]',
                                         value: product.deal_price,
@@ -241,7 +258,7 @@
                                         placeholder: t('.placeholder_deal_price')
                                     }) %>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <%= erp_form_control("number", {
                                         name: 'product[deal_percent]',
                                         value: product.deal_percent,
@@ -285,6 +302,17 @@
                                         value: product.meta_description,
                                         placeholder: t('.enter_meta_description'),
                                         label: t('.meta_description'),
+                                        type: "tiny"
+                                    }) %>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <%= erp_form_control("editor", {
+                                        name: 'product[short_description]',
+                                        value: product.short_description,
+                                        label: t('.short_description'),
+                                        placeholder: t('.enter_short_description'),
                                         type: "tiny"
                                     }) %>
                                 </div>
@@ -416,14 +444,7 @@
                                 value: product.internal_note,
                                 placeholder: t('.enter_internal_note'),
                                 type: "tiny"
-                            }) %>
-                            <h4><%= t('.short_description') %></h4>
-                            <%= erp_form_control("editor", {
-                                name: 'product[short_description]',
-                                value: product.short_description,
-                                placeholder: t('.enter_short_description'),
-                                type: "tiny"
-                            }) %>
+                            }) %>                            
                             <h4><%= t('.description') %></h4>
                             <%= erp_form_control("editor", {
                                 name: 'product[description]',

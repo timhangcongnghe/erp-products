@@ -7,6 +7,7 @@ module Erp::Products
     belongs_to :creator, class_name: "Erp::User"
     belongs_to :category
     belongs_to :brand
+    belongs_to :accessory
     belongs_to :unit, class_name: 'Erp::Products::Unit', optional: true
     
     has_many :comments, class_name: "Erp::Products::Comment"
@@ -196,6 +197,11 @@ module Erp::Products
 			brand.present? ? brand.name : ''
 		end
     
+    # accessory name
+    def accessory_name
+			accessory.present? ? accessory.name : ''
+		end
+    
     # color name
     def color_name
 			brand.present? ? brand.name : ''
@@ -282,6 +288,10 @@ module Erp::Products
     
     def self.get_deal_products
 			self.get_active.where(is_deal: true)
+		end
+    
+    def self.limit_deal_products
+			self.get_deal_products.limit(15)
 		end
     
     def self.get_bestseller_products

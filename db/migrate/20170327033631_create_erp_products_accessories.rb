@@ -1,6 +1,6 @@
-class CreateErpProductsBrandGroups < ActiveRecord::Migration[5.0]
+class CreateErpProductsAccessories < ActiveRecord::Migration[5.0]
   def change
-    create_table :erp_products_brand_groups do |t|
+    create_table :erp_products_accessories do |t|
       t.string :name
       t.text :description
       t.boolean :archived, default: false
