@@ -280,6 +280,14 @@ module Erp::Products
 			product_images.second
 		end
     
+    def self.get_deal_products
+			self.get_active.where(is_deal: true)
+		end
+    
+    def self.get_bestseller_products
+			self.get_active.where(is_bestseller: true)
+		end
+    
     def product_price
 			# product is not deal
 			return self.price if !self.is_deal

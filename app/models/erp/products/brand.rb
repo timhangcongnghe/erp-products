@@ -77,6 +77,10 @@ module Erp::Products
       query = query.limit(8).map{|brand| {value: brand.id, text: brand.name} }
     end
     
+    def self.get_brands
+			self.where(archived: false).order("created_at DESC")
+		end
+    
     def archive
 			update_columns(archived: true)
 		end
