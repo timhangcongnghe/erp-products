@@ -318,23 +318,21 @@ module Erp::Products
     
     # count stars
 		def count_stars
-			arr = []
-			self.ratings.each do |item|
-				arr << item.star
-			end
-			
-			return arr
+			self.ratings.map(&:star)
 		end
 		
 		# average stars
 		def average_stars
-			if count_stars.length > 0
-				sum = 0
-				total_stars = count_stars.each { |b| sum += b }
-				average = sum / count_stars.length
-			end
-			
-			return average
+			# calculate average stars
+			count_stars.empty? ? 0 : count_stars.inject(0, :+) / count_stars.length
+		end
+		
+		def self.get_deal_products
+			self.where(is_deal: true)
+		end
+		
+		def self.get_bestseller_products
+			self.where(is_bestseller: true)
 		end
     
     if Erp::Core.available?("carts")
