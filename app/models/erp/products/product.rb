@@ -338,11 +338,11 @@ module Erp::Products
 		end
 		
 		def self.get_deal_products
-			self.where(is_deal: true)
+			self.get_active.where(is_deal: true)
 		end
 		
 		def self.get_bestseller_products
-			self.where(is_bestseller: true)
+			self.get_active.where(is_bestseller: true)
 		end
     
     if Erp::Core.available?("carts")
