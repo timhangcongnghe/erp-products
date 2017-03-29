@@ -3,7 +3,7 @@ module Erp::Products
     belongs_to :product, class_name: 'Erp::Products::Product'
     belongs_to :parent, class_name: "Erp::Products::Comment", optional: true
     belongs_to :user, class_name: "Erp::User"
-    has_many :children, class_name: "Erp::Products::Comment", foreign_key: "parent_id"
+    has_many :children, class_name: "Erp::Products::Comment", foreign_key: "parent_id", dependent: :destroy
     validates :message, :presence => true
     
     # Filters
