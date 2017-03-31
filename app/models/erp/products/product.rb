@@ -352,10 +352,21 @@ module Erp::Products
 		def self.get_bestseller_products
 			self.get_active.where(is_bestseller: true)
 		end
+		
+		# If menus engines available
+    if Erp::Core.available?("menus")
+			# Find all menus of a product
+			def find_menus
+				self.category.nil? ? nil : self.category.menus				
+			end
+			
+			def find_menu
+				self.find_menus.last
+			end
+		end
     
+    private
     if Erp::Core.available?("carts")
-			private
-    
 			# ensure that there are no cart items referencing this product
 			def ensure_not_referenced_by_any_cart_item
 				if cart_items.empty?
@@ -365,6 +376,6 @@ module Erp::Products
 					return false
 				end
 			end
-		end		
+		end
   end
 end
