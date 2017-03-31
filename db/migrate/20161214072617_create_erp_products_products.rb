@@ -17,6 +17,8 @@ class CreateErpProductsProducts < ActiveRecord::Migration[5.0]
       t.boolean :is_deal, default: false
       t.boolean :is_new, default: false
       t.boolean :is_bestseller, default: false
+      t.boolean :is_business_choices, default: false
+      t.boolean :is_top_business_choices, default: false
       t.decimal :deal_price
       t.integer :deal_percent
       t.references :brand, index: true, references: :erp_products_brands

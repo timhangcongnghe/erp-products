@@ -286,6 +286,14 @@ module Erp::Products
 			product_images.second
 		end
     
+    def self.get_business_choices
+			self.get_active.where(is_business_choices: true)
+		end
+    
+    def self.get_top_business_choices
+			self.get_business_choices.where(is_top_business_choices: true)
+		end
+    
     def self.get_deal_products
 			self.get_active.where(is_deal: true)
 		end
