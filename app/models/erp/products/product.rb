@@ -1,8 +1,9 @@
 module Erp::Products
   class Product < ApplicationRecord
 		attr_accessor :products_values_attributes
+		validates :name, :uniqueness => true
 		
-    validates :name, :category_id, :presence => true
+    validates :name, :category_id, brand_id, :presence => true
     
     belongs_to :creator, class_name: "Erp::User"
     belongs_to :category

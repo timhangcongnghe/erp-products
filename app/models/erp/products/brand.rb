@@ -1,5 +1,6 @@
 module Erp::Products
   class Brand < ApplicationRecord
+		validates :name, :uniqueness => true
     validates :name, :presence => true
     belongs_to :creator, class_name: "Erp::User"
     
