@@ -99,7 +99,13 @@
                         <span class="label label-sm label-danger"><%= t('.archived') %></span>
                         <% else %>
                         <span class="label label-sm label-success"><%= t('.active') %></span>
-                        <% end %> 
+                        <% end %>
+                        <% if product.is_deal? %>
+                        <br /><span class="label label-sm label-orange"><%= t('.deal') %></span>
+                        <% end %>
+                        <% if product.is_bestseller? %>
+                        <br /><span class="label label-sm label-orange"><%= t('.bestseller') %></span>
+                        <% end %>
                     </td>
                     <% end %>
                     <% if get_columns(params).include?("creator") %>
