@@ -22,6 +22,13 @@
                                     required: true,
                                     errors: product.errors.full_messages_for(:name)
                                 }) %>
+                                <%= erp_form_control("text", {
+                                    name: 'product[short_name]',
+                                    value: product.short_name,
+                                    label: t('.short_name'),
+                                    help: t('.help_product_short_name'),
+                                    placeholder: t('.placeholder_product_short_name')
+                                }) %>
                                 <div class="row form-control-mb-0">
                                     <div class="col-md-6">
                                         <%= erp_form_control('checkbox', {

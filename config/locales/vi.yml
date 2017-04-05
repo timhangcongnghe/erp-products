@@ -329,6 +329,9 @@ vi:
             enter_meta_keywords: "Nhập từ khóa thẻ meta"
             meta_description: "Mô tả thẻ meta"
             enter_meta_description: "Nhập mô tả thẻ meta"
+            short_name: "Tên rút gọn"
+            help_product_short_name: "Tên rút gọn của sản phẩm không kèm thuộc tính"
+            placeholder_product_short_name: "Nhập tên rút gọn"
             # end frontend
             description_for_quotations: "Description for Quotations"
             description_for_pickings: "Description for Pickings"
