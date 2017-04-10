@@ -1,0 +1,54 @@
+<div class="">
+    <table class="table table-advance table-hover table-striped table-checkable order-column" id="">
+        <thead>
+            <tr>
+                <th width='1%'>
+                    <%= erp_datalist_check_all %>
+                </th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Status</th>
+                <th width="7%"><%= t('.actions') %></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @products["products"].each do |product| %>
+                <tr class="odd gradeX">
+                    <td>
+                        <%= erp_datalist_check_row(id: 1) %>
+                    </td>
+                    <td>
+                        <%= product["id"] %>
+                    </td>
+                    <td>
+                        <%= product["display_name"] %>
+                    </td>
+                    <td class="text-nowrap text-right">
+                        <%= format_price(product["price"]) %>
+                    </td>
+                    <td>
+                        <%= product["stock"] %>
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+                        <%= erp_datalist_row_actions(
+                            [
+                                {
+                                    text: '<i class="fa fa-edit"></i> '+t('.edit'),
+                                    href: erp_products.edit_backend_product_path(product)
+                                }
+                            ]
+                        ) %>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+    <% if @products.empty? %>
+        <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
+    <% end %>
+</div>

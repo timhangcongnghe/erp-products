@@ -1,0 +1,32 @@
+<% content_for :title do %>
+    HKErp products
+<% end %>
+
+<% content_for :page_title do %>
+    <i class="fa fa-archive"></i> HKErp products
+<% end %>
+
+<%= erp_datalist(
+    url: erp_products.hkerp_products_list_backend_products_path,
+    sortable: true,
+    keywords: [
+        {
+            text: 'Name', name: 'products.cache_search'
+        },
+        {
+            text: 'Cateogry',
+            name: 'categories.name',
+            select: {
+                name: 'categories.id',
+                data_url: erp_products.hkerp_categories_dataselect_backend_products_path
+            }
+        }
+    ],
+    actions: [
+
+    ],
+    filters: [
+
+    ],
+    sort: { sort_by: '', sort_direction: '' }
+) %>

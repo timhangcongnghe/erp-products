@@ -27,7 +27,11 @@ Erp::Products::Engine.routes.draw do
           put 'uncheck_is_bestseller'
           put 'check_is_bestseller_all'
           put 'uncheck_is_bestseller_all'
-          get 'form_property'          
+          get 'form_property'
+
+          get 'hkerp_products'
+          post 'hkerp_products_list'
+          get 'hkerp_categories_dataselect'
         end
       end
       resources :properties do
@@ -154,7 +158,7 @@ Erp::Products::Engine.routes.draw do
           put 'unarchive'
           delete 'delete_all'
           put 'archive_all'
-          put 'unarchive_all'          
+          put 'unarchive_all'
         end
       end
       resources :accessory_details do
