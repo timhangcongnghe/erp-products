@@ -52,3 +52,15 @@
         <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
     <% end %>
 </div>
+
+<ul class="pagination">
+    <li class="prev disabled"><span><i class="fa fa-angle-left"></i></span></li>
+    <% (1..(@products['total'].to_i/@products['per_page'].to_i + 0.5).round(0)).each do |number| %>
+        <% if params[:page].to_i == number.to_i %>
+            <li class="active"><span><%= number %></span></li>
+        <% else %>
+            <li><a rel="next" href="list?page=<%= number %>"><%= number %></a></li>
+        <% end %>
+    <% end %>
+    <li class="next"><a rel="next" href="/vi/backend/products/categories/list?page=2"><i class="fa fa-angle-right"></i></a></li>
+</ul>

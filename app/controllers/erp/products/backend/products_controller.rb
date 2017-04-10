@@ -247,17 +247,17 @@ module Erp
 
         # Ajax list for hkerp products
         def hkerp_products_list
-          url = "http://localhost:4000/products/erp_connector"
+          url = "http://erp.hoangkhang.com.vn/products/erp_connector"
 
           uri = URI(url)
-          res = Net::HTTP.post_form(uri, 'page' => 0, 'data' => params.to_unsafe_h.to_json)
+          res = Net::HTTP.post_form(uri, 'page' => params[:page].to_i-1, 'data' => params.to_unsafe_h.to_json)
           data = res.body
           @products = JSON.parse(data)
 
         end
 
         def hkerp_categories_dataselect
-          url = "http://localhost:4000/products/erp_categories_dataselect"
+          url = "http://erp.hoangkhang.com.vn/products/erp_categories_dataselect"
           uri = URI(url)
           uri.query = URI.encode_www_form(params)
 
