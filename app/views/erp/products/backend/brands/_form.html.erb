@@ -2,14 +2,26 @@
     <div class="form-body">
         <div class="portlet light bordered">
             <div class="portlet-body form">
-                <%= erp_form_control("text", {
-                    name: 'brand[name]',
-                    value: brand.name,                   
-                    label: t('.name'),
-                    placeholder: t('.enter_name'),
-                    required: true,
-                    errors: brand.errors.full_messages_for(:name)
-                }) %>
+                <div class="row">
+                    <div class="col-md-2">
+                        <%= erp_form_control('image', {
+                            img_src: brand.image_url.system,
+                            name: 'brand[image_url]',
+                            width: 150,
+                            height: 150
+                        }) %>
+                    </div>
+                    <div class="col-md-10">
+                        <%= erp_form_control("text", {
+                            name: 'brand[name]',
+                            value: brand.name,                   
+                            label: t('.name'),
+                            placeholder: t('.enter_name'),
+                            required: true,
+                            errors: brand.errors.full_messages_for(:name)
+                        }) %>
+                    </div>
+                </div>
                 <%= erp_form_control("editor", {
                     name: 'brand[description]',
                     value: brand.description,                   

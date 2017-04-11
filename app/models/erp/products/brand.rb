@@ -1,8 +1,13 @@
 module Erp::Products
   class Brand < ApplicationRecord
+		mount_uploader :image_url, Erp::Products::BrandImageUploader
 		validates :name, :uniqueness => true
     validates :name, :presence => true
     belongs_to :creator, class_name: "Erp::User"
+    
+    def self.get_active
+			self.where(archived: false)
+		end
     
     # Filters
     def self.filter(query, params)
@@ -98,8 +103,12 @@ module Erp::Products
 			update_all(archived: false)
 		end
     
-    def self.get_brands
-			self.where(archived: false).order('created_at DESC')
+    def self.get_brands_order_name
+			self.get_active.order('name ASC')
+		end
+    
+    def self.get_brands_order_newest_created
+			self.get_active.order('created_at DESC')
 		end
     
   end

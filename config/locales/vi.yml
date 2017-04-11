@@ -183,7 +183,7 @@ vi:
             check_is_bestseller_confirm: "Bạn muốn thêm sản phẩm vào danh sách bán chạy?"
             uncheck_is_bestseller_confirm: "Bạn muốn hủy sản phẩm khỏi danh sách bán chạy?"
             is_bestseller: "Sản phẩm bán chạy"
-            is_hotdeal: "Sản phẩm khuyến mãi"
+            is_hotdeal: "Sản phẩm khuyến mãi"            
           list:
             delete: "Xóa sản phẩm"
             name: "Tên sản phẩm"
@@ -332,6 +332,8 @@ vi:
             short_name: "Tên rút gọn"
             help_product_short_name: "Tên rút gọn của sản phẩm không kèm thuộc tính"
             placeholder_product_short_name: "Nhập tên rút gọn"
+            product_intro_link: "Link giới thiệu sản phẩm"
+            placeholder_product_intro_link: "Chèn link giới thiệu sản phẩm (nếu có)"
             # end frontend
             description_for_quotations: "Description for Quotations"
             description_for_pickings: "Description for Pickings"

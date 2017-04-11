@@ -335,6 +335,12 @@
                                     }) %>
                                 </div>
                             </div>
+                            <%= erp_form_control("text", {
+                                name: 'product[product_intro_link]',
+                                value: product.product_intro_link,
+                                label: t('.product_intro_link'),
+                                placeholder: t('.placeholder_product_intro_link')
+                            }) %>
                             <div class="row">
                                 <div class="col-md-6">
                                     <%= erp_form_control("editor", {
