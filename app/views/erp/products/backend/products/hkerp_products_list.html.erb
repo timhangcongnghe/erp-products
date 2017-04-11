@@ -32,14 +32,15 @@
                         <%= product["stock"] %>
                     </td>
                     <td>
-
+                        <%= Erp::Products::HkerpProduct.get_status_by_hkerp_product_id(product["id"]) %>
                     </td>
                     <td>
-                        <%= erp_datalist_row_actions(
+                        <%= erp_datalist_row_actions (
                             [
                                 {
-                                    text: '<i class="fa fa-edit"></i> '+t('.edit'),
-                                    href: erp_products.edit_backend_product_path(product)
+                                    text: '<i class="fa fa-download"></i> Import',
+                                    href: erp_products.new_backend_product_path(hkerp_id: product["id"]),
+                                    target: '_blank'
                                 }
                             ]
                         ) %>

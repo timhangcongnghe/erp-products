@@ -6,6 +6,20 @@
                     <div class="portlet-body form">
                         <div class="row">
                             <div class="col-md-5">
+                                <% if product.hkerp_product.present? %>
+                                    <div class="form-group">
+                                        <a href="#more" onclick="$(this).parent().find('.more-info-box').toggle()">
+                                            HKEro connect ID (#<%= product.hkerp_product.hkerp_product_id %>)
+                                        </a>
+                                        <div class="more-info-box" style="display: none">
+                                            <%= product.hkerp_product.get_data["display_name"] %>
+                                            <br><%= format_price(product.hkerp_product.get_data["price"]) %>
+                                            <hr>
+                                        </div>
+
+                                        <input type='hidden' name='hkerp_id' value='<%= product.hkerp_product.hkerp_product_id %>' />
+                                    </div>
+                                <% end %>
                                 <%= erp_form_control("text", {
                                     name: 'product[code]',
                                     value: product.code,
@@ -87,7 +101,7 @@
                                     hidden_params: [
                                         {name: 'product[product_images_attributes][__index__][product_id]', value: @product.id}
                                     ]
-                                }) %>                                
+                                }) %>
                             </div>
                         </div>
                     </div>
@@ -478,7 +492,7 @@
                                 value: product.internal_note,
                                 placeholder: t('.enter_internal_note'),
                                 type: "tiny"
-                            }) %>                            
+                            }) %>
                             <h4><%= t('.description') %></h4>
                             <%= erp_form_control("editor", {
                                 name: 'product[description]',

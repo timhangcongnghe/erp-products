@@ -29,6 +29,11 @@ module Erp
           end
           @product.deal_from_date = Time.now
           @product.deal_to_date = Time.now
+
+          #@todo HK-ERP connector
+          if params[:hkerp_id].present?
+            @product.updateHkerpInfo(params[:hkerp_id])
+          end
         end
 
         # GET /products/1/edit
@@ -47,6 +52,11 @@ module Erp
             @product.product_images.build
           end
           @product.products_values_attributes = params.to_unsafe_hash[:products_values_attributes]
+
+          #@todo HK-ERP connector
+          if params.to_unsafe_hash[:hkerp_id].present?
+            @product.updateHkerpInfo(params.to_unsafe_hash[:hkerp_id])
+          end
 
           if @product.save
             @product.update_products_values
@@ -245,9 +255,10 @@ module Erp
 
         end
 
+        #@todo HK-ERP connector
         # Ajax list for hkerp products
         def hkerp_products_list
-          url = "http://erp.hoangkhang.com.vn/products/erp_connector"
+          url = ErpSystem::Application.config.hkerp_endpoint + "products/erp_connector"
 
           uri = URI(url)
           res = Net::HTTP.post_form(uri, 'page' => params[:page].to_i-1, 'data' => params.to_unsafe_h.to_json)
@@ -257,16 +268,16 @@ module Erp
         end
 
         def hkerp_categories_dataselect
-          url = "http://erp.hoangkhang.com.vn/products/erp_categories_dataselect"
+          url = ErpSystem::Application.config.hkerp_endpoint + "products/erp_categories_dataselect"
           uri = URI(url)
           uri.query = URI.encode_www_form(params)
 
           res = Net::HTTP.get_response(uri)
-          puts res.to_json
           dataselect = res.body if res.is_a?(Net::HTTPSuccess)
 
           render json: dataselect
         end
+        ######################################
 
         private
           # Use callbacks to share common setup or constraints between actions.

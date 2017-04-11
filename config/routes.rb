@@ -29,6 +29,7 @@ Erp::Products::Engine.routes.draw do
           put 'uncheck_is_bestseller_all'
           get 'form_property'
 
+					#@todo HK-ERP connector
           get 'hkerp_products'
           post 'hkerp_products_list'
           get 'hkerp_categories_dataselect'
