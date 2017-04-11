@@ -15,6 +15,7 @@
         </thead>
         <tbody>
             <% @products["products"].each do |product| %>
+                <% erp_product = Erp::Products::HkerpProduct.get_product_by_hkerp_product_id(product["id"]) %>
                 <tr class="odd gradeX">
                     <td>
                         <%= erp_datalist_check_row(id: 1) %>
@@ -32,18 +33,34 @@
                         <%= product["stock"] %>
                     </td>
                     <td>
-                        <%= Erp::Products::HkerpProduct.get_status_by_hkerp_product_id(product["id"]) %>
+                        <% if erp_product.nil? %>
+                            <span class="label label-sm label-danger">new</span>
+                        <% else %>
+                            <span class="label label-sm label-success">imported</span>
+                        <% end %>
                     </td>
                     <td>
-                        <%= erp_datalist_row_actions (
-                            [
-                                {
-                                    text: '<i class="fa fa-download"></i> Import',
-                                    href: erp_products.new_backend_product_path(hkerp_id: product["id"]),
-                                    target: '_blank'
-                                }
-                            ]
-                        ) %>
+                        <% if erp_product.nil? %>
+                            <%= erp_datalist_row_actions (
+                                [
+                                    {
+                                        text: '<i class="fa fa-download"></i> Import',
+                                        href: erp_products.new_backend_product_path(hkerp_id: product["id"]),
+                                        target: '_blank'
+                                    }
+                                ]
+                            ) %>
+                        <% else %>
+                            <%= erp_datalist_row_actions (
+                                [
+                                    {
+                                        text: '<i class="fa fa-pencil"></i> Edit',
+                                        href: erp_products.edit_backend_product_path(erp_product),
+                                        target: '_blank'
+                                    }
+                                ]
+                            ) %>
+                        <% end %>
                     </td>
                 </tr>
             <% end %>
