@@ -522,6 +522,8 @@ vi:
             enter_name: "Nhập tên thương hiệu..."
             description: "Mô tả"
             enter_description: "Nhập mô tả..."
+            brand_is_main: "Hiển thị ra bên ngoài"
+            is_main: "Sử dụng bên ngoài website"
         brand_groups:
           create:
             success: "Thêm nhóm thương hiệu thành công."

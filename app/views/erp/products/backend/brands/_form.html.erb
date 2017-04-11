@@ -5,13 +5,13 @@
                 <div class="row">
                     <div class="col-md-2">
                         <%= erp_form_control('image', {
-                            img_src: brand.image_url.system,
+                            img_src: brand.image_url.smaller,
                             name: 'brand[image_url]',
                             width: 150,
                             height: 150
                         }) %>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-6">
                         <%= erp_form_control("text", {
                             name: 'brand[name]',
                             value: brand.name,                   
@@ -19,6 +19,15 @@
                             placeholder: t('.enter_name'),
                             required: true,
                             errors: brand.errors.full_messages_for(:name)
+                        }) %>
+                    </div>
+                    <div class="col-md-4">
+                        <%= erp_form_control('checkbox', {
+                            name: 'brand[is_main]',
+                            value: brand.is_main,
+                            not_selected_value: 'false',
+                            label: t('.brand_is_main'),
+                            options: [{value: 'true', text: t('.is_main')}]
                         }) %>
                     </div>
                 </div>

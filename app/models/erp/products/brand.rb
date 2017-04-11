@@ -104,11 +104,7 @@ module Erp::Products
 		end
     
     def self.get_brands_order_name
-			self.get_active.order('name ASC')
-		end
-    
-    def self.get_brands_order_newest_created
-			self.get_active.order('created_at DESC')
+			self.get_active.where(is_main: true).order('name ASC')
 		end
     
   end
