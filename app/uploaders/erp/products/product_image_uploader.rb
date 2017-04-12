@@ -57,6 +57,19 @@ module Erp
 			version :medium do
 				process :resize_to_fill => [300, 300]
 			end
+			
+			# thumbnails
+			version :thumb600 do
+				process :resize_to_fill => [600, 600]
+			end
+			
+			version :thumb170 do
+				process :resize_to_fill => [170, 170]
+			end
+			
+			version :thumb75 do
+				process :resize_to_fill => [75, 75]
+			end
     end
   end
 end
