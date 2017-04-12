@@ -393,7 +393,7 @@ module Erp::Products
 					)
 				end
 
-				self.price = data["price"] if self.price.to_f <= 1
+				self.price = data["price"]
 				self.name = data["name"] if !self.name.present?
 				self.code = data["product_code"] if !self.code.present?
 			end

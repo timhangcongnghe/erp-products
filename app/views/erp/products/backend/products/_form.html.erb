@@ -144,12 +144,25 @@
                         <div class="tab-pane active" id="tab_5_1">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <%= erp_form_control("number", {
-                                        name: 'product[price]',
-                                        value: product.price,
-                                        label: t('.sale_price'),
-                                        help: t('.help_price')
-                                    }) %>
+                                    <% if product.hkerp_product.present? %>
+                                        <div class="form-group ">
+                                            <label>Giá bán
+                                                    <i class="fa fa-commenting right tooltips icon-default-color" data-original-title="Giá bán của sản phẩm" data-container="body"></i>
+                                            </label>
+
+                                            <div class="text-bold text-right">
+                                                <strong><%= format_price(product.price) %></strong>
+                                            </div>
+
+                                        </div>
+                                    <% else %>
+                                        <%= erp_form_control("number", {
+                                            name: 'product[price]',
+                                            value: product.price,
+                                            label: t('.sale_price'),
+                                            help: t('.help_price')
+                                        }) %>
+                                    <% end %>
                                     <%= erp_form_control("number", {
                                         name: 'product[cost]',
                                         value: product.cost,

@@ -79,8 +79,14 @@ module Erp
         # PATCH/PUT /products/1
         def update
           @product.products_values_attributes = params.to_unsafe_hash[:products_values_attributes]
+          @product.assign_attributes(product_params)
 
-          if @product.update(product_params)
+          #@todo HK-ERP connector
+            if params.to_unsafe_hash[:hkerp_id].present?
+              @product.updateHkerpInfo(params.to_unsafe_hash[:hkerp_id])
+            end
+
+          if @product.save
             @product.update_products_values
 
             if request.xhr?
