@@ -284,6 +284,17 @@ module Erp
           render json: dataselect
         end
 
+        def hkerp_manufacturers_dataselect
+          url = ErpSystem::Application.config.hkerp_endpoint + "products/erp_manufacturers_dataselect"
+          uri = URI(url)
+          uri.query = URI.encode_www_form(params)
+
+          res = Net::HTTP.get_response(uri)
+          dataselect = res.body if res.is_a?(Net::HTTPSuccess)
+
+          render json: dataselect
+        end
+
         def hkerp_update_price
           @products.each do |p|
             p.updateHkerpInfo(p.hkerp_product.hkerp_product_id)

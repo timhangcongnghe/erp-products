@@ -34,6 +34,7 @@ Erp::Products::Engine.routes.draw do
           post 'hkerp_products_list'
           get 'hkerp_categories_dataselect'
           put 'hkerp_update_price'
+          get 'hkerp_manufacturers_dataselect'
         end
       end
       resources :properties do
