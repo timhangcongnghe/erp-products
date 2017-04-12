@@ -38,6 +38,9 @@ module Erp
       version :system do
         process resize_to_fill: [150, 150]
       end
+      version :system_logo do
+        process resize_to_fill: [0, 25]
+      end
       
       version :small do
 				process :resize_to_fill => [0, 75]

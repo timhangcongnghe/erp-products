@@ -4,20 +4,19 @@
             <th width='1%'>
                 <%= erp_datalist_check_all %>
             </th>
+            <% if get_columns(params).include?("image") %>
+                <th width='15%'><%= t('image') %></th>
+            <% end %>
             <% if get_columns(params).include?("name") %>
                 <th class="sortable" sort-by='erp_products_brands.name'>
                     <%= t('.name') %>
                 </th>
             <% end %>
             <% if get_columns(params).include?("status") %>
-                <th>
-                    <%= t('status') %>
-                </th>
+                <th><%= t('status') %></th>
             <% end %>
             <% if get_columns(params).include?("creator") %>
-                <th>
-                    <%= t('creator') %>
-                </th>
+                <th><%= t('creator') %></th>
             <% end %>
             <% if get_columns(params).include?("created_at") %>
                 <th class="sortable" sort-by='erp_products_brands.created_at'>
@@ -33,6 +32,13 @@
                 <td>
                     <%= erp_datalist_check_row(id: brand.id) %>
                 </td>
+                <% if get_columns(params).include?("image") %>
+                    <td>
+                        <%= erp_component('image', {
+                            object: brand
+                        }) %>
+                    </td>
+                <% end %>
                 <% if get_columns(params).include?("name") %>
                     <td><%= link_to brand.name, erp_products.edit_backend_brand_path(brand), class: 'title' %></td>
                 <% end %>
