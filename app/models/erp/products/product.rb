@@ -422,6 +422,8 @@ module Erp::Products
 
 				uri = URI(url)
 				Net::HTTP.post_form(uri, 'id' => self.hkerp_product.hkerp_product_id)
+
+				self.product_images.where(image_url: nil).destroy_all
 			end
 		end
 		##########################
