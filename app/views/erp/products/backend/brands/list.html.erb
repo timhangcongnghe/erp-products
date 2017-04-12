@@ -40,7 +40,9 @@
                     </td>
                 <% end %>
                 <% if get_columns(params).include?("name") %>
-                    <td><%= link_to brand.name, erp_products.edit_backend_brand_path(brand), class: 'title' %></td>
+                    <td>
+                        <%= link_to brand.name, erp_products.edit_backend_brand_path(brand), class: 'title' %>                        
+                    </td>
                 <% end %>
                 <% if get_columns(params).include?("status") %>
                     <td>
@@ -48,7 +50,9 @@
                             <span class="label label-sm label-danger"><%= t('archived') %></span>
                         <% else %>
                             <span class="label label-sm label-success"><%= t('active') %></span>
-                        <% end %> 
+                        <% end %>
+                        
+                        <br><% if brand.is_main? %><span class="label label-sm label-info">Đang hiển thị tại website</span><% end %>
                     </td>
                 <% end %>
                 <% if get_columns(params).include?("creator") %>
