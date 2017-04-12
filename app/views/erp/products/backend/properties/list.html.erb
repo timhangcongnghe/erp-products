@@ -1,0 +1,106 @@
+<table class="table table-advance table-hover table-striped table-checkable order-column">
+    <thead>
+        <tr>
+            <th width='1%'>
+                <%= erp_datalist_check_all %>
+            </th>
+            <% if get_columns(params).include?("name") %>
+                <th class="sortable" sort-by='erp_products_properties.name'>
+                    <%= t('.name') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("property_group") %>
+                <th><%= t('.property_group') %></th>
+            <% end %>
+            <% if get_columns(params).include?("status") %>
+                <th><%= t('status') %></th>
+            <% end %>
+            <% if get_columns(params).include?("creator") %>
+                <th><%= t('creator') %></th>
+            <% end %>
+            <% if get_columns(params).include?("created_at") %>
+                <th class="sortable" sort-by='erp_products_properties.created_at'>
+                    <%= t('created_at') %>
+                </th>
+            <% end %>
+            <th width="7%"><%= t('actions') %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @properties.each do |property| %>
+            <tr class="odd gradeX">
+                <td>
+                    <%= erp_datalist_check_row(id: property.id) %>
+                </td>
+                <% if get_columns(params).include?("name") %>
+                    <td>
+                        <%= link_to property.name, erp_products.edit_backend_property_path(property), class: 'title' %>                        
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("property_group") %>
+                    <td>
+                        <%= property.property_group_name %>                        
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("status") %>
+                    <td>
+                        <% if property.archived == true %>
+                            <span class="label label-sm label-danger"><%= t('archived') %></span>
+                        <% else %>
+                            <span class="label label-sm label-success"><%= t('active') %></span>
+                        <% end %>
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("creator") %>
+                    <td>
+                        <%= erp_component('avatar', {
+                            user: property.creator
+                        }) %>
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("created_at") %>
+                    <td><%= property.created_at.strftime("%d/%m/%Y") %></td>
+                <% end %>
+                <td class="text-right">
+                    <%= erp_datalist_row_actions(
+                        [
+                            {
+                                text: '<i class="fa fa-edit"></i> '+t('edit'),
+                                href: erp_products.edit_backend_property_path(property)
+                            },
+                            {
+                                text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
+                                url: erp_products.archive_backend_properties_path(id: property),
+                                data_method: 'PUT',
+                                hide: property.archived,
+                                class: 'ajax-link'
+                            },
+                            {
+                                text: '<i class="fa fa-eye"></i> '+t('unarchive'),
+                                url: erp_products.unarchive_backend_properties_path(id: property),
+                                data_method: 'PUT',
+                                hide: !property.archived,
+                                class: 'ajax-link'
+                            },
+                            {
+                                divider: true
+                            },
+                            {
+                                text: '<i class="fa fa-trash"></i> '+t('.delete'),
+                                url: erp_products.backend_property_path(property),
+                                data_method: 'DELETE',
+                                class: 'ajax-link',
+                                data_confirm: t('delete_confirm')
+                            }
+                        ]
+                    ) %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+<% if @properties.empty? %>
+    <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
+<% end %>
+        
+<%= erp_datalist_pagination(@properties) %>

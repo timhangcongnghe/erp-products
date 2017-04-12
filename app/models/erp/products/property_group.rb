@@ -1,8 +1,7 @@
 module Erp::Products
-  class Property < ApplicationRecord
-    validates :name, :property_group_id, :presence => true
+  class PropertyGroup < ApplicationRecord
+    validates :name, :presence => true
     belongs_to :creator, class_name: "Erp::User"
-    belongs_to :property_group, class_name: "Erp::Products::PropertyGroup"
     
     def self.get_active
 			self.where(archived: false)
@@ -79,12 +78,11 @@ module Erp::Products
         query = query.where('LOWER(name) LIKE ?', "%#{keyword}%")
       end
       
-      query = query.limit(8).map{|property| {value: property.id, text: property.name} }
+      query = query.limit(8).map{|property_group| {value: property_group.id, text: property_group.name} }
     end
     
-    # property group name
-    def property_group_name
-			property_group.present? ? property_group.name : ''
+    def self.get_brands
+			self.where(archived: false).order("created_at DESC")
 		end
     
     def archive

@@ -101,36 +101,27 @@ vi:
           unarchive_all:
             success: "Hiện thuộc tính được chọn thành công."
           index:
-            categories: "Tất cả thuộc tính"
+            properties: "Tất cả thuộc tính"
             create: "Thêm thuộc tính"
-            archive: "Ẩn khỏi danh sách"
-            unarchive: "Hiện ra danh sách"
             delete: "Xóa thuộc tính"
-            delete_confirm: "Bạn có chắc muốn xóa?"
             name: "Tên thuộc tính"
-            status: "Trạng thái"
-            creator: "Người tạo"
-            created_at: "Ngày tạo"
+            property_group: "Nhóm thuộc tính"
           list:
             delete: "Xóa thuộc tính"
-            delete_confirm: "Bạn có chắc muốn xóa?"
             name: "Tên thuộc tính"
-            status: "Trạng thái"
-            creator: "Người tạo"
-            created_at: "Ngày tạo"
-            actions: "Thao tác"
-            archived: "Đã ẩn"
-            active: "Đang hiển thị"
-            edit: "Cập nhật"
-            no_matching_records_found: "Danh sách chuyên mục hiện tại đang trống."
+            property_group: "Nhóm thuộc tính"
+            no_matching_records_found: "Danh sách thuộc tính hiện tại đang trống."
           new:
-            categories: "Tất cả thuộc tính"
+            properties: "Tất cả thuộc tính"
             create: "Thêm thuộc tính"
           edit:
-            categories: "Tất cả thuộc tính"
-            edit: "Cập nhật thuộc tính"
+            properties: "Tất cả thuộc tính"
+            create: "Thêm thuộc tính"
           form:
             name: "Tên thuộc tính"
+            property_group: "Nhóm thuộc tính"
+            help_property_group: "Thuộc tính sản phẩm thuộc nhóm nào?"
+            choose_property_group: "Chọn nhóm thuộc tính"
         products:
           create:
             success: "Thêm sản phẩm thành công."
@@ -568,6 +559,45 @@ vi:
             choose_brand: "Chọn thương hiệu"
             help_brand: "Chọn thương hiệu để tạo thành nhóm"
             action: "Thao tác"
+        property_groups:
+          create:
+            success: "Thêm nhóm thuộc tính thành công."
+          update:
+            success: "Cập nhật nhóm thuộc tính thành công."
+          destroy:
+            success: "Xóa nhóm thuộc tính thành công."
+          delete_all:
+            success: "Các nhóm thuộc tính đã được xóa thành công."
+          archive:
+            success: "Nhóm thuộc tính đã được ẩn thành công."
+          unarchive:
+            success: "Nhóm thuộc tính đã được hiện ra thành công."
+          archive_all:
+            success: "Các nhóm thuộc tính đã được ẩn thành công."
+          unarchive_all:
+            success: "Các nhóm thuộc tính đã được hiện ra thành công."
+          index:
+            property_groups: "Nhóm thuộc tính"
+            create: "Thêm nhóm thuộc tính"
+            name: "Tên nhóm thuộc tính"
+            delete: "Xóa nhóm thuộc tính"
+          list:
+            name: "Tên nhóm thuộc tính"
+            delete: "Xóa nhóm thuộc tính"
+            archive_confirm: "Bạn có chắc muốn ẩn nhóm thuộc tính này?"
+            unarchive_confirm: "Bạn muốn hiển thị lại nhóm thuộc tính này?"
+            no_matching_records_found: "Danh sách nhóm thuộc tính hiện tại đang trống."
+          new:
+            property_groups: "Nhóm thuộc tính"
+            create: "Thêm nhóm thuộc tính"
+          edit:
+            property_groups: "Nhóm thuộc tính"
+            create: "Thêm nhóm thuộc tính"
+          form:
+            name: "Tên nhóm thuộc tính"
+            enter_name: "Nhập tên nhóm thuộc tính..."
+            description: "Mô tả"
+            enter_description: "Nhập mô tả..."
         accessories:
           create:
             success: "Thêm nhóm phụ kiện thành công."
@@ -899,6 +929,8 @@ vi:
           attributes:
             name:
               blank: "không được để trống."
+            property_group_id:
+              blank: "không được để trống."
         erp/products/manufacturing:
           attributes:
             product_id:
@@ -925,6 +957,10 @@ vi:
           attributes:
             name:
               blank: "không được để trống."
+        erp/products/property_group:
+          attributes:
+            name:
+              blank: "không được để trống."
         erp/products/brand_group:
           attributes:
             name:
@@ -940,6 +976,8 @@ vi:
         brand_id: "Thương hiệu"
       erp/products/brand:
         name: "Tên thương hiệu"
+      erp/products/property_group:
+        name: "Tên nhóm thuộc tính"
       erp/products/brand_group:
         name: "Tên nhóm"
       erp/products/accessory:
@@ -948,6 +986,7 @@ vi:
         name: "Tên chuyên mục"
       erp/products/property:
         name: "Tên thuộc tính"
+        property_group_id: "Nhóm thuộc tính"
       erp/products/manufacturing:
         product_id: "Mặt hàng sản xuất"
         quantity: "Số lượng"

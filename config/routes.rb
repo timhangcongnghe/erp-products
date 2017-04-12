@@ -40,6 +40,12 @@ Erp::Products::Engine.routes.draw do
       resources :properties do
         collection do
           get 'dataselect'
+          post 'list'
+          delete 'delete_all'
+          put 'archive_all'
+          put 'unarchive_all'
+          put 'archive'
+          put 'unarchive'
         end
       end
       resources :properties_values do
@@ -136,7 +142,7 @@ Erp::Products::Engine.routes.draw do
           put 'archive'
           put 'unarchive'
         end
-      end
+      end      
       resources :brand_groups do
         collection do
           get 'dataselect'
@@ -153,6 +159,17 @@ Erp::Products::Engine.routes.draw do
           get 'brand_group_detail_line_form'
 				end
 			end
+      resources :property_groups do
+        collection do
+          get 'dataselect'
+          post 'list'
+          delete 'delete_all'
+          put 'archive_all'
+          put 'unarchive_all'
+          put 'archive'
+          put 'unarchive'
+        end
+      end
       resources :accessories do
         collection do
           get 'dataselect'
