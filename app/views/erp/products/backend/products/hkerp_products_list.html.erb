@@ -7,6 +7,7 @@
                 </th>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Hkerp price</th>
                 <th>Price</th>
                 <th>Stock</th>
                 <th>Status</th>
@@ -18,7 +19,7 @@
                 <% erp_product = Erp::Products::HkerpProduct.get_product_by_hkerp_product_id(product["id"]) %>
                 <tr class="odd gradeX">
                     <td>
-                        <%= erp_datalist_check_row(id: 1) %>
+                        <%= erp_datalist_check_row(id: erp_product.id) if erp_product.present? %>
                     </td>
                     <td>
                         <%= product["id"] %>
@@ -29,14 +30,22 @@
                     <td class="text-nowrap text-right">
                         <%= format_price(product["price"]) %>
                     </td>
+                    <td class="text-nowrap text-right">
+                        <%= format_price(erp_product.price) if erp_product.present? %>
+                    </td>
                     <td>
                         <%= product["stock"] %>
                     </td>
                     <td>
                         <% if erp_product.nil? %>
-                            <span class="label label-sm label-danger">new</span>
+                            <span class="label label-sm bg-grey">new</span>
                         <% else %>
                             <span class="label label-sm label-success">imported</span>
+                            <% if erp_product.price.to_f == product["price"].to_f %>
+                                <span class="label label-sm label-success">price updated</span>
+                            <% else %>
+                                <span class="label label-sm label-danger">price oudated</span>
+                            <% end %>
                         <% end %>
                     </td>
                     <td>
@@ -57,7 +66,14 @@
                                         text: '<i class="fa fa-pencil"></i> Edit',
                                         href: erp_products.edit_backend_product_path(erp_product),
                                         target: '_blank'
-                                    }
+                                    },
+                                    {
+                                        text: '<i class="fa fa-dollar"></i> Update price',
+                                        url: erp_products.hkerp_update_price_backend_products_path(ids: erp_product.id),
+                                        data_method: 'PUT',
+                                        hide: erp_product.price.to_f == product["price"].to_f,
+                                        class: 'ajax-link'
+                                    },
                                 ]
                             ) %>
                         <% end %>

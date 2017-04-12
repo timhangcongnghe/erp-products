@@ -3,7 +3,7 @@ module Erp
     module Backend
       class ProductsController < Erp::Backend::BackendController
         before_action :set_product, only: [:check_is_bestseller, :uncheck_is_bestseller, :archive, :unarchive, :show, :edit, :update, :destroy]
-        before_action :set_products, only: [:delete_all, :archive_all, :unarchive_all, :check_is_bestseller_all, :uncheck_is_bestseller_all]
+        before_action :set_products, only: [:hkerp_update_price, :delete_all, :archive_all, :unarchive_all, :check_is_bestseller_all, :uncheck_is_bestseller_all]
 
         # GET /products
         def index
@@ -276,6 +276,23 @@ module Erp
           dataselect = res.body if res.is_a?(Net::HTTPSuccess)
 
           render json: dataselect
+        end
+
+        def hkerp_update_price
+          @products.each do |p|
+            p.updateHkerpInfo(p.hkerp_product.hkerp_product_id)
+            p.save
+            p.hkerp_update_price(true)
+          end
+
+          respond_to do |format|
+            format.json {
+              render json: {
+                'message': 'Price updated!',
+                'type': 'success'
+              }
+            }
+          end
         end
         ######################################
 

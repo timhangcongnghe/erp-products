@@ -1,7 +1,10 @@
 module Erp::Products
   class HkerpProduct < ApplicationRecord
+    belongs_to :product
+
     def self.get_product_by_hkerp_product_id(pid)
-      self.where(hkerp_product_id: pid).first
+      hkp = self.where(hkerp_product_id: pid).first
+      return hkp.nil? ? nil : hkp.product
     end
     def self.get_status_by_hkerp_product_id(pid)
       hkerp_product = self.get_product_by_hkerp_product_id(pid)

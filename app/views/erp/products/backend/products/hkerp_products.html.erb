@@ -23,23 +23,28 @@
         }
     ],
     actions: [
-
+        {
+            text: '<i class="fa fa-dollar"></i> Update price',
+            url: erp_products.hkerp_update_price_backend_products_path,
+            data_method: 'PUT',
+            data_confirm: 'Update all price'
+        },
     ],
     filters: [
         {
-            text: 'Imported', name: 'products.erp_imported', value: true, checked: false
+            text: 'Imported', name: 'products.erp_imported', value: 'true', checked: false
         },
         {
-            text: 'New', name: 'products.erp_imported', value: false, checked: false
+            text: 'New', name: 'products.erp_imported', value: 'false', checked: false
         },
         {
             divider: true
         },
         {
-            text: 'Price updated', name: 'products.erp_price_updated', value: true, checked: false
+            text: 'Price updated', name: 'products.erp_price_updated', value: 'true', checked: false
         },
         {
-            text: 'Price oudated', name: 'products.erp_price_updated', value: false, checked: false
+            text: 'Price oudated', name: 'products.erp_price_updated', value: 'false', checked: false
         },
     ],
     sort: { sort_by: '', sort_direction: '' }
