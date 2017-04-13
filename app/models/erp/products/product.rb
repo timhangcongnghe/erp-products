@@ -336,10 +336,10 @@ module Erp::Products
     # get product properties array
     def get_product_property_array
 			arr = []
-			self.products_properties.each do |product_property|
+			self.properties.each do |property|
 				row = {
-					name: product_property.property.name,
-					values: product_property.products_values.map {|products_value|
+					name: property.name,
+					values: self.products_values_by_property(property).map {|products_value|
 						products_value.properties_value.value
 					}
 				}
@@ -348,10 +348,15 @@ module Erp::Products
 			arr
 		end
 
+    # get properties
+    def properties
+			Property.where(id: (self.products_values.joins(:properties_value).select("erp_products_properties_values.property_id as property_id").map {|pv| pv.property_id}).uniq)
+		end
+
 		def ratings_active
 			ratings.where(archived: false)
 		end
-		
+
     # count stars
 		def count_stars
 			self.ratings_active.map(&:star)
@@ -362,7 +367,7 @@ module Erp::Products
 			# calculate average stars
 			count_stars.empty? ? 0 : count_stars.inject(0, :+) / count_stars.length
 		end
-		
+
 		def percentage_stars(score=0)
 			self.ratings_active.where(star: score).count*100 / count_stars.length
 		end
