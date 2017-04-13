@@ -30,6 +30,35 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tabbable-custom ">
+                <ul class="nav nav-tabs ">
+                    <li class="active">
+                        <a href="#tab_property_group" data-toggle="tab"> <%= t('.add_property_group') %> </a>
+                    </li>
+                </ul>
+                <div class="tab-content order-details">
+                    <div class="tab-pane addableform-table active" id="tab_property_group">
+                        <%= erp_form_control("dataselect", {
+                            name: 'category[property_group_ids][]',
+                            values: (category.property_groups.map {|property_group| {text: property_group.name, value: property_group.id}}),
+                            multiple: true,
+                            label: t('.property_groups'),
+                            placeholder: t('.choose_property_groups'),
+                            url: erp_products.dataselect_backend_property_groups_path(format: 'json'),
+                            create: {
+                                url: erp_products.new_backend_property_group_path,
+                                title: t('.create_property_group'),
+                                container_selector: '.new_property_group',
+                                input_selector: 'input[name="property_group[name]"]'
+                            }
+                        }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <%= erp_component('button/save', {
         text: t('submit')
     }) %>

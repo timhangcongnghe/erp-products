@@ -87,6 +87,9 @@ vi:
             related_category: "Chuyên mục liên quan"
             help_category: "Thêm những chuyên mục liên quan"
             choose_related_category: "Chọn chuyên mục liên quan"
+            property_groups: "Nhóm thuộc tính"
+            choose_property_groups: "Chọn nhóm thuộc tính cho chuyên mục"
+            create_property_group: "Thêm mới nhóm thuộc tính"
         properties:
           create:
             success: "Thêm thuộc tính thành công."
