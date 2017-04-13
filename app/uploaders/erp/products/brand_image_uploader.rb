@@ -41,7 +41,9 @@ module Erp
       version :system_logo do
         process resize_to_fill: [0, 25]
       end
-      
+      version :brand_page do
+				process :resize_to_fill => [100, 0]
+			end
       version :small do
 				process :resize_to_fill => [0, 75]
 			end

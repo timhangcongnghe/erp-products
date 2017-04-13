@@ -107,5 +107,8 @@ module Erp::Products
 			self.get_active.where(is_main: true).order('name ASC')
 		end
     
+    def self.get_brands
+			self.get_active.order('name ASC')
+		end
   end
 end
