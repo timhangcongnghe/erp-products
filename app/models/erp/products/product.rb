@@ -335,15 +335,23 @@ module Erp::Products
 			arr
 		end
 
+		def ratings_active
+			ratings.where(archived: false)
+		end
+		
     # count stars
 		def count_stars
-			self.ratings.map(&:star)
+			self.ratings_active.map(&:star)
 		end
 
 		# average stars
 		def average_stars
 			# calculate average stars
 			count_stars.empty? ? 0 : count_stars.inject(0, :+) / count_stars.length
+		end
+		
+		def percentage_stars(score=0)
+			self.ratings_active.where(star: score).count*100 / count_stars.length
 		end
 
 		def self.get_deal_products
