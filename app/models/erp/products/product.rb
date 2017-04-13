@@ -1,6 +1,6 @@
 module Erp::Products
   class Product < ApplicationRecord
-		attr_accessor :products_values_attributes
+		attr_accessor :product_property_values
 		validates :name, :uniqueness => true
 
     validates :name, :category_id, :brand_id, :presence => true
@@ -19,9 +19,6 @@ module Erp::Products
 			has_and_belongs_to_many :vendor_taxes, class_name: 'Erp::Taxes::Tax', :join_table => 'erp_products_vendor_taxes'
     end
 
-    has_many :products_properties, dependent: :destroy
-    has_and_belongs_to_many :properties, class_name: 'Erp::Products::Property', :join_table => 'erp_products_products_properties'
-
     has_many :products_units, dependent: :destroy
     accepts_nested_attributes_for :products_units, :reject_if => lambda { |a| a[:unit_id].blank? or a[:conversion_value].blank? }, :allow_destroy => true
 
@@ -31,7 +28,7 @@ module Erp::Products
     has_many :products_parts, dependent: :destroy
     accepts_nested_attributes_for :products_parts, :reject_if => lambda { |a| a[:part_id].blank? }, :allow_destroy => true
 
-    has_many :products_values, through: :products_properties, dependent: :destroy
+    has_many :products_values, dependent: :destroy
     has_many :comments, class_name: 'Erp::Products::Comment', dependent: :destroy
     has_many :ratings, class_name: 'Erp::Products::Rating', dependent: :destroy
 
@@ -40,26 +37,11 @@ module Erp::Products
 			before_destroy :ensure_not_referenced_by_any_cart_item
 		end
 
-    after_initialize :set_attr
-
     OUT_OF_STOCK = 'out_of_stock'
     IN_TOCK = 'in_stock'
 
     def self.get_active
 			self.where(archived: false).order("created_at DESC")
-		end
-
-		def set_attr
-			@products_values_attributes = []
-			if !self.properties.empty?
-				self.properties.each do |property|
-					@products_values_attributes << {1 => {
-							:property_id => property.id,
-							:ids => self.values_by_property(property).map {|pv| pv.properties_value_id},
-							:names => []
-					}}
-				end
-			end
 		end
 
 		def values_by_property(property)
@@ -231,7 +213,38 @@ module Erp::Products
 
     # safe properties values from hash
     def update_products_values
-			if self.products_values_attributes.present?
+			if self.product_property_values.present?
+				# get all property value ids
+				properties_value_ids = []
+
+				# save new properties values
+				self.product_property_values.each do |row|
+					row = row[1]
+					# exist ones
+					properties_value_ids += row['ids'].select {|id| id.to_i > 0} if row['ids'].present?
+					# new one from names
+					if row['names'].present?
+						row['names'].each do |name|
+							name = name.strip
+							if name.present?
+								properties_value = PropertiesValue.create_if_not_exists(row['property_id'], name)
+								properties_value_ids << properties_value.id
+							end
+						end
+					end
+				end
+
+				# add product values
+				self.products_values.destroy_all
+				properties_value_ids.each do |prv_id|
+					self.products_values.create(properties_value_id: prv_id)
+				end
+			end
+		end
+
+    # safe properties values from hash
+    def update_products_valuesx
+			if self.product_property_values.present?
 				products_value_ids = []
 
 				# save new properties values
@@ -435,6 +448,10 @@ module Erp::Products
 			end
 		end
 		##########################
+
+		def products_values_by_property(property)
+			self.products_values.joins(:properties_value).where(erp_products_properties_values: {property_id: property.id})
+		end
 
     private
     if Erp::Core.available?("carts")

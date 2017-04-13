@@ -28,6 +28,7 @@ Erp::Products::Engine.routes.draw do
           put 'check_is_bestseller_all'
           put 'uncheck_is_bestseller_all'
           get 'form_property'
+          get 'property_form'
 
 					#@todo HK-ERP connector
           get 'hkerp_products'
@@ -142,7 +143,7 @@ Erp::Products::Engine.routes.draw do
           put 'archive'
           put 'unarchive'
         end
-      end      
+      end
       resources :brand_groups do
         collection do
           get 'dataselect'

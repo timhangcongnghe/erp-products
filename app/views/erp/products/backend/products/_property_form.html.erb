@@ -1,0 +1,29 @@
+<% product.category.property_groups.each do |group| %>
+    <h4><%= group.name %></h4>
+    <% group.properties.each do |property| %>
+        <div class="row pl-20">
+            <div class="col-md-3">
+                <strong><%= property.name %></strong>
+                <input type="hidden" id="property_<%= property.id %>"
+                    name="product_property_values[<%= property.id %>][property_id]"
+                    value="<%= property.id %>" />
+            </div>
+            <div class="col-md-9 property-value-select">
+                <%= erp_form_control("dataselect", {
+                    name: 'product_property_values[' + property.id.to_s + '][ids][]',
+                    values: product.products_values_by_property(property).map {|pv| {text: pv.properties_value.value, value: pv.properties_value.id}},
+                    tags: params[:product_property_values].present? ? params.to_unsafe_hash[:product_property_values][property.id.to_s]["names"] : [],
+                    placeholder: t('erp.products.values_of_property'),
+                    label: '',
+                    multiple: true,
+                    url: erp_products.dataselect_backend_properties_values_path(format: 'json'),
+                    inline_insert: {
+                        name: 'product_property_values[' + property.id.to_s + '][names][]'
+                    },
+                    parent_control: '#property_' + property.id.to_s,
+                    parent_id: "property_id" # +GET: parent_id with value
+                }) %>
+            </div>
+        </div>
+    <% end %>
+<% end %>

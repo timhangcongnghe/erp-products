@@ -386,13 +386,9 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="tab_5_2">
-                            <%= erp_form_control("addableform", {
-                                add_button: t('.add_property'),
-                                partial: 'erp/products/backend/products/form_property',
-                                partial_url: erp_products.form_property_backend_products_path,
-                                items: @product.products_values_attributes,
-                                item: :products_values_attribute
-                            }) %>
+                            <div class="product-property-container" data-url="<%= erp_products.property_form_backend_products_path(id: product.id) %>">
+                                <%= render partial: 'erp/products/backend/products/property_form', locals: {product: product} %>
+                            </div>
                         </div>
                         <div class="tab-pane" id="tab_5_3">
                             <div class="row">

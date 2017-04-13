@@ -23,7 +23,6 @@ module Erp
         # GET /products/new
         def new
           @product = Product.new
-          @product.products_properties << ProductsProperty.new
           8.times do
             @product.product_images.build
           end
@@ -51,7 +50,7 @@ module Erp
           8.times do
             @product.product_images.build
           end
-          @product.products_values_attributes = params.to_unsafe_hash[:products_values_attributes]
+          @product.product_property_values = params.to_unsafe_hash[:product_property_values]
 
           #@todo HK-ERP connector
           if params.to_unsafe_hash[:hkerp_id].present?
@@ -78,7 +77,7 @@ module Erp
 
         # PATCH/PUT /products/1
         def update
-          @product.products_values_attributes = params.to_unsafe_hash[:products_values_attributes]
+          @product.product_property_values = params.to_unsafe_hash[:product_property_values]
           @product.assign_attributes(product_params)
 
           #@todo HK-ERP connector
@@ -312,6 +311,13 @@ module Erp
           end
         end
         ######################################
+
+        def property_form
+          product = params[:id].present? ? Product.find(params[:id]) : Product.new
+          product.category_id = params[:category_id]
+
+          render partial: 'erp/products/backend/products/property_form', locals: {product: product}, layout: nil
+        end
 
         private
           # Use callbacks to share common setup or constraints between actions.
