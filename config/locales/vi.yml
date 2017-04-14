@@ -16,6 +16,7 @@ vi:
   erp_products_manufacturings_finished: "Hoàn thành"
   ordered_quantities: "Ordered quantities"
   delivered_quantities: "Delivered quantities"
+  property_group: "Nhóm thuộc tính"
   layouts:
     erp:
       backend:

@@ -2,7 +2,7 @@ module Erp
   module Products
     module Backend
       class PropertyGroupsController < Erp::Backend::BackendController
-        before_action :set_property_group, only: [:archive, :unarchive, :edit, :update, :destroy]
+        before_action :set_property_group, only: [:archive, :unarchive, :edit, :update, :destroy, :move_up, :move_down]
         before_action :set_property_groups, only: [:delete_all, :archive_all, :unarchive_all]
 
         # GET /property_groups
