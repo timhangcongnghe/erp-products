@@ -9,7 +9,7 @@ module Erp::Products
     belongs_to :parent, class_name: "Erp::Products::Category", optional: true
     has_many :children, class_name: "Erp::Products::Category", foreign_key: "parent_id"
     has_and_belongs_to_many :menus, class_name: "Erp::Menus::Menu"
-    has_and_belongs_to_many :property_groups, -> { order 'erp_products_property_groups.created_at' }, class_name: "Erp::Products::PropertyGroup", :join_table => 'erp_products_categories_pgroups'
+    has_and_belongs_to_many :property_groups, -> { order 'erp_products_property_groups.custom_order' }, class_name: "Erp::Products::PropertyGroup", :join_table => 'erp_products_categories_pgroups'
 
     after_save :update_level
 
