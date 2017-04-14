@@ -498,7 +498,7 @@ module Erp::Products
 		end
 
 		# Get product properties for list
-		def product_list_descipriton_values_array
+		def product_list_descipriton_values_array_1
 			rows = []
 			self.category.property_groups.each do |group|
 				group.properties.where(is_show_list: true).each do |property|
@@ -512,6 +512,23 @@ module Erp::Products
 			end
 
 			return rows
+		end
+
+		# Get product properties for list
+		def product_list_descipriton_values_array
+			groups = []
+			self.category.property_groups.each do |group|
+				row = {}
+				row[:name] = group.name
+				row[:values] = []
+				group.properties.where(is_show_detail: true).each do |property|
+					values = self.products_values_by_property(property).map {|pv| pv.properties_value.value }
+					row[:values] += values if !values.empty?
+				end
+				groups << row if !row[:values].empty?
+			end
+
+			return groups
 		end
 
     private
