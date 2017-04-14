@@ -1,5 +1,7 @@
 module Erp::Products
   class PropertyGroup < ApplicationRecord
+		include Erp::CustomOrder
+
     validates :name, :presence => true
     belongs_to :creator, class_name: "Erp::User"
     has_and_belongs_to_many :categories, class_name: "Erp::Products::Category", :join_table => 'erp_products_categories_pgroups'

@@ -31,7 +31,7 @@
                 </th>
             <% end %>
             <th width="7%" class="sortable text-nowrap" sort-by='erp_products_categories.custom_order'>
-                <%= t('custom_order') %>                
+                <%= t('custom_order') %>
             </th>
             <th width="7%"><%= t('actions') %></th>
         </tr>
@@ -53,12 +53,12 @@
                     <% if category.archived == true %>
                         <%= erp_component('label/danger', {
                             text: t('archived')
-                        }) %>                            
+                        }) %>
                     <% else %>
                         <%= erp_component('label/success', {
                             text: t('active')
                         }) %>
-                    <% end %> 
+                    <% end %>
                 </td>
                 <% end %>
                 <% if get_columns(params).include?("creator") %>
@@ -72,27 +72,12 @@
                     <td><%= category.created_at.strftime("%d/%m/%Y") %></td>
                 <% end %>
                 <td class="text-center text-semibold">
-                    <%= category.custom_order %>
-                    <% if params[:sort_by] == 'erp_products_categories.custom_order' %>
-                        <a data-method="PUT"
-                            href="<%=
-                                params[:sort_direction] == 'asc' ?
-                                erp_products.move_up_backend_categories_path(id: category) :
-                                erp_products.move_down_backend_categories_path(id: category)
-                            %>"
-                            class="ajax-link">
-                                <i class="fa fa-caret-square-o-up icon-big"></i>
-                        </a>
-                        <a data-method="PUT"
-                            href="<%=
-                                params[:sort_direction] == 'asc' ?
-                                erp_products.move_down_backend_categories_path(id: category) :
-                                erp_products.move_up_backend_categories_path(id: category)
-                            %>"
-                            class="ajax-link">
-                                <i class="fa fa-caret-square-o-down icon-big"></i>
-                        </a>
-                    <% end %>
+                    <%= erp_datalist_order_column({
+                        item: category,
+                        move_up_url: erp_products.move_up_backend_categories_path(id: category),
+                        move_down_url: erp_products.move_down_backend_categories_path(id: category),
+                        sort_by: 'erp_products_categories.custom_order'
+                    }) %>
                 </td>
                 <td class="text-right">
                     <%= erp_datalist_row_actions(
@@ -137,5 +122,5 @@
 <% if @categories.empty? %>
     <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
 <% end %>
-        
+
 <%= erp_datalist_pagination(@categories) %>

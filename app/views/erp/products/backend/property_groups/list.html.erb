@@ -8,7 +8,7 @@
                 <th class="sortable" sort-by='erp_products_property_groups.name'>
                     <%= t('.name') %>
                 </th>
-            <% end %>            
+            <% end %>
             <% if get_columns(params).include?("status") %>
                 <th><%= t('status') %></th>
             <% end %>
@@ -20,6 +20,9 @@
                     <%= t('created_at') %>
                 </th>
             <% end %>
+            <th width="7%" class="sortable text-nowrap" sort-by='erp_products_property_groups.custom_order'>
+                <%= t('custom_order') %>
+            </th>
             <th width="7%"><%= t('actions') %></th>
         </tr>
     </thead>
@@ -31,7 +34,7 @@
                 </td>
                 <% if get_columns(params).include?("name") %>
                     <td>
-                        <%= link_to property_group.name, erp_products.edit_backend_property_group_path(property_group), class: 'title' %>                        
+                        <%= link_to property_group.name, erp_products.edit_backend_property_group_path(property_group), class: 'title' %>
                     </td>
                 <% end %>
                 <% if get_columns(params).include?("status") %>
@@ -53,6 +56,14 @@
                 <% if get_columns(params).include?("created_at") %>
                     <td><%= property_group.created_at.strftime("%d/%m/%Y") %></td>
                 <% end %>
+                <td class="text-center text-semibold">
+                    <%= erp_datalist_order_column({
+                        item: property_group,
+                        move_up_url: erp_products.move_up_backend_property_groups_path(id: property_group),
+                        move_down_url: erp_products.move_down_backend_property_groups_path(id: property_group),
+                        sort_by: 'erp_products_property_groups.custom_order'
+                    }) %>
+                </td>
                 <td class="text-right">
                     <%= erp_datalist_row_actions(
                         [
@@ -94,5 +105,5 @@
 <% if @property_groups.empty? %>
     <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
 <% end %>
-        
+
 <%= erp_datalist_pagination(@property_groups) %>

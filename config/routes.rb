@@ -169,6 +169,9 @@ Erp::Products::Engine.routes.draw do
           put 'unarchive_all'
           put 'archive'
           put 'unarchive'
+
+          put 'move_up'
+          put 'move_down'
         end
       end
       resources :accessories do
