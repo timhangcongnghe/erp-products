@@ -227,7 +227,8 @@ module Erp::Products
 						row['names'].each do |name|
 							name = name.strip
 							if name.present?
-								properties_value = PropertiesValue.create_if_not_exists(row['property_id'], name)
+								properties_value = PropertiesValue.create_if_not_exists(row['property_id'].to_i, name)
+
 								properties_value_ids << properties_value.id
 							end
 						end
