@@ -6,6 +6,26 @@
         required: true,
         errors: property.errors.full_messages_for(:name)
     }) %>
+    <div class="row">
+        <div class="col-md-6">
+            <%= erp_form_control('checkbox', {
+                name: 'property[is_show_list]',
+                value: property.is_show_list,
+                not_selected_value: 'false',
+                label: t('.property_is_show_list'),
+                options: [{value: 'true', text: t('.is_show_list')}]
+            }) %>
+        </div>
+        <div class="col-md-6">
+            <%= erp_form_control('checkbox', {
+                name: 'property[is_show_detail]',
+                value: property.is_show_detail,
+                not_selected_value: 'false',
+                label: t('.property_is_show_detail'),
+                options: [{value: 'true', text: t('.is_show_detail')}]
+            }) %>
+        </div>
+    </div>
     <%= erp_form_control("dataselect", {
         name: 'property[property_group_id]',
         value: property.property_group_id,

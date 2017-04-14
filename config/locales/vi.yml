@@ -121,6 +121,10 @@ vi:
             properties: "Tất cả thuộc tính"
             create: "Thêm thuộc tính"
           form:
+            property_is_show_list: "Thuộc tính trang danh sách"
+            property_is_show_detail: "Thuộc tính trang chi tiết"
+            is_show_list: "Hiển thị trang danh sách"
+            is_show_detail: "Hiển thị trang chi tiết"
             name: "Tên thuộc tính"
             property_group: "Nhóm thuộc tính"
             help_property_group: "Thuộc tính sản phẩm thuộc nhóm nào?"
