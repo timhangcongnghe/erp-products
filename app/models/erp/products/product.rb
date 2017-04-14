@@ -459,6 +459,44 @@ module Erp::Products
 			self.products_values.joins(:properties_value).where(erp_products_properties_values: {property_id: property.id})
 		end
 
+		# Get full product properties array
+		def product_values_array
+			groups = []
+			self.category.property_groups.each do |group|
+				row = {}
+				row[:group] = group
+				row[:properties] = []
+				group.properties.each do |property|
+					row2 = {}
+					row2[:property] = property
+					row2[:values] = self.products_values_by_property(property).map {|pv| pv.properties_value.value }
+
+					row[:properties] << row2 if !row2[:values].empty?
+				end
+
+				groups << row if !row[:properties].empty?
+			end
+
+			return groups
+		end
+
+		# Get full product properties details array
+		def product_short_descipriton_values_array
+			groups = []
+			self.category.property_groups.each do |group|
+				row = {}
+				row[:name] = group.name
+				row[:values] = []
+				group.properties.where(is_show_detail: true).each do |property|
+					values = self.products_values_by_property(property).map {|pv| pv.properties_value.value }
+					row[:values] += values if !values.empty?
+				end
+				groups << row if !row[:values].empty?
+			end
+
+			return groups
+		end
+
     private
     if Erp::Core.available?("carts")
 			# ensure that there are no cart items referencing this product
