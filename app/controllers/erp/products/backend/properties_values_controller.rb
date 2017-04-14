@@ -3,21 +3,31 @@ module Erp
     module Backend
       class PropertiesValuesController < Erp::Backend::BackendController
         before_action :set_properties_value, only: [:edit, :update, :destroy]
-        
+
+        # GET /properties
+        def index
+        end
+
+        # POST /properties/list
+        def list
+          @properties_values = PropertiesValue.search(params).paginate(:page => params[:page], :per_page => 10)
+
+          render layout: nil
+        end
+
         # GET /properties/new
         def new
           @properties_value = PropertiesValue.new
         end
-        
+
         # GET /categories/1/edit
         def edit
         end
-    
+
         # POST /categories
         def create
           @properties_value = PropertiesValue.new(properties_value_params)
-          @properties_value.creator = current_user
-          
+
           if @properties_value.save
             if request.xhr?
               render json: {
@@ -32,7 +42,7 @@ module Erp
             render :new
           end
         end
-    
+
         # PATCH/PUT /categories/1
         def update
           if @properties_value.update(properties_value_params)
@@ -49,7 +59,7 @@ module Erp
             render :edit
           end
         end
-        
+
         def dataselect
           respond_to do |format|
             format.json {
@@ -57,16 +67,31 @@ module Erp
             }
           end
         end
-        
+
+        # DELETE /categories/1
+        def destroy
+          @properties_value.destroy
+
+          respond_to do |format|
+            format.html { redirect_to erp_products.backend_properties_values_path, notice: t('.success') }
+            format.json {
+              render json: {
+                'message': t('.success'),
+                'type': 'success'
+              }
+            }
+          end
+        end
+
         private
           # Use callbacks to share common setup or constraints between actions.
           def set_properties_value
             @properties_value = PropertiesValue.find(params[:id])
           end
-    
+
           # Only allow a trusted parameter "white list" through.
           def properties_value_params
-            params.fetch(:properties_value, {}).permit(:name)
+            params.fetch(:properties_value, {}).permit(:value, :property_id)
           end
       end
     end

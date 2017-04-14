@@ -1,11 +1,11 @@
 <% content_for :title do %>
-    <%= @properties_value.name %>
+    <%= @properties_value.value %>
 <% end %>
 
-<% content_for :page_title do %>    
-    <a href="<%= erp_products.backend_categories_path %>">
-    <i class="fa fa-list"></i> <%= t('.properties_values') %>
-    </a> / <%= @properties_value.name %>
+<% content_for :page_title do %>
+    <a href="<%= erp_products.backend_properties_values_path %>">
+    <i class="fa fa-gg"></i> <%= t('.properties_values') %>
+    </a> / <%= @properties_value.value %>
 <% end %>
 
 <% content_for :page_toolbar do %>
@@ -18,6 +18,9 @@
 
 <div class="row">
     <div class="col-md-6">
+        <% if @properties_value.errors.any? %>
+            <%= erp_form_control("form_error_message") %>
+        <% end %>
         <!-- BEGIN SAMPLE FORM PORTLET-->
         <div class="portlet light bordered">
             <div class="portlet-body">

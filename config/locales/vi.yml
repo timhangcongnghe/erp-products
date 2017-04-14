@@ -130,6 +130,45 @@ vi:
             property_group: "Nhóm thuộc tính"
             help_property_group: "Thuộc tính sản phẩm thuộc nhóm nào?"
             choose_property_group: "Chọn nhóm thuộc tính"
+        properties_values:
+          create:
+            success: "Thêm giá trị thuộc tính thành công."
+          update:
+            success: "Cập nhật giá trị thuộc tính thành công."
+          destroy:
+            success: "Xóa giá trị thuộc tính thành công."
+          delete_all:
+            success: "Xóa giá trị thuộc tính được chọn thành công."
+          archive_all:
+            success: "Ẩn giá trị thuộc tính được chọn thành công."
+          unarchive_all:
+            success: "Hiện giá trị thuộc tính được chọn thành công."
+          index:
+            properties_values: "Tất cả giá trị thuộc tính"
+            create: "Thêm giá trị thuộc tính"
+            delete: "Xóa giá trị thuộc tính"
+            name: "Tên thuộc tính"
+            property: "Thuộc tính"
+          list:
+            delete: "Xóa thuộc tính"
+            value: "Giá trị thuộc tính"
+            property: "Thuộc tính"
+            no_matching_records_found: "Danh sách giá trị thuộc tính hiện tại đang trống."
+          new:
+            properties: "Tất cả thuộc tính"
+            create: "Thêm thuộc tính"
+          edit:
+            properties_values: "Tất cả giá trị thuộc tính"
+            create: "Thêm giá trị thuộc tính"
+          form:
+            property_is_show_list: "Thuộc tính trang danh sách"
+            property_is_show_detail: "Thuộc tính trang chi tiết"
+            is_show_list: "Hiển thị trang danh sách"
+            is_show_detail: "Hiển thị trang chi tiết"
+            value: "Giá trị thuộc tính"
+            property: "Thuộc tính"
+            help_property: "Thuộc tính sản phẩm thuộc nhóm nào?"
+            choose_property: "Chọn Thuộc tính"
         products:
           create:
             success: "Thêm sản phẩm thành công."
@@ -939,6 +978,13 @@ vi:
               blank: "không được để trống."
             property_group_id:
               blank: "không được để trống."
+        erp/products/properties_value:
+          attributes:
+            value:
+              blank: "không được để trống."
+              invalid: "đã tồn tại cho thuộc tính này"              
+            property_id:
+              blank: "không được để trống."
         erp/products/manufacturing:
           attributes:
             product_id:
@@ -995,6 +1041,9 @@ vi:
       erp/products/property:
         name: "Tên thuộc tính"
         property_group_id: "Nhóm thuộc tính"
+      erp/products/properties_value:
+        value: "Giá trị thuộc tính"
+        property_id: "Thuộc tính"
       erp/products/manufacturing:
         product_id: "Mặt hàng sản xuất"
         quantity: "Số lượng"

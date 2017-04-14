@@ -1,42 +1,33 @@
 <%= form_for([erp_products, :backend, properties_value]) do |f| %>
-    <% if @properties_value.errors.any? %>
-        <%= erp_form_control("form_error_message") %>
-    <% end %>
-    
+    <%= erp_form_control("text", {
+        name: 'properties_value[value]',
+        value: properties_value.value,
+        label: t('.value'),
+        required: true,
+        errors: properties_value.errors.full_messages_for(:value)
+    }) %>
     <%= erp_form_control("dataselect", {
         name: 'properties_value[property_id]',
         value: properties_value.property_id,
         text: properties_value.property_name,
-        placeholder: t('erp.products.choose_property'),
-        label: '',
+        placeholder: t('.choose_property'),
+        label: t('.property'),
         url: erp_products.dataselect_backend_properties_path(format: 'json'),
         create: {
             url: erp_products.new_backend_property_path,
-            title: t('erp.products.create_property'),
+            title: t('.create_property'),
             container_selector: '.new_property',
-            input_selector: 'input[name="property[name]"]'
+            input_selector: 'input[name="properties_value[name]"]'
         },
-        edit: {
-            url: erp_products.edit_backend_property_path(id: ':value'),
-            title: t('.edit_property'),
-            container_selector: '.edit_property',
-        },
-        errors: properties_value.errors.full_messages_for(:property_id)
-    }) %>
-    
-    <%= erp_form_control("text", {
-        name: 'properties_value[value]',
-        value: properties_value.value,                   
-        label: t('.name'),
         required: true,
-        errors: properties_value.errors.full_messages_for(:name)
+        errors: properties_value.errors.full_messages_for(:property_id)
     }) %>
     <hr>
     <%= erp_component('button/save', {
-        text: t('.submit')
+        text: t('submit')
     }) %>
     <%= erp_component('button/cancel', {
-        text: t('.cancel'),
-        href: erp_products.backend_properties_values_path
+        text: t('cancel'),
+        href: erp_products.backend_properties_path
     }) %>
 <% end %>

@@ -1,0 +1,56 @@
+<table class="table table-advance table-hover table-striped table-checkable order-column">
+    <thead>
+        <tr>
+            <th width='1%'>
+                <%= erp_datalist_check_all %>
+            </th>
+            <th><%= t('.property') %></th>
+            <th><%= t('.value') %></th>
+            <th><%= t('.product_count') %></th>
+            <th width="7%"><%= t('actions') %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @properties_values.each do |properties_value| %>
+            <tr class="odd gradeX">
+                <td>
+                    <%= erp_datalist_check_row(id: properties_value.id) %>
+                </td>
+                <td>
+                    <%= properties_value.property_group_name %> / <%= properties_value.property_name %>
+                </td>
+                <td>
+                    <%= properties_value.value %>
+                </td>
+                <td>
+                    <%= properties_value.product_count %>
+                </td>
+                <td class="text-right">
+                    <%= erp_datalist_row_actions(
+                        [
+                            {
+                                text: '<i class="fa fa-edit"></i> '+t('edit'),
+                                href: erp_products.edit_backend_properties_value_path(properties_value)
+                            },
+                            {
+                                divider: true
+                            },
+                            {
+                                text: '<i class="fa fa-trash"></i> '+t('.delete'),
+                                url: erp_products.backend_properties_value_path(properties_value),
+                                data_method: 'DELETE',
+                                class: 'ajax-link',
+                                data_confirm: t('delete_confirm')
+                            }
+                        ]
+                    ) %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+<% if @properties_values.empty? %>
+    <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
+<% end %>
+
+<%= erp_datalist_pagination(@properties_values) %>

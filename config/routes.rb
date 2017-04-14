@@ -55,6 +55,7 @@ Erp::Products::Engine.routes.draw do
       resources :properties_values do
         collection do
           get 'dataselect'
+          post 'list'
         end
       end
       resources :manufacturings do
