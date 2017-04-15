@@ -9,5 +9,10 @@ module Erp::Products
     def user_name
 			user.present? ? user.name : ''
 		end
+    
+    # display message rating
+    def display_content
+			content.gsub("\r\n", "<br/>").html_safe
+		end
   end
 end
