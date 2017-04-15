@@ -366,11 +366,16 @@ module Erp::Products
 		# average stars
 		def average_stars
 			# calculate average stars
-			count_stars.empty? ? 0 : count_stars.inject(0, :+) / count_stars.length
+			(count_stars.empty? ? 0 : count_stars.inject(0, :+).to_f / count_stars.length).round(1)
 		end
 
 		def percentage_stars(score=0)
-			self.ratings_active.where(star: score).count*100 / count_stars.length
+			percentage=0
+			num = self.ratings_active.where(star: score).count
+			if num > 0
+				percentage = num*100 / count_stars.length
+			end
+			return percentage
 		end
 
 		def self.get_deal_products
