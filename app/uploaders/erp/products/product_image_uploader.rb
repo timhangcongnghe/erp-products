@@ -62,6 +62,11 @@ module Erp
 			version :thumb600 do
 				process :resize_and_pad => [600, 600, "#FFFFFF", "Center"] # resize_to_fill => [600, 600]
 			end
+			
+			# thumbnails
+			version :thumb193 do
+				process :resize_and_pad => [193, 193, "#FFFFFF", "Center"] # resize_to_fill => [600, 600]
+			end
 
 			version :thumb170 do
 				process :resize_to_fill => [170, 170]
