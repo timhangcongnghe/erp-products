@@ -101,6 +101,12 @@ module Erp::Products
 				end
 			end
 
+      # menu id
+      if params[:menu_id].present?
+				menu = Erp::Menus::Menu.find(params[:menu_id])
+				query = query.where(category_id: menu.get_all_related_category_ids)
+			end
+
       return query
     end
 
