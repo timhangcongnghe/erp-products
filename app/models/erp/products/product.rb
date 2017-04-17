@@ -526,7 +526,7 @@ module Erp::Products
 				row = {}
 				row[:name] = group.name
 				row[:values] = []
-				group.properties.where(is_show_detail: true).each do |property|
+				group.properties.where(is_show_list: true).each do |property|
 					values = self.products_values_by_property(property).map {|pv| pv.properties_value.value }
 					row[:values] += values if !values.empty?
 				end
