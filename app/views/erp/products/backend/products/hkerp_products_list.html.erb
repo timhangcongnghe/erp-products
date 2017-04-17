@@ -47,6 +47,9 @@
                                 <span class="label label-sm label-danger">price oudated</span>
                             <% end %>
                         <% end %>
+                        <% if product["out_of_date"] %>
+                            <span class="label label-sm label-danger">out of date</span>
+                        <% end %>
                     </td>
                     <td>
                         <% if erp_product.nil? %>
