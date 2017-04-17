@@ -10,6 +10,7 @@
                 <th>Hkerp price</th>
                 <th>Price</th>
                 <th>Stock</th>
+                <th>Warr</th>
                 <th>Status</th>
                 <th width="7%"><%= t('.actions') %></th>
             </tr>
@@ -35,6 +36,9 @@
                     </td>
                     <td>
                         <%= product["stock"] %>
+                    </td>
+                    <td>
+                        <%= product["warranty"] %>
                     </td>
                     <td>
                         <% if erp_product.nil? %>
