@@ -26,8 +26,8 @@ module Erp
           8.times do
             @product.product_images.build
           end
-          @product.deal_from_date = Time.now
-          @product.deal_to_date = Time.now
+          @product.deal_from_date = ''
+          @product.deal_to_date = ''
 
           #@todo HK-ERP connector
           if params[:hkerp_id].present?
