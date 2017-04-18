@@ -4,6 +4,7 @@ module Erp::Products
     belongs_to :user, class_name: 'Erp::User'
     
     validates :star, :presence => true
+    validates :content, length: { minimum: 50 }
     
     # display user name
     def user_name
