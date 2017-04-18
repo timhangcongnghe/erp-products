@@ -344,7 +344,8 @@
                                         label: t('.deal_to_date'),
                                         name: 'product[deal_to_date]',
                                         value: product.deal_to_date,
-                                        placeholder: t('.choose_deal_to_date')
+                                        placeholder: t('.choose_deal_to_date'),
+                                        errors: product.errors.full_messages_for(:deal_to_date)
                                     }) %>
                                 </div>
                             </div>

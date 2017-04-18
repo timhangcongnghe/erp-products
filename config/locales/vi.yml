@@ -962,6 +962,9 @@ vi:
       models:
         erp/products/product:
           attributes:
+            deal_to_date:
+              cannot_be_in_the_past_msg: "không được xảy ra trong quá khứ"
+              cannot_happen_before_from_date_msg: "không được xảy ra trước thời gian bắt đầu"
             name:
               blank: "không được để trống."
             category_id:
@@ -1025,6 +1028,7 @@ vi:
               blank: "không được để trống."
     attributes:
       erp/products/product:
+        deal_to_date: "Ngày kết thúc"
         name: "Tên sản phẩm"
         category_id: "Chuyên mục sản phẩm"
         brand_id: "Thương hiệu"
