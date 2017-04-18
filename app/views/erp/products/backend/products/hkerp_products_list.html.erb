@@ -48,7 +48,7 @@
                             <% if erp_product.price.to_f == product["price"].to_f %>
                                 <span class="label label-sm label-success">price updated</span>
                             <% else %>
-                                <span class="label label-sm label-danger">price oudated</span>
+                                <span class="label label-sm label-warning">price oudated</span>
                             <% end %>
                         <% end %>
                         <% if product["out_of_date"] %>
