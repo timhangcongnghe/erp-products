@@ -542,20 +542,11 @@ module Erp::Products
 			return groups
 		end
 		
-		# Custom validation
-		#def deal_datetime
-		#	if deal_to_date.present? && deal_from_date.present?
-		#		errors.add(:base, 'thời gian kết thúc phải xảy ra sau thời gian bắt đầu') if self.deal_to_date <= self.deal_from_date
-		#	end
-		#end
-		#
 		def deal_to_date_cannot_be_in_the_past
 			if deal_from_date.present? && deal_to_date.present?
 				errors.add(:deal_to_date, :cannot_be_in_the_past_msg) unless deal_to_date > Time.now.utc.in_time_zone("Hanoi") # @todo: time_zone dùng chung hàm cho toàn hệ thống
 				errors.add(:deal_to_date, :cannot_happen_before_from_date_msg) unless deal_to_date > deal_from_date
 			end
-			puts ('-----------------------------------')
-			puts (errors.to_json)
 		end
 
     private
