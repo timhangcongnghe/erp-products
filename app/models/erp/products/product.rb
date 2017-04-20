@@ -339,6 +339,10 @@ module Erp::Products
 				return self.price
 			end
 		end
+    
+    def product_name
+			return self.short_name
+		end
 
     # get product properties array
     def get_product_property_array
