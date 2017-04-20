@@ -54,6 +54,9 @@
                         <% if product["out_of_date"] %>
                             <span class="label label-sm label-danger">suspened</span>
                         <% end %>
+                        <% if product["status"].to_i == 0 %>
+                            <span class="label label-sm bg-dark">trashed</span>
+                        <% end %>
                     </td>
                     <td>
                         <% if erp_product.nil? %>
