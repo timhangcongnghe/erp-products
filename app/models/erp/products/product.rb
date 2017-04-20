@@ -439,6 +439,7 @@ module Erp::Products
 
 		after_create :hkerp_set_imported
 		after_save :hkerp_update_price
+		before_destroy :hkerp_set_not_imported
 
     def hkerp_update_price(force=false)
 			if self.hkerp_product.present?
@@ -460,6 +461,17 @@ module Erp::Products
 
 				uri = URI(url)
 				Net::HTTP.post_form(uri, 'id' => self.hkerp_product.hkerp_product_id)
+
+				self.product_images.where(image_url: nil).destroy_all
+			end
+		end
+
+		def hkerp_set_not_imported
+			if self.hkerp_product.present?
+				url = ErpSystem::Application.config.hkerp_endpoint + "products/erp_set_imported"
+
+				uri = URI(url)
+				Net::HTTP.post_form(uri, 'id' => self.hkerp_product.hkerp_product_id, 'value' => 'false')
 
 				self.product_images.where(image_url: nil).destroy_all
 			end
@@ -541,7 +553,7 @@ module Erp::Products
 
 			return groups
 		end
-		
+
 		def deal_to_date_cannot_be_in_the_past
 			if deal_from_date.present? && deal_to_date.present?
 				errors.add(:deal_to_date, :cannot_be_in_the_past_msg) unless deal_to_date > Time.now.utc.in_time_zone("Hanoi") # @todo: time_zone dùng chung hàm cho toàn hệ thống
