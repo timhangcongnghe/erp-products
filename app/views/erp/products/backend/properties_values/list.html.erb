@@ -17,7 +17,9 @@
                     <%= erp_datalist_check_row(id: properties_value.id) %>
                 </td>
                 <td>
+                    <a href="<%= erp_products.edit_backend_properties_value_path(properties_value) %>">
                     <%= properties_value.property_group_name %> / <%= properties_value.property_name %>
+                    </a>
                 </td>
                 <td>
                     <%= properties_value.value %>
