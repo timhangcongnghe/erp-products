@@ -52,7 +52,10 @@
                             <% end %>
                         <% end %>
                         <% if product["out_of_date"] %>
-                            <span class="label label-sm label-danger">suspened</span>
+                            <span class="label label-sm label-danger">Outdated</span>
+                        <% end %>
+                        <% if product["suspended"] %>
+                            <span class="label label-sm label-danger">suspended</span>
                         <% end %>
                         <% if product["status"].to_i == 0 %>
                             <span class="label label-sm bg-dark">trashed</span>
