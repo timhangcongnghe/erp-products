@@ -3,7 +3,7 @@ module Erp::Products
 		attr_accessor :product_property_values
 		validates :name, :uniqueness => true
     validates :name, :category_id, :brand_id, :presence => true
-    validate :deal_to_date_cannot_be_in_the_past
+    validate :deal_to_date_cannot_be_in_the_past, :deal_price_cannot_blank
 
     belongs_to :creator, class_name: "Erp::User"
     belongs_to :category
@@ -569,6 +569,13 @@ module Erp::Products
 				errors.add(:deal_to_date, :cannot_be_in_the_past_msg) unless deal_to_date > Time.now.utc.in_time_zone("Hanoi") # @todo: time_zone dùng chung hàm cho toàn hệ thống
 				errors.add(:deal_to_date, :cannot_happen_before_from_date_msg) unless deal_to_date > deal_from_date
 			end
+		end
+		
+		def deal_price_cannot_blank
+			if is_deal == true
+				errors.add(:deal_price, :cannot_blank_msg) unless !deal_price.nil?
+				errors.add(:deal_percent, :cannot_blank_msg) unless !deal_percent.nil?
+			end 
 		end
 
     private

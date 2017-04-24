@@ -317,7 +317,8 @@
                                         value: product.deal_price,
                                         label: t('.deal_price'),
                                         help: t('.help_deal_price'),
-                                        placeholder: t('.placeholder_deal_price')
+                                        placeholder: t('.placeholder_deal_price'),
+                                        errors: product.errors.full_messages_for(:deal_price)
                                     }) %>
                                 </div>
                                 <div class="col-md-3">
@@ -326,7 +327,8 @@
                                         value: product.deal_percent,
                                         label: t('.deal_percent'),
                                         help: t('.help_deal_percent'),
-                                        placeholder: t('.placeholder_deal_percent')
+                                        placeholder: t('.placeholder_deal_percent'),
+                                        errors: product.errors.full_messages_for(:deal_percent)
                                     }) %>
                                 </div>
                             </div>
