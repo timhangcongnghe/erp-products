@@ -339,7 +339,7 @@ module Erp::Products
 				return self.price
 			end
 		end
-    
+
     def product_name
 			return self.short_name
 		end
@@ -404,7 +404,13 @@ module Erp::Products
 			end
 
 			def find_menu
-				self.find_menus.last
+				all_menus = self.find_menus
+				if self.brand_id.present?
+					menus = all_menus.where(brand_id: self.brand_id)
+				end
+				menus = all_menus if menus.empty?
+
+				menus.last
 			end
 		end
 
