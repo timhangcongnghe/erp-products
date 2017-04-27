@@ -336,6 +336,8 @@ module Erp::Products
 			if from_conds && to_conds
 				return self.deal_price
 			else
+				# auto uncheck is_deal
+				self.update_column(:is_deal, false)
 				return self.price
 			end
 		end
