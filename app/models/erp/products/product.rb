@@ -332,7 +332,7 @@ module Erp::Products
 			return self.price if !self.is_deal
 			# product is deal
 			from_conds = !self.deal_from_date.present? || (self.deal_from_date.present? && Time.now >= self.deal_from_date.beginning_of_day)
-			to_conds = !self.deal_to_date.present? || (self.deal_to_date.present? && Time.now >= self.deal_to_date.end_of_day)
+			to_conds = !self.deal_to_date.present? || (self.deal_to_date.present? && Time.now <= self.deal_to_date.end_of_day)
 			if from_conds && to_conds
 				return self.deal_price
 			else
@@ -570,12 +570,12 @@ module Erp::Products
 				errors.add(:deal_to_date, :cannot_happen_before_from_date_msg) unless deal_to_date > deal_from_date
 			end
 		end
-		
+
 		def deal_price_cannot_blank
 			if is_deal == true
 				errors.add(:deal_price, :cannot_blank_msg) unless !deal_price.nil?
 				errors.add(:deal_percent, :cannot_blank_msg) unless !deal_percent.nil?
-			end 
+			end
 		end
 
     private
