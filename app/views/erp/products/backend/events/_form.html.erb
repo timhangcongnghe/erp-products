@@ -1,0 +1,115 @@
+<%= form_for([erp_products, :backend, event], html: {multipart: true}) do |f| %>
+    <div class="form-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <%= erp_form_control('image', {
+                                    img_src: event.image_url.system,
+                                    name: 'event[image_url]',
+                                    width: 150,
+                                    height: 150
+                                }) %>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <%= erp_form_control("text", {
+                                            name: 'event[name]',
+                                            value: event.name,
+                                            label: t('.name'),
+                                            placeholder: t('.placeholder_event_name'),
+                                            required: true,
+                                            errors: event.errors.full_messages_for(:name)
+                                        }) %>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <%= erp_form_control("date", {
+                                            name: 'event[from_date]',
+                                            value: event.from_date,
+                                            label: t('.from_date'),
+                                            placeholder: t('.placeholder_event_from_date'),
+                                            required: true,
+                                            errors: event.errors.full_messages_for(:from_date)
+                                        }) %>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <%= erp_form_control("date", {
+                                            name: 'event[to_date]',
+                                            value: event.to_date,
+                                            label: t('.to_date'),
+                                            placeholder: t('.placeholder_event_to_date'),
+                                            required: true,
+                                            errors: event.errors.full_messages_for(:to_date)
+                                        }) %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tabbable-custom ">
+                    <ul class="nav nav-tabs ">
+                        <li class="active">
+                            <a href="#tab_5_1" data-toggle="tab"> <%= t('.products_listing') %> </a>
+                        </li>
+                        <li>
+                            <a href="#tab_5_2" data-toggle="tab"> <%= t('.description') %> </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_5_1">
+                            <%= erp_form_control("addableform", {
+                                type: 'table',
+                                add_button: t('.add_to_event'),
+                                partial: 'erp/products/backend/events_products/event_product_line_form',
+                                partial_url: erp_products.event_product_line_form_backend_events_products_path,
+                                items: @event.events_products,
+                                item: :events_product,
+                                add_control_selector: "input[name='event_id']",
+                                add_control: erp_form_control("dataselect", {
+                                    name: 'event_id',
+                                    value: event.id,
+                                    placeholder: t('.choose_event_product'),
+                                    label: t('.event_product'),
+                                    help: t('.help_event_product'),
+                                    url: erp_products.dataselect_backend_products_path(format: 'json')
+                                }),
+                                thead: "<th>#{t('.product_code')}</th>
+                                        <th>#{t('.product_name')}</th>
+                                        <th>#{t('.price')}</th>
+                                        <th>#{t('.action')}</th>"
+                            }) %>
+                        </div>
+                        <div class="tab-pane" id="tab_5_2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <%= erp_form_control("editor", {
+                                        name: 'event[description]',
+                                        value: event.description,
+                                        placeholder: t('.placeholder_description'),
+                                        label: t('.description'),
+                                        type: "tiny"
+                                    }) %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%= erp_component('button/save', {
+        text: t('submit')
+    }) %>
+    <%= erp_component('button/cancel', {
+        text: t('cancel'),
+        href: erp_products.backend_events_path
+    }) %>
+<% end %>

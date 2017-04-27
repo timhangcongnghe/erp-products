@@ -957,6 +957,85 @@ vi:
             delete: "Xóa bình luận"
             archived: "Không hiển thị"
             active: "Đang hiển thị"
+        events:
+          create:
+            success: "Thêm sự kiện thành công."
+          update:
+            success: "Cập nhật sự kiện thành công."
+          destroy:
+            success: "Xóa sự kiện thành công."
+          delete_all:
+            success: "Xóa sự kiện được chọn thành công."
+          archive:
+            success: "Sự kiện đã được ngưng chạy thành công."
+          unarchive:
+            success: "Sự kiện đã được chạy thành công."
+          archive_all:
+            success: "Các sự kiện đã được ngưng chạy thành công."
+          unarchive_all:
+            success: "Các sự kiện đã được chạy thành công."
+          index:
+            events: "Tất cả sự kiện"
+            create: "Thêm sự kiện"
+            image: "Banner sự kiện"
+            name: "Tên sự kiện"
+            from_date: "Ngày bắt đầu"
+            to_date: "Ngày kết thúc"
+            description: "Mô tả"
+            status: "Trạng thái"
+            creator: "Người tạo"
+            created_at: "Ngày tạo"
+            archived: "Đã ngưng chạy"
+            archive: "Ngưng chạy"
+            unarchive: "Cho phép chạy"
+            delete: "Xóa sự kiện"
+            archive_confirm: "Bạn có thực sự muốn ngưng chạy sự kiện?"
+            unarchive_confirm: "Bạn có muốn cho phép chạy sự kiện?"
+            delete_confirm: "Bạn thực sự muốn xóa sự kiện?"
+          list:
+            image: "Banner sự kiện"
+            name: "Tên sự kiện"
+            from_date: "Ngày bắt đầu"
+            to_date: "Ngày kết thúc"
+            description: "Mô tả"
+            status: "Trạng thái"
+            creator: "Người tạo"
+            created_at: "Ngày tạo"
+            active: "Đang chạy"
+            archived: "Ngưng chạy"
+            actions: "Thao tác"
+            edit: "Chỉnh sửa"
+            archive: "Ngưng chạy"
+            unarchive: "Cho phép chạy"
+            delete: "Xóa sự kiện"
+            archive_confirm: "Bạn có thực sự muốn ngưng chạy sự kiện?"
+            unarchive_confirm: "Bạn có muốn cho phép chạy sự kiện?"
+            delete_confirm: "Bạn thực sự muốn xóa sự kiện?"
+          new:
+            events: "Tất cả sự kiện"
+            create: "Thêm sự kiện"
+          edit:
+            events: "Tất cả sự kiện"
+            create: "Thêm sự kiện"
+            edit: "Chỉnh sửa"
+          form:
+            name: "Tên sự kiện"
+            from_date: "Ngày bắt đầu"
+            to_date: "Ngày kết thúc"
+            description: "Mô tả / Ghi chú"
+            placeholder_event_name: "Nhập tên sự kiện"
+            placeholder_event_from_date: "Chọn ngày bắt đầu"
+            placeholder_event_to_date: "Chọn ngày kết thúc"
+            products_listing: "Danh sách sản phẩm"
+            placeholder_description: "Nhập mô tả chi tiết cho sự kiện"
+            event_product: "Sản phẩm cho sự kiện"
+            help_event_product: "Thêm sản phẩm vào danh sách sản phẩm có tham gia sự kiện"
+            choose_event_product: "Chọn/tìm kiếm sản phẩm"
+            add_to_event: "Thêm vào danh sách"
+            product_code: "Mã sản phẩm"
+            product_name: "Tên sản phẩm"
+            price: "Giá bán"
+            action: "Tùy chọn"
   activerecord:
     errors:
       models:
@@ -1030,6 +1109,14 @@ vi:
           attributes:
             name:
               blank: "không được để trống."
+        erp/products/event:
+          attributes:
+            name:
+              blank: "không được để trống."
+            from_date:
+              blank: "không được để trống."
+            to_date:
+              blank: "không được để trống."
     attributes:
       erp/products/product:
         deal_percent: "Phần trăm khuyến mãi"
@@ -1065,3 +1152,7 @@ vi:
         code: "Mã xuất hủy"
         adjustment_date: "Thời gian"
         warehouse_id: "Kho/Chi nhánh"
+      erp/products/event:
+        name: "Tên sự kiện"
+        from_date: "Ngày bắt đầu sự kiện"
+        to_date: "Ngày kết thúc sự kiện"

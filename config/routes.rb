@@ -206,6 +206,22 @@ Erp::Products::Engine.routes.draw do
           get 'children_comments'
         end
       end
+      resources :events do
+        collection do
+          post 'list'
+          get 'dataselect'
+          delete 'delete_all'
+          put 'archive_all'
+          put 'unarchive_all'
+          put 'archive'
+          put 'unarchive'
+				end
+			end
+      resources :events_products do
+				collection do
+          get 'event_product_line_form'
+				end
+			end
     end
 	end
 end
