@@ -28,7 +28,7 @@ module Erp::Products
     has_many :products_parts, dependent: :destroy
     accepts_nested_attributes_for :products_parts, :reject_if => lambda { |a| a[:part_id].blank? }, :allow_destroy => true
 
-    has_many :products_values, dependent: :destroy
+    has_many :products_values, -> { order 'erp_products_products_values.id' }, dependent: :destroy
     has_many :comments, class_name: 'Erp::Products::Comment', dependent: :destroy
     has_many :ratings, class_name: 'Erp::Products::Rating', dependent: :destroy
 
