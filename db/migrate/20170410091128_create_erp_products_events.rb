@@ -7,7 +7,7 @@ class CreateErpProductsEvents < ActiveRecord::Migration[5.0]
       t.string :image_url
       t.text :description
       t.boolean :archived, default: false
-      t.references :user, index: true, references: :erp_users
+      t.references :creator, index: true, references: :erp_users
 
       t.timestamps
     end
