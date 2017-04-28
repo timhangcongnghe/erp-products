@@ -117,5 +117,11 @@ module Erp::Products
       self.events_active.where("to_date <= ?", Time.now)
                         .order("from_date DESC")
     end
+    
+    # get event products
+    def self.get_event_products(params)
+			event = Event.find(params[:event_id])
+			return event.products
+		end
   end
 end
