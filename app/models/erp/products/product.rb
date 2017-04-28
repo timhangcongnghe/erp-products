@@ -579,6 +579,10 @@ module Erp::Products
 				errors.add(:deal_percent, :cannot_blank_msg) unless !deal_percent.nil?
 			end
 		end
+		
+		def self.get_products_for_brand(params)
+			self.get_active.where(brand_id: params[:brand_id])
+		end
 
     private
     if Erp::Core.available?("carts")
