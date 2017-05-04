@@ -97,7 +97,7 @@ module Erp::Products
 				keyword = params[:keyword].strip.downcase
 				keyword.split(' ').each do |q|
 					q = q.strip
-					query = query.where('LOWER(erp_products_products.name) LIKE ?', '%'+q+'%')
+					query = query.where('LOWER(erp_products_products.cache_search) LIKE ?', '%'+q+'%')
 				end
 			end
 
@@ -396,6 +396,21 @@ module Erp::Products
 
 		def self.get_bestseller_products
 			self.get_active.where(is_bestseller: true)
+		end
+		
+		
+		after_save :update_cache_search
+		
+		def update_cache_search
+			str = []
+			str << code.to_s.downcase.strip
+			str << name.to_s.downcase.strip
+			str << short_name.to_s.downcase.strip
+			str << description.to_s.downcase.strip
+			str << brand_name.to_s.downcase.strip
+			str << category_name.to_s.downcase.strip
+			
+			self.update_column(:cache_search, str.join(" ") + " " + str.join(" ").to_ascii)
 		end
 
 		# If menus engines available
