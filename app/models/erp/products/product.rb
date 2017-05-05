@@ -41,7 +41,7 @@ module Erp::Products
     IN_TOCK = 'in_stock'
 
     def self.get_active
-			self.where(archived: false).order("created_at DESC")
+			self.where(archived: false)
 		end
 
 		def values_by_property(property)
@@ -594,7 +594,7 @@ module Erp::Products
 				errors.add(:deal_percent, :cannot_blank_msg) unless !deal_percent.nil?
 			end
 		end
-		
+
 		def self.get_products_for_brand(params)
 			self.get_active.where(brand_id: params[:brand_id])
 		end
