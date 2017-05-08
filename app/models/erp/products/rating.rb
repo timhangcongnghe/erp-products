@@ -15,5 +15,10 @@ module Erp::Products
     def display_content
 			content.gsub("\r\n", "<br/>").html_safe
 		end
+    
+    # ratings count archived
+    def self.count_archived
+			self.where(archived: true).count
+		end
   end
 end
