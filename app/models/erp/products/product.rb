@@ -406,7 +406,6 @@ module Erp::Products
 			str << code.to_s.downcase.strip
 			str << name.to_s.downcase.strip
 			str << short_name.to_s.downcase.strip
-			str << description.to_s.downcase.strip
 			str << brand_name.to_s.downcase.strip
 			str << category_name.to_s.downcase.strip
 			
