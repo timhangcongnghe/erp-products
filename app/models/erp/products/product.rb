@@ -120,6 +120,8 @@ module Erp::Products
         order += " #{params[:sort_direction]}" if params[:sort_direction].present?
 
         query = query.order(order)
+      else
+				query = query.order('created_at desc')
       end
 
       return query
@@ -397,10 +399,10 @@ module Erp::Products
 		def self.get_bestseller_products
 			self.get_active.where(is_bestseller: true)
 		end
-		
-		
+
+
 		after_save :update_cache_search
-		
+
 		def update_cache_search
 			str = []
 			str << code.to_s.downcase.strip
@@ -408,7 +410,7 @@ module Erp::Products
 			str << short_name.to_s.downcase.strip
 			str << brand_name.to_s.downcase.strip
 			str << category_name.to_s.downcase.strip
-			
+
 			self.update_column(:cache_search, str.join(" ") + " " + str.join(" ").to_ascii)
 		end
 
