@@ -51,6 +51,12 @@
                             <span class="label label-sm label-danger"><%= t('archived') %></span>
                         <% else %>
                             <span class="label label-sm label-success"><%= t('active') %></span>
+                        <% end %><br>
+                        <% if property.is_show_detail == true %>
+                            <span class="label label-sm label-info">Hiển thị tại trang chi tiết</span>
+                        <% end %><br>
+                        <% if property.is_show_list == true %>
+                            <span class="label label-sm label-info">Hiển thị tại trang danh sách</span>
                         <% end %>
                     </td>
                 <% end %>
