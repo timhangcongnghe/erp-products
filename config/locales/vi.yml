@@ -957,6 +957,45 @@ vi:
             delete: "Xóa bình luận"
             archived: "Không hiển thị"
             active: "Đang hiển thị"
+        ratings:
+          archive:
+            success: "Đánh giá đã được ẩn thành công."
+          unarchive:
+            success: "Đánh giá đã được duyệt thành công."
+          archive_all:
+            success: "Các đánh giá đã được ẩn thành công."
+          unarchive_all:
+            success: "Các đánh giá đã được duyệt thành công."
+          delete:
+            success: "Đánh giá đã được xóa thành công."
+          delete_all:
+            success: "Các đánh giá đã được xóa thành công."
+          index:
+            ratings: "Đánh giá sản phẩm"
+            name: "Người đánh giá"
+            product: "Sản phẩm"
+            star: "Điểm đánh giá"
+            content: "Lời nhận xét"
+            user: "Người đánh giá"
+            archive: "Ẩn đánh giá"
+            unarchive: "Duyệt đánh giá"
+            archive_confirm: "Bạn chắc chắn muốn ẩn nội dung đánh giá?"
+            unarchive_confirm: "Bạn có chắc muốn duyệt nội dung đánh giá?"
+            delete: "Xóa đánh giá"
+            archived: "Chưa duyệt"
+            active: "Đã duyệt"
+          list:
+            name: "Người đánh giá"
+            product: "Sản phẩm"
+            star: "Điểm đánh giá"
+            content: "Lời nhận xét"
+            archive: "Ẩn đánh giá"
+            unarchive: "Duyệt đánh giá"
+            archive_confirm: "Bạn chắc chắn muốn ẩn nội dung đánh giá?"
+            unarchive_confirm: "Bạn có chắc muốn duyệt nội dung đánh giá?"
+            active: "Đã duyệt"
+            archived: "Chưa duyệt"
+            delete: "Xóa đánh giá"
         events:
           create:
             success: "Thêm sự kiện thành công."

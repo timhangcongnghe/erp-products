@@ -1,0 +1,84 @@
+<% content_for :title do %>
+    <%= t('.ratings') %>
+<% end %>
+
+<% content_for :page_title do %>
+    <i class="fa fa-folder"></i> <%= t('.ratings') %>
+<% end %>
+
+<%= erp_datalist(
+    url: erp_products.list_backend_ratings_path,
+    keywords: [
+        {
+            text: t('.content'), name: 'erp_products_ratings.content'
+        },
+        {
+            text: t('.product'),
+            name: 'erp_products_products.name',
+            select: {
+                name: 'erp_products_products.id',
+                data_url: erp_products.dataselect_backend_products_path
+            }
+        },
+        {
+            text: t('.user'),
+            name: 'erp_users.name',
+            select: {
+                name: 'erp_users.id',
+                data_url: erp.dataselect_backend_users_path
+            }
+        }
+    ],
+    actions: [
+        {
+            text: '<i class="fa fa-eye-slash"></i> '+t('.archive'),
+            url: erp_products.archive_all_backend_ratings_path,
+            data_method: 'PUT',
+            data_confirm: t('.archive_confirm')
+        },
+        {
+            text: '<i class="fa fa-eye"></i> '+t('.unarchive'),
+            url: erp_products.unarchive_all_backend_ratings_path,
+            data_method: 'PUT',
+            data_confirm: t('.unarchive_confirm')
+        },
+        {
+            divider: true
+        },
+        {
+            text: '<i class="fa fa-trash"></i> '+t('.delete'),
+            url: erp_products.delete_all_backend_ratings_path,
+            data_method: 'DELETE',
+            data_confirm: t('delete_confirm')
+        }
+    ],
+    filters: [
+        {
+            text: t('.archived'), name: 'erp_products_ratings.archived', value: 'true', checked: false
+        },
+        {
+            text: t('.active'), name: 'erp_products_ratings.archived', value: 'false', checked: false
+        }
+    ],
+    columns: [
+        {
+            text: t('.name'), name: 'name', value: true, checked: true
+        },
+        {
+            text: t('.product'), name: 'product', value: true, checked: true
+        },
+        {
+            text: t('.star'), name: 'star', value: true, checked: true
+        },
+        {
+            text: t('.content'), name: 'content', value: true, checked: true
+        },
+        {
+            text: t('status'), name: 'status', value: true, checked: true
+        },
+        {
+            text: t('created_at'), name: 'created_at', value: true, checked: false
+        }
+    ],
+    sort: { sort_by: 'erp_products_ratings.created_at', sort_direction: 'desc' }
+) %>

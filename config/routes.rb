@@ -206,6 +206,16 @@ Erp::Products::Engine.routes.draw do
           get 'children_comments'
         end
       end
+      resources :ratings do
+        collection do
+          post 'list'
+          delete 'delete_all'
+          put 'archive_all'
+          put 'unarchive_all'
+          put 'archive'
+          put 'unarchive'
+        end
+      end
       resources :events do
         collection do
           post 'list'
