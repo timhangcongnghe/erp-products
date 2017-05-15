@@ -3,6 +3,6 @@ module Erp::Products
     belongs_to :product, optional: true
     mount_uploader :image_url, Erp::Products::ProductImageUploader
 
-    default_scope { order(created_at: :desc) }
+    default_scope { order(id: :desc) }
   end
 end
