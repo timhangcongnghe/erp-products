@@ -6,6 +6,11 @@ module Erp::Products
     validates :star, :presence => true
     validates :content, length: { minimum: 50 }
     
+    # get ratings active
+    def ratings_active
+			self.where(archived: false)
+		end
+    
     # Filters
     def self.filter(query, params)
       params = params.to_unsafe_hash
