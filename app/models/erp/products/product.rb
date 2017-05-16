@@ -328,6 +328,10 @@ module Erp::Products
     def self.get_bestseller_products
 			self.get_active.where(is_bestseller: true)
 		end
+    
+    def self.get_stock_inventory_products
+			self.get_active.where(is_stock_inventory: true)
+		end
 
     def product_price
 			# product is not deal
@@ -391,15 +395,6 @@ module Erp::Products
 			end
 			return percentage
 		end
-
-		def self.get_deal_products
-			self.get_active.where(is_deal: true)
-		end
-
-		def self.get_bestseller_products
-			self.get_active.where(is_bestseller: true)
-		end
-
 
 		after_save :update_cache_search
 

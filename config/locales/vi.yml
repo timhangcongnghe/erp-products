@@ -363,6 +363,8 @@ vi:
             choose_deal_from_date: "Chọn ngày bắt đầu khuyến mãi"
             deal_to_date: "Ngày kết thúc khuyến mãi"
             choose_deal_to_date: "Chọn ngày kết thúc khuyến mãi"
+            product_stock_inventory: "Xả kho hàng tồn"
+            is_stock_inventory: "Sản phẩm cần xả kho"
             meta_keywords: "Từ khóa thẻ meta"
             enter_meta_keywords: "Nhập từ khóa thẻ meta"
             meta_description: "Mô tả thẻ meta"

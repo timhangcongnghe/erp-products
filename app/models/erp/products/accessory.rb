@@ -67,6 +67,10 @@ module Erp::Products
       return query
     end
     
+    def get_accessory_details
+			self.accessory_details.order("created_at DESC")
+		end
+    
     # data for dataselect ajax
     def self.dataselect(keyword='')
       query = self.all
