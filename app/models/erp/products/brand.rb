@@ -120,5 +120,16 @@ module Erp::Products
 
 			return query.map{|brand| {value: brand.id, text: brand.name}}
 		end
+    
+    # Update cache search for brands
+    after_save :update_cache_search
+
+		def update_cache_search
+			str = []
+			str << name.to_s.downcase.strip
+
+			self.update_column(:cache_search, str.join(" ") + " " + str.join(" ").to_ascii)
+		end
+    
   end
 end
