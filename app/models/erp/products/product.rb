@@ -328,7 +328,7 @@ module Erp::Products
     def self.get_bestseller_products
 			self.get_active.where(is_bestseller: true)
 		end
-    
+
     def self.get_stock_inventory_products
 			self.get_active.where(is_stock_inventory: true)
 		end
