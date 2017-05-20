@@ -58,20 +58,20 @@ module Erp
 				process :resize_to_fill => [300, 300]
 			end
 
-			# thumbnails		
+			# thumbnails
 			version :thumb445 do
 				process :resize_and_pad => [445, 445, "#FFFFFF", "Center"] # resize_to_fill => [600, 600]
 			end
-			
+
 			version :thumb550 do
 				process :resize_and_pad => [550, 550, "#FFFFFF", "Center"] # resize_to_fill => [600, 600]
 			end
-			
+
 			# thumbnails
 			version :thumb268 do
 				process :resize_and_pad => [268, 268, "#FFFFFF", "Center"] # resize_to_fill => [193, 193]
 			end
-			
+
 			# thumbnails
 			version :thumb193 do
 				process :resize_and_pad => [193, 193, "#FFFFFF", "Center"] # resize_to_fill => [193, 193]
@@ -81,12 +81,12 @@ module Erp
 			version :thumb170 do
 				process :resize_and_pad => [170, 170, "#FFFFFF", "Center"] # resize_to_fill => [193, 193]
 			end
-			
+
 			# thumbnails
 			version :thumb99 do
 				process :resize_and_pad => [99, 99, "#FFFFFF", "Center"] # resize_to_fill => [193, 193]
 			end
-			
+
 			# thumbnails
 			version :thumb75 do
 				process :resize_and_pad => [75, 75, "#FFFFFF", "Center"] # resize_to_fill => [193, 193]
