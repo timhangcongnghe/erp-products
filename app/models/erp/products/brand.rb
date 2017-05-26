@@ -146,5 +146,9 @@ module Erp::Products
 			self.update_column(:cache_search, str.join(" ") + " " + str.join(" ").to_ascii)
 		end
 
+		def self.for_filter
+			self.get_active.order('name asc')
+		end
+
   end
 end
