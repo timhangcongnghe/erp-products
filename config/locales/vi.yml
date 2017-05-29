@@ -330,6 +330,8 @@ vi:
             notes_description: "Ghi chú - Mô tả"
             # frontend
             website_frontend: "Tìm Hàng Công Nghệ"
+            frontend_product: "Thông tin Sản phẩm"
+            frontend_product_gift: "Quà tặng đi kèm"
             brand: "Thương hiệu"
             choose_brand: "Chọn thương hiệu"
             help_brand: "Thương hiệu của sản phẩm"
@@ -374,6 +376,14 @@ vi:
             placeholder_product_short_name: "Nhập tên rút gọn"
             product_intro_link: "Link giới thiệu sản phẩm"
             placeholder_product_intro_link: "Chèn link giới thiệu sản phẩm (nếu có)"
+            product_gift: "Sản phẩm tặng kèm"
+            help_product_gift: "Lựa chọn sản phẩm để thêm vào danh sách quà tặng kèm theo"
+            choose_product_gift: "Lựa chọn quà tặng từ danh sách sản phẩm"
+            create_product_gift: "Thêm sản phẩm"
+            gift_code: "Mã sản phẩm"
+            gift_name: "Tên sản phẩm"
+            price: "Giá ưu đãi"
+            add_gift: "Thêm vào danh sách quà tặng"
             # end frontend
             description_for_quotations: "Description for Quotations"
             description_for_pickings: "Description for Pickings"

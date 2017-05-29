@@ -116,8 +116,18 @@
                             <a href="#tab_5_1" data-toggle="tab"> <%= t('.general_information') %> </a>
                         </li>
                         <!-- Website Frontend -->
-                        <li>
-                            <a href="#tab_5_8" data-toggle="tab"> <%= t('.website_frontend') %> </a>
+                        <li class="dropdown">
+                            <a href="javascript:;" class="dropdown-toggle pointer" data-toggle="dropdown"> <%= t('.website_frontend') %>
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#tab_5_8" tabindex="-1" data-toggle="tab"> <%= t('.frontend_product') %> </a>
+                                </li>
+                                <li>
+                                    <a href="#tab_5_9" tabindex="-1" data-toggle="tab"> <%= t('.frontend_product_gift') %> </a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="#tab_5_2" data-toggle="tab"> <%= t('.properties') %> </a>
@@ -398,6 +408,46 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="tab-pane" id="tab_5_9">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <%= erp_form_control("addableform", {
+                                        type: 'table',
+                                        add_button: t('.add_gift'),
+                                        partial: 'erp/products/backend/products_gifts/gift_form',
+                                        partial_url: erp_products.gift_form_backend_products_gifts_path,
+                                        items: @product.products_gifts,
+                                        item: :products_gift,
+                                        add_control_selector: "input[name='product_id']",
+                                        add_control: erp_form_control("dataselect", {
+                                            name: 'product_id',
+                                            value: product.id,
+                                            placeholder: t('.choose_product_gift'),
+                                            label: t('.product_gift'),
+                                            help: t('.help_product_gift'),
+                                            url: erp_products.dataselect_backend_products_path(format: 'json'),
+                                            create: {
+                                                url: erp_products.new_backend_product_path,
+                                                title: t('.create_product_gift'),
+                                                container_selector: '.new_product',
+                                                input_selector: 'input[name="product[name]"]'
+                                            },
+                                            edit: {
+                                                url: erp_products.edit_backend_product_path(id: ':value'),
+                                                title: t('.edit_product_gift'),
+                                                container_selector: '.edit_product',
+                                            }
+                                        }),
+                                        thead: "<th>#{t('.gift_code')}</th>
+                                                <th>#{t('.gift_name')}</th>
+                                                <th>#{t('.quantity')}</th>
+                                                <th>#{t('.price')}</th>
+                                                <th>#{t('.action')}</th>"
+                                    }) %>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="tab-pane" id="tab_5_2">
                             <div class="product-property-container" data-url="<%= erp_products.property_form_backend_products_path(id: product.id) %>">
                                 <%= render partial: 'erp/products/backend/products/property_form', locals: {product: product} %>

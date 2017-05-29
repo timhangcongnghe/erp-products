@@ -232,6 +232,11 @@ Erp::Products::Engine.routes.draw do
           get 'event_product_line_form'
 				end
 			end
+      resources :products_gifts do
+				collection do
+          get 'gift_form'
+				end
+			end
     end
 	end
 end

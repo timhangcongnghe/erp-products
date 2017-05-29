@@ -342,7 +342,8 @@ module Erp
               customer_tax_ids: [], vendor_tax_ids: [],
               :product_images_attributes => [ :id, :image_url, :image_url_cache, :product_id, :_destroy ],
               :products_units_attributes => [ :id, :unit_id, :conversion_value, :price, :code, :product_id, :_destroy ],
-              :products_parts_attributes => [ :id, :part_id, :quantity, :total, :product_id, :_destroy ]
+              :products_parts_attributes => [ :id, :part_id, :quantity, :total, :product_id, :_destroy ],
+              :products_gifts_attributes => [ :id, :gift_id, :quantity, :price, :product_id, :_destroy ]
               )
           end
       end
