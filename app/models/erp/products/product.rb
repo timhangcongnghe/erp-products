@@ -30,6 +30,8 @@ module Erp::Products
     
     has_many :products_gifts, dependent: :destroy
     accepts_nested_attributes_for :products_gifts, :reject_if => lambda { |a| a[:gift_id].blank? }, :allow_destroy => true
+    
+    has_many :gifts, through: :products_gifts, class_name: 'Erp::Products::Product', foreign_key: :gift_id
 
     has_many :products_values, -> { order 'erp_products_products_values.id' }, dependent: :destroy
     has_many :comments, class_name: 'Erp::Products::Comment', dependent: :destroy
