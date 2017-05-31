@@ -402,6 +402,7 @@ module Erp::Products
 		end
 
 		after_save :update_cache_search
+		after_create :create_alias
 
 		def update_cache_search
 			str = []
@@ -412,6 +413,10 @@ module Erp::Products
 			str << category_name.to_s.downcase.strip
 
 			self.update_column(:cache_search, str.join(" ") + " " + str.join(" ").to_ascii)
+		end
+		
+		def create_alias
+			self.update_column(:alias, self.short_name.to_ascii.downcase.to_s.gsub(/[^0-9a-z ]/i, '').gsub(/ +/i, '-').strip)
 		end
 
 		# If menus engines available
