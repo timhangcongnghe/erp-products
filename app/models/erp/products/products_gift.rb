@@ -11,5 +11,9 @@ module Erp::Products
       gift.nil? ? '' : gift.name
     end
     
+    def total_quantity(item)
+      item.quantity*self.quantity
+    end
+    
   end
 end
