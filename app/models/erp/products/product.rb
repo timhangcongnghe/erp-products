@@ -539,6 +539,7 @@ module Erp::Products
 		# Get product properties short description
 		def product_short_descipriton_values_array
 			groups = []
+                        return [] if self.category.nil?
 			self.category.property_groups.each do |group|
 				row = {}
 				row[:name] = group.name
@@ -556,6 +557,7 @@ module Erp::Products
 		# Get product properties for list
 		def product_list_descipriton_values_array_1
 			rows = []
+                        return [] if self.category.nil?
 			self.category.property_groups.each do |group|
 				group.properties.where(is_show_list: true).each do |property|
 					row = {}
