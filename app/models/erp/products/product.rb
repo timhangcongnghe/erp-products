@@ -575,6 +575,7 @@ module Erp::Products
 		# Get product properties for list
 		def product_list_descipriton_values_array
 			groups = []
+                        return [] if self.category.nil?
 			self.category.property_groups.each do |group|
 				row = {}
 				row[:name] = group.name
