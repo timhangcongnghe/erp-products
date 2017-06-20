@@ -32,6 +32,8 @@ module Erp::Products
     accepts_nested_attributes_for :products_gifts, :reject_if => lambda { |a| a[:gift_id].blank? }, :allow_destroy => true
 
     has_many :gifts, through: :products_gifts, class_name: 'Erp::Products::Product', foreign_key: :gift_id
+    
+    has_and_belongs_to_many :events, class_name: 'Erp::Products::Event', :join_table => 'erp_products_events_products'
 
     has_many :products_values, -> { order 'erp_products_products_values.id' }, dependent: :destroy
     has_many :comments, class_name: 'Erp::Products::Comment', dependent: :destroy
@@ -609,6 +611,10 @@ module Erp::Products
 
 		def self.get_products_for_brand(params)
 			self.get_active.where(brand_id: params[:brand_id])
+		end
+		
+		def get_related_events(time_now)
+			self.events.where("from_date <= ? AND to_date >= ?", time_now.beginning_of_day, time_now.end_of_day)
 		end
 
     private
