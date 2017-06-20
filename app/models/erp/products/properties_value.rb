@@ -37,13 +37,13 @@ module Erp::Products
 				query = query.where(params[:parent_id] => params[:parent_value])
 			end
 
-      query = query.limit(8).map{|properties_value| {value: properties_value.id, text: properties_value.value} }
+      query = query.map{|properties_value| {value: properties_value.id, text: properties_value.value} }
     end
 
     def self.create_if_not_exists(prop_id, name)
-			exist = self.where(property_id: prop_id).where('LOWER(value) = ?', name.strip.downcase).first
+			exist = self.where(property_id: prop_id).where('LOWER(value) = ? OR value = ? OR UPPER(value) = ?', name.strip.downcase, name.strip, name.strip.upcase).first
 			if !exist.present?
-				exist = PropertiesValue.create(property_id: prop_id, value: name)
+				exist = PropertiesValue.create(property_id: prop_id, value: name.strip)
 			end
 			return exist
     end

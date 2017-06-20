@@ -27,10 +27,10 @@ module Erp::Products
 
     has_many :products_parts, dependent: :destroy
     accepts_nested_attributes_for :products_parts, :reject_if => lambda { |a| a[:part_id].blank? }, :allow_destroy => true
-    
+
     has_many :products_gifts, dependent: :destroy
     accepts_nested_attributes_for :products_gifts, :reject_if => lambda { |a| a[:gift_id].blank? }, :allow_destroy => true
-    
+
     has_many :gifts, through: :products_gifts, class_name: 'Erp::Products::Product', foreign_key: :gift_id
 
     has_many :products_values, -> { order 'erp_products_products_values.id' }, dependent: :destroy
@@ -414,7 +414,7 @@ module Erp::Products
 
 			self.update_column(:cache_search, str.join(" ") + " " + str.join(" ").to_ascii)
 		end
-		
+
 		def create_alias
 			self.update_column(:alias, self.short_name.to_ascii.downcase.to_s.gsub(/[^0-9a-z ]/i, '').gsub(/ +/i, '-').strip)
 		end
@@ -443,7 +443,10 @@ module Erp::Products
     def updateHkerpInfo(pid)
 			url = ErpSystem::Application.config.hkerp_endpoint + "products/erp_get_info?id=" + pid.to_s
 			uri = URI(url)
-			res = Net::HTTP.get_response(uri)
+			begin
+				res = Net::HTTP.get_response(uri)
+			rescue
+			end
 
 			if res.is_a?(Net::HTTPSuccess)
 				data = JSON.parse(res.body)
