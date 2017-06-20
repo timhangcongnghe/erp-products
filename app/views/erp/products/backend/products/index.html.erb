@@ -62,6 +62,21 @@
             divider: true
         },
         {
+            text: '<i class="fa fa-check-square"></i> '+t('.check_is_sold_out'),
+            url: erp_products.check_is_sold_out_all_backend_products_path,
+            data_method: 'PUT',
+            data_confirm: t('.check_is_sold_out_confirm')
+        },
+        {
+            text: '<i class="fa fa-square"></i> '+t('.uncheck_is_sold_out'),
+            url: erp_products.uncheck_is_sold_out_all_backend_products_path,
+            data_method: 'PUT',
+            data_confirm: t('.uncheck_is_sold_out_confirm')
+        },
+        {
+            divider: true
+        },
+        {
             text: '<i class="fa fa-trash"></i> '+t('.delete'),
             url: erp_products.delete_all_backend_products_path,
             data_method: 'DELETE',

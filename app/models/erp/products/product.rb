@@ -179,6 +179,23 @@ module Erp::Products
     def self.uncheck_is_bestseller_all
 			update_all(is_bestseller: false)
 		end
+    
+    # set is sold out
+    def check_is_sold_out
+			update_columns(is_sold_out: true)
+		end
+
+    def uncheck_is_sold_out
+			update_columns(is_sold_out: false)
+		end
+
+    def self.check_is_sold_out_all
+			update_all(is_sold_out: true)
+		end
+
+    def self.uncheck_is_sold_out_all
+			update_all(is_sold_out: false)
+		end
 
     # category name
     def category_name

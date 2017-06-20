@@ -2,8 +2,8 @@ module Erp
   module Products
     module Backend
       class ProductsController < Erp::Backend::BackendController
-        before_action :set_product, only: [:check_is_bestseller, :uncheck_is_bestseller, :archive, :unarchive, :show, :edit, :update, :destroy]
-        before_action :set_products, only: [:hkerp_update_price, :delete_all, :archive_all, :unarchive_all, :check_is_bestseller_all, :uncheck_is_bestseller_all]
+        before_action :set_product, only: [:check_is_sold_out, :uncheck_is_sold_out, :check_is_bestseller, :uncheck_is_bestseller, :archive, :unarchive, :show, :edit, :update, :destroy]
+        before_action :set_products, only: [:hkerp_update_price, :delete_all, :archive_all, :unarchive_all, :check_is_bestseller_all, :uncheck_is_bestseller_all, :check_is_sold_out_all, :uncheck_is_sold_out_all]
 
         # GET /products
         def index
@@ -242,6 +242,62 @@ module Erp
             }
           end
         end
+        
+        # Check_is_sold_out /products/sold_out?id=1
+        def check_is_sold_out
+          @product.check_is_sold_out
+
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end
+        end
+
+        # Uncheck_is_sold_out /products/sold_out?id=1
+        def uncheck_is_sold_out
+          @product.uncheck_is_sold_out
+
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end
+        end
+
+        # Check_is_sold_out_all /products/sold_out?ids=1,2,3
+        def check_is_sold_out_all
+          @products.check_is_sold_out_all
+
+          respond_to do |format|
+            format.json {
+              render json: {
+                'message': t('.success'),
+                'type': 'success'
+              }
+            }
+          end
+        end
+
+        # Check_is_sold_out_all /products/sold_out?ids=1,2,3
+        def uncheck_is_sold_out_all
+          @products.uncheck_is_sold_out_all
+
+          respond_to do |format|
+            format.json {
+              render json: {
+                'message': t('.success'),
+                'type': 'success'
+              }
+            }
+          end
+        end
 
         def dataselect
           respond_to do |format|
@@ -336,7 +392,7 @@ module Erp
               :price, :cost, :on_hand, :weight, :volume, :is_for_pos, :unit_id,
               # frontend
               :is_deal, :is_stock_inventory, :deal_price, :deal_percent, :short_description, :brand_id, :is_new, :accessory_id, :short_name, :product_intro_link,
-              :deal_from_date, :deal_to_date, :meta_keywords, :meta_description, :is_bestseller, :is_business_choices, :is_top_business_choices,
+              :deal_from_date, :deal_to_date, :meta_keywords, :meta_description, :is_bestseller, :is_business_choices, :is_top_business_choices, :is_sold_out,
               # end frontend
               :stock_min, :stock_max, :description, :internal_note, :point_enabled, :category_id,
               customer_tax_ids: [], vendor_tax_ids: [],

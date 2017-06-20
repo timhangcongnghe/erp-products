@@ -194,6 +194,14 @@ vi:
             success: "Sản phẩm đã được thêm vào danh sách bán chạy."
           uncheck_is_bestseller_all:
             success: "Sản phẩm đã hủy khỏi danh sách bán chạy."
+          check_is_sold_out:
+            success: "Sản phẩm đã được thêm vào danh sách bán hết."
+          uncheck_is_sold_out:
+            success: "Sản phẩm đã hủy khỏi danh sách bán hết."
+          check_is_sold_out_all:
+            success: "Sản phẩm đã được thêm vào danh sách bán hết."
+          uncheck_is_sold_out_all:
+            success: "Sản phẩm đã hủy khỏi danh sách bán hết."
           index:
             category: "Chuyên mục"
             products: "Tất cả sản phẩm"
@@ -221,6 +229,11 @@ vi:
             check_is_bestseller_confirm: "Bạn muốn thêm sản phẩm vào danh sách bán chạy?"
             uncheck_is_bestseller_confirm: "Bạn muốn hủy sản phẩm khỏi danh sách bán chạy?"
             is_bestseller: "Sản phẩm bán chạy"
+            check_is_sold_out: "Sản phẩm bán hết"
+            uncheck_is_sold_out: "Sản phẩm bán hết (bỏ check)"
+            check_is_sold_out_confirm: "Bạn muốn thêm sản phẩm vào danh sách đã bán hết?"
+            uncheck_is_sold_out_confirm: "Bạn muốn hủy sản phẩm khỏi danh sách đã bán hết?"
+            is_sold_out: "Sản phẩm đã bán hết"
             is_hotdeal: "Sản phẩm khuyến mãi"            
           list:
             delete: "Xóa sản phẩm"
@@ -249,8 +262,13 @@ vi:
             uncheck_is_bestseller: "Sản phẩm bán chạy"
             check_is_bestseller_confirm: "Bạn muốn thêm sản phẩm vào danh sách bán chạy?"
             uncheck_is_bestseller_confirm: "Bạn muốn hủy sản phẩm khỏi danh sách bán chạy?"
+            check_is_sold_out: "Sản phẩm bán hết"
+            uncheck_is_sold_out: "Sản phẩm bán hết (bỏ check)"
+            check_is_sold_out_confirm: "Bạn muốn thêm sản phẩm vào danh sách đã bán hết?"
+            uncheck_is_sold_out_confirm: "Bạn muốn hủy sản phẩm khỏi danh sách đã bán hết?"
             deal: "Khuyến mãi"
             bestseller: "Bán chạy"
+            sold_out: "Bán hết"
           new:
             products: "Tất cả sản phẩm"
             create: "Thêm sản phẩm"
