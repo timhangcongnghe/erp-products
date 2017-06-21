@@ -41,10 +41,10 @@
                     <%= erp_datalist_check_row(id: comment.id) %>
                 </td>
                 <% if get_columns(params).include?("name") %>
-                    <td><i class="fa fa-plus expand tr-expand-button"></i></td>
+                    <td><% if comment.children.count > 0 %><i class="fa fa-plus expand tr-expand-button"></i><% end %></td>
                     <td>
-                        <span class="title"><%= comment.name %></span>
-                        <br /><%= comment.email %>
+                        <span class="title"><%= comment.user_name %></span>
+                        <br /><%= comment.user_email %>
                     </td>
                 <% end %>
                 <% if get_columns(params).include?("product") %>

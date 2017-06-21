@@ -92,5 +92,9 @@ module Erp::Products
     def user_name
 			user.present? ? user.name : ''
 		end
+    
+    def user_email
+			user.present? ? user.email : ''
+		end
   end
 end

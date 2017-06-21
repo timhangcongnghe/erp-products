@@ -19,7 +19,7 @@
     <tbody>
         <% @comment.children.each do |children| %>
             <tr class="odd gradeX">
-                <td class="text-left"><%= children.name %></td>
+                <td class="text-left"><%= children.user_name %><br><%= children.user_email %></td>
                 <td class="text-left">
                     <span class="tooltips",
                         data-original-title="<%= children.message %>",
