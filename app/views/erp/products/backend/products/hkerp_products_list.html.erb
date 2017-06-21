@@ -27,6 +27,9 @@
                     </td>
                     <td>
                         <%= product["display_name"] %>
+                        <% if !erp_product.nil? %>
+                            <div class="" style="color: #999"><%= erp_product.name %></div>
+                        <% end %>
                     </td>
                     <td class="text-nowrap text-right">
                         <%= format_price(product["price"]) %>
