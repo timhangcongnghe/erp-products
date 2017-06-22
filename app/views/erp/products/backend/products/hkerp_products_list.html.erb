@@ -53,8 +53,11 @@
                             <% else %>
                                 <span class="label label-sm label-warning">price oudated</span>
                             <% end %>
+                            <% if erp_product.is_sold_out %>
+                                <span class="label label-sm bg-yellow">sold_out</span>
+                            <% end %>
                         <% end %>
-                        <% if product["out_of_date"] %>
+                        <% if product["out_of_date"] == true %>
                             <span class="label label-sm label-danger">Outdated</span>
                         <% end %>
                         <% if product["suspended"] %>
