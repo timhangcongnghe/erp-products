@@ -106,6 +106,18 @@
                         <% if product.is_bestseller? %>
                         <br /><span class="label label-sm label-orange"><%= t('.bestseller') %></span>
                         <% end %>
+                        <% if product.is_sold_out? %>
+                        <br /><span class="label label-sm label-warning"><%= t('.sold_out') %></span>
+                        <% end %>
+                        <% if product.is_stock_inventory? %>
+                        <br /><span class="label label-sm label-info"><%= t('.stock_inventory') %></span>
+                        <% end %>
+                        <% if product.is_business_choices? %>
+                        <br /><span class="label label-sm label-info"><%= t('.business_choices') %></span>
+                        <% end %>
+                        <% if product.is_top_business_choices? %>
+                        <br /><span class="label label-sm label-info"><%= t('.top_business_choices') %></span>
+                        <% end %>
                     </td>
                     <% end %>
                     <% if get_columns(params).include?("creator") %>
