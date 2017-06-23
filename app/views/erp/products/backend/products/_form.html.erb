@@ -224,22 +224,13 @@
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <%= erp_form_control("dataselect", {
-                                                name: 'product[brand_id]',
-                                                value: product.brand_id,
-                                                text: product.brand_name,
-                                                placeholder: t('.choose_brand'),
-                                                label: t('.brand'),
-                                                help: t('.help_brand'),
-                                                url: erp_products.dataselect_backend_brands_path(format: 'json'),
-                                                create: {
-                                                    url: erp_products.new_backend_brand_path,
-                                                    title: t('.create_brand'),
-                                                    container_selector: '.new_brand',
-                                                    input_selector: 'input[name="brand[name]"]'
-                                                },
-                                                required: true,
-                                                errors: product.errors.full_messages_for(:brand_id)
+                                            <%= erp_form_control('checkbox', {
+                                                name: 'product[is_sold_out]',
+                                                id: 'product_is_sold_out',
+                                                value: product.is_sold_out,
+                                                not_selected_value: 'false',
+                                                label: t('.product_sold_out'),
+                                                options: [{value: 'true', text: t('.is_sold_out')}]
                                             }) %>
                                         </div>
                                         <div class="col-md-6">
@@ -250,7 +241,7 @@
                                                 not_selected_value: 'false',
                                                 label: t('.product_stock_inventory'),
                                                 options: [{value: 'true', text: t('.is_stock_inventory')}]
-                                            }) %>                                            
+                                            }) %>
                                         </div>
                                     </div>
                                 </div>
@@ -315,6 +306,44 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
+                                    <%= erp_form_control("dataselect", {
+                                        name: 'product[brand_id]',
+                                        value: product.brand_id,
+                                        text: product.brand_name,
+                                        placeholder: t('.choose_brand'),
+                                        label: t('.brand'),
+                                        help: t('.help_brand'),
+                                        url: erp_products.dataselect_backend_brands_path(format: 'json'),
+                                        create: {
+                                            url: erp_products.new_backend_brand_path,
+                                            title: t('.create_brand'),
+                                            container_selector: '.new_brand',
+                                            input_selector: 'input[name="brand[name]"]'
+                                        },
+                                        required: true,
+                                        errors: product.errors.full_messages_for(:brand_id)
+                                    }) %>
+                                </div>
+                                <div class="col-md-3">
+                                    <%= erp_form_control("dataselect", {
+                                        name: 'product[accessory_id]',
+                                        value: product.accessory_id,
+                                        text: product.accessory_name,
+                                        placeholder: t('.choose_accessory'),
+                                        label: t('.accessory'),
+                                        help: t('.help_accessory'),
+                                        url: erp_products.dataselect_backend_accessories_path(format: 'json'),
+                                        create: {
+                                            url: erp_products.new_backend_accessory_path,
+                                            title: t('.create_accessory'),
+                                            container_selector: '.new_accessory',
+                                            input_selector: 'input[name="accessory[name]"]'
+                                        }
+                                    }) %>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
                                     <%= erp_form_control("number", {
                                         name: 'product[deal_price]',
                                         value: product.deal_price,
@@ -334,26 +363,7 @@
                                         errors: product.errors.full_messages_for(:deal_percent)
                                     }) %>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <%= erp_form_control("dataselect", {
-                                        name: 'product[accessory_id]',
-                                        value: product.accessory_id,
-                                        text: product.accessory_name,
-                                        placeholder: t('.choose_accessory'),
-                                        label: t('.accessory'),
-                                        help: t('.help_accessory'),
-                                        url: erp_products.dataselect_backend_accessories_path(format: 'json'),
-                                        create: {
-                                            url: erp_products.new_backend_accessory_path,
-                                            title: t('.create_accessory'),
-                                            container_selector: '.new_accessory',
-                                            input_selector: 'input[name="accessory[name]"]'
-                                        }
-                                    }) %>
-                                </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <%= erp_form_control('date', {
                                         label: t('.deal_from_date'),
                                         name: 'product[deal_from_date]',
@@ -361,7 +371,7 @@
                                         placeholder: t('.choose_deal_from_date')
                                     }) %>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <%= erp_form_control('date', {
                                         label: t('.deal_to_date'),
                                         name: 'product[deal_to_date]',

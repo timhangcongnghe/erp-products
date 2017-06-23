@@ -2,8 +2,13 @@ module Erp
   module Products
     module Backend
       class ProductsController < Erp::Backend::BackendController
-        before_action :set_product, only: [:check_is_sold_out, :uncheck_is_sold_out, :check_is_bestseller, :uncheck_is_bestseller, :archive, :unarchive, :show, :edit, :update, :destroy]
-        before_action :set_products, only: [:hkerp_update_price, :delete_all, :archive_all, :unarchive_all, :check_is_bestseller_all, :uncheck_is_bestseller_all, :check_is_sold_out_all, :uncheck_is_sold_out_all]
+        before_action :set_product, only: [:check_is_business_choices, :uncheck_is_business_choices, :check_is_top_business_choices, :uncheck_is_top_business_choices,
+                                           :check_is_sold_out, :uncheck_is_sold_out, :check_is_bestseller, :uncheck_is_bestseller,
+                                           :check_is_stock_inventory, :uncheck_is_stock_inventory, :check_is_bestseller, :uncheck_is_bestseller,
+                                           :archive, :unarchive, :show, :edit, :update, :destroy]
+        before_action :set_products, only: [:hkerp_update_price, :delete_all, :archive_all, :unarchive_all, :check_is_bestseller_all, :uncheck_is_bestseller_all,
+                                            :check_is_sold_out_all, :uncheck_is_sold_out_all, :check_is_stock_inventory_all, :uncheck_is_stock_inventory_all,
+                                            :check_is_business_choices_all, :uncheck_is_business_choices_all, :check_is_top_business_choices_all, :uncheck_is_top_business_choices_all]
 
         # GET /products
         def index
@@ -288,6 +293,174 @@ module Erp
         # Check_is_sold_out_all /products/sold_out?ids=1,2,3
         def uncheck_is_sold_out_all
           @products.uncheck_is_sold_out_all
+
+          respond_to do |format|
+            format.json {
+              render json: {
+                'message': t('.success'),
+                'type': 'success'
+              }
+            }
+          end
+        end
+        
+        # Check_is_stock_inventory /products/stock_inventory?id=1
+        def check_is_stock_inventory
+          @product.check_is_stock_inventory
+
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end
+        end
+
+        # Uncheck_is_stock_inventory /products/stock_inventory?id=1
+        def uncheck_is_stock_inventory
+          @product.uncheck_is_stock_inventory
+
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end
+        end
+
+        # Check_is_stock_inventory_all /products/stock_inventory?ids=1,2,3
+        def check_is_stock_inventory_all
+          @products.check_is_stock_inventory_all
+
+          respond_to do |format|
+            format.json {
+              render json: {
+                'message': t('.success'),
+                'type': 'success'
+              }
+            }
+          end
+        end
+
+        # Check_is_stock_inventory_all /products/stock_inventory?ids=1,2,3
+        def uncheck_is_stock_inventory_all
+          @products.uncheck_is_stock_inventory_all
+
+          respond_to do |format|
+            format.json {
+              render json: {
+                'message': t('.success'),
+                'type': 'success'
+              }
+            }
+          end
+        end
+        
+        # Check_is_business_choices /products/business_choices?id=1
+        def check_is_business_choices
+          @product.check_is_business_choices
+
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end
+        end
+
+        # Uncheck_is_business_choices /products/business_choices?id=1
+        def uncheck_is_business_choices
+          @product.uncheck_is_business_choices
+
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end
+        end
+
+        # Check_is_business_choices_all /products/business_choices?ids=1,2,3
+        def check_is_business_choices_all
+          @products.check_is_business_choices_all
+
+          respond_to do |format|
+            format.json {
+              render json: {
+                'message': t('.success'),
+                'type': 'success'
+              }
+            }
+          end
+        end
+
+        # Check_is_business_choices_all /products/business_choices?ids=1,2,3
+        def uncheck_is_business_choices_all
+          @products.uncheck_is_business_choices_all
+
+          respond_to do |format|
+            format.json {
+              render json: {
+                'message': t('.success'),
+                'type': 'success'
+              }
+            }
+          end
+        end
+        
+        # Check_is_top_business_choices /products/top_business_choices?id=1
+        def check_is_top_business_choices
+          @product.check_is_top_business_choices
+
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end
+        end
+
+        # Uncheck_is_top_business_choices /products/top_business_choices?id=1
+        def uncheck_is_top_business_choices
+          @product.uncheck_is_top_business_choices
+
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end
+        end
+
+        # Check_is_top_business_choices_all /products/top_business_choices?ids=1,2,3
+        def check_is_top_business_choices_all
+          @products.check_is_top_business_choices_all
+
+          respond_to do |format|
+            format.json {
+              render json: {
+                'message': t('.success'),
+                'type': 'success'
+              }
+            }
+          end
+        end
+
+        # Check_is_top_business_choices_all /products/top_business_choices?ids=1,2,3
+        def uncheck_is_top_business_choices_all
+          @products.uncheck_is_top_business_choices_all
 
           respond_to do |format|
             format.json {

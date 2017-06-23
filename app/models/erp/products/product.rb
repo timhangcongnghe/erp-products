@@ -196,6 +196,57 @@ module Erp::Products
     def self.uncheck_is_sold_out_all
 			update_all(is_sold_out: false)
 		end
+    
+    # set is stock inventory
+    def check_is_stock_inventory
+			update_columns(is_stock_inventory: true)
+		end
+
+    def uncheck_is_stock_inventory
+			update_columns(is_stock_inventory: false)
+		end
+
+    def self.check_is_stock_inventory_all
+			update_all(is_stock_inventory: true)
+		end
+
+    def self.uncheck_is_stock_inventory_all
+			update_all(is_stock_inventory: false)
+		end
+    
+    # set is business choices
+    def check_is_business_choices
+			update_columns(is_business_choices: true)
+		end
+
+    def uncheck_is_business_choices
+			update_columns(is_business_choices: false)
+		end
+
+    def self.check_is_business_choices_all
+			update_all(is_business_choices: true)
+		end
+
+    def self.uncheck_is_business_choices_all
+			update_all(is_business_choices: false)
+		end
+    
+    # set is top business choices
+    def check_is_top_business_choices
+			update_columns(is_top_business_choices: true)
+		end
+
+    def uncheck_is_top_business_choices
+			update_columns(is_top_business_choices: false)
+		end
+
+    def self.check_is_top_business_choices_all
+			update_all(is_top_business_choices: true)
+		end
+
+    def self.uncheck_is_top_business_choices_all
+			update_all(is_top_business_choices: false)
+		end
 
     # category name
     def category_name

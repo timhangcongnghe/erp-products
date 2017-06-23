@@ -158,7 +158,7 @@
                                     data_confirm: t('.uncheck_is_bestseller_confirm')
                                 },
                                 {
-                                    text: '<i class="fa fa-check-square-o"></i> '+t('.check_is_sold_out'),
+                                    text: '<i class="fa fa-plus"></i> '+t('.check_is_sold_out'),
                                     url: erp_products.check_is_sold_out_backend_products_path(id: product),
                                     data_method: 'PUT',
                                     hide: product.is_sold_out,
@@ -166,12 +166,63 @@
                                     data_confirm: t('.check_is_sold_out_confirm')
                                 },
                                 {
-                                    text: '<i class="fa fa-square-o"></i> '+t('.uncheck_is_sold_out'),
+                                    text: '<i class="fa fa-remove"></i> '+t('.uncheck_is_sold_out'),
                                     url: erp_products.uncheck_is_sold_out_backend_products_path(id: product),
                                     data_method: 'PUT',
                                     hide: !product.is_sold_out,
                                     class: 'ajax-link',
                                     data_confirm: t('.uncheck_is_sold_out_confirm')
+                                },
+                                {
+                                    text: '<i class="fa fa-plus"></i> '+t('.check_is_stock_inventory'),
+                                    url: erp_products.check_is_stock_inventory_backend_products_path(id: product),
+                                    data_method: 'PUT',
+                                    hide: product.is_stock_inventory,
+                                    class: 'ajax-link',
+                                    data_confirm: t('.check_is_stock_inventory_confirm')
+                                },
+                                {
+                                    text: '<i class="fa fa-remove"></i> '+t('.uncheck_is_stock_inventory'),
+                                    url: erp_products.uncheck_is_stock_inventory_backend_products_path(id: product),
+                                    data_method: 'PUT',
+                                    hide: !product.is_stock_inventory,
+                                    class: 'ajax-link',
+                                    data_confirm: t('.uncheck_is_stock_inventory_confirm')
+                                },
+                                
+                                
+                                
+                                {
+                                    text: '<i class="fa fa-plus"></i> '+t('.check_is_business_choices'),
+                                    url: erp_products.check_is_business_choices_backend_products_path(id: product),
+                                    data_method: 'PUT',
+                                    hide: product.is_business_choices,
+                                    class: 'ajax-link',
+                                    data_confirm: t('.check_is_business_choices_confirm')
+                                },
+                                {
+                                    text: '<i class="fa fa-remove"></i> '+t('.uncheck_is_business_choices'),
+                                    url: erp_products.uncheck_is_business_choices_backend_products_path(id: product),
+                                    data_method: 'PUT',
+                                    hide: !product.is_business_choices,
+                                    class: 'ajax-link',
+                                    data_confirm: t('.uncheck_is_business_choices_confirm')
+                                },
+                                {
+                                    text: '<i class="fa fa-plus"></i> '+t('.check_is_top_business_choices'),
+                                    url: erp_products.check_is_top_business_choices_backend_products_path(id: product),
+                                    data_method: 'PUT',
+                                    hide: product.is_top_business_choices,
+                                    class: 'ajax-link',
+                                    data_confirm: t('.check_is_top_business_choices_confirm')
+                                },
+                                {
+                                    text: '<i class="fa fa-remove"></i> '+t('.uncheck_is_top_business_choices'),
+                                    url: erp_products.uncheck_is_top_business_choices_backend_products_path(id: product),
+                                    data_method: 'PUT',
+                                    hide: !product.is_top_business_choices,
+                                    class: 'ajax-link',
+                                    data_confirm: t('.uncheck_is_top_business_choices_confirm')
                                 },
                                 {
                                     divider: true
