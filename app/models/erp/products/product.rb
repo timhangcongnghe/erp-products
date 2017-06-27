@@ -32,7 +32,7 @@ module Erp::Products
     accepts_nested_attributes_for :products_gifts, :reject_if => lambda { |a| a[:gift_id].blank? }, :allow_destroy => true
 
     has_many :gifts, through: :products_gifts, class_name: 'Erp::Products::Product', foreign_key: :gift_id
-    
+
     has_and_belongs_to_many :events, class_name: 'Erp::Products::Event', :join_table => 'erp_products_events_products'
 
     has_many :products_values, -> { order 'erp_products_products_values.id' }, dependent: :destroy
@@ -179,7 +179,7 @@ module Erp::Products
     def self.uncheck_is_bestseller_all
 			update_all(is_bestseller: false)
 		end
-    
+
     # set is sold out
     def check_is_sold_out
 			update_columns(is_sold_out: true)
@@ -196,7 +196,7 @@ module Erp::Products
     def self.uncheck_is_sold_out_all
 			update_all(is_sold_out: false)
 		end
-    
+
     # set is stock inventory
     def check_is_stock_inventory
 			update_columns(is_stock_inventory: true)
@@ -213,7 +213,7 @@ module Erp::Products
     def self.uncheck_is_stock_inventory_all
 			update_all(is_stock_inventory: false)
 		end
-    
+
     # set is business choices
     def check_is_business_choices
 			update_columns(is_business_choices: true)
@@ -230,7 +230,7 @@ module Erp::Products
     def self.uncheck_is_business_choices_all
 			update_all(is_business_choices: false)
 		end
-    
+
     # set is top business choices
     def check_is_top_business_choices
 			update_columns(is_top_business_choices: true)
@@ -507,83 +507,6 @@ module Erp::Products
 			end
 		end
 
-    #@todo HK-ERP connector
-    has_one :hkerp_product, dependent: :destroy
-
-    def updateHkerpInfo(pid)
-			url = ErpSystem::Application.config.hkerp_endpoint + "products/erp_get_info?id=" + pid.to_s
-			uri = URI(url)
-			begin
-				res = Net::HTTP.get_response(uri)
-			rescue
-			end
-
-			if res.is_a?(Net::HTTPSuccess)
-				data = JSON.parse(res.body)
-
-				if self.hkerp_product.nil?
-					self.hkerp_product = Erp::Products::HkerpProduct.new(
-						hkerp_product_id: data["id"],
-						price: data["price"],
-						stock: data["stock"],
-						data: res.body
-					)
-				else
-					self.hkerp_product.update_attributes(
-						hkerp_product_id: data["id"],
-						price: data["price"],
-						stock: data["stock"],
-						data: res.body
-					)
-				end
-
-				self.price = data["price"]
-				self.name = data["name"] if !self.name.present?
-				self.code = data["product_code"] if !self.code.present?
-			end
-		end
-
-		after_create :hkerp_set_imported
-		after_save :hkerp_update_price
-		before_destroy :hkerp_set_not_imported
-
-    def hkerp_update_price(force=false)
-			if self.hkerp_product.present?
-				if force
-					self.update_column(:price, self.hkerp_product.price)
-				end
-				if self.price.to_f == self.hkerp_product.get_data["price"].to_f
-					url = ErpSystem::Application.config.hkerp_endpoint + "products/erp_price_update"
-
-					uri = URI(url)
-					Net::HTTP.post_form(uri, 'id' => self.hkerp_product.hkerp_product_id)
-				end
-			end
-		end
-
-		def hkerp_set_imported
-			if self.hkerp_product.present?
-				url = ErpSystem::Application.config.hkerp_endpoint + "products/erp_set_imported"
-
-				uri = URI(url)
-				Net::HTTP.post_form(uri, 'id' => self.hkerp_product.hkerp_product_id)
-
-				self.product_images.where(image_url: nil).destroy_all
-			end
-		end
-
-		def hkerp_set_not_imported
-			if self.hkerp_product.present?
-				url = ErpSystem::Application.config.hkerp_endpoint + "products/erp_set_imported"
-
-				uri = URI(url)
-				Net::HTTP.post_form(uri, 'id' => self.hkerp_product.hkerp_product_id, 'value' => 'false')
-
-				self.product_images.where(image_url: nil).destroy_all
-			end
-		end
-		##########################
-
 		def products_values_by_property(property)
 			self.products_values.joins(:properties_value).where(erp_products_properties_values: {property_id: property.id})
 		end
@@ -680,7 +603,7 @@ module Erp::Products
 		def self.get_products_for_brand(params)
 			self.get_active.where(brand_id: params[:brand_id])
 		end
-		
+
 		def get_related_events(time_now)
 			self.events.where("from_date <= ? AND to_date >= ?", time_now.beginning_of_day, time_now.end_of_day)
 		end
