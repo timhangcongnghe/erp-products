@@ -120,7 +120,7 @@ module Erp::Products
         query = query.where('LOWER(name) LIKE ?', "%#{keyword}%")
       end
 
-      query = query.limit(8).map{|category| {value: category.id, text: category.name} }
+      query = query.limit(8).map{|category| {value: category.id, text: (category.parent_name.empty? ? '' : "#{category.parent_name} / ") + category.name} }
     end
 
     # product count
