@@ -39,11 +39,6 @@ module Erp::Products
     has_many :comments, class_name: 'Erp::Products::Comment', dependent: :destroy
     has_many :ratings, class_name: 'Erp::Products::Rating', dependent: :destroy
 
-    if Erp::Core.available?("carts")
-			has_many :cart_items, class_name: 'Erp::Carts::CartItem'
-			before_destroy :ensure_not_referenced_by_any_cart_item
-		end
-
     OUT_OF_STOCK = 'out_of_stock'
     IN_TOCK = 'in_stock'
 
@@ -606,19 +601,6 @@ module Erp::Products
 
 		def get_related_events(time_now)
 			self.events.where("from_date <= ? AND to_date >= ?", time_now.beginning_of_day, time_now.end_of_day)
-		end
-
-    private
-    if Erp::Core.available?("carts")
-			# ensure that there are no cart items referencing this product
-			def ensure_not_referenced_by_any_cart_item
-				if cart_items.empty?
-					return true
-				else
-					errors.add(:base, "Cart Items present")
-					return false
-				end
-			end
 		end
   end
 end
