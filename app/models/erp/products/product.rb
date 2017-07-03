@@ -103,10 +103,12 @@ module Erp::Products
 				end
 			end
 
-      # menu id
-      if params[:menu_id].present?
-				menu = Erp::Menus::Menu.find(params[:menu_id])
-				query = query.where(category_id: menu.get_all_related_category_ids)
+			if Erp::Core.available?("menus")
+				# menu id
+				if params[:menu_id].present?
+					menu = Erp::Menus::Menu.find(params[:menu_id])
+					query = query.where(category_id: menu.get_all_related_category_ids)
+				end
 			end
 
       return query
@@ -482,24 +484,6 @@ module Erp::Products
 
 		def create_alias
 			self.update_column(:alias, self.short_name.to_ascii.downcase.to_s.gsub(/[^0-9a-z ]/i, '').gsub(/ +/i, '-').strip)
-		end
-
-		# If menus engines available
-    if Erp::Core.available?("menus")
-			# Find all menus of a product
-			def find_menus
-				self.category.nil? ? nil : self.category.menus
-			end
-
-			def find_menu
-				all_menus = self.find_menus
-				if self.brand_id.present?
-					menus = all_menus.where(brand_id: self.brand_id)
-				end
-				menus = all_menus if menus.empty?
-
-				menus.last
-			end
 		end
 
 		def products_values_by_property(property)
