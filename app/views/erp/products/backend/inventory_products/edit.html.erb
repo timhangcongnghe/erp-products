@@ -1,0 +1,29 @@
+<% content_for :title do %>
+    <%= @inventory_product.name %>
+<% end %>
+
+<% content_for :page_title do %>    
+    <a href="<%= erp_products.backend_inventory_products_path %>">
+    <i class="fa fa-th-list"></i> <%= t('.inventory_products') %>
+    </a> / <%= @inventory_product.name %>
+<% end %>
+
+<% content_for :page_toolbar do %>
+    <%= erp_component('button/create', {
+        text: t('.create'),
+        href: erp_products.new_backend_inventory_product_path,
+        class: 'btn-noborder'
+    }) %>
+<% end %>
+
+<div class="row">
+    <div class="col-md-12">
+        <% if @inventory_product.errors.any? %>
+            <%= erp_form_control("form_error_message") %>
+        <% end %>
+        
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <%= render 'form', inventory_product: @inventory_product %>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>

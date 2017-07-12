@@ -1,0 +1,91 @@
+<%= form_for([erp_products, :backend, inventory_product], html: {multipart: true}) do |f| %>
+    <div class="form-body">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">
+                        <h4>Hình đại diện sản phẩm</h4>
+                        <%= erp_form_control('image', {
+                            img_src: inventory_product.image_url,
+                            name: 'inventory_product[image_url]',
+                            width: 150,
+                            height: 150
+                        }) %>
+                        <%= erp_form_control("text", {
+                            name: 'inventory_product[name]',
+                            value: inventory_product.name,
+                            label: t('.name'),
+                            placeholder: t('.placeholder_inventory_product_name'),
+                            required: true,
+                            errors: inventory_product.errors.full_messages_for(:name)
+                        }) %>
+                        <%= erp_form_control("dataselect", {
+                            name: 'inventory_product[inventory_category_id]',
+                            value: inventory_product.inventory_category_id,
+                            text: inventory_product.inventory_category_name,
+                            placeholder: t('.choose_inventory_category'),
+                            label: t('.inventory_category'),
+                            url: erp_products.dataselect_backend_inventory_categories_path(format: 'json'),
+                            create: {
+                                url: erp_products.new_backend_inventory_category_path,
+                                title: t('.create_inventory_category'),
+                                container_selector: '.new_inventory_category',
+                                input_selector: 'input[name="inventory_category[name]"]'
+                            },
+                            edit: {
+                                url: erp_products.edit_backend_inventory_category_path(id: ':value'),
+                                title: t('.edit_inventory_category'),
+                                container_selector: '.edit_inventory_category',
+                            },
+                            required: true,
+                            errors: inventory_product.errors.full_messages_for(:inventory_category_id)
+                        }) %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">                        
+                        <%= erp_form_control("text", {
+                            name: 'inventory_product[price]',
+                            value: inventory_product.price,
+                            label: t('.price'),
+                            placeholder: t('.placeholder_product_price'),
+                            required: true,
+                            errors: inventory_product.errors.full_messages_for(:price)
+                        }) %>                        
+                        <%= erp_form_control("text", {
+                            name: 'inventory_product[gift]',
+                            value: inventory_product.gift,
+                            label: t('.gift'),
+                            help: t('.help_product_gift'),
+                            placeholder: t('.placeholder_product_gift')
+                        }) %>
+                        <%= erp_form_control('checkbox', {
+                            name: 'inventory_product[is_stock]',
+                            id: 'inventory_product_is_stock',
+                            value: inventory_product.is_stock,
+                            not_selected_value: 'false',
+                            options: [{value: 'true', text: t('.is_stock')}]
+                        }) %>
+                        <%= erp_form_control("text", {
+                            name: 'inventory_product[product_link]',
+                            value: inventory_product.product_link,
+                            label: t('.product_link'),
+                            placeholder: t('.placeholder_product_link'),
+                            required: true,
+                            errors: inventory_product.errors.full_messages_for(:product_link)
+                        }) %>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>    
+    <%= erp_component('button/save', {
+        text: t('submit')
+    }) %>
+    <%= erp_component('button/cancel', {
+        text: t('cancel'),
+        href: erp_products.backend_inventory_products_path
+    }) %>
+<% end %>

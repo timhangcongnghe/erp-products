@@ -1,0 +1,162 @@
+<table class="table table-advance table-hover table-striped table-checkable order-column">
+    <thead>
+        <tr>
+            <th width='1%'>
+                <%= erp_datalist_check_all %>
+            </th>
+            <% if get_columns(params).include?("name") %>
+                <th class="sortable" sort-by='erp_products_inventory_products.name'>
+                    <%= t('.name') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("price") %>
+                <th>
+                    <%= t('.price') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("gift") %>
+                <th>
+                    <%= t('.gift') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("inventory_category") %>
+                <th>
+                    <%= t('.inventory_category') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("status") %>
+                <th>
+                    <%= t('status') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("creator") %>
+                <th>
+                    <%= t('creator') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("created_at") %>
+                <th class="sortable" sort-by='erp_products_inventory_products.created_at'>
+                    <%= t('created_at') %>
+                </th>
+            <% end %>
+            <th width="8%" class="text-center sortable text-nowrap" sort-by='erp_products_inventory_products.custom_order'>
+                <%= t('.custom_order') %>                
+            </th>
+            <th width="8%" class="text-right"><%= t('actions') %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @inventory_products.each do |inventory_product| %>
+            <tr class="odd gradeX">
+                <td>
+                    <%= erp_datalist_check_row(id: inventory_product.id) %>
+                </td>
+                <% if get_columns(params).include?("name") %>
+                    <td>
+                        <%= link_to inventory_product.name, erp_products.edit_backend_inventory_product_path(inventory_product), class: 'title' %>
+                        <br>
+                        <% if inventory_product.is_stock == true %>
+                            Sản phẩm xả kho
+                        <% else %>
+                            Sản phẩm quảng cáo
+                        <% end %>
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("price") %>
+                    <td><%= format_number(inventory_product.price) %>đ</td>
+                <% end %>
+                <% if get_columns(params).include?("gift") %>
+                    <td><%= inventory_product.gift %></td>
+                <% end %>
+                <% if get_columns(params).include?("inventory_category") %>
+                    <td><%= inventory_product.inventory_category_name %></td>
+                <% end %>
+                <% if get_columns(params).include?("status") %>
+                <td>
+                    <% if inventory_product.archived == true %>
+                        <%= erp_component('label/danger', {
+                            text: t('archived')
+                        }) %>                            
+                    <% else %>
+                        <%= erp_component('label/success', {
+                            text: t('active')
+                        }) %>
+                    <% end %> 
+                </td>
+                <% end %>
+                <% if get_columns(params).include?("creator") %>
+                    <td>
+                        <%= erp_component('avatar', {
+                            user: inventory_product.creator
+                        }) %>
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("created_at") %>
+                    <td><%= inventory_product.created_at.strftime("%d/%m/%Y") %></td>
+                <% end %>
+                <td class="text-center text-semibold">
+                    <%= inventory_product.custom_order %>
+                    <% if params[:sort_by] == 'erp_products_inventory_products.custom_order' %>
+                        <a data-method="PUT"
+                            href="<%=
+                                params[:sort_direction] == 'asc' ?
+                                erp_products.move_up_backend_inventory_products_path(id: inventory_product) :
+                                erp_products.move_down_backend_inventory_products_path(id: inventory_product)
+                            %>"
+                            class="ajax-link">
+                            <i class="fa fa-caret-square-o-up icon-big"></i>
+                        </a>
+                        <a data-method="PUT"
+                            href="<%=
+                                params[:sort_direction] == 'asc' ?
+                                erp_products.move_down_backend_inventory_products_path(id: inventory_product) :
+                                erp_products.move_up_backend_inventory_products_path(id: inventory_product)
+                            %>"
+                            class="ajax-link">
+                                <i class="fa fa-caret-square-o-down icon-big"></i>
+                        </a>
+                    <% end %>
+                </td>            
+                <td class="text-right">
+                    <%= erp_datalist_row_actions(
+                        [
+                            {
+                                text: '<i class="fa fa-edit"></i> '+t('edit'),
+                                href: erp_products.edit_backend_inventory_product_path(inventory_product)
+                            },
+                            {
+                                text: '<i class="fa fa-remove"></i> '+t('archive'),
+                                url: erp_products.archive_backend_inventory_products_path(id: inventory_product.id),
+                                data_method: 'PUT',
+                                hide: inventory_product.archived,
+                                class: 'ajax-link'
+                            },
+                            {
+                                text: '<i class="fa fa-check"></i> '+t('unarchive'),
+                                url: erp_products.unarchive_backend_inventory_products_path(id: inventory_product.id),
+                                data_method: 'PUT',
+                                hide: !inventory_product.archived,
+                                class: 'ajax-link'
+                            },
+                            {
+                                divider: true
+                            },
+                            {
+                                text: '<i class="fa fa-trash"></i> '+t('.delete'),
+                                url: erp_products.backend_inventory_product_path(inventory_product),
+                                data_method: 'DELETE',
+                                class: 'ajax-link',
+                                data_confirm: t('delete_confirm')
+                            }
+                        ]
+                    ) %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+<% if @inventory_products.empty? %>
+    <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
+<% end %>
+        
+<%= erp_datalist_pagination(@inventory_products) %>

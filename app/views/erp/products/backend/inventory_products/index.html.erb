@@ -1,0 +1,90 @@
+<% content_for :title do %>
+    <%= t('.inventory_products') %>
+<% end %>
+
+<% content_for :page_title do %>
+    <i class="fa fa-th-list"></i> <%= t('.inventory_products') %>
+<% end %>
+
+<% content_for :page_toolbar do %>
+    <%= erp_component('button/create', {
+        text: t('.create'),
+        href: erp_products.new_backend_inventory_product_path,
+        class: 'btn-noborder'
+    }) %>
+<% end %>
+
+<%= erp_datalist(
+    url: erp_products.list_backend_inventory_products_path,
+    keywords: [
+        {
+            text: t('.name'), name: 'erp_products_inventory_products.name'
+        },
+        {
+            text: t('.inventory_category'),
+            name: 'erp_products_inventory_categories.name',
+            select: {
+                name: 'erp_products_inventory_categories.id',
+                data_url: erp_products.dataselect_backend_inventory_categories_path
+            }
+        },
+        {
+            text: t('creator'),
+            name: 'erp_users.name',
+            select: {
+                name: 'erp_users.id',
+                data_url: erp.dataselect_backend_users_path
+            }
+        }
+    ],
+    actions: [
+        {
+            text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
+            url: erp_products.archive_all_backend_inventory_products_path,
+            data_method: 'PUT'
+        },
+        {
+            text: '<i class="fa fa-eye"></i> '+t('unarchive'),
+            url: erp_products.unarchive_all_backend_inventory_products_path,
+            data_method: 'PUT'
+        },
+        {
+            divider: true
+        },
+        {
+            text: '<i class="fa fa-trash"></i> '+t('.delete'),
+            url: erp_products.delete_all_backend_inventory_products_path,
+            data_method: 'DELETE',
+            data_confirm: t('delete_confirm')
+        }
+    ],
+    filters: [
+        {
+            text: t('archived'), name: 'show_archived', value: true, checked: false
+        }
+    ],
+    columns: [
+        {
+            text: t('.name'), name: 'name', value: true, checked: true
+        },
+        {
+            text: t('.price'), name: 'price', value: true, checked: true
+        },
+        {
+            text: t('.gift'), name: 'gift', value: true, checked: true
+        },
+        {
+            text: t('.inventory_category'), name: 'inventory_category', value: true, checked: true
+        },
+        {
+            text: t('status'), name: 'status', value: true, checked: true
+        },
+        {
+            text: t('creator'), name: 'creator', value: true, checked: false
+        },
+        {
+            text: t('created_at'), name: 'created_at', value: true, checked: false
+        }
+    ],
+    sort: { sort_by: 'erp_products_inventory_products.created_at', sort_direction: 'desc' }
+) %>

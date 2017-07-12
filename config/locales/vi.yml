@@ -1161,6 +1161,103 @@ vi:
             product_name: "Tên sản phẩm"
             price: "Giá bán"
             action: "Tùy chọn"
+        inventory_products:
+          create:
+            success: "Thêm sản phẩm thành công."
+          update:
+            success: "Cập nhật sản phẩm thành công."
+          destroy:
+            success: "Xóa sản phẩm thành công."
+          delete_all:
+            success: "Xóa sản phẩm được chọn thành công."
+          archive:
+            success: "Ẩn sản phẩm thành công."
+          unarchive:
+            success: "Hiện sản phẩm thành công."
+          archive_all:
+            success: "Ẩn sản phẩm được chọn thành công."
+          unarchive_all:
+            success: "Hiện sản phẩm được chọn thành công."
+          index:
+            inventory_products: "Sản phẩm xả kho"
+            name: "Tên sản phẩm"
+            price: "Giá sản phẩm"
+            gift: "Tiêu đề ưu đãi"
+            inventory_category: "Chuyên mục xả kho"
+            create: "Thêm sản phẩm"
+            delete: "Xóa sản phẩm"
+          list:
+            name: "Tên sản phẩm"
+            price: "Giá sản phẩm"
+            gift: "Ưu đãi"
+            inventory_category: "Chuyên mục xả kho"
+            custom_order: "Sắp xếp"
+            delete: "Xóa sản phẩm"
+            no_matching_records_found: "Sản phẩm xả kho hiện tại đang trống."
+          new:
+            inventory_products: "Sản phẩm xả kho"
+            create: "Thêm sản phẩm"
+          edit:
+            inventory_products: "Sản phẩm xả kho"
+            create: "Thêm sản phẩm"
+          form:
+            name: "Tên sản phẩm"
+            enter_name: "Nhập tên sản phẩm"
+            price: "Giá sản phẩm"
+            gift: "Tặng kèm - Giảm giá"
+            product_link: "Đường dẫn liên kết"
+            help_product_gift: "Là quà tặng hoặc phần trăm giảm giá nếu website chính có giảm"
+            placeholder_inventory_product_name: "Nhập tên sản phẩm xả kho"
+            placeholder_product_price: "Nhập giá sản phẩm xả kho"
+            placeholder_product_gift: "Nhập quà tặng hoặc phần trăm giảm giá"
+            placeholder_product_link: "Nhập đường dẫn liên kết"
+            inventory_category: "Chuyên mục xả kho"
+            choose_inventory_category: "Chọn chuyên mục xả kho"
+            create_inventory_category: "Tạo mới chuyên mục xả kho"
+            edit_inventory_category: "Chỉnh sửa chuyên mục xả kho"
+            is_stock: "Sản phẩm cần xả kho"
+            hot_category_name: "Tên mục sản phẩm hot"
+            enter_hot_category_name: "Nhập tên mục sản phẩm hot"
+        inventory_categories:
+          create:
+            success: "Thêm chuyên mục thành công."
+          update:
+            success: "Cập nhật chuyên mục thành công."
+          destroy:
+            success: "Xóa chuyên mục thành công."
+          delete_all:
+            success: "Xóa chuyên mục được chọn thành công."
+          archive:
+            success: "Ẩn chuyên mục thành công."
+          unarchive:
+            success: "Hiện chuyên mục thành công."
+          archive_all:
+            success: "Ẩn chuyên mục được chọn thành công."
+          unarchive_all:
+            success: "Hiện chuyên mục được chọn thành công."
+          index:
+            inventory_categories: "Chuyên mục xả kho"
+            name: "Tên chuyên mục"
+            hot_name: "Tên chuyên mục quảng cáo"
+            create: "Thêm chuyên mục"
+            delete: "Xóa chuyên mục"
+          list:
+            name: "Tên chuyên mục"
+            hot_name: "Tên chuyên mục quảng cáo"
+            custom_order: "Sắp xếp"
+            delete: "Xóa chuyên mục"
+            no_matching_records_found: "Chuyên mục xả kho hiện tại đang trống."
+          new:
+            inventory_categories: "Chuyên mục xả kho"
+            create: "Thêm chuyên mục"
+          edit:
+            inventory_categories: "Chuyên mục xả kho"
+            create: "Thêm chuyên mục"
+          form:
+            name: "Tên chuyên mục"
+            enter_name: "Nhập tên chuyên mục"
+            hot_name: "Tên chuyên mục quảng cáo"
+            enter_hot_name: "Nhập tên chuyên mục quảng cáo"
   activerecord:
     errors:
       models:
@@ -1242,6 +1339,12 @@ vi:
               blank: "không được để trống."
             to_date:
               blank: "không được để trống."
+        erp/products/inventory_category:
+          attributes:
+            name:
+              blank: "không được để trống."
+            hot_name:
+              blank: "không được để trống."
     attributes:
       erp/products/product:
         deal_percent: "Phần trăm khuyến mãi"
@@ -1281,3 +1384,6 @@ vi:
         name: "Tên sự kiện"
         from_date: "Ngày bắt đầu sự kiện"
         to_date: "Ngày kết thúc sự kiện"
+      erp/products/inventory_category:
+        name: "Tên chuyên mục"
+        hot_name: "Chuyên mục quảng cáo"

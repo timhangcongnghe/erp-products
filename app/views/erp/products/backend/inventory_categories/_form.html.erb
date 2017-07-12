@@ -1,0 +1,35 @@
+<%= form_for([erp_products, :backend, inventory_category], html: {multipart: true}) do |f| %>
+    <div class="form-body">        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">
+                        <%= erp_form_control("text", {
+                            name: 'inventory_category[name]',
+                            value: inventory_category.name,                   
+                            label: t('.name'),
+                            placeholder: t('.enter_name'),
+                            required: true,
+                            errors: inventory_category.errors.full_messages_for(:name)
+                        }) %>
+                        <%= erp_form_control("text", {
+                            name: 'inventory_category[hot_name]',
+                            value: inventory_category.hot_name,                   
+                            label: t('.hot_name'),
+                            placeholder: t('.enter_hot_name'),
+                            required: true,
+                            errors: inventory_category.errors.full_messages_for(:hot_name)
+                        }) %>    
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+    <%= erp_component('button/save', {
+        text: t('submit')
+    }) %>
+    <%= erp_component('button/cancel', {
+        text: t('cancel'),
+        href: erp_products.backend_inventory_categories_path
+    }) %>
+<% end %>
