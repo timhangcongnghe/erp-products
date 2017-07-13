@@ -1345,6 +1345,18 @@ vi:
               blank: "không được để trống."
             hot_name:
               blank: "không được để trống."
+        erp/products/inventory_product:
+          attributes:
+            image_url:
+              blank: "không được để trống."
+            name:
+              blank: "không được để trống."
+            inventory_category_id:
+              blank: "không được để trống."
+            price:
+              blank: "không được để trống."
+            product_link:
+              blank: "không được để trống."
     attributes:
       erp/products/product:
         deal_percent: "Phần trăm khuyến mãi"
@@ -1387,3 +1399,9 @@ vi:
       erp/products/inventory_category:
         name: "Tên chuyên mục"
         hot_name: "Chuyên mục quảng cáo"
+      erp/products/inventory_product:
+        image_url: "Hình ảnh sản phẩm"
+        name: "Tên sản phẩm"
+        inventory_category_id: "Chuyên mục xả kho"
+        price: "Giá sản phẩm"
+        product_link: "Đường dẩn liên kết"
