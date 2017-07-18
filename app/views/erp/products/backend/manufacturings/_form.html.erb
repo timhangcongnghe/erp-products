@@ -39,6 +39,7 @@
                                 }) %>
                             </div>
                             <div class="col-md-6">
+                                <% if Erp::Core.available?("contacts") %>
                                 <%= erp_form_control("dataselect", {
                                     name: 'manufacturing[responsible_id]',
                                     value: manufacturing.responsible_id,
@@ -48,12 +49,13 @@
                                     help: t('.help_responsible'),
                                     url: erp_contacts.dataselect_backend_contacts_path(format: 'json'),
                                     create: {
-                                        url: erp.new_backend_user_url,
+                                        url: erp.new_backend_user_path,
                                         title: t('.create'),
                                         container_selector: '.new_user',
                                         input_selector: 'input[name="user[name]"]'
                                     }
                                 }) %>
+                                <% end %>
                                 <%= erp_form_control('select', {
                                     label: t('.status'),
                                     name: 'manufacturing[status]',

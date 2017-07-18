@@ -47,9 +47,11 @@
                     <li>
                         <a href="#tab_5_2" data-toggle="tab"> <%= t('.sales') %> </a>
                     </li>
+                    <% if Erp::Core.available?("contacts") %>
                     <li>
                         <a href="#tab_5_3" data-toggle="tab"> <%= t('.contact_groups') %> </a>
                     </li>
+                    <% end %>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_5_1">
@@ -59,6 +61,7 @@
                             value: price_list.all_warehouses.to_s,
                             options: Erp::Products::PriceList::get_all_warehouses_options()
                         }) %>
+                        <% if Erp::Core.available?("warehouses") %>
                         <div class="hiddable-control"
                             data-cond-item="input[name='price_list[all_warehouses]']"
                             data-cond-value="<%= false %>">
@@ -76,6 +79,7 @@
                                 }
                             }) %>
                         </div>
+                        <% end %>
                     </div>
                     <div class="tab-pane" id="tab_5_2">
                         <%= erp_form_control("radio", {
@@ -102,6 +106,7 @@
                             }) %>
                         </div>
                     </div>
+                    <% if Erp::Core.available?("contacts") %>
                     <div class="tab-pane" id="tab_5_3">
                         <%= erp_form_control("radio", {
                             id: "is_contact_group",
@@ -127,6 +132,7 @@
                             }) %>
                         </div>
                     </div>
+                    <% end %>
                 </div>
             </div>    
         </div>
