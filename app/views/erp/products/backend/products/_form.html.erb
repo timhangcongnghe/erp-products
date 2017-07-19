@@ -6,6 +6,7 @@
                     <div class="portlet-body form">
                         <div class="row">
                             <div class="col-md-5">
+                                <% if Erp::Core.available?("online_store") %>
                                 <% if product.hkerp_product.present? %>
                                     <div class="form-group">
                                         <a href="#more" onclick="$(this).parent().find('.more-info-box').toggle()">
@@ -19,6 +20,7 @@
 
                                         <input type='hidden' name='hkerp_id' value='<%= product.hkerp_product.hkerp_product_id %>' />
                                     </div>
+                                <% end %>
                                 <% end %>
                                 <%= erp_form_control("text", {
                                     name: 'product[code]',
@@ -154,6 +156,7 @@
                         <div class="tab-pane active" id="tab_5_1">
                             <div class="row">
                                 <div class="col-md-6">
+                                    <% if Erp::Core.available?("online_store") %>
                                     <% if product.hkerp_product.present? %>
                                         <div class="form-group ">
                                             <label>Giá bán
@@ -165,6 +168,14 @@
                                             </div>
 
                                         </div>
+                                    <% else %>
+                                        <%= erp_form_control("number", {
+                                            name: 'product[price]',
+                                            value: product.price,
+                                            label: t('.sale_price'),
+                                            help: t('.help_price')
+                                        }) %>
+                                    <% end %>
                                     <% else %>
                                         <%= erp_form_control("number", {
                                             name: 'product[price]',

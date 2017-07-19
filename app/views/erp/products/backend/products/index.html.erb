@@ -32,13 +32,13 @@
     ],
     actions: [
         {
-            text: '<i class="fa fa-ban"></i> '+t('.archive'),
+            text: '<i class="fa fa-ban"></i> '+t('archive'),
             url: erp_products.archive_all_backend_products_path,
             data_method: 'PUT',
             data_confirm: t('.archive_confirm')
         },
         {
-            text: '<i class="fa fa-check"></i> '+t('.unarchive'),
+            text: '<i class="fa fa-check"></i> '+t('unarchive'),
             url: erp_products.unarchive_all_backend_products_path,
             data_method: 'PUT',
             data_confirm: t('.unarchive_confirm')
@@ -177,13 +177,13 @@
             text: t('.stock_max'), name: 'stock_max', value: true, checked: false
         },
         {
-            text: t('.status'), name: 'status', value: true, checked: true
+            text: t('status'), name: 'status', value: true, checked: true
         },
         {
-            text: t('.creator'), name: 'creator', value: true, checked: false
+            text: t('creator'), name: 'creator', value: true, checked: false
         },
         {
-            text: t('.created_at'), name: 'created_at', value: true, checked: false
+            text: t('created_at'), name: 'created_at', value: true, checked: false
         }
     ],
     sort: { sort_by: 'erp_products_products.created_at', sort_direction: 'desc' }

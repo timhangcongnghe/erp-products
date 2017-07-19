@@ -47,20 +47,20 @@
                 <% end %>
                 <% if get_columns(params).include?("status") %>
                     <th>
-                        <%= t('.status') %>
+                        <%= t('status') %>
                     </th>
                 <% end %>
                 <% if get_columns(params).include?("creator") %>
                     <th>
-                        <%= t('.creator') %>
+                        <%= t('creator') %>
                     </th>
                 <% end %>
                 <% if get_columns(params).include?("created_at") %>
                     <th class="sortable" sort-by='erp_products_products.created_at'>
-                        <%= t('.created_at') %>
+                        <%= t('created_at') %>
                     </th>
                 <% end %>
-                <th width="7%"><%= t('.actions') %></th>
+                <th width="7%"><%= t('actions') %></th>
             </tr>
         </thead>
         <tbody>
