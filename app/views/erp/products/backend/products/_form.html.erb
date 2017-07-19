@@ -7,20 +7,20 @@
                         <div class="row">
                             <div class="col-md-5">
                                 <% if Erp::Core.available?("online_store") %>
-                                <% if product.hkerp_product.present? %>
-                                    <div class="form-group">
-                                        <a href="#more" onclick="$(this).parent().find('.more-info-box').toggle()">
-                                            HKEro connect ID (#<%= product.hkerp_product.hkerp_product_id %>)
-                                        </a>
-                                        <div class="more-info-box" style="display: none">
-                                            <%= product.hkerp_product.get_data["display_name"] %>
-                                            <br><%= format_price(product.hkerp_product.get_data["price"]) %>
-                                            <hr>
-                                        </div>
+                                    <% if product.hkerp_product.present? %>
+                                        <div class="form-group">
+                                            <a href="#more" onclick="$(this).parent().find('.more-info-box').toggle()">
+                                                HKEro connect ID (#<%= product.hkerp_product.hkerp_product_id %>)
+                                            </a>
+                                            <div class="more-info-box" style="display: none">
+                                                <%= product.hkerp_product.get_data["display_name"] %>
+                                                <br><%= format_price(product.hkerp_product.get_data["price"]) %>
+                                                <hr>
+                                            </div>
 
-                                        <input type='hidden' name='hkerp_id' value='<%= product.hkerp_product.hkerp_product_id %>' />
-                                    </div>
-                                <% end %>
+                                            <input type='hidden' name='hkerp_id' value='<%= product.hkerp_product.hkerp_product_id %>' />
+                                        </div>
+                                    <% end %>
                                 <% end %>
                                 <%= erp_form_control("text", {
                                     name: 'product[code]',
@@ -156,8 +156,7 @@
                         <div class="tab-pane active" id="tab_5_1">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <% if Erp::Core.available?("online_store") %>
-                                    <% if product.hkerp_product.present? %>
+                                    <% if Erp::Core.available?("online_store") and product.hkerp_product.present? %>
                                         <div class="form-group ">
                                             <label>Giá bán
                                                     <i class="fa fa-commenting right tooltips icon-default-color" data-original-title="Giá bán của sản phẩm" data-container="body"></i>
@@ -168,14 +167,6 @@
                                             </div>
 
                                         </div>
-                                    <% else %>
-                                        <%= erp_form_control("number", {
-                                            name: 'product[price]',
-                                            value: product.price,
-                                            label: t('.sale_price'),
-                                            help: t('.help_price')
-                                        }) %>
-                                    <% end %>
                                     <% else %>
                                         <%= erp_form_control("number", {
                                             name: 'product[price]',
@@ -468,7 +459,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="tab-pane" id="tab_5_2">
                             <div class="product-property-container" data-url="<%= erp_products.property_form_backend_products_path(id: product.id) %>">
                                 <%= render partial: 'erp/products/backend/products/property_form', locals: {product: product} %>

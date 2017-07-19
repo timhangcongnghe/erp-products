@@ -158,7 +158,7 @@ module Erp
         def dataselect
           respond_to do |format|
             format.json {
-              render json: Category.dataselect(params[:keyword].split('/').last.strip)
+              render json: Category.dataselect(params[:keyword].split('/').last.to_s.strip)
             }
           end
         end
