@@ -8,7 +8,7 @@ module Erp::Products
     belongs_to :creator, class_name: "Erp::User"
     belongs_to :category
     belongs_to :brand
-    belongs_to :accessory
+    belongs_to :accessory, optional: true
     belongs_to :unit, class_name: 'Erp::Products::Unit', optional: true
 
     has_many :comments, class_name: "Erp::Products::Comment"
