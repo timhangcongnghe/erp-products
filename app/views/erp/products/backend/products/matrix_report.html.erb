@@ -6,7 +6,7 @@
     <i class="fa fa-archive"></i> <%= t('.matrix_report') %>
 <% end %>
 
-<form class="global-filter">
+<% content_for :global_filter do %>
     <div class="row">
         <div class="col-md-3">
             <%= erp_form_control("dataselect", {
@@ -51,7 +51,7 @@
             }) %>
         </div>
     </div>
-</form>
+<% end %>
 
 <%= erp_datalist(
     url: erp_products.matrix_report_table_backend_products_path,
