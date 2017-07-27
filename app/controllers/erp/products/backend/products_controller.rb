@@ -247,7 +247,7 @@ module Erp
             }
           end
         end
-        
+
         # Check_is_sold_out /products/sold_out?id=1
         def check_is_sold_out
           @product.check_is_sold_out
@@ -303,7 +303,7 @@ module Erp
             }
           end
         end
-        
+
         # Check_is_stock_inventory /products/stock_inventory?id=1
         def check_is_stock_inventory
           @product.check_is_stock_inventory
@@ -359,7 +359,7 @@ module Erp
             }
           end
         end
-        
+
         # Check_is_business_choices /products/business_choices?id=1
         def check_is_business_choices
           @product.check_is_business_choices
@@ -415,7 +415,7 @@ module Erp
             }
           end
         end
-        
+
         # Check_is_top_business_choices /products/top_business_choices?id=1
         def check_is_top_business_choices
           @product.check_is_top_business_choices
@@ -546,6 +546,32 @@ module Erp
           product.category_id = params[:category_id]
 
           render partial: 'erp/products/backend/products/property_form', locals: {product: product}, layout: nil
+        end
+
+        # Matrix report
+        def matrix_report
+        end
+
+        def matrix_report_table
+          if params.to_unsafe_hash[:global_filter].present? and params.to_unsafe_hash[:global_filter][:column].present?
+            @columns = Erp::Products::ProductsValue.joins(:properties_value).where(
+              erp_products_properties_values: {
+                property_id: params.to_unsafe_hash[:global_filter][:column]
+              }
+            ).select(:value).map(&:value).uniq.sort
+            @columns = (@columns.map {|v| v.to_i }).sort if !@columns.empty? and @columns[0] == @columns[0].to_i.to_s
+          end
+
+          if params.to_unsafe_hash[:global_filter].present? and params.to_unsafe_hash[:global_filter][:row].present?
+            @rows = Erp::Products::ProductsValue.joins(:properties_value).where(
+              erp_products_properties_values: {
+                property_id: params.to_unsafe_hash[:global_filter][:row]
+              }
+            ).select(:value).map(&:value).uniq.sort
+            @rows = (@rows.map {|v| v.to_i }).sort if !@rows.empty? and @rows[0] == @rows[0].to_i.to_s
+          end
+
+          render layout: nil
         end
 
         private

@@ -483,7 +483,8 @@ module Erp::Products
 		end
 
 		def create_alias
-			self.update_column(:alias, self.short_name.to_ascii.downcase.to_s.gsub(/[^0-9a-z ]/i, '').gsub(/ +/i, '-').strip)
+			name = self.short_name.present? ? self.short_name : self.name
+			self.update_column(:alias, name.to_ascii.downcase.to_s.gsub(/[^0-9a-z ]/i, '').gsub(/ +/i, '-').strip)
 		end
 
 		def products_values_by_property(property)

@@ -450,6 +450,23 @@ vi:
             add_unit: "Thêm đơn vị"
             add_property: "Thêm thuộc tính"
             add_part: "Thêm thành phần"
+          matrix_report:
+            name: "Tên hàng"
+            matrix_report: "Báo cáo tồn kho - tổng hợp"
+            column: "Hàng ngang"
+            choose_column: "Chọn thuộc tính hàng ngang"
+            row: "Hàng dọc"
+            choose_row: "Chọn thuộc tính hàng dọc"
+            warehouse: "Kho"
+            choose_warehouse: "Chọn kho cần xem"
+            category: "Loại hàng"
+            choose_category: "Chọn loại mặt hàng"
+            show_virtual: "Hiển thị cả hàng sắp nhập"
+            state_normal: "Hàng còn nguyên"
+            state_scratched: "Hàng xước"
+            state_broken: "Hàng vỡ"
+          matrix_report_table:
+            please_select_column_and_row_filter: "Vui lòng chọn thuộc tính <span class='text-bold'>Hàng ngang</span> - <span class='text-bold'>Hàng dọc</span> cần thống kê"
         manufacturings:
           create:
             success: "Thêm phiếu sản xuất thành công."
