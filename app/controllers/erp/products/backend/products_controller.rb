@@ -504,7 +504,7 @@ module Erp
         def hkerp_categories_dataselect
           url = ErpSystem::Application.config.hkerp_endpoint + "products/erp_categories_dataselect"
           uri = URI(url)
-          uri.query = URI.encode_www_form(params)
+          uri.query = URI.encode_www_form(params.to_unsafe_hash)
 
           res = Net::HTTP.get_response(uri)
           dataselect = res.body if res.is_a?(Net::HTTPSuccess)
@@ -515,7 +515,7 @@ module Erp
         def hkerp_manufacturers_dataselect
           url = ErpSystem::Application.config.hkerp_endpoint + "products/erp_manufacturers_dataselect"
           uri = URI(url)
-          uri.query = URI.encode_www_form(params)
+          uri.query = URI.encode_www_form(params.to_unsafe_hash)
 
           res = Net::HTTP.get_response(uri)
           dataselect = res.body if res.is_a?(Net::HTTPSuccess)
