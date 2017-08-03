@@ -73,6 +73,10 @@ Erp::Products::Engine.routes.draw do
           get 'property_form'
           get 'matrix_report'
           post 'matrix_report_table'
+          get 'delivery_report'
+          post 'delivery_report_table'
+          get 'warehouses_report'
+          post 'warehouses_report_table'
 
 					#@todo HK-ERP connector
           get 'hkerp_products'

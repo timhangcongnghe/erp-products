@@ -17,7 +17,7 @@ Erp::Products::Brand.where(name: "Ortho-K").destroy_all
 brand = Erp::Products::Brand.create(name: "Ortho-K", creator_id: user.id)
 
 # Property Group
-Erp::Products::PropertyGroup.all.destroy_all
+Erp::Products::PropertyGroup.destroy_all
 len_pg = Erp::Products::PropertyGroup.create(
   creator_id: user.id,
   name: "Len"
@@ -31,7 +31,7 @@ len_cpg = Erp::Products::CategoriesPgroup.create(
 )
 
 # Property
-len_pg.properties.destroy_all
+Erp::Products::Property.destroy_all
 so_p = len_pg.properties.create(
   name: 'Số',
   creator_id: user.id
@@ -110,7 +110,7 @@ dok_vs = {
 (5..29).each do |number|
   Erp::Products::PropertiesValue.create(
     property_id: so_p.id,
-    value: number
+    value: number.to_s.rjust(2, '0')
   )
   Erp::Products::PropertiesValue.create(
     property_id: dok_p.id,
@@ -118,51 +118,71 @@ dok_vs = {
   )
 end
 
-dk_pv = Erp::Products::PropertiesValue.create(
-  property_id: dk_p.id,
-  value: '10.6'
-)
+dk_pvs = [
+  Erp::Products::PropertiesValue.create(
+    property_id: dk_p.id,
+    value: '10.6'
+  ),
+  Erp::Products::PropertiesValue.create(
+    property_id: dk_p.id,
+    value: '10.8'
+  ),
+  Erp::Products::PropertiesValue.create(
+    property_id: dk_p.id,
+    value: '11'
+  ),
+  Erp::Products::PropertiesValue.create(
+    property_id: dk_p.id,
+    value: '11.2'
+  ),
+  Erp::Products::PropertiesValue.create(
+    property_id: dk_p.id,
+    value: '11.6'
+  )
+]
 
 # products
 Erp::Products::Product.all.destroy_all
 Erp::Products::ProductsValue.destroy_all
 
-do_v = 0.75
-('B'..'T').each do |letter|
-  chu_pv = Erp::Products::PropertiesValue.where(property_id: chu_p.id, value: letter).first
-  do_pv = Erp::Products::PropertiesValue.where(property_id: do_p.id, value: do_v.to_s).first
-  (5..29).each do |number|
-    so_pv = Erp::Products::PropertiesValue.where(property_id: so_p.id, value: number).first
-    dok_pv = Erp::Products::PropertiesValue.where(property_id: dok_p.id, value: dok_vs[:"#{number.to_s}"]).first
+dk_pvs.each do |dk_pv|
+  do_v = 0.75
+  ('B'..'T').each do |letter|
+    chu_pv = Erp::Products::PropertiesValue.where(property_id: chu_p.id, value: letter).first
+    do_pv = Erp::Products::PropertiesValue.where(property_id: do_p.id, value: do_v.to_s).first
+    (5..29).each do |number|
+      so_pv = Erp::Products::PropertiesValue.where(property_id: so_p.id, value: number.to_s.rjust(2, '0')).first
+      dok_pv = Erp::Products::PropertiesValue.where(property_id: dok_p.id, value: dok_vs[:"#{number.to_s}"]).first
 
-    product = Erp::Products::Product.create(
-      code: "#{letter}#{number}-#{dk_pv.value}-#{len_cat.name}",
-      name: "#{letter}#{number}-#{dk_pv.value}-#{len_cat.name}",
-      category_id: len_cat.id,
-      brand_id: brand.id,
-      creator_id: user.id
-    )
-    Erp::Products::ProductsValue.create(
-      product_id: product.id,
-      properties_value_id: chu_pv.id
-    )
-    Erp::Products::ProductsValue.create(
-      product_id: product.id,
-      properties_value_id: do_pv.id
-    )
-    Erp::Products::ProductsValue.create(
-      product_id: product.id,
-      properties_value_id: so_pv.id
-    )
-    Erp::Products::ProductsValue.create(
-      product_id: product.id,
-      properties_value_id: dok_pv.id
-    )
-    Erp::Products::ProductsValue.create(
-      product_id: product.id,
-      properties_value_id: dk_pv.id
-    )
+      product = Erp::Products::Product.create(
+        code: "#{letter}#{number.to_s.rjust(2, '0')}",
+        name: "#{letter}#{number.to_s.rjust(2, '0')}-#{dk_pv.value}-#{len_cat.name}",
+        category_id: len_cat.id,
+        brand_id: brand.id,
+        creator_id: user.id
+      )
+      Erp::Products::ProductsValue.create(
+        product_id: product.id,
+        properties_value_id: chu_pv.id
+      )
+      Erp::Products::ProductsValue.create(
+        product_id: product.id,
+        properties_value_id: do_pv.id
+      )
+      Erp::Products::ProductsValue.create(
+        product_id: product.id,
+        properties_value_id: so_pv.id
+      )
+      Erp::Products::ProductsValue.create(
+        product_id: product.id,
+        properties_value_id: dok_pv.id
+      )
+      Erp::Products::ProductsValue.create(
+        product_id: product.id,
+        properties_value_id: dk_pv.id
+      )
+    end
+
+    do_v = do_v + 0.75
   end
-
-  do_v = do_v + 0.75
 end

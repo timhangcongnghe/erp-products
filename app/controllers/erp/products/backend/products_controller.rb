@@ -574,6 +574,55 @@ module Erp
           render layout: nil
         end
 
+        # Delivery report
+        def delivery_report
+        end
+
+        def delivery_report_table
+          # group bys
+          global_filters = params.to_unsafe_hash[:global_filter]
+
+          @group_by_category = (global_filters.present? and global_filters[:group_by_category].present?) ? global_filters[:group_by_category] : nil
+          @group_by_property = (global_filters.present? and global_filters[:group_by_property].present?) ? global_filters[:group_by_property] : nil
+
+          if @group_by_category.present?
+            @categories = @group_by_category == 'all' ? Erp::Products::Category.order('name') : Erp::Products::Category.where(id: @group_by_category)
+          end
+
+          if @group_by_property.present?
+            @properties_values = Erp::Products::PropertiesValue.where(property_id: @group_by_property).order('value')
+          end
+
+          @products = Erp::Products::Product.all.order("code").paginate(:page => params[:page], :per_page => 50)
+
+          render layout: nil
+        end
+
+        # Warehouses report
+        def warehouses_report
+        end
+
+        def warehouses_report_table
+          # group bys
+          global_filters = params.to_unsafe_hash[:global_filter]
+
+          @group_by_category = (global_filters.present? and global_filters[:group_by_category].present?) ? global_filters[:group_by_category] : nil
+          @group_by_property = (global_filters.present? and global_filters[:group_by_property].present?) ? global_filters[:group_by_property] : nil
+
+          if @group_by_category.present?
+            @categories = @group_by_category == 'all' ? Erp::Products::Category.order('name') : Erp::Products::Category.where(id: @group_by_category)
+          end
+
+          if @group_by_property.present?
+            @properties_values = Erp::Products::PropertiesValue.where(property_id: @group_by_property).order('value')
+          end
+          
+          @products = Erp::Products::Product.all.order("code").paginate(:page => params[:page], :per_page => 50)
+          @warehouses = Erp::Warehouses::Warehouse.all.order("name")
+
+          render layout: nil
+        end
+
         private
           # Use callbacks to share common setup or constraints between actions.
           def set_product
