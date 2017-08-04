@@ -419,6 +419,11 @@ module Erp::Products
 				return self.price
 			end
 		end
+    
+    # get product price
+    def get_price
+			return self.price
+		end
 
     def product_name
 			return self.short_name
