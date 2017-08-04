@@ -159,7 +159,8 @@ dk_pvs.each do |dk_pv|
         name: "#{letter}#{number.to_s.rjust(2, '0')}-#{dk_pv.value}-#{len_cat.name}",
         category_id: len_cat.id,
         brand_id: brand.id,
-        creator_id: user.id
+        creator_id: user.id,
+        price: rand(5..100)*10000
       )
       Erp::Products::ProductsValue.create(
         product_id: product.id,
