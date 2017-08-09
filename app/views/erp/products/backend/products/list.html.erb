@@ -134,11 +134,11 @@
                         <%= erp_datalist_row_actions(
                             [
                                 {
-                                    text: '<i class="fa fa-edit"></i> '+t('.edit'),
+                                    text: '<i class="fa fa-edit"></i> '+t('edit'),
                                     href: erp_products.edit_backend_product_path(product)
                                 },
                                 {
-                                    text: '<i class="fa fa-ban"></i> '+t('.archive'),
+                                    text: '<i class="fa fa-ban"></i> '+t('archive'),
                                     url: erp_products.archive_backend_products_path(id: product),
                                     data_method: 'PUT',
                                     hide: product.archived,
@@ -146,7 +146,7 @@
                                     data_confirm: t('.archive_confirm')
                                 },
                                 {
-                                    text: '<i class="fa fa-check"></i> '+t('.unarchive'),
+                                    text: '<i class="fa fa-check"></i> '+t('unarchive'),
                                     url: erp_products.unarchive_backend_products_path(id: product),
                                     data_method: 'PUT',
                                     hide: !product.archived,
