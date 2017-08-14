@@ -603,5 +603,9 @@ module Erp::Products
 			end
 			self.update_column(:cache_properties, arr.join(''))
 		end
+
+		def get_stock
+			return 100;
+		end
   end
 end
