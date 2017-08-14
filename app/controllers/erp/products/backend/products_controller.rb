@@ -548,81 +548,6 @@ module Erp
           render partial: 'erp/products/backend/products/property_form', locals: {product: product}, layout: nil
         end
 
-        # Matrix report
-        def matrix_report
-        end
-
-        def matrix_report_table
-          if params.to_unsafe_hash[:global_filter].present? and params.to_unsafe_hash[:global_filter][:column].present?
-            @columns = Erp::Products::ProductsValue.joins(:properties_value).where(
-              erp_products_properties_values: {
-                property_id: params.to_unsafe_hash[:global_filter][:column]
-              }
-            ).select(:value).map(&:value).uniq.sort
-            @columns = (@columns.map {|v| v.to_i }).sort if !@columns.empty? and @columns[0] == @columns[0].to_i.to_s
-          end
-
-          if params.to_unsafe_hash[:global_filter].present? and params.to_unsafe_hash[:global_filter][:row].present?
-            @rows = Erp::Products::ProductsValue.joins(:properties_value).where(
-              erp_products_properties_values: {
-                property_id: params.to_unsafe_hash[:global_filter][:row]
-              }
-            ).select(:value).map(&:value).uniq.sort
-            @rows = (@rows.map {|v| v.to_i }).sort if !@rows.empty? and @rows[0] == @rows[0].to_i.to_s
-          end
-
-          render layout: nil
-        end
-
-        # Delivery report
-        def delivery_report
-        end
-
-        def delivery_report_table
-          # group bys
-          global_filters = params.to_unsafe_hash[:global_filter]
-
-          @group_by_category = (global_filters.present? and global_filters[:group_by_category].present?) ? global_filters[:group_by_category] : nil
-          @group_by_property = (global_filters.present? and global_filters[:group_by_property].present?) ? global_filters[:group_by_property] : nil
-
-          if @group_by_category.present?
-            @categories = @group_by_category == 'all' ? Erp::Products::Category.order('name') : Erp::Products::Category.where(id: @group_by_category)
-          end
-
-          if @group_by_property.present?
-            @properties_values = Erp::Products::PropertiesValue.where(property_id: @group_by_property).order('value')
-          end
-
-          @products = Erp::Products::Product.all.order("code").paginate(:page => params[:page], :per_page => 50)
-
-          render layout: nil
-        end
-
-        # Warehouses report
-        def warehouses_report
-        end
-
-        def warehouses_report_table
-          # group bys
-          global_filters = params.to_unsafe_hash[:global_filter]
-
-          @group_by_category = (global_filters.present? and global_filters[:group_by_category].present?) ? global_filters[:group_by_category] : nil
-          @group_by_property = (global_filters.present? and global_filters[:group_by_property].present?) ? global_filters[:group_by_property] : nil
-
-          if @group_by_category.present?
-            @categories = @group_by_category == 'all' ? Erp::Products::Category.order('name') : Erp::Products::Category.where(id: @group_by_category)
-          end
-
-          if @group_by_property.present?
-            @properties_values = Erp::Products::PropertiesValue.where(property_id: @group_by_property).order('value')
-          end
-          
-          @products = Erp::Products::Product.all.order("code").paginate(:page => params[:page], :per_page => 50)
-          @warehouses = Erp::Warehouses::Warehouse.all.order("name")
-
-          render layout: nil
-        end
-
         private
           # Use callbacks to share common setup or constraints between actions.
           def set_product
@@ -648,7 +573,7 @@ module Erp
               :products_units_attributes => [ :id, :unit_id, :conversion_value, :price, :code, :product_id, :_destroy ],
               :products_parts_attributes => [ :id, :part_id, :quantity, :total, :product_id, :_destroy ],
               :products_gifts_attributes => [ :id, :gift_id, :quantity, :price, :product_id, :_destroy ]
-              )
+            )
           end
       end
     end

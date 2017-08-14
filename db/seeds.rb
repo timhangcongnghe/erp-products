@@ -66,7 +66,7 @@ do_v = 0.75
     property_id: do_p.id,
     value: do_v
   )
-  do_v = do_v + 0.75
+  do_v = do_v + 0.25
 end
 
 dok_vs = {
@@ -182,8 +182,10 @@ dk_pvs.each do |dk_pv|
         product_id: product.id,
         properties_value_id: dk_pv.id
       )
+
+      product.update_cache_properties
     end
 
-    do_v = do_v + 0.75
+    do_v = do_v + 0.25
   end
 end

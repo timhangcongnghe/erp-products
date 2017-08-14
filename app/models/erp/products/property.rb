@@ -5,6 +5,7 @@ module Erp::Products
     validates :name, :property_group_id, :presence => true
     belongs_to :creator, class_name: "Erp::User"
     belongs_to :property_group, class_name: "Erp::Products::PropertyGroup"
+    has_many :properties_values
 
     def self.get_active
 			self.where(archived: false)

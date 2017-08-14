@@ -71,12 +71,6 @@ Erp::Products::Engine.routes.draw do
           put 'uncheck_is_top_business_choices_all'
           get 'form_property'
           get 'property_form'
-          get 'matrix_report'
-          post 'matrix_report_table'
-          get 'delivery_report'
-          post 'delivery_report_table'
-          get 'warehouses_report'
-          post 'warehouses_report_table'
 
 					#@todo HK-ERP connector
           get 'hkerp_products'

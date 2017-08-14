@@ -14,6 +14,8 @@ module Erp::Products
     has_many :comments, class_name: "Erp::Products::Comment"
     has_many :ratings, class_name: "Erp::Products::Rating"
 
+    after_save :update_cache_properties
+
     if Erp::Core.available?("taxes")
       has_and_belongs_to_many :customer_taxes, class_name: 'Erp::Taxes::Tax', :join_table => 'erp_products_customer_taxes'
 			has_and_belongs_to_many :vendor_taxes, class_name: 'Erp::Taxes::Tax', :join_table => 'erp_products_vendor_taxes'
@@ -419,7 +421,7 @@ module Erp::Products
 				return self.price
 			end
 		end
-    
+
     # get product price
     def get_price
 			return self.price
@@ -591,6 +593,15 @@ module Erp::Products
 
 		def get_related_events(time_now)
 			self.events.where("from_date <= ? AND to_date >= ?", time_now.beginning_of_day, time_now.end_of_day)
+		end
+
+		# update cache properties
+		def update_cache_properties
+			arr = []
+			self.products_values.each do |pv|
+				arr << "[#{pv.properties_value_id}]"
+			end
+			self.update_column(:cache_properties, arr.join(''))
 		end
   end
 end
