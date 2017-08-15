@@ -80,6 +80,23 @@ Erp::Products::Engine.routes.draw do
           get 'hkerp_manufacturers_dataselect'
         end
       end
+      resources :states do
+				collection do
+					post 'list'
+					get 'dataselect'
+					delete 'delete_all'
+					put 'status_draft'
+					put 'status_active'
+					put 'status_deleted'
+					put 'status_draft_all'
+					put 'status_active_all'
+					put 'status_deleted_all'
+					put 'archive'
+					put 'unarchive'
+					put 'archive_all'
+					put 'unarchive_all'
+				end
+			end
       resources :properties do
         collection do
           get 'dataselect'

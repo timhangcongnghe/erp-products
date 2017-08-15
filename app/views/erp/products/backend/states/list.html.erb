@@ -1,0 +1,110 @@
+<table class="table table-advance table-hover table-striped table-checkable order-column">
+    <thead>
+        <tr>
+            <th width='1%'>
+                <%= erp_datalist_check_all %>
+            </th>
+            <% if get_columns(params).include?("name") %>
+                <th><%= t('.name') %></th>
+            <% end %>
+            <% if get_columns(params).include?("status") %>
+                <th><%= t('status') %></th>
+            <% end %>
+            <% if get_columns(params).include?("creator") %>
+                <th class="text-center"><%= t('creator') %></th>
+            <% end %>
+            <% if get_columns(params).include?("created_at") %>
+                <th><%= t('created_at') %></th>
+            <% end %>
+            <th class="text-right" width="7%"><%= t('actions') %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if @states.each do |state| %>
+            <tr class="odd gradeX has-child-table" data-url="<%= erp_products.state_details_backend_states_path(id: state.id) %>">
+                <td>
+                    <%= erp_datalist_check_row(id: state.id) %>
+                </td>
+                <% if get_columns(params).include?("name") %>
+                    <td>
+                        <i class="fa fa-plus expand tr-expand-button"></i>
+                        <strong><%= link_to state.name, erp_products.edit_backend_state_path(state) %></strong>
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("status") %>
+                <td>
+                    <% if state.status == Erp::Products::State::STATE_STATUS_DRAFT %>
+                        <%= erp_component('label/danger', {
+                            text: t('.'+state.status)
+                        }) %>
+                    <% end %>
+                    <% if state.status == Erp::Products::State::STATE_STATUS_ACTIVE %>
+                        <%= erp_component('label/primary', {
+                            text: t('.'+state.status)
+                        }) %>
+                    <% end %>
+                    <% if state.status == Erp::Products::State::STATE_STATUS_DELETED %>
+                        <%= erp_component('label/default', {
+                            text: t('.'+state.status)
+                        }) %>
+                    <% end %>
+                </td>
+                <% end %>
+                <% if get_columns(params).include?("creator") %>
+                    <td>
+                        <%= erp_component('avatar', {
+                            user: state.creator
+                        }) %>
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("created_at") %>
+                    <td><%= state.created_at.strftime("%d/%m/%Y") %></td>
+                <% end %>
+                <td>
+                    <%= erp_datalist_row_actions(
+                        [
+                            {
+                                text: '<i class="fa fa-edit"></i> '+t('.edit'),
+                                href: erp_products.edit_backend_state_path(state)
+                            },
+                            {
+                                text: '<i class="fa fa-file-text"></i> '+t('.create_return'),
+                                href: erp_products.new_backend_cs_return_path(state_id: state.id)
+                            },
+                            {
+                                text: '<i class="fa fa-file-o"></i> '+t('.change_draft'),
+                                url: erp_products.status_draft_backend_states_path(id: state),
+                                data_method: 'PUT',
+                                hide: state.status == Erp::Products::State::STATE_STATUS_DRAFT,
+                                class: 'ajax-link'
+                            },
+                            {
+                                text: '<i class="fa fa-file-text-o"></i> '+t('.change_active'),
+                                url: erp_products.status_active_backend_states_path(id: state),
+                                data_method: 'PUT',
+                                hide: state.status == Erp::Products::State::STATE_STATUS_ACTIVE,
+                                class: 'ajax-link'
+                            },
+                            {
+                                divider: true
+                            },
+                            {
+                                text: '<i class="fa fa-close"></i> '+t('.change_deleted'),
+                                url: erp_products.status_deleted_backend_states_path(id: state),
+                                data_method: 'PUT',
+                                class: 'ajax-link',
+                                data_confirm: t('.change_deleted_confirm')
+                            }
+                        ]
+                    ) %>
+                </td>
+            </tr>
+        <% end.empty? %>
+            <tr>
+                <td colspan="7"><%= t('.no_matching_records_found') %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+        
+<%= erp_datalist_pagination(@states) %>
