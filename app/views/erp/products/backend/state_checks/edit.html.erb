@@ -1,0 +1,29 @@
+<% content_for :title do %>
+    <%= @state_check.name %>
+<% end %>
+
+<% content_for :page_title do %>    
+    <a href="<%= erp_products.backend_state_checks_path %>">
+    <i class="fa fa-cubes"></i> <%= t('.state_checks') %>
+    </a> / <%= @state_check.name %>
+<% end %>
+
+<% content_for :page_toolbar do %>
+    <%= erp_component('button/create', {
+        text: t('.create'),
+        href: erp_products.new_backend_state_check_path,
+        class: 'btn-noborder'
+    }) %>
+<% end %>
+
+<div class="row">
+    <div class="col-md-12">
+        <% if @state_check.errors.any? %>
+            <%= erp_form_control("form_error_message") %>
+        <% end %>
+        
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <%= render 'form', state_check: @state_check %>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>

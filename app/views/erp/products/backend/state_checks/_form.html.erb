@@ -1,0 +1,136 @@
+<%= form_for([erp_products, :backend, state_check], html: {multipart: true}) do |f| %>
+    <div class="form-body">        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">
+                        <%= erp_form_control("text", {
+                            name: 'state_check[name]',
+                            value: state_check.name,
+                            id: "state_check_name",
+                            label: t('.name'),
+                            placeholder: t('.enter_name'),
+                            required: true,
+                            errors: state_check.errors.full_messages_for(:name)
+                        }) %>
+                        <%= erp_form_control('date', {
+                            name: 'state_check[check_date]',
+                            value: state_check.check_date,
+                            placeholder: t('.choose_check_date'),
+                            label: t('.check_date'),
+                            required: true,
+                            errors: state_check.errors.full_messages_for(:check_date)
+                        }) %>
+                        <% if Erp::Core.available?("warehouses") %>
+                            <%= erp_form_control("dataselect", {
+                                name: 'state_check[warehouse_id]',
+                                value: state_check.warehouse_id,
+                                text: state_check.warehouse_name,
+                                placeholder: t('.choose_warehouse'),
+                                label: t('.warehouse'),
+                                url: erp_warehouses.dataselect_backend_warehouses_path(format: 'json'),
+                                create: {
+                                    url: erp_warehouses.new_backend_warehouse_path,
+                                    title: t('.create_warehouse'),
+                                    container_selector: '.new_warehouse',
+                                    input_selector: 'input[name="warehouse[name]"]',
+                                },
+                                edit: {
+                                    url: erp_warehouses.edit_backend_warehouse_path(id: ':value'),
+                                    title: t('.edit_warehouse'),
+                                    container_selector: '.edit_warehouse',
+                                },
+                                required: true,
+                                errors: state_check.errors.full_messages_for(:warehouse_id)
+                            }) %>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">                        
+                        <%= erp_form_control("dataselect", {
+                            name: 'state_check[employee_id]',
+                            value: state_check.employee_id,
+                            text: state_check.employee_name,
+                            placeholder: t('.choose_employee'),
+                            label: t('.employee'),
+                            url: erp.dataselect_backend_users_path(format: 'json'),
+                            required: true,
+                            errors: state_check.errors.full_messages_for(:employee_id)
+                        }) %>                        
+                        <%= erp_form_control("textarea", {
+                            name: 'state_check[note]',
+                            value: state_check.note,
+                            label: t('.note'),
+                            placeholder: t('.enter_note')
+                        }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tabbable-custom ">
+                    <ul class="nav nav-tabs ">
+                        <li class="active">
+                            <a href="#tab_5_1" data-toggle="tab" aria-expanded="true"><%= t('.state_check_details') %></a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane addableform-table active" id="tab_5_1">
+                            <%= erp_form_control("addableform", {
+                                type: 'table',
+                                add_button: t('.add_product'),
+                                partial: 'erp/products/backend/state_check_details/state_check_detail_line_form',
+                                partial_url: erp_products.state_check_detail_line_form_backend_state_check_details_path,
+                                items: @state_check.state_check_details,
+                                item: :state_check_detail,
+                                add_control_selector: "input[name='product_id']",
+                                add_control: erp_form_control("dataselect", {
+                                    name: 'product_id',
+                                    placeholder: t('.choose_product'),
+                                    label: t('.product'),
+                                    help: t('.help_product'),
+                                    url: erp_products.dataselect_backend_products_path(format: 'json'),
+                                    create: {
+                                        url: erp_products.new_backend_product_path,
+                                        title: t('.create_product'),
+                                        container_selector: '.new_product',
+                                        input_selector: 'input[name="product[name]"]',
+                                        modal_size: "full"
+                                    },
+                                    edit: {
+                                        url: erp_products.edit_backend_product_path(id: ':value'),
+                                        title: t('.edit_product'),
+                                        container_selector: '.edit_product',
+                                        modal_size: "full"
+                                    }
+                                }),
+                                thead: "<th>#{t('.code')}</th>
+                                        <th>#{t('.name')}</th>
+                                        <th>#{t('.quantity')}</th>
+                                        <th>#{t('.state')}</th>
+                                        <th>#{t('.note')}</th>
+                                        <th class='text-right'>#{t('.action')}</th>"
+                            }) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%= erp_component('button/save', {
+        text: t('submit')
+    }) %>
+    <%= erp_component('button/cancel', {
+        text: t('cancel'),
+        href: erp_products.backend_state_checks_path
+    }) %>
+<% end %>
+<script>
+  window.onload = function() {
+    document.getElementById("state_check_name").focus();
+  };
+</script>

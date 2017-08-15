@@ -1,0 +1,120 @@
+<table class="table table-advance table-hover table-striped table-checkable order-column">
+    <thead>
+        <tr>
+            <th width='1%'>
+                <%= erp_datalist_check_all %>
+            </th>
+            <% if get_columns(params).include?("name") %>
+                <th><%= t('.name') %></th>
+            <% end %>
+            <% if get_columns(params).include?("employee") %>
+                <th><%= t('.employee') %></th>
+            <% end %>
+            <% if get_columns(params).include?("check_date") %>
+                <th class="sortable" sort-by='erp_products_state_checks.check_date'>
+                    <%= t('.check_date') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("status") %>
+                <th><%= t('status') %></th>
+            <% end %>
+            <% if get_columns(params).include?("creator") %>
+                <th class="text-center"><%= t('creator') %></th>
+            <% end %>
+            <% if get_columns(params).include?("created_at") %>
+                <th><%= t('created_at') %></th>
+            <% end %>
+            <th class="text-right" width="7%"><%= t('actions') %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if @state_checks.each do |state_check| %>
+            <tr class="odd gradeX has-child-table" data-url="<%= erp_products.state_check_details_backend_state_checks_path(id: state_check.id) %>">
+                <td>
+                    <%= erp_datalist_check_row(id: state_check.id) %>
+                </td>
+                <% if get_columns(params).include?("name") %>
+                    <td>
+                        <i class="fa fa-plus expand tr-expand-button"></i>
+                        <strong><%= link_to state_check.name, erp_products.edit_backend_state_check_path(state_check) %></strong>
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("employee") %>
+                    <td><%= state_check.employee_name %></td>
+                <% end %>
+                <% if get_columns(params).include?("check_date") %>
+                    <td><%= state_check.check_date.strftime("%d/%m/%Y") %></td>
+                <% end %>
+                <% if get_columns(params).include?("status") %>
+                <td>
+                    <% if state_check.status == Erp::Products::StateCheck::STATE_CHECK_STATUS_DRAFT %>
+                        <%= erp_component('label/danger', {
+                            text: t('.'+state_check.status)
+                        }) %>
+                    <% end %>
+                    <% if state_check.status == Erp::Products::StateCheck::STATE_CHECK_STATUS_ACTIVE %>
+                        <%= erp_component('label/primary', {
+                            text: t('.'+state_check.status)
+                        }) %>
+                    <% end %>
+                    <% if state_check.status == Erp::Products::StateCheck::STATE_CHECK_STATUS_DELETED %>
+                        <%= erp_component('label/default', {
+                            text: t('.'+state_check.status)
+                        }) %>
+                    <% end %>
+                </td>
+                <% end %>
+                <% if get_columns(params).include?("creator") %>
+                    <td>
+                        <%= erp_component('avatar', {
+                            user: state_check.creator
+                        }) %>
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("created_at") %>
+                    <td><%= state_check.created_at.strftime("%d/%m/%Y") %></td>
+                <% end %>
+                <td>
+                    <%= erp_datalist_row_actions(
+                        [
+                            {
+                                text: '<i class="fa fa-edit"></i> '+t('.edit'),
+                                href: erp_products.edit_backend_state_check_path(state_check)
+                            },
+                            {
+                                text: '<i class="fa fa-file-o"></i> '+t('.change_draft'),
+                                url: erp_products.status_draft_backend_state_checks_path(id: state_check),
+                                data_method: 'PUT',
+                                hide: state_check.status == Erp::Products::StateCheck::STATE_CHECK_STATUS_DRAFT,
+                                class: 'ajax-link'
+                            },
+                            {
+                                text: '<i class="fa fa-file-text-o"></i> '+t('.change_active'),
+                                url: erp_products.status_active_backend_state_checks_path(id: state_check),
+                                data_method: 'PUT',
+                                hide: state_check.status == Erp::Products::StateCheck::STATE_CHECK_STATUS_ACTIVE,
+                                class: 'ajax-link'
+                            },
+                            {
+                                divider: true
+                            },
+                            {
+                                text: '<i class="fa fa-close"></i> '+t('.change_deleted'),
+                                url: erp_products.status_deleted_backend_state_checks_path(id: state_check),
+                                data_method: 'PUT',
+                                class: 'ajax-link',
+                                data_confirm: t('.change_deleted_confirm')
+                            }
+                        ]
+                    ) %>
+                </td>
+            </tr>
+        <% end.empty? %>
+            <tr>
+                <td colspan="7"><%= t('.no_matching_records_found') %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+        
+<%= erp_datalist_pagination(@state_checks) %>
