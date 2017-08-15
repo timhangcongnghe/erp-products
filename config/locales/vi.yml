@@ -1164,6 +1164,107 @@ vi:
             enter_name: "Nhập tên trạng thái sản phẩm"
             description: "Mô tả"
             enter_description: "Nhập nội dung mô tả cho trạng thái sản phẩm"
+        state_checks:
+          create:
+            success: "Thêm phiếu kiểm tra sản phẩm thành công."
+          update:
+            success: "Cập nhật phiếu kiểm tra sản phẩm thành công."
+          destroy:
+            success: "Xóa phiếu kiểm tra sản phẩm thành công."
+          delete_all:
+            success: "Xóa phiếu kiểm tra sản phẩm được chọn thành công."
+          archive:
+            success: "Ẩn phiếu kiểm tra sản phẩm thành công."
+          unarchive:
+            success: "Hiện phiếu kiểm tra sản phẩm thành công."
+          archive_all:
+            success: "Ẩn phiếu kiểm tra sản phẩm được chọn thành công."
+          unarchive_all:
+            success: "Hiện trạng thái sản phẩm được chọn thành công."
+          status_draft:
+            success: "Thay đổi phiếu kiểm tra sản phẩm thành nháp thành công."
+          status_active:
+            success: "Phiếu kiểm tra sản phẩm được xác nhận thành công."
+          status_deleted:
+            success: "Phiếu kiểm tra sản phẩm đã được hủy."
+          status_draft_all:
+            success: "Thay đổi phiếu kiểm tra sản phẩm đã chọn thành nháp thành công."
+          status_active_all:
+            success: "Phiếu kiểm tra sản phẩm đã chọn được xác nhận thành công."
+          status_deleted_all:
+            success: "'hiếu kiểm tra sản phẩm được chọn đã được hủy."
+          index:
+            change_draft: "Trạng thái phiếu nháp"
+            change_active: "Xác nhận phiếu kiểm tra sản phẩm"
+            change_deleted: "Hủy phiếu kiểm tra sản phẩm"
+            change_deleted_confirm: "Bạn có chắc muốn hủy các phiếu kiểm tra sản phẩm được chọn?"
+            state_checks: "Tất cả phiếu kiểm tra sản phẩm"
+            create: "Thêm phiếu kiểm tra sản phẩm"
+            delete: "Xóa phiếu kiểm tra sản phẩm được chọn"
+            name: "Tên phiếu kiểm tra sản phẩm"        
+            is_draft: "Trạng thái nháp"
+            is_active: "Trạng thái đã xác nhận"
+            is_deleted: "Trạng thái đã xóa"
+            state_check_date: "Ngày tạo phiếu"
+            select_check_date: "Chọn ngày tạo phiếu"
+            check_date: "Ngày tạo phiếu (Bắt đầu từ)"
+            employee: "Nhân viên phụ trách"
+          state_check_details:
+            state_check_details: "Chi tiết phiếu kiểm tra sản phẩm"
+            code: "Mã sản phẩm"
+            name: "Tên sản phẩm"
+            quantity: "Số lượng"
+            state: "Trạng thái"
+            note: "Ghi chú"
+          list:
+            change_draft: "Trạng thái phiếu nháp"
+            change_active: "Xác nhận phiếu kiểm tra sản phẩm"
+            change_deleted: "Hủy phiếu kiểm tra sản phẩm"
+            change_deleted_confirm: "Bạn có chắc muốn hủy các phiếu kiểm tra sản phẩm được chọn?"
+            draft: "Phiếu kiểm tra sản phẩm nháp"
+            active: "Phiếu kiểm tra sản phẩm đã xác nhận"
+            deleted: "Phiếu kiểm tra sản phẩm đã xóa"
+            delete: "Xóa phiếu kiểm tra sản phẩm"
+            edit: "Cập nhật phiếu kiểm tra sản phẩm"
+            name: "Tên phiếu kiểm tra sản phẩm"          
+            no_matching_records_found: "Danh sách phiếu kiểm tra sản phẩm hiện tại đang trống."
+            check_date: "Ngày tạo phiếu"
+            employee: "Nhân viên phụ trách"
+          new:
+            state_checks: "Tất cả phiếu kiểm tra sản phẩm"
+            create: "Thêm phiếu kiểm tra sản phẩm"
+          edit:
+            state_checks: "Tất cả phiếu kiểm tra sản phẩm"
+            create: "Thêm phiếu kiểm tra sản phẩm"         
+          form:
+            name: "Tên phiếu kiểm tra sản phẩm"
+            enter_name: "Nhập tên phiếu kiểm tra sản phẩm"
+            note: "Mô tả"
+            enter_note: "Nhập ghi chú cho phiếu kiểm tra sản phẩm"
+            check_date: "Ngày tạo phiếu"
+            choose_check_date: "Chọn ngày tạo phiếu"
+            warehouse: "Kho kiểm"
+            choose_warehouse: "Chọn kho kiểm"
+            employee: "Nhân viên phụ trách"
+            choose_employee: "Chọn nhân viên phụ trách"
+            state_check_details: "Chi tiết phiếu kiểm tra sản phẩm"
+            create_warehouse: "Thêm kho kiểm"
+            edit_warehouse: "Cập nhật kho kiểm"
+            product: "Sản phẩm cần thêm vào phiếu kiểm"
+            help_product: "Thêm sản phẩm vào phiếu kiểm tra sản phẩm"
+            choose_product: "Chọn sản phẩm"
+            add_product: "Thêm sản phẩm vào phiếu"
+            create_product: "Thêm sản phẩm"
+            edit_product: "Cập nhật sản phẩm"
+            code: "Mã sản phẩm"
+            quantity: "Số lượng"
+            state: "Trạng thái sản phẩm"
+            action: "Thao tác"
+        state_check_details:
+          state_check_detail_line_form:
+            choose_state: "Chọn trạng thái sản phẩm"
+            create_state: "Thêm trạng thái sản phẩm"
+            edit_state: "Cập nhật trạng thái sản phẩm"
         inventory_products:
           create:
             success: "Thêm sản phẩm thành công."
@@ -1352,6 +1453,16 @@ vi:
           attributes:
             name:
               blank: "không được để trống."
+        erp/products/state_check:
+          attributes:
+            name:
+              blank: "không được để trống."
+            warehouse_id:
+              blank: "không được để trống."
+            check_date:
+              blank: "không được để trống."
+            employee_id:
+              blank: "không được để trống."
         erp/products/inventory_product:
           attributes:
             image_url:
@@ -1408,6 +1519,11 @@ vi:
         hot_name: "Chuyên mục quảng cáo"
       erp/products/state:
         name: "Tên trạng thái sản phẩm"
+      erp/products/state_check:
+        name: "Tên phiếu kiểm tra sản phẩm"
+        check_date: "Ngày tạo phiếu"
+        warehouse_id: "Kho kiểm"
+        employee_id: "Nhân viên phụ trách"
       erp/products/inventory_product:
         image_url: "Hình ảnh sản phẩm"
         name: "Tên sản phẩm"

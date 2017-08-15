@@ -97,6 +97,29 @@ Erp::Products::Engine.routes.draw do
 					put 'unarchive_all'
 				end
 			end
+      resources :state_checks do
+				collection do
+					post 'list'
+					get 'dataselect'
+					delete 'delete_all'
+					put 'status_draft'
+					put 'status_active'
+					put 'status_deleted'
+					put 'status_draft_all'
+					put 'status_active_all'
+					put 'status_deleted_all'
+					put 'archive'
+					put 'unarchive'
+					put 'archive_all'
+					put 'unarchive_all'
+					get 'state_check_details'
+				end
+			end
+      resources :state_check_details do
+				collection do
+          get 'state_check_detail_line_form'
+				end
+			end
       resources :properties do
         collection do
           get 'dataselect'

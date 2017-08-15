@@ -55,7 +55,7 @@ module Erp
                 value: @state.id
               }              
             else
-              redirect_to erp_states.edit_backend_state_path(@state), notice: t('.success')
+              redirect_to erp_products.edit_backend_state_path(@state), notice: t('.success')
             end
           else
             render :edit
@@ -67,7 +67,7 @@ module Erp
           @state.destroy
 
           respond_to do |format|
-            format.html { redirect_to erp_states.backend_states_path, notice: t('.success') }
+            format.html { redirect_to erp_products.backend_states_path, notice: t('.success') }
             format.json {
               render json: {
                 'message': t('.success'),
