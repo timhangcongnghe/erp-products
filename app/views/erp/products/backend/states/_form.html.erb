@@ -1,17 +1,39 @@
-<%= form_with(model: state, local: true) do |form| %>
-  <% if state.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(state.errors.count, "error") %> prohibited this state from being saved:</h2>
-
-      <ul>
-      <% state.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= form_for([erp_products, :backend, state], html: {multipart: true}) do |f| %>
+    <div class="form-body">        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">
+                        <%= erp_form_control("text", {
+                            name: 'state[name]',
+                            value: state.name,
+                            id: "state_name",
+                            label: t('.name'),
+                            placeholder: t('.enter_name'),
+                            required: true,
+                            errors: state.errors.full_messages_for(:name)
+                        }) %>
+                        <%= erp_form_control('textarea', {
+                            name: 'state[description]',
+                            value: state.description,
+                            placeholder: t('.enter_description'),
+                            label: t('.description')
+                        }) %>
+                    </div>
+                </div>
+            </div>
+        </div>        
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+    <%= erp_component('button/save', {
+        text: t('submit')
+    }) %>
+    <%= erp_component('button/cancel', {
+        text: t('cancel'),
+        href: erp_products.backend_states_path
+    }) %>
 <% end %>
+<script>
+  window.onload = function() {
+    document.getElementById("state_name").focus();
+  };
+</script>

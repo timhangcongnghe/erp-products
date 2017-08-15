@@ -1100,6 +1100,70 @@ vi:
             product_code: "Mã sản phẩm"
             product_name: "Tên sản phẩm"
             price: "Giá bán"
+        states:
+          create:
+            success: "Thêm trạng thái sản phẩm thành công."
+          update:
+            success: "Cập nhật trạng thái sản phẩm thành công."
+          destroy:
+            success: "Xóa trạng thái sản phẩm thành công."
+          delete_all:
+            success: "Xóa trạng thái sản phẩm được chọn thành công."
+          archive:
+            success: "Ẩn trạng thái sản phẩm thành công."
+          unarchive:
+            success: "Hiện trạng thái sản phẩm thành công."
+          archive_all:
+            success: "Ẩn trạng thái sản phẩm được chọn thành công."
+          unarchive_all:
+            success: "Hiện trạng thái sản phẩm được chọn thành công."
+          status_draft:
+            success: "Thay đổi trạng thái sản phẩm thành nháp thành công."
+          status_active:
+            success: "Trạng thái sản phẩm được xác nhận thành công."
+          status_deleted:
+            success: "Trạng thái sản phẩm đã được hủy."
+          status_draft_all:
+            success: "Thay đổi trạng thái sản phẩm đã chọn thành nháp thành công."
+          status_active_all:
+            success: "Trạng thái sản phẩm đã chọn được xác nhận thành công."
+          status_deleted_all:
+            success: "Trạng thái sản phẩm được chọn đã được hủy."
+          index:
+            change_draft: "Trạng thái sản phẩm nháp"
+            change_active: "Xác nhận trạng thái sản phẩm"
+            change_deleted: "Hủy trạng thái sản phẩm"
+            change_deleted_confirm: "Bạn có chắc muốn hủy các trạng thái sản phẩm được chọn?"
+            states: "Tất cả trạng thái sản phẩm"
+            create: "Thêm trạng thái sản phẩm"
+            delete: "Xóa trạng thái sản phẩm được chọn"
+            name: "Tên trạng thái sản phẩm"        
+            is_draft: "Trạng thái nháp"
+            is_active: "Trạng thái đã xác nhận"
+            is_deleted: "Trạng thái đã xóa"            
+          list:
+            change_draft: "Trạng thái sản phẩm nháp"
+            change_active: "Xác nhận trạng thái sản phẩm"
+            change_deleted: "Hủy trạng thái sản phẩm"
+            change_deleted_confirm: "Bạn có chắc muốn hủy các trạng thái sản phẩm được chọn?"
+            draft: "Trạng thái sản phẩm nháp"
+            active: "Trạng thái sản phẩm đã xác nhận"
+            deleted: "Trạng thái sản phẩm đã xóa"
+            delete: "Xóa trạng thái sản phẩm"
+            edit: "Cập nhật trạng thái sản phẩm"
+            name: "Tên trạng thái sản phẩm"          
+            no_matching_records_found: "Danh sách trạng thái sản phẩm hiện tại đang trống."
+          new:
+            states: "Tất cả trạng thái sản phẩm"
+            create: "Thêm trạng thái sản phẩm"
+          edit:
+            states: "Tất cả trạng thái sản phẩm"
+            create: "Thêm trạng thái sản phẩm"           
+          form:
+            name: "Tên trạng thái sản phẩm"
+            enter_name: "Nhập tên trạng thái sản phẩm"
+            description: "Mô tả"
+            enter_description: "Nhập nội dung mô tả cho trạng thái sản phẩm"
         inventory_products:
           create:
             success: "Thêm sản phẩm thành công."
@@ -1284,6 +1348,10 @@ vi:
               blank: "không được để trống."
             hot_name:
               blank: "không được để trống."
+        erp/products/state:
+          attributes:
+            name:
+              blank: "không được để trống."
         erp/products/inventory_product:
           attributes:
             image_url:
@@ -1338,6 +1406,8 @@ vi:
       erp/products/inventory_category:
         name: "Tên chuyên mục"
         hot_name: "Chuyên mục quảng cáo"
+      erp/products/state:
+        name: "Tên trạng thái sản phẩm"
       erp/products/inventory_product:
         image_url: "Hình ảnh sản phẩm"
         name: "Tên sản phẩm"

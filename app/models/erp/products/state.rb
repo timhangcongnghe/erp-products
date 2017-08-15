@@ -1,5 +1,6 @@
 module Erp::Products
   class State < ApplicationRecord
+    validates :name, :presence => true
     belongs_to :creator, class_name: "Erp::User"
     STATE_STATUS_DRAFT = 'draft'
     STATE_STATUS_ACTIVE = 'active'

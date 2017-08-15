@@ -1,5 +1,28 @@
-<h1>New State</h1>
+<% content_for :title do %>
+    <%= t('.create') %>
+<% end %>
 
-<%= render 'form', state: @state %>
+<% content_for :page_title do %>    
+    <a href="<%= erp_products.backend_states_path %>">
+    <i class="fa fa-cubes"></i> <%= t('.states') %>
+    </a> / <%= t('.create') %>
+<% end %>
 
-<%= link_to 'Back', states_path %>
+<% content_for :page_toolbar do %>
+    <div class="btn-group">
+        <div class="clearfix">
+        </div>
+    </div>
+<% end %>
+
+<div class="row">
+    <div class="col-md-12">
+        <% if @state.errors.any? %>
+            <%= erp_form_control("form_error_message") %>
+        <% end %>
+        
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <%= render 'form', state: @state %>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>

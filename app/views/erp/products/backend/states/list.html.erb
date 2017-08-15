@@ -21,13 +21,12 @@
     </thead>
     <tbody>
         <% if @states.each do |state| %>
-            <tr class="odd gradeX has-child-table" data-url="<%= erp_products.state_details_backend_states_path(id: state.id) %>">
+            <tr class="odd gradeX has-child-table">
                 <td>
                     <%= erp_datalist_check_row(id: state.id) %>
                 </td>
                 <% if get_columns(params).include?("name") %>
                     <td>
-                        <i class="fa fa-plus expand tr-expand-button"></i>
                         <strong><%= link_to state.name, erp_products.edit_backend_state_path(state) %></strong>
                     </td>
                 <% end %>
@@ -66,10 +65,6 @@
                             {
                                 text: '<i class="fa fa-edit"></i> '+t('.edit'),
                                 href: erp_products.edit_backend_state_path(state)
-                            },
-                            {
-                                text: '<i class="fa fa-file-text"></i> '+t('.create_return'),
-                                href: erp_products.new_backend_cs_return_path(state_id: state.id)
                             },
                             {
                                 text: '<i class="fa fa-file-o"></i> '+t('.change_draft'),

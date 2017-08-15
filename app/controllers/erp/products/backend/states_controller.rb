@@ -38,7 +38,7 @@ module Erp
                 value: @state.id
               }
             else
-              redirect_to erp_states.edit_backend_state_path(@state), notice: t('.success')
+              redirect_to erp_products.edit_backend_state_path(@state), notice: t('.success')
             end
           else
             render :new        
