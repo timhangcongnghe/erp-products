@@ -114,12 +114,16 @@ module Erp::Products
     end
 
     # data for dataselect ajax
-    def self.dataselect(keyword='')
+    def self.dataselect(keyword='', params={})
       query = self.all
 
       if keyword.present?
         keyword = keyword.strip.downcase
         query = query.where('LOWER(name) LIKE ?', "%#{keyword}%")
+      end
+
+      if params[:current_value].present?
+        query = query.where.not(id: params[:current_value].split(','))
       end
 
       query = query.limit(8).map{|category| {value: category.id, text: (category.parent_name.empty? ? '' : "#{category.parent_name} / ") + category.name} }
