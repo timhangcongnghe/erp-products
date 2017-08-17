@@ -1,52 +1,24 @@
-<div class="col-md-12">
-    <div class="tabbable-custom ">
-        <ul class="nav nav-tabs ">
-            <li class="active">
-                <a href="#tab_5_1" data-toggle="tab">
-                    <i class="fa fa-file-text-o"></i>
-                    Chi tiết đã xuất
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="tab-content">
-        <div class="tab-pane active" id="tab_5_1">
-            <div class="portlet grey-cascade box">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="fa fa-cubes"></i>
-                        <%= t('.state_check_details') %>
-                    </div>
-                </div>
-                <div class="portlet-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped flip-content">
-                            <thead class="flip-content">
-                                <tr>
-                                    <th width="20%" class="text-left"><%= t('.code') %></th>
-                                    <th><%= t('.name') %></th>
-                                    <th class="numeric"><%= t('.quantity') %></th>
-                                    <th><%= t('.state') %></th>
-                                    <th><%= t('.note') %></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% @state_check.state_check_details.each do |state_check_detail| %>
-                                <tr>
-                                    <td class="text-left">
-                                        <strong><%= link_to state_check_detail.get_product_code, erp_products.edit_backend_product_path(state_check_detail.product), target: '_blank' %></strong>
-                                    </td>
-                                    <td class="text-left"><%= state_check_detail.get_product_name %></td>
-                                    <td class="numeric text-left"><%= state_check_detail.quantity %></td>
-                                    <td class="text-left"><%= state_check_detail.get_state_name %></td>
-                                    <td class="text-left"><%= state_check_detail.note %></td>
-                                </tr>
-                                <% end %>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<table class="table table-bordered table-striped flip-content">
+    <thead class="flip-content">
+        <tr>
+            <th width="20%" class="text-left"><%= t('.code') %></th>
+            <th><%= t('.name') %></th>
+            <th class="numeric"><%= t('.quantity') %></th>
+            <th><%= t('.state') %></th>
+            <th><%= t('.note') %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @state_check.state_check_details.each do |state_check_detail| %>
+        <tr>
+            <td class="text-left">
+                <strong><%= link_to state_check_detail.get_product_code, erp_products.edit_backend_product_path(state_check_detail.product), target: '_blank' %></strong>
+            </td>
+            <td class="text-left"><%= state_check_detail.get_product_name %></td>
+            <td class="numeric text-left"><%= state_check_detail.quantity %></td>
+            <td class="text-left"><%= state_check_detail.get_state_name %></td>
+            <td class="text-left"><%= state_check_detail.note %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
