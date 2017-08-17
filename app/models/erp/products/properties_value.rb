@@ -37,6 +37,11 @@ module Erp::Products
 				query = query.where(params[:parent_id] => params[:parent_value])
 			end
 
+      # filter by property
+      if params[:property_id].present?
+				query = query.where(property_id: params[:property_id])
+			end
+
       query = query.map{|properties_value| {value: properties_value.id, text: properties_value.value} }
     end
 
