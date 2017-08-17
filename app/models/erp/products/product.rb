@@ -597,15 +597,20 @@ module Erp::Products
 
 		# update cache properties
 		def update_cache_properties
-			arr = []
+			arr = {}
 			self.products_values.each do |pv|
-				arr << "[#{pv.properties_value_id}]"
+				arr[pv.properties_value.property_id] = [pv.properties_value_id.to_s, pv.properties_value.value] # "[#{pv.properties_value_id}]"
 			end
-			self.update_column(:cache_properties, arr.join(''))
+			self.update_column(:cache_properties, arr.to_json)
 		end
 
 		def get_stock
 			return 100;
+		end
+
+		# Get category name
+		def category_name
+			category.nil? ? '' : category.name
 		end
   end
 end
