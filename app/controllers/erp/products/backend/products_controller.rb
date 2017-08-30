@@ -548,6 +548,14 @@ module Erp
           render partial: 'erp/products/backend/products/property_form', locals: {product: product}, layout: nil
         end
 
+        def dataselect_code
+          respond_to do |format|
+            format.json {
+              render json: Product.dataselect_code(params)
+            }
+          end
+        end
+
         private
           # Use callbacks to share common setup or constraints between actions.
           def set_product

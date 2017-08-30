@@ -137,10 +137,14 @@ module Erp::Products
     def self.dataselect(keyword='')
       query = self.all
 
+      # single keyword
       if keyword.present?
-        keyword = keyword.strip.downcase
-        query = query.where('LOWER(name) LIKE ?', "%#{keyword}%")
-      end
+				keyword = keyword.strip.downcase
+				keyword.split(' ').each do |q|
+					q = q.strip
+					query = query.where('LOWER(erp_products_products.name) LIKE ?', '%'+q+'%')
+				end
+			end
 
       query = query.limit(8).map{|product| {value: product.id, text: product.name} }
     end
@@ -612,5 +616,19 @@ module Erp::Products
 		def category_name
 			category.nil? ? '' : category.name
 		end
+
+		# data for dataselect ajax
+    def self.dataselect_code(params={})
+      query = self.all
+
+      if params[:keyword].present?
+        keyword = params[:keyword].strip.downcase
+        query = query.where('LOWER(code) LIKE ?', "%#{keyword}%")
+      end
+
+      query = query.limit(8).pluck(:code).uniq
+
+      query = query.map{|code| {value: code, text: code} }
+    end
   end
 end

@@ -78,6 +78,8 @@ Erp::Products::Engine.routes.draw do
           get 'hkerp_categories_dataselect'
           put 'hkerp_update_price'
           get 'hkerp_manufacturers_dataselect'
+
+          get 'dataselect_code'
         end
       end
       resources :states do
