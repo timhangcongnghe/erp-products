@@ -63,10 +63,10 @@ dk_p = len_pg.properties.create(
 Erp::Products::PropertiesValue.destroy_all
 
 do_v = 0.75
-letters = ('B'..'T').to_a
-('C'..'U').each do |x|
-  letters << "H#{x}"
-end
+letters = ('B'..'E').to_a
+#('C'..'U').each do |x|
+#  letters << "H#{x}"
+#end
 letters.each do |letter|
   Erp::Products::PropertiesValue.create(
     property_id: chu_p.id,
@@ -91,31 +91,31 @@ dok_vs = {
   '13': '44.00/7.67',
   '14': '43.75/7.71',
   '15': '43.50/7.75',
-  '16': '43.25/7.80',
-  '17': '43.00/7.84',
-  '18': '42.75/7.89',
-  '19': '42.50/7.94',
-  '20': '42.25/7.98',
-  '21': '42.00/8.03',
-  '22': '41.75/8.08',
-  '23': '41.50/8.13',
-  '24': '41.25/8.18',
-  '25': '41.00/8.23',
-  '26': '40.75/8.28',
-  '27': '40.50/8.33',
-  '28': '40.25/8.38',
-  '29': '40.00/8.44',
-  '1': 'K1',
-  '2': 'K2',
-  '3': 'K3',
-  '4': 'K4',
-  '30': 'K30',
-  '31': 'K31',
-  '32': 'K32',
-  '33': 'K33',
-  '34': 'K34',
-  '35': 'K35',
-  '36': 'K36',
+  #'16': '43.25/7.80',
+  #'17': '43.00/7.84',
+  #'18': '42.75/7.89',
+  #'19': '42.50/7.94',
+  #'20': '42.25/7.98',
+  #'21': '42.00/8.03',
+  #'22': '41.75/8.08',
+  #'23': '41.50/8.13',
+  #'24': '41.25/8.18',
+  #'25': '41.00/8.23',
+  #'26': '40.75/8.28',
+  #'27': '40.50/8.33',
+  #'28': '40.25/8.38',
+  #'29': '40.00/8.44',
+  #'1': 'K1',
+  #'2': 'K2',
+  #'3': 'K3',
+  #'4': 'K4',
+  #'30': 'K30',
+  #'31': 'K31',
+  #'32': 'K32',
+  #'33': 'K33',
+  #'34': 'K34',
+  #'35': 'K35',
+  #'36': 'K36',
 }
 (5..29).each do |number|
   Erp::Products::PropertiesValue.create(
@@ -145,18 +145,18 @@ dk_pvs = [
     property_id: dk_p.id,
     value: '10.8'
   ),
-  Erp::Products::PropertiesValue.create(
-    property_id: dk_p.id,
-    value: '11'
-  ),
-  Erp::Products::PropertiesValue.create(
-    property_id: dk_p.id,
-    value: '11.2'
-  ),
-  Erp::Products::PropertiesValue.create(
-    property_id: dk_p.id,
-    value: '11.4'
-  ),
+  #Erp::Products::PropertiesValue.create(
+  #  property_id: dk_p.id,
+  #  value: '11'
+  #),
+  #Erp::Products::PropertiesValue.create(
+  #  property_id: dk_p.id,
+  #  value: '11.2'
+  #),
+  #Erp::Products::PropertiesValue.create(
+  #  property_id: dk_p.id,
+  #  value: '11.4'
+  #),
   Erp::Products::PropertiesValue.create(
     property_id: dk_p.id,
     value: '11.6'
