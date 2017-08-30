@@ -14,6 +14,10 @@ module Erp::Products
     has_many :comments, class_name: "Erp::Products::Comment"
     has_many :ratings, class_name: "Erp::Products::Rating"
 
+		if Erp::Core.available?("orders")
+			has_many :order_details, class_name: "Erp::Orders::OrderDetail"
+		end
+
     after_save :update_cache_properties
 
     if Erp::Core.available?("taxes")
@@ -134,7 +138,7 @@ module Erp::Products
     end
 
     # data for dataselect ajax
-    def self.dataselect(keyword='')
+    def self.dataselect(keyword='', params={})
       query = self.all
 
       # single keyword
@@ -146,7 +150,14 @@ module Erp::Products
 				end
 			end
 
-      query = query.limit(8).map{|product| {value: product.id, text: product.name} }
+			if Erp::Core.available?("orders")
+				# product from order
+				if params[:order_id].present?
+					query = query.includes(:order_details).where(erp_orders_order_details: {order_id: params[:order_id]})
+				end
+			end
+
+      query = query.order(:name).limit(80).map{|product| {value: product.id, text: product.name} }
     end
 
     # set archived

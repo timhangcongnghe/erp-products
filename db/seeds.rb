@@ -206,7 +206,8 @@ dk_pvs.each do |dk_pv|
   letters.each do |letter|
     chu_pv = Erp::Products::PropertiesValue.where(property_id: chu_p.id, value: letter).first
     do_pv = Erp::Products::PropertiesValue.where(property_id: do_p.id, value: do_v.to_s).first
-    (5..29).each do |number|
+    #(5..29).each do |number|
+    (5..19).each do |number|
       so_pv = Erp::Products::PropertiesValue.where(property_id: so_p.id, value: number.to_s.rjust(2, '0')).first
       dok_pv = Erp::Products::PropertiesValue.where(property_id: dok_p.id, value: dok_vs[:"#{number.to_s}"]).first
 
