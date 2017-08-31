@@ -622,6 +622,10 @@ module Erp::Products
 		def get_stock
 			return 100;
 		end
+		
+		def get_stock_by_warehouse(warehouse)
+			return rand(0..100)
+		end
 
 		# Get category name
 		def category_name
