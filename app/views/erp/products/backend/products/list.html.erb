@@ -84,8 +84,14 @@
                     <% if get_columns(params).include?("cost") %>
                         <td><%= format_number(product.cost) %></td>
                     <% end %>
-                    <% if get_columns(params).include?("on_hand") %>
-                        <td><%= product.on_hand %></td>
+                    <% if Erp::Core.available?("qdeliveries") %>
+                        <% if get_columns(params).include?("on_hand") %>
+                            <td><%= product.get_stock %></td>
+                        <% end %>
+                    <% else %>
+                        <% if get_columns(params).include?("on_hand") %>
+                            <td><%= product.on_hand %></td>
+                        <% end %>
                     <% end %>
                     <% if get_columns(params).include?("stock_min") %>
                         <td><%= product.stock_min %></td>

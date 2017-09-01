@@ -47,6 +47,76 @@ module Erp::Products
 
     OUT_OF_STOCK = 'out_of_stock'
     IN_TOCK = 'in_stock'
+    
+    if Erp::Core.available?("qdeliveries")
+			# @todo purchases - import
+			def get_stock_warehouse_import
+				Erp::Qdeliveries::DeliveryDetail.joins(:order_detail)
+								.where.not(erp_qdeliveries_delivery_details: {order_detail_id: nil}).joins(:delivery)
+								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT})
+								.where(erp_orders_order_details: {product_id: self.id})
+								.sum("erp_qdeliveries_delivery_details.quantity") + Erp::Qdeliveries::DeliveryDetail.joins(:order_detail)
+								.where(erp_qdeliveries_delivery_details: {order_detail_id: nil}).joins(:delivery)
+								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT})
+								.where(erp_orders_order_details: {product_id: self.id})
+								.sum("erp_qdeliveries_delivery_details.quantity")
+			end
+			
+			# @todo purchases - export
+			def get_manufacturer_export
+				Erp::Qdeliveries::DeliveryDetail.joins(:order_detail)
+								.where.not(erp_qdeliveries_delivery_details: {order_detail_id: nil}).joins(:delivery)
+								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_MANUFACTURER_EXPORT})
+								.where(erp_orders_order_details: {product_id: self.id})
+								.sum("erp_qdeliveries_delivery_details.quantity") + Erp::Qdeliveries::DeliveryDetail.joins(:order_detail)
+								.where(erp_qdeliveries_delivery_details: {order_detail_id: nil}).joins(:delivery)
+								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_MANUFACTURER_EXPORT})
+								.where(erp_orders_order_details: {product_id: self.id})
+								.sum("erp_qdeliveries_delivery_details.quantity")
+			end
+			
+			# @todo sales - import
+			def get_customer_import
+				Erp::Qdeliveries::DeliveryDetail.joins(:order_detail)
+								.where.not(erp_qdeliveries_delivery_details: {order_detail_id: nil}).joins(:delivery)
+								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT})
+								.where(erp_orders_order_details: {product_id: self.id})
+								.sum("erp_qdeliveries_delivery_details.quantity") + Erp::Qdeliveries::DeliveryDetail.joins(:order_detail)
+								.where(erp_qdeliveries_delivery_details: {order_detail_id: nil}).joins(:delivery)
+								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT})
+								.where(erp_orders_order_details: {product_id: self.id})
+								.sum("erp_qdeliveries_delivery_details.quantity")
+			end			
+			
+			# @todo sales - export
+			def get_warehouse_export
+				Erp::Qdeliveries::DeliveryDetail.joins(:order_detail)
+								.where.not(erp_qdeliveries_delivery_details: {order_detail_id: nil}).joins(:delivery)
+								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT})
+								.where(erp_orders_order_details: {product_id: self.id})
+								.sum("erp_qdeliveries_delivery_details.quantity") + Erp::Qdeliveries::DeliveryDetail.joins(:order_detail)
+								.where(erp_qdeliveries_delivery_details: {order_detail_id: nil}).joins(:delivery)
+								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT})
+								.where(erp_orders_order_details: {product_id: self.id})
+								.sum("erp_qdeliveries_delivery_details.quantity")
+			end
+			
+			def get_stock
+				result = (get_stock_warehouse_import + get_customer_import)
+								 - (get_warehouse_export + get_manufacturer_export)
+				return result
+			end
+			
+			# stock status
+			def stock_status
+				if get_stock <= 0
+					return OUT_OF_STOCK
+				else
+					return IN_TOCK
+				end
+			end
+			
+		end
 
     def self.get_active
 			self.where(archived: false)
@@ -285,27 +355,6 @@ module Erp::Products
     # color name
     def color_name
 			brand.present? ? brand.name : ''
-		end
-
-    # remain stock
-    def stock
-			result = Erp::Deliveries::DeliveryDetail.joins(:delivery).joins(:order_detail)
-			.where(erp_deliveries_deliveries: {delivery_type: Erp::Deliveries::Delivery::TYPE_IMPORT})
-			.where(erp_orders_order_details: {product_id: self.id})
-			.sum("erp_deliveries_delivery_details.quantity") - Erp::Deliveries::DeliveryDetail.joins(:delivery).joins(:order_detail)
-			.where(erp_deliveries_deliveries: {delivery_type: Erp::Deliveries::Delivery::TYPE_EXPORT})
-			.where(erp_orders_order_details: {product_id: self.id})
-			.sum("erp_deliveries_delivery_details.quantity")
-			return result
-		end
-
-    # stock status
-    def stock_status
-			if stock <= 0
-				return OUT_OF_STOCK
-			else
-				return IN_TOCK
-			end
 		end
 
     # safe properties values from hash
@@ -617,10 +666,6 @@ module Erp::Products
 				arr[pv.properties_value.property_id] = [pv.properties_value_id.to_s, pv.properties_value.value] # "[#{pv.properties_value_id}]"
 			end
 			self.update_column(:cache_properties, arr.to_json)
-		end
-
-		def get_stock
-			return 100;
 		end
 		
 		def get_stock_by_warehouse(warehouse)
