@@ -20,6 +20,13 @@ len_cats = Erp::Products::Category.all
 Erp::Products::Brand.where(name: "Ortho-K").destroy_all
 brand = Erp::Products::Brand.create(name: "Ortho-K", creator_id: user.id)
 
+# State
+Erp::Products::State.destroy_all
+states = ['Mới', 'Xước', 'Vỡ', 'Sau 1 năm']
+states.each do |st|
+  Erp::Products::State.create(name: st, creator_id: user.id)
+end
+
 # Property Group
 Erp::Products::PropertyGroup.destroy_all
 len_pg = Erp::Products::PropertyGroup.create(
