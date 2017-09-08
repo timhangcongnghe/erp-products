@@ -35,16 +35,6 @@
                         <%= t('.on_hand') %>
                     </th>
                 <% end %>
-                <% if get_columns(params).include?("stock_min") %>
-                    <th>
-                        <%= t('.stock_min') %>
-                    </th>
-                <% end %>
-                <% if get_columns(params).include?("stock_max") %>
-                    <th>
-                        <%= t('.stock_max') %>
-                    </th>
-                <% end %>
                 <% if get_columns(params).include?("status") %>
                     <th>
                         <%= t('status') %>
@@ -93,36 +83,12 @@
                             <td><%= product.on_hand %></td>
                         <% end %>
                     <% end %>
-                    <% if get_columns(params).include?("stock_min") %>
-                        <td><%= product.stock_min %></td>
-                    <% end %>
-                    <% if get_columns(params).include?("stock_max") %>
-                        <td><%= product.stock_max %></td>
-                    <% end %>
                     <% if get_columns(params).include?("status") %>
                     <td>
                         <% if product.archived == true %>
                         <span class="label label-sm label-danger"><%= t('.archived') %></span>
                         <% else %>
                         <span class="label label-sm label-success"><%= t('.active') %></span>
-                        <% end %>
-                        <% if product.is_deal? %>
-                        <br /><span class="label label-sm label-orange"><%= t('.deal') %></span>
-                        <% end %>
-                        <% if product.is_bestseller? %>
-                        <br /><span class="label label-sm label-orange"><%= t('.bestseller') %></span>
-                        <% end %>
-                        <% if product.is_sold_out? %>
-                        <br /><span class="label label-sm label-warning"><%= t('.sold_out') %></span>
-                        <% end %>
-                        <% if product.is_stock_inventory? %>
-                        <br /><span class="label label-sm label-info"><%= t('.stock_inventory') %></span>
-                        <% end %>
-                        <% if product.is_business_choices? %>
-                        <br /><span class="label label-sm label-info"><%= t('.business_choices') %></span>
-                        <% end %>
-                        <% if product.is_top_business_choices? %>
-                        <br /><span class="label label-sm label-info"><%= t('.top_business_choices') %></span>
                         <% end %>
                     </td>
                     <% end %>
@@ -158,89 +124,6 @@
                                     hide: !product.archived,
                                     class: 'ajax-link',
                                     data_confirm: t('.unarchive_confirm')
-                                },
-                                {
-                                    text: '<i class="fa fa-check-square-o"></i> '+t('.check_is_bestseller'),
-                                    url: erp_products.check_is_bestseller_backend_products_path(id: product),
-                                    data_method: 'PUT',
-                                    hide: product.is_bestseller,
-                                    class: 'ajax-link',
-                                    data_confirm: t('.check_is_bestseller_confirm')
-                                },
-                                {
-                                    text: '<i class="fa fa-square-o"></i> '+t('.uncheck_is_bestseller'),
-                                    url: erp_products.uncheck_is_bestseller_backend_products_path(id: product),
-                                    data_method: 'PUT',
-                                    hide: !product.is_bestseller,
-                                    class: 'ajax-link',
-                                    data_confirm: t('.uncheck_is_bestseller_confirm')
-                                },
-                                {
-                                    text: '<i class="fa fa-plus"></i> '+t('.check_is_sold_out'),
-                                    url: erp_products.check_is_sold_out_backend_products_path(id: product),
-                                    data_method: 'PUT',
-                                    hide: product.is_sold_out,
-                                    class: 'ajax-link',
-                                    data_confirm: t('.check_is_sold_out_confirm')
-                                },
-                                {
-                                    text: '<i class="fa fa-remove"></i> '+t('.uncheck_is_sold_out'),
-                                    url: erp_products.uncheck_is_sold_out_backend_products_path(id: product),
-                                    data_method: 'PUT',
-                                    hide: !product.is_sold_out,
-                                    class: 'ajax-link',
-                                    data_confirm: t('.uncheck_is_sold_out_confirm')
-                                },
-                                {
-                                    text: '<i class="fa fa-plus"></i> '+t('.check_is_stock_inventory'),
-                                    url: erp_products.check_is_stock_inventory_backend_products_path(id: product),
-                                    data_method: 'PUT',
-                                    hide: product.is_stock_inventory,
-                                    class: 'ajax-link',
-                                    data_confirm: t('.check_is_stock_inventory_confirm')
-                                },
-                                {
-                                    text: '<i class="fa fa-remove"></i> '+t('.uncheck_is_stock_inventory'),
-                                    url: erp_products.uncheck_is_stock_inventory_backend_products_path(id: product),
-                                    data_method: 'PUT',
-                                    hide: !product.is_stock_inventory,
-                                    class: 'ajax-link',
-                                    data_confirm: t('.uncheck_is_stock_inventory_confirm')
-                                },
-                                
-                                
-                                
-                                {
-                                    text: '<i class="fa fa-plus"></i> '+t('.check_is_business_choices'),
-                                    url: erp_products.check_is_business_choices_backend_products_path(id: product),
-                                    data_method: 'PUT',
-                                    hide: product.is_business_choices,
-                                    class: 'ajax-link',
-                                    data_confirm: t('.check_is_business_choices_confirm')
-                                },
-                                {
-                                    text: '<i class="fa fa-remove"></i> '+t('.uncheck_is_business_choices'),
-                                    url: erp_products.uncheck_is_business_choices_backend_products_path(id: product),
-                                    data_method: 'PUT',
-                                    hide: !product.is_business_choices,
-                                    class: 'ajax-link',
-                                    data_confirm: t('.uncheck_is_business_choices_confirm')
-                                },
-                                {
-                                    text: '<i class="fa fa-plus"></i> '+t('.check_is_top_business_choices'),
-                                    url: erp_products.check_is_top_business_choices_backend_products_path(id: product),
-                                    data_method: 'PUT',
-                                    hide: product.is_top_business_choices,
-                                    class: 'ajax-link',
-                                    data_confirm: t('.check_is_top_business_choices_confirm')
-                                },
-                                {
-                                    text: '<i class="fa fa-remove"></i> '+t('.uncheck_is_top_business_choices'),
-                                    url: erp_products.uncheck_is_top_business_choices_backend_products_path(id: product),
-                                    data_method: 'PUT',
-                                    hide: !product.is_top_business_choices,
-                                    class: 'ajax-link',
-                                    data_confirm: t('.uncheck_is_top_business_choices_confirm')
                                 },
                                 {
                                     divider: true
