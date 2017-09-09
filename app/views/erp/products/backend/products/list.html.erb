@@ -76,7 +76,7 @@
                     <% end %>
                     <% if Erp::Core.available?("qdeliveries") %>
                         <% if get_columns(params).include?("on_hand") %>
-                            <td><%= product.get_stock %></td>
+                            <td><%= product.get_stock(params) %></td>
                         <% end %>
                     <% else %>
                         <% if get_columns(params).include?("on_hand") %>

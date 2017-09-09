@@ -49,61 +49,44 @@ module Erp::Products
     IN_TOCK = 'in_stock'
     
     if Erp::Core.available?("qdeliveries")
-			# @todo purchases - import
-			def get_stock_warehouse_import
-				Erp::Qdeliveries::DeliveryDetail.joins(:order_detail)
+			ImportArrays = [Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT, Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT]
+			ExportArrays = [Erp::Qdeliveries::Delivery::TYPE_MANUFACTURER_EXPORT, Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT]
+			# @todo import
+			def get_import(params)
+				if !params[:warehouse_id].present?
+					return 100
+				else
+					Erp::Qdeliveries::DeliveryDetail.joins(:order_detail)
 								.where.not(erp_qdeliveries_delivery_details: {order_detail_id: nil}).joins(:delivery)
-								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT})
+								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Products::Product::ImportArrays})
 								.where(erp_orders_order_details: {product_id: self.id})
 								.sum("erp_qdeliveries_delivery_details.quantity") + Erp::Qdeliveries::DeliveryDetail.joins(:order_detail)
 								.where(erp_qdeliveries_delivery_details: {order_detail_id: nil}).joins(:delivery)
-								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT})
+								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Products::Product::ImportArrays})
 								.where(erp_orders_order_details: {product_id: self.id})
 								.sum("erp_qdeliveries_delivery_details.quantity")
+				end
 			end
 			
-			# @todo purchases - export
-			def get_manufacturer_export
+			# @todo export
+			def get_export(params)
+				if !params[:warehouse_id].present?
+					return 10
+				else
 				Erp::Qdeliveries::DeliveryDetail.joins(:order_detail)
 								.where.not(erp_qdeliveries_delivery_details: {order_detail_id: nil}).joins(:delivery)
-								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_MANUFACTURER_EXPORT})
+								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Products::Product::ExportArrays})
 								.where(erp_orders_order_details: {product_id: self.id})
 								.sum("erp_qdeliveries_delivery_details.quantity") + Erp::Qdeliveries::DeliveryDetail.joins(:order_detail)
 								.where(erp_qdeliveries_delivery_details: {order_detail_id: nil}).joins(:delivery)
-								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_MANUFACTURER_EXPORT})
+								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Products::Product::ExportArrays})
 								.where(erp_orders_order_details: {product_id: self.id})
 								.sum("erp_qdeliveries_delivery_details.quantity")
+				end
 			end
 			
-			# @todo sales - import
-			def get_customer_import
-				Erp::Qdeliveries::DeliveryDetail.joins(:order_detail)
-								.where.not(erp_qdeliveries_delivery_details: {order_detail_id: nil}).joins(:delivery)
-								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT})
-								.where(erp_orders_order_details: {product_id: self.id})
-								.sum("erp_qdeliveries_delivery_details.quantity") + Erp::Qdeliveries::DeliveryDetail.joins(:order_detail)
-								.where(erp_qdeliveries_delivery_details: {order_detail_id: nil}).joins(:delivery)
-								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT})
-								.where(erp_orders_order_details: {product_id: self.id})
-								.sum("erp_qdeliveries_delivery_details.quantity")
-			end			
-			
-			# @todo sales - export
-			def get_warehouse_export
-				Erp::Qdeliveries::DeliveryDetail.joins(:order_detail)
-								.where.not(erp_qdeliveries_delivery_details: {order_detail_id: nil}).joins(:delivery)
-								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT})
-								.where(erp_orders_order_details: {product_id: self.id})
-								.sum("erp_qdeliveries_delivery_details.quantity") + Erp::Qdeliveries::DeliveryDetail.joins(:order_detail)
-								.where(erp_qdeliveries_delivery_details: {order_detail_id: nil}).joins(:delivery)
-								.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT})
-								.where(erp_orders_order_details: {product_id: self.id})
-								.sum("erp_qdeliveries_delivery_details.quantity")
-			end
-			
-			def get_stock
-				result = (get_stock_warehouse_import + get_customer_import)
-								 - (get_warehouse_export + get_manufacturer_export)
+			def get_stock(params={})
+				result = get_import(params) - get_export(params)
 				return result
 			end
 			
