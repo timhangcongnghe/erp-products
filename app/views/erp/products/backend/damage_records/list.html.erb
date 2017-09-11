@@ -39,12 +39,17 @@
     </thead>
     <tbody>
         <% if @damage_records.each do |damage_record| %>
-            <tr class="odd gradeX">
+            <tr class="<%= 'blurred' if damage_record.is_deleted? %> odd gradeX has-child-table" data-url="<%= erp_products.damage_record_details_backend_damage_records_path(id: damage_record.id) %>">
                 <td>
                     <%= erp_datalist_check_row(id: damage_record.id) %>
                 </td>
                 <% if get_columns(params).include?("code") %>
-                    <td><%= link_to damage_record.code, erp_products.edit_backend_damage_record_path(damage_record) %></td>
+                    <td>
+                        <i class="fa fa-plus expand tr-expand-button"></i>
+                        <strong>
+                            <%= link_to damage_record.code, erp_products.edit_backend_damage_record_path(damage_record) %>
+                        </strong>
+                    </td>
                 <% end %>
                 <% if get_columns(params).include?("date") %>
                     <td><%= damage_record.date.strftime("%H:%M %d-%m-%Y") %></td>
@@ -54,11 +59,7 @@
                 <% end %>
                 <% if get_columns(params).include?("status") %>
                 <td>
-                    <% if damage_record.status == Erp::Products::DamageRecord::DAMAGE_RECORD_STATUS_PENDING %>
-                    <span class="label label-sm label-warning"><%= t('.'+damage_record.status) %></span>
-                    <% else %>
-                    <span class="label label-sm label-success"><%= t('.'+damage_record.status) %></span>
-                    <% end %> 
+                    <%= status_label(damage_record.status) %> 
                 </td>
                 <% end %>
                 <% if get_columns(params).include?("creator") %>
@@ -80,9 +81,9 @@
                             },
                             {
                                 text: '<i class="fa fa-check"></i> '+t('confirm'),
-                                url: erp_products.damage_record_confirm_backend_damage_records_path(id: damage_record),
+                                url: erp_products.set_confirm_backend_damage_records_path(id: damage_record),
                                 data_method: 'PUT',
-                                hide: damage_record.status != 'pending',
+                                hide: damage_record.is_done?,
                                 class: 'ajax-link'
                             },
                             {
@@ -104,8 +105,9 @@
                             },
                             {
                                 text: '<i class="fa fa-trash"></i> '+t('.delete'),
-                                url: erp_products.backend_damage_record_path(damage_record),
-                                data_method: 'DELETE',
+                                url: erp_products.set_delete_backend_damage_records_path(id: damage_record),
+                                data_method: 'PUT',
+                                hide: damage_record.is_deleted?,
                                 class: 'ajax-link',
                                 data_confirm: t('delete_confirm')
                             }

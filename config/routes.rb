@@ -190,9 +190,11 @@ Erp::Products::Engine.routes.draw do
       resources :damage_records do
         collection do
           post 'list'
+          get 'damage_record_details'
           get 'dataselect'
           delete 'delete_all'
-          put 'damage_record_confirm'
+          put 'set_confirm'
+          put 'set_delete'
           put 'archive'
           put 'unarchive'
           put 'archive_all'

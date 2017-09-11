@@ -2,7 +2,8 @@ module Erp
   module Products
     module Backend
       class DamageRecordsController < Erp::Backend::BackendController
-        before_action :set_damage_record, only: [:damage_record_confirm, :archive, :unarchive, :show, :edit, :update, :destroy]
+        before_action :set_damage_record, only: [:show, :edit, :update, :destroy, :damage_record_details,
+                                                 :set_confirm, :set_delete, :archive, :unarchive]
         before_action :set_damage_records, only: [:delete_all, :archive_all, :unarchive_all]
         
         # GET /damage_records
@@ -11,8 +12,13 @@ module Erp
         
         # POST /damage_records/list
         def list
-          @damage_records = DamageRecord.search(params).paginate(:page => params[:page], :per_page => 3)
+          @damage_records = DamageRecord.search(params).paginate(:page => params[:page], :per_page => 10)
           
+          render layout: nil
+        end
+        
+        # GET /damage record details
+        def damage_record_details
           render layout: nil
         end
     
@@ -152,9 +158,23 @@ module Erp
           end          
         end
         
-        # Confirm /damage_records/damage_record_confirm?id=1
-        def damage_record_confirm
-          @damage_record.damage_record_confirm
+        # Confirm /damage_records/set_confirm?id=1
+        def set_confirm
+          @damage_record.set_confirm
+          
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end 
+        end
+        
+        # Delete /damage_records/set_delete?id=1
+        def set_delete
+          @damage_record.set_delete
           
           respond_to do |format|
           format.json {
@@ -187,7 +207,7 @@ module Erp
           # Only allow a trusted parameter "white list" through.
           def damage_record_params
             params.fetch(:damage_record, {}).permit(:code, :date, :warehouse_id, :description,
-                                            :damage_record_details_attributes => [ :id, :product_id, :damage_record_id, :quantity, :note, :_destroy ])
+                                            :damage_record_details_attributes => [ :id, :product_id, :damage_record_id, :quantity, :state_id, :note, :_destroy ])
           end
       end
     end

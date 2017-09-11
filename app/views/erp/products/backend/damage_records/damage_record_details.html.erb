@@ -1,0 +1,35 @@
+<div class="col-md-12">
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped flip-content">
+                <thead class="flip-content">
+                    <tr>
+                        <th class="bg-yellow bg-font-yellow text-nowrap text-left"><%= t('.product_code') %></th>
+                        <th class="bg-yellow bg-font-yellow text-nowrap text-left"><%= t('.diameter') %></th>
+                        <th class="bg-yellow bg-font-yellow text-nowrap text-left"><%= t('.category') %></th>
+                        <th class="bg-yellow bg-font-yellow text-nowrap text-right"><%= t('.quantity') %></th>
+                        <th class="bg-yellow bg-font-yellow text-nowrap text-right"><%= t('.state') %></th>
+                        <th class="bg-yellow bg-font-yellow text-nowrap text-left"><%= t('.note') %></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="bg-green" colspan="3"><strong><%= t('.total_all') %></strong></td>
+                        <td class="bg-green text-right"><strong>100</strong></td>
+                        <td class="bg-green" colspan="2"></td>
+                    </tr>
+                    <% @damage_record.damage_record_details.each do |damage_record_detail| %>
+                        <tr>
+                            <td class="text-left"><strong><%= damage_record_detail.product_code %></strong></td>
+                            <td class="text-left"><%= damage_record_detail.product.get_diameter %></td>
+                            <td class="text-left"><%= damage_record_detail.product.category_name %></td>
+                            <td class="text-right"><%= format_number(damage_record_detail.quantity) %></td>
+                            <td class="text-right"><%= damage_record_detail.state_name %></td>
+                            <td class="text-left"><%= damage_record_detail.note %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

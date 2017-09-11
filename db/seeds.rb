@@ -231,10 +231,35 @@ dk_pvs.each do |dk_pv|
         create_product(user, brand, letter, number, dk_pv, len_exp, chu_pv, do_pv, so_pv, dok_pv)
       end
 
-      puts "================================= #{dk_pv.value} #{letter} #{number} ======================================="
+      puts "==== #{dk_pv.value} #{letter} #{number} ===="
 
     end
 
     do_v = do_v + 0.25
   end
+end
+
+status = [
+  Erp::Products::DamageRecord::STATUS_DRAFT,
+  Erp::Products::DamageRecord::STATUS_DONE,
+  Erp::Products::DamageRecord::STATUS_DELETED
+]
+
+(1..10).each do |num|
+  dr = Erp::Products::DamageRecord.create(
+    code: 'DR' + num.to_s.rjust(3, '0'),
+    date: rand((Time.current-2.month)..Time.current),
+    status: status[rand(status.count)],
+    warehouse_id: Erp::Warehouses::Warehouse.order('RANDOM()').first.id,
+    creator_id: user.id
+  )
+  Erp::Products::Product.where(id: Erp::Products::Product.pluck(:id).sample(rand(5..20))).each do |product|
+    drd = Erp::Products::DamageRecordDetail.create(
+      product_id: product.id,
+      damage_record_id: dr.id,
+      quantity: rand(1..3),
+      state_id: Erp::Products::State.order("RANDOM()").first.id
+    )
+  end
+  puts '==== Damage record ' +num.ordinalize+ ' complete ('+dr.code+') ===='
 end

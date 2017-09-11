@@ -11,11 +11,14 @@ module Erp::Products
         warehouse.present? ? warehouse.name : ''
       end
     end
-    after_create  :update_damage_record_status
+    after_create  :set_drart
     
     # class const
     DAMAGE_RECORD_STATUS_PENDING = 'pending'
     DAMAGE_RECORD_STATUS_DONE = 'done'
+    STATUS_DRAFT = 'draft'
+    STATUS_DONE = 'done'
+    STATUS_DELETED = 'deleted'
     
     # Filters
     def self.filter(query, params)
@@ -129,14 +132,34 @@ module Erp::Products
 			update_all(archived: false)
 		end
     
-    # update damage record status
-    def update_damage_record_status
-      self.update_columns(status: Erp::Products::DamageRecord::DAMAGE_RECORD_STATUS_PENDING)
+    # damage record draft
+    def set_drart
+      self.update_columns(status: Erp::Products::DamageRecord::STATUS_DRAFT)
     end
     
     # damage record confirm
-    def damage_record_confirm
-      self.update_columns(status: Erp::Products::DamageRecord::DAMAGE_RECORD_STATUS_DONE)
+    def set_confirm
+      self.update_columns(status: Erp::Products::DamageRecord::STATUS_DONE)
     end
+    
+    # damage record delete
+    def set_delete
+      self.update_columns(status: Erp::Products::DamageRecord::STATUS_DELETED)
+    end
+    
+    # check if damage record is draft
+		def is_draft?
+			return self.status == Erp::Products::DamageRecord::STATUS_DRAFT
+		end
+    
+    # check if damage record is done
+		def is_done?
+			return self.status == Erp::Products::DamageRecord::STATUS_DONE
+		end
+    
+    # check if damage record is deleted
+		def is_deleted?
+			return self.status == Erp::Products::DamageRecord::STATUS_DELETED
+		end
   end
 end

@@ -854,24 +854,31 @@ vi:
             success: "Các phiếu xuất hủy đã được ẩn thành công."
           unarchive_all:
             success: "Các phiếu xuất hủy đã được hiện ra thành công."
-          damage_record_confirm:
-            success: "Phiếu xuất hủy được duyệt thành công"
+          set_confirm:
+            success: "Phiếu xuất hủy đã được xác nhận hoàn thành."
+          set_delete:
+            success: "Phiếu xuất hủy đã xóa thành công."
           index:
             damage_records: "Phiếu xuất hủy"
             create: "Thêm phiếu xuất hủy"
-            code: "Mã xuất hủy"
+            code: "Mã phiếu"
             date: "Thời gian"
-            warehouse: "Kho/Chi nhánh"
-            delete: "Xóa phiếu xuất hủy"
-          list:
-            code: "Mã xuất hủy"
-            date: "Thời gian"
-            warehouse: "Kho/Chi nhánh"
+            warehouse: "Kho xuất"
             status: "Trạng thái"
-            pending: "Chưa xác nhận"
-            done: "Đã xác nhận"
-            delete: "Xóa phiếu xuất hủy"
-            no_matching_records_found: "Danh sách phiếu xuất hủy hiện tại đang trống."
+            draft: "Phiếu tạm"
+            done: "Hoàn thành"
+            deleted: "Đã bị xóa"
+            delete: "Xóa phiếu"
+          list:
+            code: "Mã phiếu"
+            date: "Thời gian"
+            warehouse: "Kho xuất"
+            status: "Trạng thái"
+            draft: "Phiếu tạm"
+            done: "Hoàn thành"
+            deleted: "Đã bị xóa"
+            delete: "Xóa phiếu"
+            no_matching_records_found: "Danh sách hiện không có kết quả nào được tìm thấy"
           new:
             damage_records: "Phiếu xuất hủy"
             create: "Thêm phiếu xuất hủy"
@@ -885,7 +892,6 @@ vi:
             choose_date: "Chọn ngày tạo phiếu"
             choose_warehouse: "Chọn kho/chi nhánh"
             description: "Mô tả cho phiếu xuất hủy....."
-            note: "Ghi chú"
             damage_record_details: "Chi tiết sản phẩm cần hủy"
             product: "Sản phẩm"
             help_product: "Chọn sản phẩm cần hủy và thêm vào phiếu"
@@ -894,7 +900,20 @@ vi:
             product_code: "Mã sản phẩm"
             product_name: "Tên sản phẩm"
             quantity: "Số lượng"
+            state: "Tình trạng"
+            note: "Ghi chú"
             quantity_total: "Tổng số lượng hủy"
+          damage_record_details:
+            product_code: "Mã hàng"
+            diameter: "Đường kính"
+            category: "Loại hàng"
+            quantity: "Số lượng"
+            state: "Tình trạng"
+            note: "Ghi chú"
+            total_all: "Tổng cộng"
+        damage_record_details:
+          damage_record_line_form:
+            choose_state: "Trạng thái sản phẩm"
         stock_checks:
           create:
             success: "Thêm phiếu kiểm kho thành công."
