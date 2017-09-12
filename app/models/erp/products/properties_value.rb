@@ -7,6 +7,8 @@ module Erp::Products
     validates :property_id, :presence => true
     validate :value_check
 
+    has_many :products, through: :products_values
+
     def value_check
 			exist = PropertiesValue.where.not(id: self.id).where(property_id: self.property_id).where('LOWER(value) = ?', self.value.strip.downcase).first
 			if exist.present?
