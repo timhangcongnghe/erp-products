@@ -1,5 +1,11 @@
 user = Erp::User.first
 
+# State
+Erp::Products::State.destroy_all
+Erp::Products::State.create(name: "Mới", status: Erp::Products::State::STATE_STATUS_ACTIVE, creator_id: user.id)
+Erp::Products::State.create(name: "Xước", status: Erp::Products::State::STATE_STATUS_ACTIVE, creator_id: user.id)
+Erp::Products::State.create(name: "Vỡ", status: Erp::Products::State::STATE_STATUS_ACTIVE, creator_id: user.id)
+
 # Create category
 Erp::Products::Category.destroy_all
 len_sta = Erp::Products::Category.create(name: "Standard", creator_id: user.id)
