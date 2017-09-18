@@ -59,7 +59,10 @@ module Erp::Products
 				query = Erp::Qdeliveries::DeliveryDetail.joins(:order_detail, :delivery)
 					.where.not(order_detail_id: nil)
 					.where(erp_orders_order_details: {product_id: self.id})
-					.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Products::Product::ImportArrays})
+					.where(erp_qdeliveries_deliveries: {
+						delivery_type: Erp::Products::Product::ImportArrays,
+						status: Erp::Qdeliveries::Delivery::STATUS_DELIVERED
+					})
 				# warehouse
 				query = query.where(warehouse_id: params[:warehouse].id) if params[:warehouse].present?
 				# state
@@ -71,7 +74,10 @@ module Erp::Products
 				query = Erp::Qdeliveries::DeliveryDetail.joins(:delivery)
 					.where(order_detail_id: nil)
 					.where(product_id: self.id)
-					.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Products::Product::ImportArrays})				
+					.where(erp_qdeliveries_deliveries: {
+						delivery_type: Erp::Products::Product::ImportArrays,
+						status: Erp::Qdeliveries::Delivery::STATUS_DELIVERED
+					})				
 				# warehouse
 				query = query.where(warehouse_id: params[:warehouse].id) if params[:warehouse].present?
 				# state
@@ -90,7 +96,10 @@ module Erp::Products
 				query = Erp::Qdeliveries::DeliveryDetail.joins(:order_detail, :delivery)
 					.where.not(order_detail_id: nil)
 					.where(erp_orders_order_details: {product_id: self.id})
-					.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Products::Product::ExportArrays})
+					.where(erp_qdeliveries_deliveries: {
+						delivery_type: Erp::Products::Product::ExportArrays,
+						status: Erp::Qdeliveries::Delivery::STATUS_DELIVERED
+					})
 				# warehouse
 				query = query.where(warehouse_id: params[:warehouse].id) if params[:warehouse].present?
 				# state
@@ -102,7 +111,10 @@ module Erp::Products
 				query = Erp::Qdeliveries::DeliveryDetail.joins(:delivery)
 					.where(order_detail_id: nil)
 					.where(product_id: self.id)
-					.where(erp_qdeliveries_deliveries: {delivery_type: Erp::Products::Product::ExportArrays})
+					.where(erp_qdeliveries_deliveries: {
+						delivery_type: Erp::Products::Product::ExportArrays,
+						status: Erp::Qdeliveries::Delivery::STATUS_DELIVERED
+					})
 				# warehouse
 				query = query.where(warehouse_id: params[:warehouse].id) if params[:warehouse].present?
 				# state
