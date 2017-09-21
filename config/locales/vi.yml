@@ -962,16 +962,21 @@ vi:
             choose_adjustment_date: "Chọn ngày cân bằng kho"
             choose_warehouse: "Chọn kho/chi nhánh"
             description: "Mô tả cho phiếu kiểm kho....."
-            note: "Ghi chú"
             stock_check_details: "Chi tiết kiểm kho"
             product: "Sản phẩm"
             help_product: "Chọn sản phẩm cần thêm để kiểm tra và cân bằng kho"
             choose_product: "Chọn sản phẩm"
             add: "Thêm"
-            product_code: "Mã sản phẩm"
-            product_name: "Tên sản phẩm"
-            quantity: "Số lượng"
+            product_name: "Sản phẩm"
+            stock: "Tồn kho"
+            real_qty: "Kiểm thực tế"
+            quantity: "Chênh lệch"
+            state: "Tình trạng"
+            note: "Ghi chú"
             quantity_total: "Tổng số lượng sản phẩm kiểm"
+        stock_check_details:
+          stock_check_line_form:
+            choose_state: "Chọn tình trạng sản phẩm"
         comments:
           archive: 
             success: "Bình luận đã được ẩn thành công."

@@ -1,21 +1,49 @@
 <input type="hidden" name="stock_check[stock_check_details_attributes][<%= uid %>][id]" value="<%= stock_check_detail.id %>">
 <input type="hidden" name="stock_check[stock_check_details_attributes][<%= uid %>][product_id]" value="<%= stock_check_detail.product_id %>" class="product-id">
 <input type="hidden" name="stock_check[stock_check_details_attributes][<%= uid %>][_destroy]" value="">
-<td><%= stock_check_detail.product_code %></td>
 <td><%= stock_check_detail.product_name %></td>
-<td>
+<td width='10%'>
+    <div class="form-group">
+        <div class="form-control">
+            <input type="hidden" value="<%= stock_check_detail.stock %>"
+            name="stock_check[stock_check_details_attributes][<%= uid %>][stock]" />
+            <span class="line_stock_qty">9</span>
+        </div>
+    </div>
+</td>
+<td width='10%'>
     <%= erp_form_control("number", {
-        name: 'stock_check[stock_check_details_attributes][' + uid + '][quantity]',
-        value: stock_check_detail.quantity,
-        text: stock_check_detail.quantity,
-        class: "line_quantity inline"
+        name: 'stock_check[stock_check_details_attributes][' + uid + '][real]',
+        value: stock_check_detail.real,
+        text: stock_check_detail.real,
+        class: "line_real_qty inline"
     }) %>
 </td>
-<td>
+<td width='10%'>
+    <div class="form-group">
+        <div class="form-control">
+            <input type="hidden" value="<%= stock_check_detail.quantity %>"
+            name="stock_check[stock_check_details_attributes][<%= uid %>][quantity]" />
+            <span class="line_difference_qty"></span>
+        </div>
+    </div>
+</td>
+<td width='20%'>
+    <%= erp_form_control("dataselect", {
+        name: 'stock_check[stock_check_details_attributes][' + uid + '][state_id]',
+        value: stock_check_detail.state_id,
+        text: stock_check_detail.state_name,
+        placeholder: t('.choose_state'),
+        url: erp_products.dataselect_backend_states_path(format: 'json'),
+        errors: stock_check_detail.errors.full_messages_for(:state_id)
+    }) %>
+</td>
+<td width='20%'>
     <%= erp_form_control("textarea", {
         name: 'stock_check[stock_check_details_attributes][' + uid + '][note]',
         value: stock_check_detail.note,
         text: stock_check_detail.note,
+        rows: 1
     }) %>
 </td>
 <td class="text-right">
@@ -23,3 +51,4 @@
         is_nested_form: true
     }) %>
 </td>
+
