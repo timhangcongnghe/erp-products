@@ -216,6 +216,7 @@ Erp::Products::Engine.routes.draw do
           put 'unarchive'
           put 'archive_all'
           put 'unarchive_all'
+          get 'ajax_stock_col'
         end
       end
       resources :stock_check_details do

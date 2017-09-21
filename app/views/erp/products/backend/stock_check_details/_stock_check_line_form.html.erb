@@ -3,7 +3,16 @@
 <input type="hidden" name="stock_check[stock_check_details_attributes][<%= uid %>][_destroy]" value="">
 <td><%= stock_check_detail.product_name %></td>
 <td width='10%'>
-    <div class="form-group">
+
+    <div class="ajax-box"
+        data-url="<%= erp_products.ajax_stock_col_backend_stock_checks_path %>"
+        data-control="
+            [name='stock_check[warehouse_id]'],
+            [name='stock_check[stock_check_details_attributes][<%= uid %>][product_id]'],
+            [name='stock_check[stock_check_details_attributes][<%= uid %>][state_id]'],
+            [name='stock_check[stock_check_details_attributes][<%= uid %>][stock]']"
+        "
+    >
         <div class="form-control">
             <input type="hidden" value="<%= stock_check_detail.stock %>"
             name="stock_check[stock_check_details_attributes][<%= uid %>][stock]" />
@@ -51,4 +60,3 @@
         is_nested_form: true
     }) %>
 </td>
-
