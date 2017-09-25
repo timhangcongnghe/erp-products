@@ -24,6 +24,7 @@ module Erp
         def new
           @stock_check = StockCheck.new
           @stock_check.adjustment_date = Time.now
+          @stock_check.employee = current_user
         end
 
         # GET /stock_checks/1/edit
@@ -175,9 +176,9 @@ module Erp
         def ajax_stock_col
           @warehouse = Erp::Warehouses::Warehouse.where(id: params[:datas][0]).first
           @product = Erp::Products::Product.where(id: params[:datas][1]).first
-          @state = Erp::Products::State.where(id: params[:datas][2]).first
+          @state = nil # Erp::Products::State.where(id: params[:datas][2]).first
           @stock = @product.get_stock(warehouse: @warehouse, state: @state)
-          @name = params[:datas][3]
+          @uid = params[:datas][3]
           render layout: false
         end
 
@@ -193,7 +194,7 @@ module Erp
 
           # Only allow a trusted parameter "white list" through.
           def stock_check_params
-            params.fetch(:stock_check, {}).permit(:code, :adjustment_date, :warehouse_id, :description,
+            params.fetch(:stock_check, {}).permit(:code, :adjustment_date, :warehouse_id, :description, :employee_id,
                                             :stock_check_details_attributes => [ :id, :product_id, :stock_check_id, :quantity, :real, :stock, :state_id, :note, :_destroy ])
           end
       end

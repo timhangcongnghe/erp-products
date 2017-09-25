@@ -54,11 +54,7 @@
                 <% end %>
                 <% if get_columns(params).include?("status") %>
                 <td>
-                    <% if stock_check.status == Erp::Products::StockCheck::STOCK_CHECK_STATUS_PENDING %>
-                    <span class="label label-sm label-warning"><%= t('.'+stock_check.status) %></span>
-                    <% else %>
-                    <span class="label label-sm label-success"><%= t('.'+stock_check.status) %></span>
-                    <% end %>
+                    <%= status_label(stock_check.status) %>
                 </td>
                 <% end %>
                 <% if get_columns(params).include?("creator") %>

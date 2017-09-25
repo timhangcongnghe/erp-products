@@ -1,4 +1,4 @@
-<input type="hidden"
+<input type="hidden" class="line_stock_qty"
     value="<%= @stock %>"
-    name="<%= @name %>" />
-<%= @stock %>
+    name="stock_check[stock_check_details_attributes][<%= @uid %>][stock]" />
+<strong><%= @stock %></strong>

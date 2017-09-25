@@ -2,6 +2,7 @@ module Erp::Products
   class StockCheck < ApplicationRecord
     validates :code, :adjustment_date, :warehouse_id, :presence => true
     belongs_to :creator, class_name: "Erp::User"
+    belongs_to :employee, class_name: "Erp::User"
     
     has_many :stock_check_details, inverse_of: :stock_check, dependent: :destroy
     accepts_nested_attributes_for :stock_check_details, :reject_if => lambda { |a| a[:product_id].blank? || a[:quantity].blank? || a[:quantity].to_i <= 0 }
@@ -13,8 +14,13 @@ module Erp::Products
     end
     after_create  :update_stock_check_status
     
+    # display employee name
+    def employee_name
+      employee.present? ? employee.name : ''
+    end
+    
     # class const
-    STOCK_CHECK_STATUS_PENDING = 'pending'
+    STOCK_CHECK_STATUS_DRAFT = 'draft'
     STOCK_CHECK_STATUS_DONE = 'done'
     
     # Filters
@@ -131,7 +137,7 @@ module Erp::Products
     
     # update stock check status
     def update_stock_check_status
-      self.update_columns(status: Erp::Products::StockCheck::STOCK_CHECK_STATUS_PENDING)
+      self.update_columns(status: Erp::Products::StockCheck::STOCK_CHECK_STATUS_DRAFT)
     end
      
     # stock check confirm

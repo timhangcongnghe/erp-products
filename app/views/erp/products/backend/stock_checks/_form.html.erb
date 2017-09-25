@@ -4,27 +4,27 @@
             <div class="col-md-6">
                 <div class="portlet light bordered">
                     <div class="portlet-body form">
-                        <%= erp_form_control("text", {
-                            name: 'stock_check[code]',
-                            value: stock_check.code,                   
-                            label: t('.code'),
-                            required: true,
-                            errors: stock_check.errors.full_messages_for(:code)
-                        }) %>
-                        <%= erp_form_control('date', {
-                            label: t('.adjustment_date'),
-                            name: 'stock_check[adjustment_date]',
-                            value: stock_check.adjustment_date,
-                            placeholder: t('.choose_adjustment_date'),
-                            required: true,
-                            errors: stock_check.errors.full_messages_for(:adjustment_date)
-                        }) %>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="portlet light bordered">
-                    <div class="portlet-body form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <%= erp_form_control("text", {
+                                    name: 'stock_check[code]',
+                                    value: stock_check.code,                   
+                                    label: t('.code'),
+                                    help: t('.help_code'),
+                                    errors: stock_check.errors.full_messages_for(:code)
+                                }) %>
+                            </div>
+                            <div class="col-md-6">
+                                <%= erp_form_control('date', {
+                                    label: t('.adjustment_date'),
+                                    name: 'stock_check[adjustment_date]',
+                                    value: stock_check.adjustment_date,
+                                    placeholder: t('.choose_adjustment_date'),
+                                    required: true,
+                                    errors: stock_check.errors.full_messages_for(:adjustment_date)
+                                }) %>
+                            </div>
+                        </div>
                         <% if Erp::Core.available?("warehouses") %>
                             <%= erp_form_control("dataselect", {
                                 name: 'stock_check[warehouse_id]',
@@ -37,10 +37,28 @@
                                 errors: stock_check.errors.full_messages_for(:warehouse_id)
                             }) %>
                         <% end %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">
+                        <%= erp_form_control("dataselect", {
+                            name: 'stock_check[employee_id]',
+                            value: stock_check.employee_id,
+                            text: stock_check.employee_name,
+                            placeholder: t('.choose_employee'),
+                            label: t('.employee'),
+                            url: erp.dataselect_backend_users_path(format: 'json'),
+                            required: true,
+                            errors: stock_check.errors.full_messages_for(:employee_id)
+                        }) %>
                         <%= erp_form_control("textarea", {
                             name: 'stock_check[description]',
                             value: stock_check.description,
-                            placeholder: t('.description')
+                            label: t('.description'),
+                            placeholder: t('.placeholder_description'),
+                            rows: 1
                         }) %>
                     </div>
                 </div>
@@ -54,7 +72,7 @@
                             <a href="#tab_5_1" data-toggle="tab"> <%= t('.stock_check_details') %> </a>
                         </li>
                     </ul>
-                    <div class="tab-content order-details">
+                    <div class="tab-content stock-check-details">
                         <div class="tab-pane addableform-table active" id="tab_5_1">
                             <%= erp_form_control("addableform", {
                                 type: 'table',
@@ -91,13 +109,26 @@
                                         <th></th>"
                             }) %>
                             
-                            <table class="table">
+                            <table class="table all-line-total">                                
                                 <tr>
-                                    <td width="90%" class="text-right text-semibold"><%= t(".quantity_total") %>:</td>
+                                    <td class="text-right text-semibold" colspan="2"><%= t('.totals') %></td>
+                                </tr>
+                                <tr>
+                                    <td width="90%" class="text-right text-semibold"><%= t('.stock_total') %>:</td>
                                     <td class="text-right">
-                                        <h4>
-                                            <span class="quantity_total text-bold"></span>
-                                        </h4>
+                                        <span class="stock_total text-bold"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="90%" class="text-right text-semibold"><%= t('.real_total') %>:</td>
+                                    <td class="text-right">
+                                        <span class="real_total text-bold"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="90%" class="text-right text-semibold"><%= t('.diff_qty_total') %>:</td>
+                                    <td class="text-right">
+                                        <span class="diff_qty_total text-bold"></span>
                                     </td>
                                 </tr>
                             </table>
@@ -114,4 +145,65 @@
         text: t('cancel'),
         href: erp_products.backend_stock_checks_path
     }) %>
+    
+    
+    <% content_for :page_script do %>
+    <script>
+    function calculateQuantityLine(container) {
+        var rows = container.find('table tbody tr:visible');
+        var stock_total = 0;
+        var real_total = 0;
+        var diff_qty_total = 0;
+        rows.each(function() {
+            var row = $(this);
+            var difference_qty = 0;
+            var stock = parseFloat(row.find('.line_stock_qty').val());
+            var real = parseFloat(row.find('.line_real_qty').val());
+            if (real) {
+                var difference_qty=real-stock;   
+            }
+            row.find('.line_difference_qty').html(difference_qty);
+            
+            // Update stock check total
+            if(stock) {
+                stock_total += stock;
+            }
+            if(real) {
+                real_total += real;
+            }
+            if(difference_qty) {
+                diff_qty_total += difference_qty;
+            }
+        });
+        // update line total
+        container.find('.stock_total').html(stock_total);
+        container.find('.real_total').html(real_total);
+        container.find('.diff_qty_total').html(diff_qty_total);
+    }
+    $(document).ready(function() {
+        $('.stock-check-details').each(function() {
+            calculateQuantityLine($(this));
+        });
+        
+        $('.ajax-box').bind("DOMSubtreeModified",function(){
+            $('.stock-check-details').each(function() {
+                calculateQuantityLine($(this));
+            });
+        });
+    
+        // Change event on order line
+        $(document).on('change keyup', '.stock-check-details input', function(e) {
+            var container = $(this).parents('.stock-check-details');
+            calculateQuantityLine(container);
+        });
+        
+        // Click event nested remove button
+        $(document).on('click', '.nested-remove-button', function(e) {
+            var container = $(this).parents('.stock-check-details');
+            setTimeout(function() {calculateQuantityLine(container);}, 100);
+        });
+    });
+    </script>
+    <% end %>
+    
 <% end %>

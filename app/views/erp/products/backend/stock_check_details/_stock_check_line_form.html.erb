@@ -1,6 +1,7 @@
 <input type="hidden" name="stock_check[stock_check_details_attributes][<%= uid %>][id]" value="<%= stock_check_detail.id %>">
 <input type="hidden" name="stock_check[stock_check_details_attributes][<%= uid %>][product_id]" value="<%= stock_check_detail.product_id %>" class="product-id">
 <input type="hidden" name="stock_check[stock_check_details_attributes][<%= uid %>][_destroy]" value="">
+<input type="hidden" name="uids[<%= uid %>]" value="<%= uid %>" />
 <td><%= stock_check_detail.product_name %></td>
 <td width='10%'>
 
@@ -10,14 +11,9 @@
             [name='stock_check[warehouse_id]'],
             [name='stock_check[stock_check_details_attributes][<%= uid %>][product_id]'],
             [name='stock_check[stock_check_details_attributes][<%= uid %>][state_id]'],
-            [name='stock_check[stock_check_details_attributes][<%= uid %>][stock]']"
+            [name='uids[<%= uid %>]']
         "
     >
-        <div class="form-control">
-            <input type="hidden" value="<%= stock_check_detail.stock %>"
-            name="stock_check[stock_check_details_attributes][<%= uid %>][stock]" />
-            <span class="line_stock_qty">9</span>
-        </div>
     </div>
 </td>
 <td width='10%'>
@@ -29,13 +25,9 @@
     }) %>
 </td>
 <td width='10%'>
-    <div class="form-group">
-        <div class="form-control">
-            <input type="hidden" value="<%= stock_check_detail.quantity %>"
-            name="stock_check[stock_check_details_attributes][<%= uid %>][quantity]" />
-            <span class="line_difference_qty"></span>
-        </div>
-    </div>
+    <input class="line_difference_qty" type="hidden" value="<%= stock_check_detail.quantity %>"
+    name="stock_check[stock_check_details_attributes][<%= uid %>][quantity]" />
+    <span class="line_difference_qty"></span>
 </td>
 <td width='20%'>
     <%= erp_form_control("dataselect", {
