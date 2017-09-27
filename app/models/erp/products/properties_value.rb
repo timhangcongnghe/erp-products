@@ -2,6 +2,7 @@ module Erp::Products
   class PropertiesValue < ApplicationRecord
     belongs_to :property
     has_many  :products_values, dependent: :destroy
+    has_many :products, through: :products_values, class_name: "Erp::Products::Product"
 
     validates :value, :presence => true
     validates :property_id, :presence => true

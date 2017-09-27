@@ -26,6 +26,9 @@
                 </td>
                 <td>
                     <%= properties_value.product_count %>
+                    / <a target="_blank" href="<%= erp_products.export_products_backend_properties_values_path(id: properties_value.id) %>">
+                        export
+                    </a>
                 </td>
                 <td class="text-right">
                     <%= erp_datalist_row_actions(

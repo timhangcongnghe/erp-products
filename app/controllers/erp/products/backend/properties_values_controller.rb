@@ -2,7 +2,7 @@ module Erp
   module Products
     module Backend
       class PropertiesValuesController < Erp::Backend::BackendController
-        before_action :set_properties_value, only: [:edit, :update, :destroy]
+        before_action :set_properties_value, only: [:export_products, :edit, :update, :destroy]
 
         # GET /properties
         def index
@@ -81,6 +81,16 @@ module Erp
               }
             }
           end
+        end
+
+        # export products list
+        def export_products
+          @products = @properties_value.products
+          render helpers.export_partial,
+            locals: {
+              header: ["id", "name", "property"],
+              rows: (@products.map {|product| [product.id, product.name, @properties_value.value] })
+            }
         end
 
         private

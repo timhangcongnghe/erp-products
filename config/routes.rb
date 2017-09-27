@@ -140,6 +140,7 @@ Erp::Products::Engine.routes.draw do
         collection do
           get 'dataselect'
           post 'list'
+          get 'export_products'
         end
       end
       resources :manufacturings do
