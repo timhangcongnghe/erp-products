@@ -58,6 +58,9 @@
                         <% if property.is_show_list == true %>
                             <span class="label label-sm label-info">Hiển thị tại trang danh sách</span>
                         <% end %>
+                        <% if property.is_show_website == true %>
+                            <span class="label label-sm label-info">Hiển thị bộ lọc</span>
+                        <% end %>
                     </td>
                 <% end %>
                 <% if get_columns(params).include?("creator") %>

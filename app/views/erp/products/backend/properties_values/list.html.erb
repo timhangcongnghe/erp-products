@@ -7,6 +7,7 @@
             <th><%= t('.property') %></th>
             <th><%= t('.value') %></th>
             <th><%= t('.product_count') %></th>
+            <th><%= t('.status') %></th>
             <th width="7%"><%= t('actions') %></th>
         </tr>
     </thead>
@@ -29,6 +30,11 @@
                     / <a target="_blank" href="<%= erp_products.export_products_backend_properties_values_path(id: properties_value.id) %>">
                         export
                     </a>
+                </td>
+                <td>
+                    <% if properties_value.is_show_website == true %>
+                        <span class="label label-sm label-info">Hiển thị bộ lọc</span>
+                    <% end %>
                 </td>
                 <td class="text-right">
                     <%= erp_datalist_row_actions(

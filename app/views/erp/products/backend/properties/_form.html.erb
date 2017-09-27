@@ -26,6 +26,14 @@
             }) %>
         </div>
     </div>
+    <%= erp_form_control('checkbox', {
+        name: 'property[is_show_website]',
+        id: 'property_is_show_website',
+        value: property.is_show_website,
+        not_selected_value: 'false',
+        options: [{value: 'true', text: t('.is_show_website')}],
+        help: t('.help_is_show_website')
+    }) %>
     <%= erp_form_control("dataselect", {
         name: 'property[property_group_id]',
         value: property.property_group_id,

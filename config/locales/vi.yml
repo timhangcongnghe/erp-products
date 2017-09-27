@@ -130,6 +130,8 @@ vi:
             property_group: "Nhóm thuộc tính"
             help_property_group: "Thuộc tính sản phẩm thuộc nhóm nào?"
             choose_property_group: "Chọn nhóm thuộc tính"
+            is_show_website: "Hiển thị thuộc tính ngoài trang danh sách"
+            help_is_show_website: "Chọn để hiển thị thuộc tính trên bộ lọc trang sản phẩm"
         properties_values:
           create:
             success: "Thêm giá trị thuộc tính thành công."
@@ -155,7 +157,7 @@ vi:
             property: "Thuộc tính"
             no_matching_records_found: "Danh sách giá trị thuộc tính hiện tại đang trống."
           new:
-            properties: "Tất cả thuộc tính"
+            properties_values: "Tất cả giá trị thuộc tính"
             create: "Thêm thuộc tính"
           edit:
             properties_values: "Tất cả giá trị thuộc tính"
@@ -169,6 +171,8 @@ vi:
             property: "Thuộc tính"
             help_property: "Thuộc tính sản phẩm thuộc nhóm nào?"
             choose_property: "Chọn Thuộc tính"
+            is_show_website: "Hiển thị ngoài trang danh sách"
+            help_is_show_website: "Chọn để hiển thị giá trị thuộc tính trên bộ lọc trang sản phẩm"
         products:
           create:
             success: "Thêm sản phẩm thành công."

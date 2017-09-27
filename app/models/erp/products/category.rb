@@ -14,6 +14,24 @@ module Erp::Products
     has_and_belongs_to_many :property_groups, -> { order 'erp_products_property_groups.custom_order' }, class_name: "Erp::Products::PropertyGroup", :join_table => 'erp_products_categories_pgroups'
 
     after_save :update_level
+    
+    # Get product properties for list
+		def category_get_properties_array
+			groups = []
+      return [] if self.nil?
+			self.property_groups.get_active.each do |group|
+				row = {}
+				row[:name] = group.name
+				row[:values] = []
+				group.properties.get_properties_for_filter.each do |property|
+					values = property.properties_values.get_property_values_for_filter.map {|pv| pv }
+					row[:values] += values if !values.empty?
+				end
+				groups << row if !row[:values].empty?
+			end
+
+			return groups
+		end
 
     # get self and children ids
     def get_self_and_children_ids

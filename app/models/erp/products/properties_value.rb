@@ -16,6 +16,10 @@ module Erp::Products
 				errors.add(:value)
 			end
 		end
+    
+    def self.get_property_values_for_filter
+			self.where(is_show_website: true)
+		end
 
     # Get property name
     def property_name

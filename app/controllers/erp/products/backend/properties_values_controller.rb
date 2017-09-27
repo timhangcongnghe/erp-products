@@ -101,7 +101,7 @@ module Erp
 
           # Only allow a trusted parameter "white list" through.
           def properties_value_params
-            params.fetch(:properties_value, {}).permit(:value, :property_id)
+            params.fetch(:properties_value, {}).permit(:value, :property_id, :is_show_website)
           end
       end
     end

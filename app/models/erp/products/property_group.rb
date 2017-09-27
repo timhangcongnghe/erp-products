@@ -10,6 +10,10 @@ module Erp::Products
     def self.get_active
 			self.where(archived: false)
 		end
+    
+    def self.get_properties_for_filter
+			self.get_active
+		end
 
     # Filters
     def self.filter(query, params)
