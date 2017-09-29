@@ -176,7 +176,7 @@ module Erp
         def ajax_stock_col
           @warehouse = Erp::Warehouses::Warehouse.where(id: params[:datas][0]).first
           @product = Erp::Products::Product.where(id: params[:datas][1]).first
-          @state = nil # Erp::Products::State.where(id: params[:datas][2]).first
+          @state = Erp::Products::State.where(id: params[:datas][2]).first
           @stock = @product.get_stock(warehouse: @warehouse, state: @state)
           @uid = params[:datas][3]
           render layout: false
