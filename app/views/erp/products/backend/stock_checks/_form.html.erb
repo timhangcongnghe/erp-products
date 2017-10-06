@@ -163,6 +163,7 @@
                 var difference_qty=real-stock;   
             }
             row.find('.line_difference_qty').html(difference_qty);
+            row.find('.line_difference_qty').val(difference_qty);
             
             // Update stock check total
             if(stock) {
