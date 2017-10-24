@@ -123,8 +123,7 @@ module Erp::Products
     
     def product_count_by_menu(menu)
 			Erp::Products::ProductsValue.includes(:product)
-        .where(erp_products_products: {is_sold_out: false})
-        .where(erp_products_products: {category_id: menu.get_all_related_category_ids})        
+        .where(erp_products_products: {is_sold_out: false, category_id: menu.categories.first})       
         .where(properties_value: self.id).count
 		end
   end
