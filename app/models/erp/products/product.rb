@@ -47,14 +47,14 @@ module Erp::Products
 
     OUT_OF_STOCK = 'out_of_stock'
     IN_TOCK = 'in_stock'
-    
+
     if Erp::Core.available?("qdeliveries")
 			ImportArrays = [Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT, Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT]
 			ExportArrays = [Erp::Qdeliveries::Delivery::TYPE_MANUFACTURER_EXPORT, Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT]
 			# @todo import
 			def get_qdelivery_import(params={})
 				stock = 0
-				
+
 				# qdelivery detail with order detail
 				query = Erp::Qdeliveries::DeliveryDetail.joins(:order_detail, :delivery)
 					.where.not(order_detail_id: nil)
@@ -67,9 +67,9 @@ module Erp::Products
 				query = query.where(warehouse_id: params[:warehouse].id) if params[:warehouse].present?
 				# state
 				query = query.where(state_id: params[:state].id) if params[:state].present?
-					
+
 				stock = stock + query.sum("erp_qdeliveries_delivery_details.quantity")
-					
+
 				# qdelivery detail without order detail
 				query = Erp::Qdeliveries::DeliveryDetail.joins(:delivery)
 					.where(order_detail_id: nil)
@@ -77,21 +77,21 @@ module Erp::Products
 					.where(erp_qdeliveries_deliveries: {
 						delivery_type: Erp::Products::Product::ImportArrays,
 						status: Erp::Qdeliveries::Delivery::STATUS_DELIVERED
-					})				
+					})
 				# warehouse
 				query = query.where(warehouse_id: params[:warehouse].id) if params[:warehouse].present?
 				# state
 				query = query.where(state_id: params[:state].id) if params[:state].present?
-										
+
 				stock = stock + query.sum("erp_qdeliveries_delivery_details.quantity")
-					
+
 				return stock
 			end
-			
+
 			# @todo export
 			def get_qdelivery_export(params={})
 				stock = 0
-				
+
 				# qdelivery detail with order detail
 				query = Erp::Qdeliveries::DeliveryDetail.joins(:order_detail, :delivery)
 					.where.not(order_detail_id: nil)
@@ -104,9 +104,9 @@ module Erp::Products
 				query = query.where(warehouse_id: params[:warehouse].id) if params[:warehouse].present?
 				# state
 				query = query.where(state_id: params[:state].id) if params[:state].present?
-					
+
 				stock = stock + query.sum("erp_qdeliveries_delivery_details.quantity")
-					
+
 				# qdelivery detail without order detail
 				query = Erp::Qdeliveries::DeliveryDetail.joins(:delivery)
 					.where(order_detail_id: nil)
@@ -119,25 +119,25 @@ module Erp::Products
 				query = query.where(warehouse_id: params[:warehouse].id) if params[:warehouse].present?
 				# state
 				query = query.where(state_id: params[:state].id) if params[:state].present?
-					
+
 				stock = stock + query.sum("erp_qdeliveries_delivery_details.quantity")
-					
+
 				return stock
 			end
 		end
-    
+
     # get stock
     def get_stock(params={})
 			stock = 0
-			
+
 			# Qdelivery
 			if Erp::Core.available?("qdeliveries")
 				stock += get_qdelivery_import(params) - get_qdelivery_export(params)
 			end
-			
+
 			return stock
 		end
-    
+
     # stock status
 		def stock_status
 			if get_stock <= 0
@@ -296,10 +296,18 @@ module Erp::Products
     # set is sold out
     def check_is_sold_out
 			update_columns(is_sold_out: true)
+
+			if Erp::Core.available?("online_store")
+        self.hkerp_set_sold_out
+      end
 		end
 
     def uncheck_is_sold_out
 			update_columns(is_sold_out: false)
+
+			if Erp::Core.available?("online_store")
+        self.hkerp_set_sold_out
+      end
 		end
 
     def self.check_is_sold_out_all
@@ -696,7 +704,7 @@ module Erp::Products
 			end
 			self.update_column(:cache_properties, arr.to_json)
 		end
-		
+
 		def get_stock_by_warehouse(warehouse)
 			return rand(0..100)
 		end
