@@ -37,6 +37,18 @@
             data_method: 'PUT',
             data_confirm: 'Update all price'
         },
+        {
+            text: '<i class="fa fa-plus"></i> '+t('.check_is_sold_out'),
+            url: erp_products.check_is_sold_out_all_backend_products_path,
+            data_method: 'PUT',
+            data_confirm: t('.check_is_sold_out_confirm')
+        },
+        {
+            text: '<i class="fa fa-remove"></i> '+t('.uncheck_is_sold_out'),
+            url: erp_products.uncheck_is_sold_out_all_backend_products_path,
+            data_method: 'PUT',
+            data_confirm: t('.uncheck_is_sold_out_confirm')
+        },
     ],
     filters: [
         {
