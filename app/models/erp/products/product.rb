@@ -48,6 +48,13 @@ module Erp::Products
     OUT_OF_STOCK = 'out_of_stock'
     IN_TOCK = 'in_stock'
 
+    def price=(new_price)
+      self[:price] = new_price.to_s.gsub(/\,/, '')
+    end
+    def deal_price=(new_price)
+      self[:deal_price] = new_price.to_s.gsub(/\,/, '')
+    end
+
     if Erp::Core.available?("qdeliveries")
 			ImportArrays = [Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT, Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT]
 			ExportArrays = [Erp::Qdeliveries::Delivery::TYPE_MANUFACTURER_EXPORT, Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT]
