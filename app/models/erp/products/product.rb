@@ -14,11 +14,32 @@ module Erp::Products
     has_many :comments, class_name: "Erp::Products::Comment"
     has_many :ratings, class_name: "Erp::Products::Rating"
 
+    has_many :cache_stocks, class_name: "Erp::Products::CacheStock"
+
 		if Erp::Core.available?("orders")
 			has_many :order_details, class_name: "Erp::Orders::OrderDetail"
 		end
 
     after_save :update_cache_properties
+    after_save :update_cache_stock
+
+    # update cache stock
+    def update_cache_stock
+			self.update_column(:cache_stock, self.get_stock)
+
+			Erp::Products::CacheStock.update_stock(self, self.get_stock)
+
+			# update cache stock for state warehouse
+			Erp::Products::State.all.each do |state|
+				Erp::Products::CacheStock.update_stock(self, self.get_stock(state: state), {state_id: state.id})
+				Erp::Warehouses::Warehouse.all.each do |warehouse|
+					Erp::Products::CacheStock.update_stock(self, self.get_stock(warehouse: warehouse, state: state), {warehouse_id: warehouse.id, state_id: state.id})
+				end
+			end
+			Erp::Warehouses::Warehouse.all.each do |warehouse|
+				Erp::Products::CacheStock.update_stock(self, self.get_stock(warehouse: warehouse), {warehouse_id: warehouse.id})
+			end
+		end
 
     if Erp::Core.available?("taxes")
       has_and_belongs_to_many :customer_taxes, class_name: 'Erp::Taxes::Tax', :join_table => 'erp_products_customer_taxes'
@@ -75,6 +96,11 @@ module Erp::Products
 				# state
 				query = query.where(state_id: params[:state].id) if params[:state].present?
 
+				# warehouse ids
+				query = query.where(warehouse_id: params[:warehouse_ids]) if params[:warehouse_ids].present?
+				# state ids
+				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
+
 				stock = stock + query.sum("erp_qdeliveries_delivery_details.quantity")
 
 				# qdelivery detail without order detail
@@ -89,6 +115,11 @@ module Erp::Products
 				query = query.where(warehouse_id: params[:warehouse].id) if params[:warehouse].present?
 				# state
 				query = query.where(state_id: params[:state].id) if params[:state].present?
+
+				# warehouse ids
+				query = query.where(warehouse_id: params[:warehouse_ids]) if params[:warehouse_ids].present?
+				# state ids
+				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
 
 				stock = stock + query.sum("erp_qdeliveries_delivery_details.quantity")
 
@@ -112,6 +143,11 @@ module Erp::Products
 				# state
 				query = query.where(state_id: params[:state].id) if params[:state].present?
 
+				# warehouse ids
+				query = query.where(warehouse_id: params[:warehouse_ids]) if params[:warehouse_ids].present?
+				# state ids
+				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
+
 				stock = stock + query.sum("erp_qdeliveries_delivery_details.quantity")
 
 				# qdelivery detail without order detail
@@ -126,6 +162,11 @@ module Erp::Products
 				query = query.where(warehouse_id: params[:warehouse].id) if params[:warehouse].present?
 				# state
 				query = query.where(state_id: params[:state].id) if params[:state].present?
+
+				# warehouse ids
+				query = query.where(warehouse_id: params[:warehouse_ids]) if params[:warehouse_ids].present?
+				# state ids
+				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
 
 				stock = stock + query.sum("erp_qdeliveries_delivery_details.quantity")
 

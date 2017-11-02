@@ -76,10 +76,10 @@ dk_p = len_pg.properties.create(
 Erp::Products::PropertiesValue.destroy_all
 
 do_v = 0.75
-letters = ('B'..'E').to_a
-#('C'..'U').each do |x|
-#  letters << "H#{x}"
-#end
+letters = ('B'..'T').to_a
+('C'..'U').each do |x|
+  letters << "H#{x}"
+end
 letters.each do |letter|
   Erp::Products::PropertiesValue.create(
     property_id: chu_p.id,
@@ -130,8 +130,8 @@ dok_vs = {
   '35': 'K35',
   '36': 'K36',
 }
-#(5..29).each do |number|
-(5..19).each do |number|
+(5..29).each do |number|
+#(5..19).each do |number|
   Erp::Products::PropertiesValue.create(
     property_id: so_p.id,
     value: number.to_s.rjust(2, '0')
@@ -159,18 +159,18 @@ dk_pvs = [
     property_id: dk_p.id,
     value: '10.8'
   ),
-  #Erp::Products::PropertiesValue.create(
-  #  property_id: dk_p.id,
-  #  value: '11'
-  #),
-  #Erp::Products::PropertiesValue.create(
-  #  property_id: dk_p.id,
-  #  value: '11.2'
-  #),
-  #Erp::Products::PropertiesValue.create(
-  #  property_id: dk_p.id,
-  #  value: '11.4'
-  #),
+  Erp::Products::PropertiesValue.create(
+    property_id: dk_p.id,
+    value: '11'
+  ),
+  Erp::Products::PropertiesValue.create(
+    property_id: dk_p.id,
+    value: '11.2'
+  ),
+  Erp::Products::PropertiesValue.create(
+    property_id: dk_p.id,
+    value: '11.4'
+  ),
   Erp::Products::PropertiesValue.create(
     property_id: dk_p.id,
     value: '11.6'
@@ -188,7 +188,7 @@ def create_product(user, brand, letter, number, dk_pv, len_cat, chu_pv, do_pv, s
     category_id: len_cat.id,
     brand_id: brand.id,
     creator_id: user.id,
-    price: rand(5..100)*10000
+    price: nil, # rand(5..100)*10000
   )
   Erp::Products::ProductsValue.create(
     product_id: product.id,
@@ -219,8 +219,8 @@ dk_pvs.each do |dk_pv|
   letters.each do |letter|
     chu_pv = Erp::Products::PropertiesValue.where(property_id: chu_p.id, value: letter).first
     do_pv = Erp::Products::PropertiesValue.where(property_id: do_p.id, value: do_v.to_s).first
-    #(5..29).each do |number|
-    (5..19).each do |number|
+    (5..29).each do |number|
+    #(5..19).each do |number|
       so_pv = Erp::Products::PropertiesValue.where(property_id: so_p.id, value: number.to_s.rjust(2, '0')).first
       dok_pv = Erp::Products::PropertiesValue.where(property_id: dok_p.id, value: dok_vs[:"#{number.to_s}"]).first
 
@@ -245,27 +245,27 @@ dk_pvs.each do |dk_pv|
   end
 end
 
-status = [
-  Erp::Products::DamageRecord::STATUS_DRAFT,
-  Erp::Products::DamageRecord::STATUS_DONE,
-  Erp::Products::DamageRecord::STATUS_DELETED
-]
+#status = [
+#  Erp::Products::DamageRecord::STATUS_DRAFT,
+#  Erp::Products::DamageRecord::STATUS_DONE,
+#  Erp::Products::DamageRecord::STATUS_DELETED
+#]
 
-(1..10).each do |num|
-  dr = Erp::Products::DamageRecord.create(
-    code: 'DR' + num.to_s.rjust(3, '0'),
-    date: rand((Time.current-2.month)..Time.current),
-    status: status[rand(status.count)],
-    warehouse_id: Erp::Warehouses::Warehouse.order('RANDOM()').first.id,
-    creator_id: user.id
-  )
-  Erp::Products::Product.where(id: Erp::Products::Product.pluck(:id).sample(rand(5..20))).each do |product|
-    drd = Erp::Products::DamageRecordDetail.create(
-      product_id: product.id,
-      damage_record_id: dr.id,
-      quantity: rand(1..3),
-      state_id: Erp::Products::State.order("RANDOM()").first.id
-    )
-  end
-  puts '==== Damage record ' +num.ordinalize+ ' complete ('+dr.code+') ===='
-end
+#(1..10).each do |num|
+#  dr = Erp::Products::DamageRecord.create(
+#    code: 'DR' + num.to_s.rjust(3, '0'),
+#    date: rand((Time.current-2.month)..Time.current),
+#    status: status[rand(status.count)],
+#    warehouse_id: Erp::Warehouses::Warehouse.order('RANDOM()').first.id,
+#    creator_id: user.id
+#  )
+#  Erp::Products::Product.where(id: Erp::Products::Product.pluck(:id).sample(rand(5..20))).each do |product|
+#    drd = Erp::Products::DamageRecordDetail.create(
+#      product_id: product.id,
+#      damage_record_id: dr.id,
+#      quantity: rand(1..3),
+#      state_id: Erp::Products::State.order("RANDOM()").first.id
+#    )
+#  end
+#  puts '==== Damage record ' +num.ordinalize+ ' complete ('+dr.code+') ===='
+#end
