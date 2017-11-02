@@ -300,7 +300,16 @@ module Erp::Products
 			if Erp::Core.available?("orders")
 				# product from order
 				if params[:order_id].present?
-					query = query.includes(:order_details).where(erp_orders_order_details: {order_id: params[:order_id]})
+					query = query.includes(:order_details)
+						.where(erp_orders_order_details: {order_id: params[:order_id]})
+
+					if Erp::Core.available?("qdeliveries")
+						if params[:delivery_type].present?
+							if [Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT, Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT].include?(params[:delivery_type])
+								query = query.where(erp_orders_order_details: {cache_delivery_status: Erp::Orders::OrderDetail::DELIVERY_STATUS_NOT_DELIVERY})
+							end
+						end
+					end
 				end
 			end
 
