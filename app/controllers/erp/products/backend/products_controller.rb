@@ -3,10 +3,10 @@ module Erp
     module Backend
       class ProductsController < Erp::Backend::BackendController
         before_action :set_product, only: [:check_is_business_choices, :uncheck_is_business_choices, :check_is_top_business_choices, :uncheck_is_top_business_choices,
-                                           :check_is_sold_out, :uncheck_is_sold_out, :check_is_bestseller, :uncheck_is_bestseller,
+                                           :check_is_sold_out, :uncheck_is_sold_out, :check_is_bestseller, :uncheck_is_bestseller, :check_is_call, :uncheck_is_call,
                                            :check_is_stock_inventory, :uncheck_is_stock_inventory, :check_is_bestseller, :uncheck_is_bestseller,
                                            :archive, :unarchive, :show, :edit, :update, :destroy]
-        before_action :set_products, only: [:hkerp_update_price, :delete_all, :archive_all, :unarchive_all, :check_is_bestseller_all, :uncheck_is_bestseller_all,
+        before_action :set_products, only: [:hkerp_update_price, :delete_all, :archive_all, :unarchive_all, :check_is_bestseller_all, :uncheck_is_bestseller_all, :check_is_call_all, :uncheck_is_call_all,
                                             :check_is_sold_out_all, :uncheck_is_sold_out_all, :check_is_stock_inventory_all, :uncheck_is_stock_inventory_all,
                                             :check_is_business_choices_all, :uncheck_is_business_choices_all, :check_is_top_business_choices_all, :uncheck_is_top_business_choices_all]
 
@@ -237,6 +237,62 @@ module Erp
         # Check_is_bestseller_all /products/bestseller?ids=1,2,3
         def uncheck_is_bestseller_all
           @products.uncheck_is_bestseller_all
+
+          respond_to do |format|
+            format.json {
+              render json: {
+                'message': t('.success'),
+                'type': 'success'
+              }
+            }
+          end
+        end
+        
+        # Check_is_call /products/call?id=1
+        def check_is_call
+          @product.check_is_call
+
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end
+        end
+
+        # Uncheck_is_call /products/call?id=1
+        def uncheck_is_call
+          @product.uncheck_is_call
+
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end
+        end
+
+        # Check_is_call_all /products/call?ids=1,2,3
+        def check_is_call_all
+          @products.check_is_call_all
+
+          respond_to do |format|
+            format.json {
+              render json: {
+                'message': t('.success'),
+                'type': 'success'
+              }
+            }
+          end
+        end
+
+        # Check_is_call_all /products/call?ids=1,2,3
+        def uncheck_is_call_all
+          @products.uncheck_is_call_all
 
           respond_to do |format|
             format.json {
@@ -573,7 +629,7 @@ module Erp
               :price, :cost, :on_hand, :weight, :volume, :is_for_pos, :unit_id,
               # frontend
               :is_deal, :is_stock_inventory, :deal_price, :deal_percent, :short_description, :brand_id, :is_new, :accessory_id, :short_name, :product_intro_link,
-              :deal_from_date, :deal_to_date, :meta_keywords, :meta_description, :is_bestseller, :is_business_choices, :is_top_business_choices, :is_sold_out,
+              :deal_from_date, :deal_to_date, :meta_keywords, :meta_description, :is_bestseller, :is_business_choices, :is_top_business_choices, :is_sold_out, :is_call,
               # end frontend
               :stock_min, :stock_max, :description, :internal_note, :point_enabled, :category_id,
               customer_tax_ids: [], vendor_tax_ids: [],

@@ -21,25 +21,27 @@ module Erp::Products
 		end
 
     after_save :update_cache_properties
-    after_save :update_cache_stock
-
-    # update cache stock
-    def update_cache_stock
-			self.update_column(:cache_stock, self.get_stock)
-
-			Erp::Products::CacheStock.update_stock(self, self.get_stock)
-
-			# update cache stock for state warehouse
-			Erp::Products::State.all.each do |state|
-				Erp::Products::CacheStock.update_stock(self, self.get_stock(state: state), {state_id: state.id})
-				Erp::Warehouses::Warehouse.all.each do |warehouse|
-					Erp::Products::CacheStock.update_stock(self, self.get_stock(warehouse: warehouse, state: state), {warehouse_id: warehouse.id, state_id: state.id})
-				end
-			end
-			Erp::Warehouses::Warehouse.all.each do |warehouse|
-				Erp::Products::CacheStock.update_stock(self, self.get_stock(warehouse: warehouse), {warehouse_id: warehouse.id})
-			end
-		end
+    if Erp::Core.available?("warehouses")
+      after_save :update_cache_stock
+  
+      # update cache stock
+      def update_cache_stock
+        self.update_column(:cache_stock, self.get_stock)
+  
+        Erp::Products::CacheStock.update_stock(self, self.get_stock)
+  
+        # update cache stock for state warehouse
+        Erp::Products::State.all.each do |state|
+          Erp::Products::CacheStock.update_stock(self, self.get_stock(state: state), {state_id: state.id})
+          Erp::Warehouses::Warehouse.all.each do |warehouse|
+            Erp::Products::CacheStock.update_stock(self, self.get_stock(warehouse: warehouse, state: state), {warehouse_id: warehouse.id, state_id: state.id})
+          end
+        end
+        Erp::Warehouses::Warehouse.all.each do |warehouse|
+          Erp::Products::CacheStock.update_stock(self, self.get_stock(warehouse: warehouse), {warehouse_id: warehouse.id})
+        end
+      end
+    end
 
     if Erp::Core.available?("taxes")
       has_and_belongs_to_many :customer_taxes, class_name: 'Erp::Taxes::Tax', :join_table => 'erp_products_customer_taxes'
@@ -348,6 +350,23 @@ module Erp::Products
 
     def self.uncheck_is_bestseller_all
 			update_all(is_bestseller: false)
+		end
+    
+    # set is call
+    def check_is_call
+			update_columns(is_call: true)
+		end
+
+    def uncheck_is_call
+			update_columns(is_call: false)
+		end
+
+    def self.check_is_call_all
+			update_all(is_call: true)
+		end
+
+    def self.uncheck_is_call_all
+			update_all(is_call: false)
 		end
 
     # set is sold out

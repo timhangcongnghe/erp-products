@@ -206,6 +206,14 @@ vi:
             success: "Sản phẩm đã được thêm vào danh sách bán hết."
           uncheck_is_sold_out_all:
             success: "Sản phẩm đã hủy khỏi danh sách bán hết."
+          check_is_call:
+            success: "Sản phẩm đã được thêm vào danh sách 'Call'."
+          uncheck_is_call:
+            success: "Sản phẩm đã hủy khỏi danh sách 'Call'."
+          check_is_call_all:
+            success: "Sản phẩm đã được thêm vào danh sách 'Call'."
+          uncheck_is_call_all:
+            success: "Sản phẩm đã hủy khỏi danh sách 'Call'."
           check_is_stock_inventory:
             success: "Sản phẩm đã được thêm vào danh sách xả hàng tồn kho."
           uncheck_is_stock_inventory:
@@ -257,6 +265,10 @@ vi:
             uncheck_is_sold_out: "Hủy khỏi 'bán hết'"
             check_is_sold_out_confirm: "Bạn muốn thêm sản phẩm vào danh sách đã bán hết?"
             uncheck_is_sold_out_confirm: "Bạn muốn hủy sản phẩm khỏi danh sách đã bán hết?"
+            check_is_call: "Thêm vào 'Call'"
+            uncheck_is_call: "Hủy khỏi 'Call'"
+            check_is_call_confirm: "Bạn muốn thêm sản phẩm vào danh sách sản phẩm 'Call'?"
+            uncheck_is_call_confirm: "Bạn muốn hủy sản phẩm khỏi danh sách sản phẩm 'Call'?"
             is_sold_out: "Sản phẩm đã bán hết"
             check_is_stock_inventory: "Thêm vào 'xả hàng tồn'"
             uncheck_is_stock_inventory: "Hủy khỏi 'xả hàng tồn'"
@@ -272,7 +284,7 @@ vi:
             uncheck_is_top_business_choices: "Hủy khỏi 'lựa chọn hàng đầu'"
             check_is_top_business_choices_confirm: "Bạn muốn thêm sản phẩm vào danh sách lựa chọn hàng đầu?"
             uncheck_is_top_business_choices_confirm: "Bạn muốn hủy sản phẩm khỏi danh sách lựa chọn hàng đầu?"
-            is_top_business_choices: "Sản phẩm lựa chọn hàng đầu"
+            is_top_business_choices: "Sản phẩm lựa chọn hàng đầu"            
           list:
             active: "Đang hiển thị"
             delete_confirm: "Bạn có chắc muốn xóa?"
@@ -296,9 +308,14 @@ vi:
             uncheck_is_sold_out: "Hủy khỏi 'bán hết'"
             check_is_sold_out_confirm: "Bạn muốn thêm sản phẩm vào danh sách đã bán hết?"
             uncheck_is_sold_out_confirm: "Bạn muốn hủy sản phẩm khỏi danh sách đã bán hết?"
+            check_is_call: "Thêm vào 'Call'"
+            uncheck_is_call: "Hủy khỏi 'Call'"
+            check_is_call_confirm: "Bạn muốn thêm sản phẩm vào danh sách sản phẩm 'Call'?"
+            uncheck_is_call_confirm: "Bạn muốn hủy sản phẩm khỏi danh sách sản phẩm 'Call'?"
             deal: "Khuyến mãi"
             bestseller: "Bán chạy"
             sold_out: "Bán hết"
+            is_call: "Gọi hỏi giá"
             stock_inventory: "Xả hàng tồn kho"
             check_is_stock_inventory: "Thêm vào 'xả hàng tồn'"
             uncheck_is_stock_inventory: "Hủy khỏi 'xả hàng tồn'"
@@ -449,6 +466,8 @@ vi:
             gift_name: "Tên sản phẩm"
             price: "Giá ưu đãi"
             add_gift: "Thêm vào danh sách quà tặng"
+            product_is_call: "Gọi hỏi giá"
+            is_call: "Không hiện giá sản phẩm"
             # end frontend
             description_for_quotations: "Description for Quotations"
             description_for_pickings: "Description for Pickings"
