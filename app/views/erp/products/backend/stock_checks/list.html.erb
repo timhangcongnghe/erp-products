@@ -78,7 +78,7 @@
                                 text: '<i class="fa fa-check"></i> '+t('confirm'),
                                 url: erp_products.stock_check_confirm_backend_stock_checks_path(id: stock_check),
                                 data_method: 'PUT',
-                                hide: stock_check.status != 'pending',
+                                hide: stock_check.status == Erp::Products::StockCheck::STOCK_CHECK_STATUS_DONE,
                                 class: 'ajax-link'
                             },
                             {
@@ -116,5 +116,5 @@
         <% end %>
     </tbody>
 </table>
-        
+
 <%= erp_datalist_pagination(@stock_checks) %>

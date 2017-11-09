@@ -5,7 +5,8 @@ module Erp
         def damage_record_line_form
           @damage_record_detail = DamageRecordDetail.new
           @damage_record_detail.product_id = params[:add_value]
-          
+          @damage_record_detail.state = Erp::Products::State.first
+
           render partial: params[:partial], locals: {
             damage_record_detail: @damage_record_detail,
             uid: helpers.unique_id()

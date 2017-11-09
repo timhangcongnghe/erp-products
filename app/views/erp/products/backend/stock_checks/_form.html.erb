@@ -1,5 +1,5 @@
 <%= form_for([erp_products, :backend, stock_check], html: {multipart: true}) do |f| %>
-    <div class="form-body">        
+    <div class="form-body">
         <div class="row">
             <div class="col-md-6">
                 <div class="portlet light bordered">
@@ -8,10 +8,11 @@
                             <div class="col-md-6">
                                 <%= erp_form_control("text", {
                                     name: 'stock_check[code]',
-                                    value: stock_check.code,                   
+                                    value: stock_check.code,
                                     label: t('.code'),
                                     help: t('.help_code'),
-                                    errors: stock_check.errors.full_messages_for(:code)
+                                    errors: stock_check.errors.full_messages_for(:code),
+                                    required: !stock_check.id.nil?,
                                 }) %>
                             </div>
                             <div class="col-md-6">
@@ -108,8 +109,8 @@
                                         <th>#{t('.note')}</th>
                                         <th></th>"
                             }) %>
-                            
-                            <table class="table all-line-total">                                
+
+                            <table class="table all-line-total">
                                 <tr>
                                     <td class="text-right text-semibold" colspan="2"><%= t('.totals') %></td>
                                 </tr>
@@ -145,8 +146,8 @@
         text: t('cancel'),
         href: erp_products.backend_stock_checks_path
     }) %>
-    
-    
+
+
     <% content_for :page_script do %>
     <script>
     function calculateQuantityLine(container) {
@@ -160,11 +161,11 @@
             var stock = parseFloat(row.find('.line_stock_qty').val());
             var real = parseFloat(row.find('.line_real_qty').val());
             if (real) {
-                var difference_qty=real-stock;   
+                var difference_qty=real-stock;
             }
             row.find('.line_difference_qty').html(difference_qty);
             row.find('.line_difference_qty').val(difference_qty);
-            
+
             // Update stock check total
             if(stock) {
                 stock_total += stock;
@@ -185,19 +186,19 @@
         $('.stock-check-details').each(function() {
             calculateQuantityLine($(this));
         });
-        
+
         $('.ajax-box').bind("DOMSubtreeModified",function(){
             $('.stock-check-details').each(function() {
                 calculateQuantityLine($(this));
             });
         });
-    
+
         // Change event on order line
         $(document).on('change keyup', '.stock-check-details input', function(e) {
             var container = $(this).parents('.stock-check-details');
             calculateQuantityLine(container);
         });
-        
+
         // Click event nested remove button
         $(document).on('click', '.nested-remove-button', function(e) {
             var container = $(this).parents('.stock-check-details');
@@ -206,5 +207,5 @@
     });
     </script>
     <% end %>
-    
+
 <% end %>

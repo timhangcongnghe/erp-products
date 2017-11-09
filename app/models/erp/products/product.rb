@@ -23,13 +23,13 @@ module Erp::Products
     after_save :update_cache_properties
     if Erp::Core.available?("warehouses")
       after_save :update_cache_stock
-  
+
       # update cache stock
       def update_cache_stock
         self.update_column(:cache_stock, self.get_stock)
-  
+
         Erp::Products::CacheStock.update_stock(self, self.get_stock)
-  
+
         # update cache stock for state warehouse
         Erp::Products::State.all.each do |state|
           Erp::Products::CacheStock.update_stock(self, self.get_stock(state: state), {state_id: state.id})
@@ -81,47 +81,56 @@ module Erp::Products
     if Erp::Core.available?("qdeliveries")
 			ImportArrays = [Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT, Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT]
 			ExportArrays = [Erp::Qdeliveries::Delivery::TYPE_MANUFACTURER_EXPORT, Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT]
-			# @todo import
-			def get_qdelivery_import(params={})
-				stock = 0
 
-				# qdelivery detail with order detail
-				query = Erp::Qdeliveries::DeliveryDetail.joins(:order_detail, :delivery)
-					.where.not(order_detail_id: nil)
-					.where(erp_orders_order_details: {product_id: self.id})
-					.where(erp_qdeliveries_deliveries: {
-						delivery_type: Erp::Products::Product::ImportArrays,
-						status: Erp::Qdeliveries::Delivery::STATUS_DELIVERED
-					})
+			def self.get_delivery_query(params={})
+        query = Erp::Qdeliveries::DeliveryDetail.joins(:delivery)
+          .where(erp_qdeliveries_deliveries: {
+            status: Erp::Qdeliveries::Delivery::STATUS_DELIVERED,
+          })
+
+        # from date
+        query = query.where("erp_qdeliveries_deliveries.created_at >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
+        query = query.where("erp_qdeliveries_deliveries.created_at <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
+
 				# warehouse
 				query = query.where(warehouse_id: params[:warehouse].id) if params[:warehouse].present?
 				# state
 				query = query.where(state_id: params[:state].id) if params[:state].present?
-
 				# warehouse ids
 				query = query.where(warehouse_id: params[:warehouse_ids]) if params[:warehouse_ids].present?
 				# state ids
 				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
+
+				# delivery type
+				query = query.where(erp_qdeliveries_deliveries: {delivery_type: params[:delivery_type]}) if params[:delivery_type].present?
+
+				return query
+      end
+
+			# @todo import
+			def self.get_qdelivery_import(params={})
+				stock = 0
+
+				main_query = self.get_delivery_query(params).where(erp_qdeliveries_deliveries: {
+          delivery_type: Erp::Products::Product::ImportArrays,
+        })
+
+				# qdelivery detail with order detail
+				query = main_query.joins(:order_detail)
+					.where.not(order_detail_id: nil)
+
+				if params[:product_id].present?
+					query = query.where(erp_orders_order_details: {product_id: params[:product_id]})
+				end
 
 				stock = stock + query.sum("erp_qdeliveries_delivery_details.quantity")
 
 				# qdelivery detail without order detail
-				query = Erp::Qdeliveries::DeliveryDetail.joins(:delivery)
-					.where(order_detail_id: nil)
-					.where(product_id: self.id)
-					.where(erp_qdeliveries_deliveries: {
-						delivery_type: Erp::Products::Product::ImportArrays,
-						status: Erp::Qdeliveries::Delivery::STATUS_DELIVERED
-					})
-				# warehouse
-				query = query.where(warehouse_id: params[:warehouse].id) if params[:warehouse].present?
-				# state
-				query = query.where(state_id: params[:state].id) if params[:state].present?
+				query = main_query.where(order_detail_id: nil)
 
-				# warehouse ids
-				query = query.where(warehouse_id: params[:warehouse_ids]) if params[:warehouse_ids].present?
-				# state ids
-				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
+				if params[:product_id].present?
+					query = query.where(product_id: params[:product_id])
+				end
 
 				stock = stock + query.sum("erp_qdeliveries_delivery_details.quantity")
 
@@ -129,46 +138,29 @@ module Erp::Products
 			end
 
 			# @todo export
-			def get_qdelivery_export(params={})
-				stock = 0
+			def self.get_qdelivery_export(params={})
+        stock = 0
+
+				main_query = self.get_delivery_query(params).where(erp_qdeliveries_deliveries: {
+          delivery_type: Erp::Products::Product::ExportArrays,
+        })
 
 				# qdelivery detail with order detail
-				query = Erp::Qdeliveries::DeliveryDetail.joins(:order_detail, :delivery)
+				query = main_query.joins(:order_detail)
 					.where.not(order_detail_id: nil)
-					.where(erp_orders_order_details: {product_id: self.id})
-					.where(erp_qdeliveries_deliveries: {
-						delivery_type: Erp::Products::Product::ExportArrays,
-						status: Erp::Qdeliveries::Delivery::STATUS_DELIVERED
-					})
-				# warehouse
-				query = query.where(warehouse_id: params[:warehouse].id) if params[:warehouse].present?
-				# state
-				query = query.where(state_id: params[:state].id) if params[:state].present?
 
-				# warehouse ids
-				query = query.where(warehouse_id: params[:warehouse_ids]) if params[:warehouse_ids].present?
-				# state ids
-				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
+				if params[:product_id].present?
+					query = query.where(erp_orders_order_details: {product_id: params[:product_id]})
+				end
 
 				stock = stock + query.sum("erp_qdeliveries_delivery_details.quantity")
 
 				# qdelivery detail without order detail
-				query = Erp::Qdeliveries::DeliveryDetail.joins(:delivery)
-					.where(order_detail_id: nil)
-					.where(product_id: self.id)
-					.where(erp_qdeliveries_deliveries: {
-						delivery_type: Erp::Products::Product::ExportArrays,
-						status: Erp::Qdeliveries::Delivery::STATUS_DELIVERED
-					})
-				# warehouse
-				query = query.where(warehouse_id: params[:warehouse].id) if params[:warehouse].present?
-				# state
-				query = query.where(state_id: params[:state].id) if params[:state].present?
+				query = main_query.where(order_detail_id: nil)
 
-				# warehouse ids
-				query = query.where(warehouse_id: params[:warehouse_ids]) if params[:warehouse_ids].present?
-				# state ids
-				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
+				if params[:product_id].present?
+					query = query.where(product_id: params[:product_id])
+				end
 
 				stock = stock + query.sum("erp_qdeliveries_delivery_details.quantity")
 
@@ -176,14 +168,228 @@ module Erp::Products
 			end
 		end
 
+    if Erp::Core.available?("stock_transfers")
+			def self.get_transfer_query(params={})
+        query = Erp::StockTransfers::TransferDetail.joins(:transfer)
+          .where(erp_stock_transfers_transfers: {
+            status: Erp::StockTransfers::Transfer::STATUS_DELIVERED,
+          })
+
+        # product
+        if params[:product_id].present?
+					query = query.where(product_id: params[:product_id])
+				end
+
+        # from date
+        query = query.where("erp_stock_transfers_transfers.received_at >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
+        query = query.where("erp_stock_transfers_transfers.received_at <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
+
+				# state ids
+				query = query.where(state_id: params[:state].id) if params[:state].present?
+				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
+
+				return query
+      end
+
+			# @todo import
+			def self.get_transfer_import(params={})
+				stock = 0
+
+				if params[:warehouse_ids].present?
+          query = self.get_transfer_query(params).where(erp_stock_transfers_transfers: {destination_warehouse_id: params[:warehouse_ids]})
+          stock = stock + query.sum("erp_stock_transfers_transfer_details.quantity")
+        end
+
+				return stock
+			end
+
+      def self.get_transfer_export(params={})
+				stock = 0
+
+				if params[:warehouse_ids].present?
+          query = self.get_transfer_query(params).where(erp_stock_transfers_transfers: {source_warehouse_id: params[:warehouse_ids]})
+          stock = stock + query.sum("erp_stock_transfers_transfer_details.quantity")
+        end
+
+				return stock
+			end
+		end
+
+    #if Erp::Core.available?("stock_transfers")
+			def self.get_stock_check_query(params={})
+        query = Erp::Products::StockCheckDetail.joins(:stock_check)
+          .where(erp_products_stock_checks: {
+            status: Erp::Products::StockCheck::STOCK_CHECK_STATUS_DONE,
+          })
+
+        # product
+        if params[:product_id].present?
+					query = query.where(product_id: params[:product_id])
+				end
+
+        # from date
+        query = query.where("erp_products_stock_checks.created_at >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
+        query = query.where("erp_products_stock_checks.created_at <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
+
+				# state ids
+				query = query.where(state_id: params[:state].id) if params[:state].present?
+				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
+
+				# warehouse id
+				query = query.where(erp_products_stock_checks: {warehouse_id: params[:warehouse].id}) if params[:warehouse].present?
+				query = query.where(erp_products_stock_checks: {warehouse_id: params[:warehouse_ids]}) if params[:warehouse_ids].present?
+
+				return query
+      end
+
+			# @todo import
+			def self.get_stock_check_import(params={})
+				stock = 0
+
+				query = self.get_stock_check_query(params)
+				query = query.where("erp_products_stock_check_details.quantity > ?", 0)
+				stock = stock + query.sum("erp_products_stock_check_details.quantity")
+
+				return stock
+			end
+
+      # @todo import
+			def self.get_stock_check_export(params={})
+				stock = 0
+
+				query = self.get_stock_check_query(params)
+				query = query.where("erp_products_stock_check_details.quantity < ?", 0)
+				stock = stock - query.sum("erp_products_stock_check_details.quantity")
+
+				return stock
+			end
+		#end
+
+		if Erp::Core.available?("gift_givens")
+			def self.get_gift_given_query(params={})
+        query = Erp::GiftGivens::GivenDetail.joins(:given)
+          .where(erp_gift_givens_givens: {
+            status: Erp::GiftGivens::Given::STATUS_DELIVERED,
+          })
+
+        # product
+        if params[:product_id].present?
+					query = query.where(product_id: params[:product_id])
+				end
+
+        # from date
+        query = query.where("erp_gift_givens_givens.given_date >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
+        query = query.where("erp_gift_givens_givens.given_date <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
+
+				# state ids
+				query = query.where(state_id: params[:state].id) if params[:state].present?
+				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
+
+				# warehouse id
+				query = query.where(warehouse_id: params[:warehouse].id) if params[:warehouse].present?
+				query = query.where(warehouse_id: params[:warehouse_ids]) if params[:warehouse_ids].present?
+
+				return query
+      end
+
+      # @todo import
+			def self.get_gift_given_export(params={})
+				stock = 0
+
+				query = self.get_gift_given_query(params)
+				stock = stock + query.sum("erp_gift_givens_given_details.quantity")
+
+				return stock
+			end
+		end
+
+		#if Erp::Core.available?("gift_givens")
+			def self.get_damage_record_query(params={})
+        query = Erp::Products::DamageRecordDetail.joins(:damage_record)
+          .where(erp_products_damage_records: {
+            status: Erp::Products::DamageRecord::STATUS_DONE,
+          })
+
+        # product
+        if params[:product_id].present?
+					query = query.where(product_id: params[:product_id])
+				end
+
+        # from date
+        query = query.where("erp_products_damage_records.created_at >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
+        query = query.where("erp_products_damage_records.created_at <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
+
+				# state ids
+				query = query.where(state_id: params[:state].id) if params[:state].present?
+				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
+
+				# warehouse id
+				query = query.where(erp_products_damage_records: {warehouse_id: params[:warehouse].id}) if params[:warehouse].present?
+				query = query.where(erp_products_damage_records: {warehouse_id: params[:warehouse_ids]}) if params[:warehouse_ids].present?
+
+				return query
+      end
+
+      # @todo import
+			def self.get_damage_record_export(params={})
+				stock = 0
+
+				query = self.get_damage_record_query(params)
+				stock = stock + query.sum("erp_products_damage_record_details.quantity")
+
+				return stock
+			end
+		#end
+
     # get stock
     def get_stock(params={})
 			stock = 0
 
 			# Qdelivery
 			if Erp::Core.available?("qdeliveries")
-				stock += get_qdelivery_import(params) - get_qdelivery_export(params)
+				stock += Product.get_qdelivery_import(params.merge({product_id: self.id})) - Product.get_qdelivery_export(params.merge({product_id: self.id}))
 			end
+
+			# Transfer
+			if Erp::Core.available?("stock_transfers")
+				stock += Product.get_transfer_import(params.merge({product_id: self.id})) - Product.get_transfer_export(params.merge({product_id: self.id}))
+			end
+
+			# stock check
+			stock += Product.get_stock_check_import(params.merge({product_id: self.id})) - Product.get_stock_check_export(params.merge({product_id: self.id}))
+
+			# gift given
+			stock -= Product.get_gift_given_export(params.merge({product_id: self.id}))
+
+			# damange record
+			stock -= Product.get_damage_record_export(params.merge({product_id: self.id}))
+
+			return stock
+		end
+
+    # get stock
+    def self.get_stock_real(params={})
+			stock = 0
+
+			# Qdelivery
+			if Erp::Core.available?("qdeliveries")
+				stock += (Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT)) + Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT)) - Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_MANUFACTURER_EXPORT)) -  Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT))
+                )
+			end
+
+			# Transfer
+			if Erp::Core.available?("stock_transfers")
+				stock += Product.get_transfer_import(params) - Product.get_transfer_export(params)
+			end
+
+			# stock check
+			stock += Product.get_stock_check_import(params) - Product.get_stock_check_export(params)
+
+			# gift given
+			stock -= Product.get_gift_given_export(params)
+
+			# damange record
+			stock -= Product.get_damage_record_export(params)
 
 			return stock
 		end
@@ -351,7 +557,7 @@ module Erp::Products
     def self.uncheck_is_bestseller_all
 			update_all(is_bestseller: false)
 		end
-    
+
     # set is call
     def check_is_call
 			update_columns(is_call: true)
