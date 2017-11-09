@@ -5,7 +5,7 @@ module Erp::Products
     belongs_to :employee, class_name: "Erp::User"
     
     has_many :stock_check_details, inverse_of: :stock_check, dependent: :destroy
-    accepts_nested_attributes_for :stock_check_details, :reject_if => lambda { |a| a[:product_id].blank? || a[:quantity].blank? || a[:quantity].to_i <= 0 }
+    accepts_nested_attributes_for :stock_check_details, :reject_if => lambda { |a| a[:product_id].blank? || a[:quantity].blank? }, :allow_destroy => true
     if Erp::Core.available?("warehouses")
       belongs_to :warehouse, class_name: "Erp::Warehouses::Warehouse"
       def warehouse_name
