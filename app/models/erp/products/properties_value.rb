@@ -11,12 +11,12 @@ module Erp::Products
     has_many :products, through: :products_values
 
     def value_check
-			exist = PropertiesValue.where.not(id: self.id).where(property_id: self.property_id).where('LOWER(value) = ?', self.value.strip.downcase).first
+			exist = PropertiesValue.where.not(id: self.id).where(property_id: self.property_id).where('value = ?', self.value).first
 			if exist.present?
 				errors.add(:value)
 			end
 		end
-    
+
     def self.get_property_values_for_filter
 			self.where(is_show_website: true)
 		end
@@ -120,10 +120,10 @@ module Erp::Products
     def product_count
 			Erp::Products::ProductsValue.where(properties_value: self.id).count
 		end
-    
+
     def product_count_by_menu(menu)
 			Erp::Products::ProductsValue.includes(:product)
-        .where(erp_products_products: {is_sold_out: false, category_id: menu.categories.first})       
+        .where(erp_products_products: {is_sold_out: false, category_id: menu.categories.first})
         .where(properties_value: self.id).count
 		end
   end

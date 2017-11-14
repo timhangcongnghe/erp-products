@@ -373,8 +373,7 @@ module Erp::Products
 
 			# Qdelivery
 			if Erp::Core.available?("qdeliveries")
-				stock += (Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT)) + Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT)) - Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_MANUFACTURER_EXPORT)) -  Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT))
-                )
+				stock += (Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT)) + Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT)) - Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_MANUFACTURER_EXPORT)) -  Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT)))
 			end
 
 			# Transfer
