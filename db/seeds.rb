@@ -274,16 +274,16 @@ dk_pvs.each do |dk_pv|
       dok_pv = Erp::Products::PropertiesValue.where(property_id: dok_p.id, value: dok_vs[:"#{number.to_s}"]).first
 
       if [10.4, 10.6, 10.8, 11, 11.2, 11.4].include?(dk_pv.value.to_f)
-        create_product(user, brand, letter, number, dk_pv, len_sta, chu_pv, do_pv, so_pv, dok_pv)
+        create_product(user, brand, letter, number, dk_pv, len_sta, chu_pv, do_pv, so_pv, dok_pv, unit_cai)
       end
       if [10.4, 10.6, 10.8, 11].include?(dk_pv.value.to_f)
-        create_product(user, brand, letter, number, dk_pv, len_pre, chu_pv, do_pv, so_pv, dok_pv)
+        create_product(user, brand, letter, number, dk_pv, len_pre, chu_pv, do_pv, so_pv, dok_pv, unit_cai)
       end
       if [10.6, 10.8, 11, 11.4, 11.6].include?(dk_pv.value.to_f)
-        create_product(user, brand, letter, number, dk_pv, len_tor, chu_pv, do_pv, so_pv, dok_pv)
+        create_product(user, brand, letter, number, dk_pv, len_tor, chu_pv, do_pv, so_pv, dok_pv, unit_cai)
       end
       if [10.5, 10.6].include?(dk_pv.value.to_f)
-        create_product(user, brand, letter, number, dk_pv, len_exp, chu_pv, do_pv, so_pv, dok_pv)
+        create_product(user, brand, letter, number, dk_pv, len_exp, chu_pv, do_pv, so_pv, dok_pv, unit_cai)
       end
 
       puts "==== #{dk_pv.value} #{letter} #{number} ===="
