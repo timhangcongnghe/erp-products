@@ -79,8 +79,16 @@ module Erp::Products
     end
 
     if Erp::Core.available?("qdeliveries")
-			ImportArrays = [Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT, Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT]
-			ExportArrays = [Erp::Qdeliveries::Delivery::TYPE_MANUFACTURER_EXPORT, Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT]
+			ImportArrays = [
+        Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT,
+        Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT,
+        Erp::Qdeliveries::Delivery::TYPE_CUSTOM_IMPORT,
+      ]
+			ExportArrays = [
+        Erp::Qdeliveries::Delivery::TYPE_MANUFACTURER_EXPORT,
+        Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT,
+        Erp::Qdeliveries::Delivery::TYPE_CUSTOM_EXPORT,
+      ]
 
 			def self.get_delivery_query(params={})
         query = Erp::Qdeliveries::DeliveryDetail.joins(:delivery)
@@ -373,7 +381,14 @@ module Erp::Products
 
 			# Qdelivery
 			if Erp::Core.available?("qdeliveries")
-				stock += (Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT)) + Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT)) - Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_MANUFACTURER_EXPORT)) -  Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT)))
+				stock += (
+          Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT)) +
+          Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT)) -
+          Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_MANUFACTURER_EXPORT)) -
+          Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT)) +
+          Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOM_IMPORT)) -
+          Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOM_EXPORT))
+        )
 			end
 
 			# Transfer

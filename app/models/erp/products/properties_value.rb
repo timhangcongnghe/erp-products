@@ -48,6 +48,10 @@ module Erp::Products
 				query = query.where(property_id: params[:property_id])
 			end
 
+			if params[:group_by_property].present?
+				query = query.where(property_id: params[:group_by_property])
+			end
+
       query = query.map{|properties_value| {value: properties_value.id, text: properties_value.value} }
     end
 
