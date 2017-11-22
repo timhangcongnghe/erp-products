@@ -70,6 +70,20 @@
                                         }) %>
                                     </div>
                                 </div>
+                                <% if Erp::Core.available?("ortho_k") %>
+                                    <div class="row form-control-mb-0">
+                                        <div class="col-md-6">
+                                            <%= erp_form_control('checkbox', {
+                                                name: 'product[is_outside]',
+                                                id: 'is_outside',
+                                                value: product.is_outside,
+                                                not_selected_value: 'false',
+                                                options: [{value: 'true', text: 'Len ngoài bảng'}],
+                                                help: 'Len ngoài bảng'
+                                            }) %>
+                                        </div>
+                                    </div>
+                                <% end %>
                             </div>
                             <div class="col-md-7">
                                 <%= erp_form_control("images", {

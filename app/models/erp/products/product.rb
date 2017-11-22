@@ -79,6 +79,17 @@ module Erp::Products
     end
 
     if Erp::Core.available?("qdeliveries")
+      has_many :delivery_details, class_name: 'Erp::Qdeliveries::DeliveryDetail', dependent: :destroy
+
+      # Get all delivered delivery details
+      def delivered_delivery_details
+        delivery_details.joins(:delivery).
+          where(erp_qdeliveries_deliveries: {
+            status: Erp::Qdeliveries::Delivery::STATUS_DELIVERED
+          }
+        )
+      end
+
 			ImportArrays = [
         Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT,
         Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT,

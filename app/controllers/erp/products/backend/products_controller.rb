@@ -247,7 +247,7 @@ module Erp
             }
           end
         end
-        
+
         # Check_is_call /products/call?id=1
         def check_is_call
           @product.check_is_call
@@ -625,7 +625,7 @@ module Erp
           # Only allow a trusted parameter "white list" through.
           def product_params
             params.fetch(:product, {}).permit(
-              :code, :name, :can_be_sold, :can_be_purchased, :product_type, :barcode,
+              :code, :name, :can_be_sold, :can_be_purchased, :product_type, :barcode, :is_outside,
               :price, :cost, :on_hand, :weight, :volume, :is_for_pos, :unit_id,
               # frontend
               :is_deal, :is_stock_inventory, :deal_price, :deal_percent, :short_description, :brand_id, :is_new, :accessory_id, :short_name, :product_intro_link,
