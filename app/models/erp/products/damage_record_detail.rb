@@ -5,6 +5,13 @@ module Erp::Products
     belongs_to :state
     validates :damage_record, presence: true
     
+    after_save :update_product_cache_stock
+
+    # update product cache stock
+    def update_product_cache_stock
+			self.product.update_cache_stock if self.product.present?
+		end
+    
     def product_code
       product.nil? ? '' : product.code
     end

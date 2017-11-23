@@ -5,6 +5,13 @@ module Erp::Products
     belongs_to :product, class_name: "Erp::Products::Product"
     belongs_to :state_check, class_name: "Erp::Products::StateCheck"
     
+    after_save :update_product_cache_stock
+
+    # update product cache stock
+    def update_product_cache_stock
+			self.product.update_cache_stock if self.product.present?
+		end
+    
     def get_product_name
       product.present? ? product.name : ''
     end

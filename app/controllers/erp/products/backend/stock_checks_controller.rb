@@ -44,7 +44,7 @@ module Erp
                 value: @stock_check.id
               }
             else
-              redirect_to erp_products.edit_backend_stock_check_path(@stock_check), notice: t('.success')
+              redirect_to erp_products.backend_stock_checks_path, notice: t('.success')
             end
           else
             render :new
@@ -61,7 +61,7 @@ module Erp
                 value: @stock_check.id
               }
             else
-              redirect_to erp_products.edit_backend_stock_check_path(@stock_check), notice: t('.success')
+              redirect_to erp_products.backend_stock_checks_path, notice: t('.success')
             end
           else
             render :edit

@@ -9,7 +9,24 @@ module Erp::Products
 
     has_many :state_check_details, inverse_of: :state_check, dependent: :destroy
     accepts_nested_attributes_for :state_check_details, :reject_if => lambda { |a| a[:product_id].blank? || a[:state_id].blank? || a[:quantity].blank? || a[:quantity].to_i <= 0 }, :allow_destroy => true
+    
+    # update product cache stock
+    def update_product_cache_stock
+			self.state_check_details.each do |scd|
+        scd.update_product_cache_stock
+      end
+		end
+    
+    # Generate code
+    before_validation :generate_code
+    def generate_code
+			if !name.present?
+				num = StateCheck.where('check_date >= ? AND check_date <= ?', self.check_date.beginning_of_month, self.check_date.end_of_month).count + 1
 
+				self.name = 'KTT' + check_date.strftime("%m") + check_date.strftime("%Y").last(2) + "-" + num.to_s.rjust(3, '0')
+			end
+		end
+    
     if Erp::Core.available?("warehouses")
 			validates :warehouse_id, :presence => true
       belongs_to :warehouse, class_name: "Erp::Warehouses::Warehouse"

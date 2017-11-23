@@ -17,6 +17,7 @@
         value: state_check_detail.state_id,
         text: state_check_detail.get_state_name,
         placeholder: t('.choose_state'),
+        required: true,
         url: erp_products.dataselect_backend_states_path(format: 'json'),
         create: {
             url: erp_products.new_backend_state_path,

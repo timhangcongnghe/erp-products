@@ -8,7 +8,6 @@
                             name: 'damage_record[code]',
                             value: damage_record.code,                   
                             label: t('.code'),
-                            required: true,
                             errors: damage_record.errors.full_messages_for(:code)
                         }) %>
                         <%= erp_form_control('date', {

@@ -48,7 +48,7 @@ module Erp
                 value: @state_check.id
               }
             else
-              redirect_to erp_products.edit_backend_state_check_path(@state_check), notice: t('.success')
+              redirect_to erp_products.backend_state_checks_path, notice: t('.success')
             end
           else
             render :new
@@ -65,7 +65,7 @@ module Erp
                 value: @state_check.id
               }
             else
-              redirect_to erp_products.edit_backend_state_check_path(@state_check), notice: t('.success')
+              redirect_to erp_products.backend_state_checks_path, notice: t('.success')
             end
           else
             render :edit

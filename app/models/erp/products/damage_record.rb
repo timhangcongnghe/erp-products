@@ -1,6 +1,6 @@
 module Erp::Products
   class DamageRecord < ApplicationRecord
-    validates :code, :date, :warehouse_id, :presence => true
+    validates :date, :warehouse_id, :presence => true
     belongs_to :creator, class_name: "Erp::User"
     
     has_many :damage_record_details, inverse_of: :damage_record, dependent: :destroy
@@ -19,6 +19,25 @@ module Erp::Products
     STATUS_DRAFT = 'draft'
     STATUS_DONE = 'done'
     STATUS_DELETED = 'deleted'
+    
+    after_save :update_product_cache_stock
+
+    # update product cache stock
+    def update_product_cache_stock
+			self.damage_record_details.each do |drd|
+        drd.update_product_cache_stock
+      end
+		end    
+    
+    # Generate code
+    before_validation :generate_code
+    def generate_code
+			if !code.present?
+				num = DamageRecord.where('date >= ? AND date <= ?', self.date.beginning_of_month, self.date.end_of_month).count + 1
+
+				self.code = 'XH' + date.strftime("%m") + date.strftime("%Y").last(2) + "-" + num.to_s.rjust(3, '0')
+			end
+		end
     
     # Filters
     def self.filter(query, params)
@@ -72,6 +91,30 @@ module Erp::Products
           and_conds << '('+or_conds.join(' OR ')+')'
         end
       end
+      
+      # global filter
+      global_filter = params[:global_filter]
+      
+      if global_filter.present?
+
+        # if has period
+        if global_filter[:period].present?
+          period = Erp::Periods::Period.find(global_filter[:period])
+          global_filter[:from_date] = period.from_date
+          global_filter[:to_date] = period.to_date
+        end
+
+				# filter by order from date
+				if global_filter[:from_date].present?
+					query = query.where('date >= ?', global_filter[:from_date].to_date.beginning_of_day)
+				end
+
+				# filter by order to date
+				if global_filter[:to_date].present?
+					query = query.where('date <= ?', global_filter[:to_date].to_date.end_of_day)
+				end
+				
+			end
 
       # join with users table for search creator
       query = query.joins(:creator)

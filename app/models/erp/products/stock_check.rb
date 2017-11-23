@@ -23,6 +23,25 @@ module Erp::Products
     STOCK_CHECK_STATUS_DRAFT = 'draft'
     STOCK_CHECK_STATUS_DONE = 'done'
     
+    after_save :update_product_cache_stock
+
+    # update product cache stock
+    def update_product_cache_stock
+			self.stock_check_details.each do |scd|
+        scd.update_product_cache_stock
+      end
+		end
+    
+    # Generate code
+    before_validation :generate_code
+    def generate_code
+			if !code.present?
+				num = StockCheck.where('adjustment_date >= ? AND adjustment_date <= ?', self.adjustment_date.beginning_of_month, self.adjustment_date.end_of_month).count + 1
+
+				self.code = 'KK' + adjustment_date.strftime("%m") + adjustment_date.strftime("%Y").last(2) + "-" + num.to_s.rjust(3, '0')
+			end
+		end
+    
     # Filters
     def self.filter(query, params)
       params = params.to_unsafe_hash
@@ -75,6 +94,30 @@ module Erp::Products
           and_conds << '('+or_conds.join(' OR ')+')'
         end
       end
+      
+      # global filter
+      global_filter = params[:global_filter]
+      
+      if global_filter.present?
+
+        # if has period
+        if global_filter[:period].present?
+          period = Erp::Periods::Period.find(global_filter[:period])
+          global_filter[:from_date] = period.from_date
+          global_filter[:to_date] = period.to_date
+        end
+
+				# filter by order from date
+				if global_filter[:from_date].present?
+					query = query.where('adjustment_date >= ?', global_filter[:from_date].to_date.beginning_of_day)
+				end
+
+				# filter by order to date
+				if global_filter[:to_date].present?
+					query = query.where('adjustment_date <= ?', global_filter[:to_date].to_date.end_of_day)
+				end
+				
+			end
 
       # join with users table for search creator
       query = query.joins(:creator)

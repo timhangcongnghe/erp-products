@@ -14,6 +14,35 @@
     }) %>
 <% end %>
 
+<% content_for :global_filter do %>
+    <div class="row top-datalist">
+        <div class="col-md-2">
+            <%= erp_form_control('date', {
+                label: 'Từ ngày',
+                name: 'from_date',
+                placeholder: 'Chọn ngày'
+            }) %>
+        </div>
+        <div class="col-md-2">
+            <%= erp_form_control('date', {
+                label: 'Đến ngày',
+                name: 'to_date',
+                placeholder: 'Chọn ngày'
+            }) %>
+        </div>
+        <div class="col-md-2">
+            <%= erp_form_control('dataselect', {
+                label: 'Mốc thời gian',
+                name: 'period',
+                value: (@period.present? ? @period.id : ''),
+                text: (@period.present? ? @period.name : ''),
+                placeholder: 'Chọn khoảng thời gian',
+                url: erp_periods.dataselect_backend_periods_path(format: 'json'),
+            }) %>
+        </div>
+    </div>
+<% end %>
+
 <%= erp_datalist(
     url: erp_products.list_backend_damage_records_path,
     keywords: [
@@ -48,11 +77,6 @@
             url: erp_products.delete_all_backend_damage_records_path,
             data_method: 'DELETE',
             data_confirm: t('delete_confirm')
-        }
-    ],
-    filters: [
-        {
-            text: t('archived'), name: 'show_archived', value: true, checked: false
         }
     ],
     columns: [
