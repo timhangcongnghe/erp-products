@@ -14,7 +14,7 @@ module Erp::Products
     has_and_belongs_to_many :property_groups, -> { order 'erp_products_property_groups.custom_order' }, class_name: "Erp::Products::PropertyGroup", :join_table => 'erp_products_categories_pgroups'
 
     after_save :update_level
-    
+
     # Get product properties for list
 		def category_get_properties_array
 			groups = []
@@ -144,7 +144,7 @@ module Erp::Products
         query = query.where.not(id: params[:current_value].split(','))
       end
 
-      query = query.limit(8).map{|category| {value: category.id, text: (category.parent_name.empty? ? '' : "#{category.parent_name} / ") + category.name} }
+      query = query.limit(20).map{|category| {value: category.id, text: (category.parent_name.empty? ? '' : "#{category.parent_name} / ") + category.name} }
     end
 
     # product count
@@ -188,14 +188,14 @@ module Erp::Products
     def self.all_unarchive
 			self.where(archived: false)
 		end
-    
+
     # --------- Report Functions - Start ---------
     # Get sales order details
     def self.get_sales_order_details(params={})
       query = Erp::Orders::OrderDetail.joins(:order, :product)
         .where(erp_orders_orders: {status: Erp::Orders::Order::STATUS_CONFIRMED})
         .where(erp_orders_orders: {supplier_id: Erp::Contacts::Contact.get_main_contact.id})
-      
+
       if params[:from_date].present?
 				query = query.where('erp_orders_orders.order_date >= ?', params[:from_date].to_date.beginning_of_day)
 			end
@@ -203,7 +203,7 @@ module Erp::Products
 			if params[:to_date].present?
 				query = query.where('erp_orders_orders.order_date <= ?', params[:to_date].to_date.end_of_day)
 			end
-			
+
 			if Erp::Core.available?("periods")
 				if params[:period].present?
 					query = query.where('erp_orders_orders.order_date >= ? AND erp_orders_orders.order_date <= ?',
@@ -211,39 +211,39 @@ module Erp::Products
             Erp::Periods::Period.find(params[:period]).to_date.end_of_day)
 				end
 			end
-			
+
 			return query
     end
-    
+
     def get_sales_order_details(params={})
       query = Category.get_sales_order_details(params).where(erp_products_products: {category_id: self.id})
     end
-    
+
     # Get sales count
     def get_sales_count(params={})
       self.get_sales_order_details(params).count
     end
-    
+
     # Get sales amount
     def get_sales_amount(params={})
       self.get_sales_order_details(params).sum(:cache_real_revenue)
     end
-    
+
     # Get sales quantity
     def get_sales_quantity(params={})
       self.get_sales_order_details(params).sum(:quantity)
     end
-    
+
     # Total sales amount
     def self.total_sales_amount(params={})
       self.get_sales_order_details(params).sum(:cache_real_revenue)
     end
-    
+
     # Total sales quantity
     def self.total_sales_quantity(params={})
       self.get_sales_order_details(params).sum(:quantity)
     end
-    
+
     # Get return delivery details (customer import) - Co chung tu
     def self.get_return_delivery_details(params={})
       query = Erp::Qdeliveries::DeliveryDetail.joins(:delivery, :order_detail => :product)
@@ -251,7 +251,7 @@ module Erp::Products
         .where(erp_qdeliveries_deliveries: {status: Erp::Qdeliveries::Delivery::STATUS_DELIVERED})
         .where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT})
         #.where(erp_products_products: {category_id: self.id})
-        
+
       if params[:from_date].present?
 				query = query.where('erp_qdeliveries_deliveries.date >= ?', params[:from_date].to_date.beginning_of_day)
 			end
@@ -259,7 +259,7 @@ module Erp::Products
 			if params[:to_date].present?
 				query = query.where('erp_qdeliveries_deliveries.date <= ?', params[:to_date].to_date.end_of_day)
 			end
-			
+
 			if Erp::Core.available?("periods")
 				if params[:period].present?
 					query = query.where('erp_qdeliveries_deliveries.date >= ? AND erp_qdeliveries_deliveries.date <=',
@@ -267,21 +267,21 @@ module Erp::Products
             Erp::Periods::Period.find(params[:period]).to_date.end_of_day)
 				end
 			end
-			
+
 			return query
     end
-    
+
     def get_return_delivery_details(params={})
       query = Category.get_return_delivery_details(params).where(erp_products_products: {category_id: self.id})
     end
-    
+
     # Get return delivery details (customer import) - Khong chung tu
     def self.get_return_delivery_details_without_order(params={})
       query = Erp::Qdeliveries::DeliveryDetail.joins(:delivery, :product)
         .where(order_detail_id: nil)
         .where(erp_qdeliveries_deliveries: {status: Erp::Qdeliveries::Delivery::STATUS_DELIVERED})
-        .where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT})        
-      
+        .where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT})
+
       if params[:from_date].present?
 				query = query.where('erp_qdeliveries_deliveries.date >= ?', params[:from_date].to_date.beginning_of_day)
 			end
@@ -289,7 +289,7 @@ module Erp::Products
 			if params[:to_date].present?
 				query = query.where('erp_qdeliveries_deliveries.date <= ?', params[:to_date].to_date.end_of_day)
 			end
-			
+
 			if Erp::Core.available?("periods")
 				if params[:period].present?
 					query = query.where('erp_qdeliveries_deliveries.date >= ? AND erp_qdeliveries_deliveries.date <=',
@@ -297,44 +297,44 @@ module Erp::Products
             Erp::Periods::Period.find(params[:period]).to_date.end_of_day)
 				end
 			end
-			
+
 			return query
     end
-    
+
     def get_return_delivery_details_without_order(params={})
       query = Category.get_return_delivery_details_without_order(params).where(erp_products_products: {category_id: self.id})
     end
-    
+
     # Return count
     def get_return_count(params={})
       self.get_return_delivery_details(params).count + self.get_return_delivery_details_without_order(params).count
     end
-    
+
     # Get return amount
     def get_return_amount(params={})
       self.get_return_delivery_details(params).sum(:cache_total) + self.get_return_delivery_details_without_order(params).sum(:cache_total)
     end
-    
+
     # Get return quantity
     def get_return_quantity(params={})
       self.get_return_delivery_details(params).sum(:quantity) + self.get_return_delivery_details_without_order(params).sum(:quantity)
     end
-    
+
     # Total sales amount
     def self.total_return_amount(params={})
       self.get_return_delivery_details(params).sum(:cache_total) + self.get_return_delivery_details_without_order(params).sum(:cache_total)
     end
-    
+
     # Total sales quantity
     def self.total_return_quantity(params={})
       self.get_return_delivery_details(params).sum(:quantity) + self.get_return_delivery_details_without_order(params).sum(:quantity)
     end
-    
+
     # Total sales without return
     def self.total_sales_quantity_without_return(params={})
       self.total_sales_quantity(params) - self.total_return_quantity(params)
     end
-    
+
     def self.total_sales_amount_without_return(params={})
       self.total_sales_amount(params) - self.total_return_amount(params)
     end
