@@ -475,7 +475,23 @@ vi:
             enter_pickings_description: "Description for Pickings (Rack, Row and Case Information)"
             add_unit: "Thêm đơn vị"
             add_property: "Thêm thuộc tính"
-            add_part: "Thêm thành phần"          
+            add_part: "Thêm thành phần"
+          show:
+            show: "Chi tiết sản phẩm"
+            products: "Tất cả sản phẩm"
+            options: "Tùy chọn"
+            edit: "Chỉnh sửa"
+            archive: "Ngừng kinh doanh"
+            archive_confirm: "Bạn có chắc muốn ngừng kinh doanh sản phẩm này?"
+            unarchive: "Kinh doanh lại"
+            unarchive_confirm: "Bạn có chắc muốn kinh doanh lại sản phẩm này?"
+            delete: "Xóa sản phẩm"
+            deleted_confirm: "Bạn có chắc muốn xóa sản phẩm này?"
+          show_detail:
+            general: "Thông tin cơ bản"
+            stock: "Tồn kho"
+            images: "Hình ảnh"
+            import_export_warehouse: "Lịch sử XNK"
         manufacturings:
           create:
             success: "Thêm phiếu sản xuất thành công."

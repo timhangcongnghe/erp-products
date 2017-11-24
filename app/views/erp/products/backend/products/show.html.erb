@@ -1,4 +1,55 @@
-<p id="notice"><%= notice %></p>
+<% content_for :title do %>
+    <%= t('.show') %>
+<% end %>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+<% content_for :page_title do %>    
+    <a href="<%= erp_products.backend_products_path %>">
+    <i class="fa fa-archive"></i> <%= t('.products') %>
+    </a> / <%= t('.show') %>: <%= @product.name %>
+<% end %>
+
+<% content_for :page_toolbar do %>
+    <%= erp_component('button/edit', {
+        text: t('.edit'),
+        href: erp_products.edit_backend_product_path(@product)
+    }) %>
+
+    <%= erp_component('button/actions', {
+        actions:
+        [
+            {
+                text: '<i class="fa fa-ban"></i> '+t('.archive'),
+                url: erp_products.archive_backend_products_path(id: @product),
+                data_method: 'PUT',
+                data_confirm: t('.archive_confirm'),
+                class: 'ajax-link',
+                hide: @product.archived
+            },
+            {
+                text: '<i class="fa fa-check"></i> '+t('.unarchive'),
+                url: erp_products.archive_backend_products_path(id: @product),
+                data_method: 'PUT',
+                data_confirm: t('.unarchive_confirm'),
+                class: 'ajax-link',
+                hide: !@product.archived
+            },
+            {
+                text: '<i class="fa fa-close"></i> '+t('.delete'),
+                href: '',
+                data_method: 'PUT',
+                data_confirm: t('.deleted_confirm'),
+                class: 'ajax-link'
+            },
+        ],
+        text: t('.options'),
+        class: 'btn-noborder'
+    }) %>
+<% end %>
+
+<div class="row">
+    <div class="col-md-12">
+    <!-- BEGIN SAMPLE FORM PORTLET-->
+    <%= render 'show_detail', product: @product %>
+    <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>

@@ -84,6 +84,8 @@ Erp::Products::Engine.routes.draw do
           get 'hkerp_manufacturers_dataselect'
 
           get 'dataselect_code'
+          
+          post 'import_export_table' # @todo if qdeliveries available
         end
       end
       resources :states do

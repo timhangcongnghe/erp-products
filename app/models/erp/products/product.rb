@@ -676,6 +676,11 @@ module Erp::Products
 			update_all(is_top_business_choices: false)
 		end
 
+    # creator name
+    def creator_name
+			creator.present? ? creator.name : ''
+		end
+
     # category name
     def category_name
 			category.present? ? category.name : ''

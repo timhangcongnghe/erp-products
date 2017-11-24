@@ -1,0 +1,28 @@
+<table class="table table-bordered order-column">
+    <thead class="flip-content">
+        <tr>
+            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap">Ngày XNK</th>
+            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap">Mã xuất nhập</th>
+            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap">Kho xuất nhập</th>
+            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap">Loại XNK</th>
+            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap">SL nhập</th>
+            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap">SL xuất</th>
+            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap">Tồn</th>
+            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap">Ghi chú</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% (1..5).each_with_index do |delivery,index| %>
+            <tr>
+                <td class="text-center"><%= format_date(Time.now) %></td>
+                <td class="text-center"><%= ['XK1117-012', 'XT1217-001', 'CK1117-324'][rand(3)] %></td>
+                <td class="text-center"><%= ['SG -> HN', 'SG <-', 'HN ->'][rand(3)] %></td>
+                <td class="text-center font-yellow-gold"><%= ['Xuất kho', 'Nhập kho', 'Chuyển kho', 'Hoàn kho'][rand(4)] %></td>
+                <td class="text-center font-yellow-gold"><%= rand(1..5) %></td>
+                <td class="text-center font-yellow-gold"><%= rand(1..5) %></td>
+                <td class="text-center font-yellow-gold"><%= rand(1..5) %></td>
+                <td class="text-justify"><%= '' %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
