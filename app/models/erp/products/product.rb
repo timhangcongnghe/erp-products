@@ -91,13 +91,13 @@ module Erp::Products
       end
 
 			ImportArrays = [
-        Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT,
-        Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT,
+        Erp::Qdeliveries::Delivery::TYPE_PURCHASE_IMPORT,
+        Erp::Qdeliveries::Delivery::TYPE_SALES_IMPORT,
         Erp::Qdeliveries::Delivery::TYPE_CUSTOM_IMPORT,
       ]
 			ExportArrays = [
-        Erp::Qdeliveries::Delivery::TYPE_MANUFACTURER_EXPORT,
-        Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT,
+        Erp::Qdeliveries::Delivery::TYPE_PURCHASE_EXPORT,
+        Erp::Qdeliveries::Delivery::TYPE_SALES_EXPORT,
         Erp::Qdeliveries::Delivery::TYPE_CUSTOM_EXPORT,
       ]
 
@@ -393,10 +393,10 @@ module Erp::Products
 			# Qdelivery
 			if Erp::Core.available?("qdeliveries")
 				stock += (
-          Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT)) +
-          Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT)) -
-          Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_MANUFACTURER_EXPORT)) -
-          Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT)) +
+          Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_PURCHASE_IMPORT)) +
+          Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_SALES_IMPORT)) -
+          Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_PURCHASE_EXPORT)) -
+          Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_SALES_EXPORT)) +
           Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOM_IMPORT)) -
           Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOM_EXPORT))
         )
@@ -538,7 +538,7 @@ module Erp::Products
 
 					if Erp::Core.available?("qdeliveries")
 						if params[:delivery_type].present?
-							if [Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_EXPORT, Erp::Qdeliveries::Delivery::TYPE_WAREHOUSE_IMPORT].include?(params[:delivery_type])
+							if [Erp::Qdeliveries::Delivery::TYPE_SALES_EXPORT, Erp::Qdeliveries::Delivery::TYPE_PURCHASE_IMPORT].include?(params[:delivery_type])
 								query = query.where(erp_orders_order_details: {cache_delivery_status: Erp::Orders::OrderDetail::DELIVERY_STATUS_NOT_DELIVERY})
 							end
 						end

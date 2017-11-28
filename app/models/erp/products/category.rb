@@ -249,7 +249,7 @@ module Erp::Products
       query = Erp::Qdeliveries::DeliveryDetail.joins(:delivery, :order_detail => :product)
         .where.not(order_detail_id: nil)
         .where(erp_qdeliveries_deliveries: {status: Erp::Qdeliveries::Delivery::STATUS_DELIVERED})
-        .where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT})
+        .where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_SALES_IMPORT})
         #.where(erp_products_products: {category_id: self.id})
 
       if params[:from_date].present?
@@ -280,7 +280,7 @@ module Erp::Products
       query = Erp::Qdeliveries::DeliveryDetail.joins(:delivery, :product)
         .where(order_detail_id: nil)
         .where(erp_qdeliveries_deliveries: {status: Erp::Qdeliveries::Delivery::STATUS_DELIVERED})
-        .where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOMER_IMPORT})
+        .where(erp_qdeliveries_deliveries: {delivery_type: Erp::Qdeliveries::Delivery::TYPE_SALES_IMPORT})
 
       if params[:from_date].present?
 				query = query.where('erp_qdeliveries_deliveries.date >= ?', params[:from_date].to_date.beginning_of_day)
