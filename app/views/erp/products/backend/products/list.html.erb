@@ -55,7 +55,7 @@
         </thead>
         <tbody>
             <% @products.each do |product| %>
-                <tr class="odd gradeX">
+                <tr class="<%= 'blurred' if product.archived? %> odd gradeX has-child-table" data-url="<%= erp_products.product_details_backend_products_path(id: product.id) %>">
                     <td>
                         <%= erp_datalist_check_row(id: product.id) %>
                     </td>
@@ -63,7 +63,10 @@
                         <td><%= product.code %></td>
                     <% end %>
                     <% if get_columns(params).include?("name") %>
-                        <td><%= link_to product.name, erp_products.edit_backend_product_path(product) %></td>
+                        <td>
+                            <i class="fa fa-plus expand tr-expand-button"></i>
+                            <%= link_to product.name, erp_products.edit_backend_product_path(product) %>
+                        </td>
                     <% end %>
                     <% if get_columns(params).include?("category") %>
                         <td><%= product.category_name %></td>

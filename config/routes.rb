@@ -86,6 +86,7 @@ Erp::Products::Engine.routes.draw do
           get 'dataselect_code'
           
           post 'import_export_table' # @todo if qdeliveries available
+          get 'product_details'
         end
       end
       resources :states do
