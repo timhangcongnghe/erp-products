@@ -7,16 +7,18 @@
                     <a href="#tab_<%= tabid %>_1" data-toggle="tab"> <%= t('.general') %> </a>
                 </li>
                 <% if false %>
-                <li>
-                    <a href="#tab_<%= tabid %>_2" data-toggle="tab"> <%= t('.stock') %> </a>
-                </li>
-                <li>
-                    <a href="#tab_<%= tabid %>_3" data-toggle="tab"> <%= t('.images') %> </a>
-                </li>
+                    <li>
+                        <a href="#tab_<%= tabid %>_2" data-toggle="tab"> <%= t('.stock') %> </a>
+                    </li>
+                    <li>
+                        <a href="#tab_<%= tabid %>_3" data-toggle="tab"> <%= t('.images') %> </a>
+                    </li>
                 <% end %>
-                <li>
-                    <a href="#tab_<%= tabid %>_4" data-toggle="tab"> <%= t('.import_export_warehouse') %> </a>
-                </li>
+                <% if Erp::Core.available?("qdeliveries") and Erp::Core.available?("ortho_k") %>
+                    <li>
+                        <a href="#tab_<%= tabid %>_4" data-toggle="tab"> <%= t('.import_export_warehouse') %> </a>
+                    </li>
+                <% end %>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab_<%= tabid %>_1">
@@ -103,42 +105,35 @@
                 <div class="tab-pane" id="tab_<%= tabid %>_3">
                     Updating...
                 </div>
-                <div class="tab-pane" id="tab_<%= tabid %>_4">
-                    <h5 class="font-yellow-mint bold mb-15 text-left">
-                        Lịch sử xuất nhập kho
-                    </h5>
-                    <hr class="mt-10 mb-15">
-                    <div class="row">
-                        <div class="col-md-3 text-left">
-                            <%= erp_form_control('date', {
-                                label: 'Từ ngày',
-                                name: 'from_date',
-                                placeholder: 'Chọn lọc từ ngày bắt đầu'
-                            }) %>
-                        </div>
-                        <div class="col-md-3 text-left">
-                            <%= erp_form_control('date', {
-                                label: 'Đến ngày',
-                                name: 'to_date',
-                                placeholder: 'Chọn lọc đến ngày cuối'
-                            }) %>
-                        </div>
-                        <div class="col-md-3 text-left">
-                            <%= erp_form_control('select', {
-                                name: 'currency',
-                                value: '',
-                                text: '',
-                                label: 'Loại XNK',
-                                options: [{text: 'Xuất kho', value: ''},
-                                          {text: 'Nhập kho', value: ''},
-                                          {text: 'Tất cả', value: ''}]
-                            }) %>
-                        </div>
+                <% if Erp::Core.available?("qdeliveries") and Erp::Core.available?("ortho_k") %>
+                    <div class="tab-pane" id="tab_<%= tabid %>_4">
+                        <h5 class="font-yellow-mint bold mb-15 text-left">
+                            Lịch sử xuất nhập kho
+                        </h5>
+                        <hr class="mt-10 mb-15">
+                        <form class="more-filter">
+                            <div class="row">
+                                <div class="col-md-3 text-left">
+                                    <%= erp_form_control('date', {
+                                        label: 'Từ ngày',
+                                        name: 'from_date',
+                                        placeholder: 'Chọn lọc từ ngày bắt đầu'
+                                    }) %>
+                                </div>
+                                <div class="col-md-3 text-left">
+                                    <%= erp_form_control('date', {
+                                        label: 'Đến ngày',
+                                        name: 'to_date',
+                                        placeholder: 'Chọn lọc đến ngày cuối'
+                                    }) %>
+                                </div>
+                            </div>
+                        </form>
+                        <%= erp_datalist(
+                            url: erp_products.import_export_table_backend_products_path(id: product.id)
+                        ) %>
                     </div>
-                    <%= erp_datalist(
-                        url: erp_products.import_export_table_backend_products_path
-                    ) %>
-                </div>
+                <% end %>
             </div>
         </div>
     </div>
