@@ -3,12 +3,33 @@
 <input type="hidden" name="state_check[state_check_details_attributes][<%= uid %>][_destroy]" value="">
 <td><%= state_check_detail.get_product_code %></td>
 <td><%= state_check_detail.get_product_name %></td>
-<td>
+<td width="10%">
     <%= erp_form_control("number", {
         name: 'state_check[state_check_details_attributes][' + uid + '][quantity]',
         value: state_check_detail.quantity,
         text: state_check_detail.quantity,
         class: "line_quantity inline"
+    }) %>
+</td>
+<td>
+    <%= erp_form_control("dataselect", {
+        name: 'state_check[state_check_details_attributes][' + uid + '][old_state_id]',
+        value: state_check_detail.old_state_id,
+        text: state_check_detail.get_old_state_name,
+        placeholder: t('.choose_old_state'),
+        required: true,
+        url: erp_products.dataselect_backend_states_path(format: 'json'),
+        create: {
+            url: erp_products.new_backend_state_path,
+            title: t('.create_state'),
+            container_selector: '.new_state',
+            input_selector: 'input[name="state[name]"]',
+        },
+        edit: {
+            url: erp_products.edit_backend_state_path(id: ':value'),
+            title: t('.edit_state'),
+            container_selector: '.edit_state',
+        }
     }) %>
 </td>
 <td>
@@ -37,6 +58,7 @@
         name: 'state_check[state_check_details_attributes][' + uid + '][note]',
         value: state_check_detail.note,
         text: state_check_detail.note,
+        rows: 1
     }) %>
 </td>
 <td class="text-right">

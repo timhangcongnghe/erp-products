@@ -4,6 +4,7 @@
             <th width="20%" class="text-left"><%= t('.code') %></th>
             <th><%= t('.name') %></th>
             <th class="numeric"><%= t('.quantity') %></th>
+            <th><%= t('.old_state') %></th>
             <th><%= t('.state') %></th>
             <th><%= t('.note') %></th>
         </tr>
@@ -16,6 +17,7 @@
             </td>
             <td class="text-left"><%= state_check_detail.get_product_name %></td>
             <td class="numeric text-left"><%= state_check_detail.quantity %></td>
+            <td class="text-left"><%= state_check_detail.get_old_state_name %></td>
             <td class="text-left"><%= state_check_detail.get_state_name %></td>
             <td class="text-left"><%= state_check_detail.note %></td>
         </tr>

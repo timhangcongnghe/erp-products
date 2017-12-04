@@ -1269,7 +1269,7 @@ vi:
             change_active: "Xác nhận phiếu kiểm tra sản phẩm"
             change_deleted: "Hủy phiếu kiểm tra sản phẩm"
             change_deleted_confirm: "Bạn có chắc muốn hủy các phiếu kiểm tra sản phẩm được chọn?"
-            state_checks: "Tất cả phiếu kiểm tra sản phẩm"
+            state_checks: "Kiểm tra trạng thái sản phẩm"
             create: "Thêm phiếu kiểm tra sản phẩm"
             delete: "Xóa phiếu kiểm tra sản phẩm được chọn"
             name: "Tên phiếu kiểm tra sản phẩm"        
@@ -1329,13 +1329,17 @@ vi:
             edit_product: "Cập nhật sản phẩm"
             code: "Mã sản phẩm"
             quantity: "Số lượng"
-            state: "Trạng thái sản phẩm"
+            old_state: "Trạng thái trước kiểm"
+            state: "Trạng thái thực tế"
             action: "Thao tác"
         state_check_details:
           state_check_detail_line_form:
             choose_state: "Chọn trạng thái sản phẩm"
-            create_state: "Thêm trạng thái sản phẩm"
-            edit_state: "Cập nhật trạng thái sản phẩm"
+            create_state: "Thêm trạng thái"
+            edit_state: "Cập nhật trạng thái"
+            choose_old_state: "Chọn trạng thái sản phẩm"
+            create_old_state: "Thêm trạng thái"
+            edit_old_state: "Cập nhật trạng thái"
         inventory_products:
           create:
             success: "Thêm sản phẩm thành công."

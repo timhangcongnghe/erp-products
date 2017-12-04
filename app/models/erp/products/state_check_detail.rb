@@ -1,9 +1,10 @@
 module Erp::Products
   class StateCheckDetail < ApplicationRecord
     validates :product_id, :state_id, :quantity, presence: true
-    belongs_to :state, class_name: "Erp::Products::State"
-    belongs_to :product, class_name: "Erp::Products::Product"
     belongs_to :state_check, class_name: "Erp::Products::StateCheck"
+    belongs_to :product, class_name: "Erp::Products::Product"
+    belongs_to :state, class_name: "Erp::Products::State", foreign_key: :state_id
+    belongs_to :old_state, class_name: "Erp::Products::State", foreign_key: :old_state_id
     
     after_save :update_product_cache_stock
 
@@ -18,6 +19,10 @@ module Erp::Products
     
     def get_product_code
       product.present? ? product.code : ''
+    end
+    
+    def get_old_state_name
+      old_state.present? ? old_state.name : ''
     end
     
     def get_state_name
