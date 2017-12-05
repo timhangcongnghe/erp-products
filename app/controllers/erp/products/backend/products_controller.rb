@@ -16,7 +16,7 @@ module Erp
 
         # POST /products/list
         def list
-          @products = Product.search(params).paginate(:page => params[:page], :per_page => 10)
+          @products = Product.search(params).paginate(:page => params[:page], :per_page => 20)
 
           render layout: nil
         end
@@ -64,6 +64,11 @@ module Erp
 
           if @product.save
             @product.update_products_values
+            if Erp::Core.available?('ortho_k')
+              @product.update_cache_properties
+              @product.set_default_name
+              @product.set_default_code
+            end
 
             if request.xhr?
               render json: {
@@ -92,6 +97,11 @@ module Erp
 
           if @product.save
             @product.update_products_values
+            if Erp::Core.available?('ortho_k')
+              @product.update_cache_properties
+              @product.set_default_name
+              @product.set_default_code
+            end
 
             if request.xhr?
               render json: {
@@ -611,16 +621,16 @@ module Erp
             }
           end
         end
-        
+
         def import_export_table # @todo if qdeliveries available
           filters = params.to_unsafe_hash[:more_filter]
-          
+
           @rows = @product.import_export_report(filters.merge({not_filters: 'stock_transfer'}))[:data]
           @totals = @product.import_export_report(filters)[:total]
 
           render layout: nil
         end
-        
+
         def product_details # @todo if qdeliveries available
         end
 

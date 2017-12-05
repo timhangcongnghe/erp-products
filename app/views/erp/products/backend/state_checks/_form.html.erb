@@ -1,5 +1,5 @@
 <%= form_for([erp_products, :backend, state_check], html: {multipart: true}) do |f| %>
-    <div class="form-body">        
+    <div class="form-body">
         <div class="row">
             <div class="col-md-6">
                 <div class="portlet light bordered">
@@ -48,7 +48,7 @@
             </div>
             <div class="col-md-6">
                 <div class="portlet light bordered">
-                    <div class="portlet-body form">                        
+                    <div class="portlet-body form">
                         <%= erp_form_control("dataselect", {
                             name: 'state_check[employee_id]',
                             value: state_check.employee_id,
@@ -58,7 +58,7 @@
                             url: erp.dataselect_backend_users_path(format: 'json'),
                             required: true,
                             errors: state_check.errors.full_messages_for(:employee_id)
-                        }) %>                        
+                        }) %>
                         <%= erp_form_control("textarea", {
                             name: 'state_check[note]',
                             value: state_check.note,
@@ -79,6 +79,22 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane addableform-table active" id="tab_5_1">
+
+                            <% if Erp::Core.available?("ortho_k") %>
+                                <div class="row">
+                                  <div class="col-md-3">
+                                    <%= erp_form_control("dataselect", {
+                                        name: 'default_state',
+                                        value: '',
+                                        text: '',
+                                        label: 'Tình trạng mặc định',
+                                        placeholder: 'Chọn tình trạng',
+                                        url: erp_products.dataselect_backend_states_path(format: 'json'),
+                                    }) %>
+                                  </div>
+                            </div>
+                            <% end %>
+
                             <%= erp_form_control("addableform", {
                                 type: 'table',
                                 add_button: t('.add_product'),

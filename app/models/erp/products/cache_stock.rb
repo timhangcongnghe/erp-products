@@ -25,7 +25,9 @@ module Erp::Products
     end
 
     def self.filter(products, options={})
-      query = self.where(product_id: products)
+      query = self.all
+
+      query = query.where(product_id: products) if products.present?
 
       sts = options[:state_id].present? ? options[:state_id] : nil
       query = query.where(state_id: sts)

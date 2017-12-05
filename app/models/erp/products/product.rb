@@ -1,8 +1,8 @@
 module Erp::Products
   class Product < ApplicationRecord
 		attr_accessor :product_property_values
-		validates :name, :uniqueness => true
-    validates :name, :category_id, :brand_id, :presence => true
+		#validates :name, :uniqueness => true
+    validates :category_id, :brand_id, :presence => true
     validate :deal_to_date_cannot_be_in_the_past, :deal_price_cannot_blank
 
     belongs_to :creator, class_name: "Erp::User"
@@ -471,6 +471,84 @@ module Erp::Products
           and_conds << '('+or_conds.join(' OR ')+')'
         end
       end
+
+      # global filter
+      global_filter = params[:global_filter]
+
+      if global_filter.present?
+
+        @global_filters = global_filter
+
+        # get categories
+        category_ids = @global_filters[:categories].present? ? @global_filters[:categories] : nil
+        @categories = Erp::Products::Category.where(id: category_ids)
+
+        # get diameters
+        diameter_ids = @global_filters[:diameters].present? ? @global_filters[:diameters] : nil
+        @diameters = Erp::Products::PropertiesValue.where(id: diameter_ids)
+
+        # get diameters
+        letter_ids = @global_filters[:letters].present? ? @global_filters[:letters] : nil
+        @letters = Erp::Products::PropertiesValue.where(id: letter_ids)
+
+        # get numbers
+        number_ids = @global_filters[:numbers].present? ? @global_filters[:numbers] : nil
+        @numbers = Erp::Products::PropertiesValue.where(id: number_ids)
+
+        # warehouses
+        @warehouses = Erp::Warehouses::Warehouse.all
+
+
+        # product query
+        query = query.where(category_id: category_ids) if category_ids.present?
+        # filter by diameters
+        if diameter_ids.present?
+          if !diameter_ids.kind_of?(Array)
+            query = query.where("erp_products_products.cache_properties LIKE '%[\"#{diameter_ids}\",%'")
+          else
+            diameter_ids = (diameter_ids.reject { |c| c.empty? })
+            if !diameter_ids.empty?
+              qs = []
+              diameter_ids.each do |x|
+                qs << "(erp_products_products.cache_properties LIKE '%[\"#{x}\",%')"
+              end
+              query = query.where("(#{qs.join(" OR ")})")
+            end
+          end
+        end
+        # filter by letters
+        if letter_ids.present?
+          if !letter_ids.kind_of?(Array)
+            query = query.where("erp_products_products.cache_properties LIKE '%[\"#{letter_ids}\",%'")
+          else
+            letter_ids = (letter_ids.reject { |c| c.empty? })
+            if !letter_ids.empty?
+              qs = []
+              letter_ids.each do |x|
+                qs << "(erp_products_products.cache_properties LIKE '%[\"#{x}\",%')"
+              end
+              query = query.where("(#{qs.join(" OR ")})")
+            end
+          end
+        end
+        # filter by numbers
+        if number_ids.present?
+          if !number_ids.kind_of?(Array)
+            query = query.where("erp_products_products.cache_properties LIKE '%[\"#{number_ids}\",%'")
+          else
+            number_ids = (number_ids.reject { |c| c.empty? })
+            if !number_ids.empty?
+              qs = []
+              number_ids.each do |x|
+                qs << "(erp_products_products.cache_properties LIKE '%[\"#{x}\",%')"
+              end
+              query = query.where("(#{qs.join(" OR ")})")
+            end
+          end
+        end
+
+			end
+      # end// global filter
 
       # join with categories table for search with category
       query = query.joins(:category)
@@ -1015,6 +1093,7 @@ module Erp::Products
 				arr[pv.properties_value.property_id] = [pv.properties_value_id.to_s, pv.properties_value.value] # "[#{pv.properties_value_id}]"
 			end
 			self.update_column(:cache_properties, arr.to_json)
+			self.cache_properties = arr.to_json
 		end
 
 		def get_stock_by_warehouse(warehouse)

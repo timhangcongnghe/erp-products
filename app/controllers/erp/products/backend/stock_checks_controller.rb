@@ -182,6 +182,98 @@ module Erp
           render layout: false
         end
 
+        def form_check_details
+          @stock_check = StockCheck.new()
+
+          # product query
+          @product_query = Erp::Products::Product.joins(:category)
+
+          if params[:form_data].present?
+            form_data = params[:form_data]
+            # get categories
+            category_ids = form_data[:categories].present? ? form_data[:categories] : nil
+            @categories = Erp::Products::Category.where(id: category_ids)
+
+            # get diameters
+            diameter_ids = form_data[:diameters].present? ? form_data[:diameters] : nil
+            @diameters = Erp::Products::PropertiesValue.where(id: diameter_ids)
+
+            # get diameters
+            letter_ids = form_data[:letters].present? ? form_data[:letters] : nil
+            @letters = Erp::Products::PropertiesValue.where(id: letter_ids)
+
+            # get numbers
+            number_ids = form_data[:numbers].present? ? form_data[:numbers] : nil
+            @numbers = Erp::Products::PropertiesValue.where(id: number_ids)
+
+            # warehouses
+            @warehouses = Erp::Warehouses::Warehouse.all
+
+            @product_query = @product_query.where(category_id: category_ids) if category_ids.present?
+            # filter by diameters
+            if diameter_ids.present?
+              if !diameter_ids.kind_of?(Array)
+                @product_query = @product_query.where("erp_products_products.cache_properties LIKE '%[\"#{diameter_ids}\",%'")
+              else
+                diameter_ids = (diameter_ids.reject { |c| c.empty? })
+                if !diameter_ids.empty?
+                  qs = []
+                  diameter_ids.each do |x|
+                    qs << "(erp_products_products.cache_properties LIKE '%[\"#{x}\",%')"
+                  end
+                  @product_query = @product_query.where("(#{qs.join(" OR ")})")
+                end
+              end
+            end
+            # filter by letters
+            if letter_ids.present?
+              if !letter_ids.kind_of?(Array)
+                @product_query = @product_query.where("erp_products_products.cache_properties LIKE '%[\"#{letter_ids}\",%'")
+              else
+                letter_ids = (letter_ids.reject { |c| c.empty? })
+                if !letter_ids.empty?
+                  qs = []
+                  letter_ids.each do |x|
+                    qs << "(erp_products_products.cache_properties LIKE '%[\"#{x}\",%')"
+                  end
+                  @product_query = @product_query.where("(#{qs.join(" OR ")})")
+                end
+              end
+            end
+            # filter by numbers
+            if number_ids.present?
+              if !number_ids.kind_of?(Array)
+                @product_query = @product_query.where("erp_products_products.cache_properties LIKE '%[\"#{number_ids}\",%'")
+              else
+                number_ids = (number_ids.reject { |c| c.empty? })
+                if !number_ids.empty?
+                  qs = []
+                  number_ids.each do |x|
+                    qs << "(erp_products_products.cache_properties LIKE '%[\"#{x}\",%')"
+                  end
+                  @product_query = @product_query.where("(#{qs.join(" OR ")})")
+                end
+              end
+            end
+          end
+
+          if category_ids.present? and diameter_ids.present?
+            @products = @product_query.limit(20).order("erp_products_categories.name, cache_diameter, code")
+          else
+            @products = []
+          end
+
+          # Default state
+          @state = ((params[:form_data].present? and params[:form_data][:default_state].present?) ? params[:form_data][:default_state] : nil)
+
+          @products.each do |p|
+            @stock_check.stock_check_details.build(
+              product_id: p.id,
+              state_id: @state
+            )
+          end
+        end
+
         private
           # Use callbacks to share common setup or constraints between actions.
           def set_stock_check

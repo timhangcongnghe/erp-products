@@ -75,40 +75,79 @@
                     </ul>
                     <div class="tab-content stock-check-details">
                         <div class="tab-pane addableform-table active" id="tab_5_1">
-                            <%= erp_form_control("addableform", {
-                                type: 'table',
-                                add_button: t('.add'),
-                                partial: 'erp/products/backend/stock_check_details/stock_check_line_form',
-                                partial_url: erp_products.stock_check_line_form_backend_stock_check_details_path,
-                                items: @stock_check.stock_check_details,
-                                item: :stock_check_detail,
-                                add_control_selector: "input[name='product_id']",
-                                add_control: erp_form_control("dataselect", {
-                                    name: 'product_id',
-                                    placeholder: t('.choose_product'),
-                                    label: t('.product'),
-                                    help: t('.help_product'),
-                                    url: erp_products.dataselect_backend_products_path(format: 'json'),
-                                    create: {
-                                        url: erp_products.new_backend_product_path,
-                                        title: t('.create_product'),
-                                        container_selector: '.new_product',
-                                        input_selector: 'input[name="product[name]"]'
-                                    },
-                                    edit: {
-                                        url: erp_products.edit_backend_product_path(id: ':value'),
-                                        title: t('.edit_product'),
-                                        container_selector: '.edit_product',
-                                    }
-                                }),
-                                thead: "<th>#{t('.product_name')}</th>
-                                        <th>#{t('.stock')}</th>
-                                        <th>#{t('.real_qty')}</th>
-                                        <th>#{t('.quantity')}</th>
-                                        <th>#{t('.state')}</th>
-                                        <th>#{t('.note')}</th>
-                                        <th></th>"
-                            }) %>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <%= erp_form_control("dataselect", {
+                                        name: 'default_state',
+                                        value: '',
+                                        text: '',
+                                        label: 'Tình trạng mặc định',
+                                        placeholder: 'Chọn tình trạng',
+                                        url: erp_products.dataselect_backend_states_path(format: 'json'),
+                                    }) %>
+                                </div>
+                            </div>
+                            <hr/>
+
+                            <% if Erp::Core.available?("ortho_k") %>
+                                <div class="row addableform-filter">
+                                    <div class="col-md-3">
+                                        <%= erp_form_control("dataselect", {
+                                            name: 'categories',
+                                            value: '',
+                                            text: '',
+                                            label: 'Loại hàng',
+                                            placeholder: 'Chọn loại hàng',
+                                            url: erp_products.dataselect_backend_categories_path(format: 'json'),
+                                            multiple: true
+                                        }) %>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <% diameter = Erp::Products::Property.where(name: "Đường kính").first %>
+                                        <%= erp_form_control("dataselect", {
+                                            name: 'diameters',
+                                            value: '',
+                                            text: '',
+                                            label: 'Đường kính',
+                                            placeholder: 'Chọn đường kính',
+                                            url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: diameter.id),
+                                            multiple: true
+                                        }) %>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <% letter = Erp::Products::Property.where(name: "Chữ").first %>
+                                        <%= erp_form_control("dataselect", {
+                                            name: 'letters',
+                                            value: '',
+                                            text: '',
+                                            label: 'Chữ',
+                                            placeholder: letter.name,
+                                            url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: letter.id),
+                                            multiple: true
+                                        }) %>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <% number = Erp::Products::Property.where(name: "Số").first %>
+                                        <%= erp_form_control("dataselect", {
+                                            name: 'numbers',
+                                            value: '',
+                                            text: '',
+                                            label: 'Chữ',
+                                            placeholder: number.name,
+                                            url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: number.id),
+                                            multiple: true
+                                        }) %>
+                                    </div>
+                                </div>
+                                <hr>
+                            <% end %>
+
+                            <div class="ajax-box"
+                                data-control=".addableform-filter select,.addableform-filter input"
+                                data-url="<%= erp_products.form_check_details_backend_stock_checks_path %>"
+                            >
+
+                            </div>
 
                             <table class="table all-line-total">
                                 <tr>
@@ -158,8 +197,8 @@
         rows.each(function() {
             var row = $(this);
             var difference_qty = 0;
-            var stock = parseFloat(row.find('.line_stock_qty').val());
-            var real = parseFloat(row.find('.line_real_qty').val());
+            var stock = customParseFloat(row.find('.line_stock_qty').val());
+            var real = customParseFloat(row.find('.line_real_qty').val());
             if (real) {
                 var difference_qty=real-stock;
             }
@@ -187,11 +226,11 @@
             calculateQuantityLine($(this));
         });
 
-        $('.ajax-box').bind("DOMSubtreeModified",function(){
-            $('.stock-check-details').each(function() {
-                calculateQuantityLine($(this));
-            });
-        });
+        //$('.ajax-box').bind("DOMSubtreeModified",function(){
+        //    $('.stock-check-details').each(function() {
+        //        calculateQuantityLine($(this));
+        //    });
+        //});
 
         // Change event on order line
         $(document).on('change keyup', '.stock-check-details input', function(e) {

@@ -1,0 +1,34 @@
+<%= erp_form_control("addableform", {
+    type: 'table',
+    add_button: t('.add'),
+    partial: 'erp/products/backend/stock_check_details/stock_check_line_form',
+    partial_url: erp_products.stock_check_line_form_backend_stock_check_details_path,
+    items: @stock_check.stock_check_details,
+    item: :stock_check_detail,
+    add_control_selector: "input[name='product_id']",
+    add_control: erp_form_control("dataselect", {
+        name: 'product_id',
+        placeholder: t('.choose_product'),
+        label: t('.product'),
+        help: t('.help_product'),
+        url: erp_products.dataselect_backend_products_path(format: 'json'),
+        create: {
+            url: erp_products.new_backend_product_path,
+            title: t('.create_product'),
+            container_selector: '.new_product',
+            input_selector: 'input[name="product[name]"]'
+        },
+        edit: {
+            url: erp_products.edit_backend_product_path(id: ':value'),
+            title: t('.edit_product'),
+            container_selector: '.edit_product',
+        }
+    }),
+    thead: "<th>#{t('.product_name')}</th>
+            <th>#{t('.stock')}</th>
+            <th>#{t('.real_qty')}</th>
+            <th>#{t('.quantity')}</th>
+            <th>#{t('.state')}</th>
+            <th>#{t('.note')}</th>
+            <th></th>"
+}) %>

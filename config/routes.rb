@@ -84,7 +84,7 @@ Erp::Products::Engine.routes.draw do
           get 'hkerp_manufacturers_dataselect'
 
           get 'dataselect_code'
-          
+
           post 'import_export_table' # @todo if qdeliveries available
           get 'product_details'
         end
@@ -225,6 +225,8 @@ Erp::Products::Engine.routes.draw do
           put 'archive_all'
           put 'unarchive_all'
           get 'ajax_stock_col'
+
+          get 'form_check_details'
         end
       end
       resources :stock_check_details do

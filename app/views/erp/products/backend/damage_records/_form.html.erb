@@ -1,12 +1,12 @@
 <%= form_for([erp_products, :backend, damage_record], html: {multipart: true}) do |f| %>
-    <div class="form-body">        
+    <div class="form-body">
         <div class="row">
             <div class="col-md-6">
                 <div class="portlet light bordered">
                     <div class="portlet-body form">
                         <%= erp_form_control("text", {
                             name: 'damage_record[code]',
-                            value: damage_record.code,                   
+                            value: damage_record.code,
                             label: t('.code'),
                             errors: damage_record.errors.full_messages_for(:code)
                         }) %>
@@ -56,6 +56,20 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_5_1">
+                            <% if Erp::Core.available?("ortho_k") %>
+                                <div class="row">
+                                  <div class="col-md-3">
+                                    <%= erp_form_control("dataselect", {
+                                        name: 'default_state',
+                                        value: '',
+                                        text: '',
+                                        label: 'Tình trạng mặc định',
+                                        placeholder: 'Chọn tình trạng',
+                                        url: erp_products.dataselect_backend_states_path(format: 'json'),
+                                    }) %>
+                                  </div>
+                                </div>
+                            <% end %>
                             <div class="add-items-line">
                                 <%= erp_form_control("addableform", {
                                     type: 'table',
@@ -90,7 +104,7 @@
                                             <th>#{t('.note')}</th>
                                             <th></th>"
                                 }) %>
-                            
+
                                 <table class="table">
                                     <tr>
                                         <td width="90%" class="text-right text-semibold"><%= t(".quantity_total") %>:</td>

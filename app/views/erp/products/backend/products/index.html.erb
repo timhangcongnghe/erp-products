@@ -14,6 +14,60 @@
     }) %>
 <% end %>
 
+<% content_for :global_filter do %>
+    <div class="row top-datalist">
+        <div class="col-md-3">
+            <%= erp_form_control("dataselect", {
+                name: 'categories',
+                value: '',
+                text: '',
+                label: 'Loại hàng',
+                placeholder: 'Chọn loại hàng',
+                url: erp_products.dataselect_backend_categories_path(format: 'json'),
+                multiple: true
+            }) %>
+        </div>
+        <% if Erp::Core.available?("ortho_k") %>
+            <div class="col-md-3">
+                <% diameter = Erp::Products::Property.where(name: "Đường kính").first %>
+                <%= erp_form_control("dataselect", {
+                    name: 'diameters',
+                    value: '',
+                    text: '',
+                    label: 'Đường kính',
+                    placeholder: 'Chọn đường kính',
+                    url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: diameter.id),
+                    multiple: true
+                }) %>
+            </div>
+            <div class="col-md-3">
+                <% letter = Erp::Products::Property.where(name: "Chữ").first %>
+                <%= erp_form_control("dataselect", {
+                    name: 'letters',
+                    value: '',
+                    text: '',
+                    label: 'Chữ',
+                    placeholder: letter.name,
+                    url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: letter.id),
+                    multiple: true
+                }) %>
+            </div>
+            <div class="col-md-3">
+                <% number = Erp::Products::Property.where(name: "Số").first %>
+                <%= erp_form_control("dataselect", {
+                    name: 'numbers',
+                    value: '',
+                    text: '',
+                    label: 'Chữ',
+                    placeholder: number.name,
+                    url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: number.id),
+                    multiple: true
+                }) %>
+            </div>
+        <% end %>
+    </div>
+<% end %>
+
 <%= erp_datalist(
     url: erp_products.list_backend_products_path,
     sortable: true,
