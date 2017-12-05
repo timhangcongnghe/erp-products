@@ -4,26 +4,28 @@
             <div class="col-md-6">
                 <div class="portlet light bordered">
                     <div class="portlet-body form">
-                        <%= erp_form_control("text", {
-                            name: 'damage_record[code]',
-                            value: damage_record.code,
-                            label: t('.code'),
-                            errors: damage_record.errors.full_messages_for(:code)
-                        }) %>
-                        <%= erp_form_control('date', {
-                            label: t('.date'),
-                            name: 'damage_record[date]',
-                            value: damage_record.date,
-                            placeholder: t('.choose_date'),
-                            required: true,
-                            errors: damage_record.errors.full_messages_for(:date)
-                        }) %>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="portlet light bordered">
-                    <div class="portlet-body form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <%= erp_form_control("text", {
+                                    name: 'damage_record[code]',
+                                    value: damage_record.code,                   
+                                    label: t('.code'),
+                                    help: t('.help_code'),
+                                    required: (damage_record.id.nil? ? false : true),
+                                    errors: damage_record.errors.full_messages_for(:code)
+                                }) %>
+                            </div>
+                            <div class="col-md-6">
+                                <%= erp_form_control('date', {
+                                    label: t('.date'),
+                                    name: 'damage_record[date]',
+                                    value: damage_record.date,
+                                    placeholder: t('.choose_date'),
+                                    required: true,
+                                    errors: damage_record.errors.full_messages_for(:date)
+                                }) %>
+                            </div>
+                        </div>
                         <% if Erp::Core.available?("warehouses") %>
                             <%= erp_form_control("dataselect", {
                                 name: 'damage_record[warehouse_id]',
@@ -36,11 +38,28 @@
                                 errors: damage_record.errors.full_messages_for(:warehouse_id)
                             }) %>
                         <% end %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">
+                        <%= erp_form_control("dataselect", {
+                            name: 'damage_record[employee_id]',
+                            value: damage_record.employee_id,
+                            text: damage_record.employee_name,
+                            placeholder: t('.choose_employee'),
+                            label: t('.employee'),
+                            url: erp.dataselect_backend_users_path(format: 'json'),
+                            required: true,
+                            errors: damage_record.errors.full_messages_for(:employee_id)
+                        }) %>
                         <%= erp_form_control("textarea", {
                             name: 'damage_record[description]',
                             value: damage_record.description,
-                            placeholder: t('.description'),
-                            rows: '2'
+                            label: t('.description'),
+                            placeholder: t('.placeholder_description'),
+                            rows: '1'
                         }) %>
                     </div>
                 </div>

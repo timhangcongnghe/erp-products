@@ -4,16 +4,22 @@
             <th width='1%'>
                 <%= erp_datalist_check_all %>
             </th>
-            <% if get_columns(params).include?("name") %>
-                <th><%= t('.name') %></th>
-            <% end %>
-            <% if get_columns(params).include?("employee") %>
-                <th><%= t('.employee') %></th>
+            <% if get_columns(params).include?("code") %>
+                <th><%= t('.code') %></th>
             <% end %>
             <% if get_columns(params).include?("check_date") %>
                 <th class="sortable" sort-by='erp_products_state_checks.check_date'>
                     <%= t('.check_date') %>
                 </th>
+            <% end %>
+            <% if get_columns(params).include?("warehouse") %>
+                <th><%= t('.warehouse') %></th>
+            <% end %>
+            <% if get_columns(params).include?("employee") %>
+                <th><%= t('.employee') %></th>
+            <% end %>
+            <% if get_columns(params).include?("note") %>
+                <th><%= t('.note') %></th>
             <% end %>
             <% if get_columns(params).include?("status") %>
                 <th><%= t('status') %></th>
@@ -33,35 +39,27 @@
                 <td>
                     <%= erp_datalist_check_row(id: state_check.id) %>
                 </td>
-                <% if get_columns(params).include?("name") %>
+                <% if get_columns(params).include?("code") %>
                     <td>
                         <i class="fa fa-plus expand tr-expand-button"></i>
-                        <strong><%= link_to state_check.name, erp_products.edit_backend_state_check_path(state_check) %></strong>
+                        <strong><%= state_check.code %></strong>
                     </td>
+                <% end %>
+                <% if get_columns(params).include?("check_date") %>
+                    <td><%= format_date(state_check.check_date) %></td>
+                <% end %>
+                <% if get_columns(params).include?("warehouse") %>
+                    <td><%= state_check.warehouse_name %></td>
                 <% end %>
                 <% if get_columns(params).include?("employee") %>
                     <td><%= state_check.employee_name %></td>
                 <% end %>
-                <% if get_columns(params).include?("check_date") %>
-                    <td><%= state_check.check_date.strftime("%d/%m/%Y") %></td>
+                <% if get_columns(params).include?("note") %>
+                    <td><%= raw state_check.note %></td>
                 <% end %>
                 <% if get_columns(params).include?("status") %>
                 <td>
-                    <% if state_check.status == Erp::Products::StateCheck::STATE_CHECK_STATUS_DRAFT %>
-                        <%= erp_component('label/danger', {
-                            text: t('.'+state_check.status)
-                        }) %>
-                    <% end %>
-                    <% if state_check.status == Erp::Products::StateCheck::STATE_CHECK_STATUS_ACTIVE %>
-                        <%= erp_component('label/primary', {
-                            text: t('.'+state_check.status)
-                        }) %>
-                    <% end %>
-                    <% if state_check.status == Erp::Products::StateCheck::STATE_CHECK_STATUS_DELETED %>
-                        <%= erp_component('label/default', {
-                            text: t('.'+state_check.status)
-                        }) %>
-                    <% end %>
+                    <%= status_label(state_check.status) %>
                 </td>
                 <% end %>
                 <% if get_columns(params).include?("creator") %>
@@ -72,7 +70,7 @@
                     </td>
                 <% end %>
                 <% if get_columns(params).include?("created_at") %>
-                    <td><%= state_check.created_at.strftime("%d/%m/%Y") %></td>
+                    <td><%= format_date(state_check.created_at) %></td>
                 <% end %>
                 <td>
                     <%= erp_datalist_row_actions(
@@ -89,7 +87,7 @@
                                 class: 'ajax-link'
                             },
                             {
-                                text: '<i class="fa fa-file-text-o"></i> '+t('.change_active'),
+                                text: '<i class="fa fa-check"></i> '+t('.change_active'),
                                 url: erp_products.status_active_backend_state_checks_path(id: state_check),
                                 data_method: 'PUT',
                                 hide: state_check.status == Erp::Products::StateCheck::STATE_CHECK_STATUS_ACTIVE,
@@ -99,7 +97,7 @@
                                 divider: true
                             },
                             {
-                                text: '<i class="fa fa-close"></i> '+t('.change_deleted'),
+                                text: '<i class="fa fa-trash"></i> '+t('.change_deleted'),
                                 url: erp_products.status_deleted_backend_state_checks_path(id: state_check),
                                 data_method: 'PUT',
                                 class: 'ajax-link',

@@ -21,6 +21,10 @@ module Erp::Products
       product.present? ? product.code : ''
     end
     
+    def get_product_unit
+      product.present? ? product.unit_name : ''
+    end
+    
     def get_old_state_name
       old_state.present? ? old_state.name : ''
     end

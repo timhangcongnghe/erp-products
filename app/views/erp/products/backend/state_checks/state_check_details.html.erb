@@ -1,24 +1,28 @@
 <table class="table table-bordered table-striped flip-content">
     <thead class="flip-content">
         <tr>
-            <th width="20%" class="text-left"><%= t('.code') %></th>
-            <th><%= t('.name') %></th>
-            <th class="numeric"><%= t('.quantity') %></th>
-            <th><%= t('.old_state') %></th>
-            <th><%= t('.state') %></th>
-            <th><%= t('.note') %></th>
+            <% if !Erp::Core.available?('ortho_k') %>
+                <th width="20%" class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.code') %></th>
+            <% end %>
+            <th width="25%" class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.name') %></th>
+            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.unit') %></th>
+            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.quantity') %></th>
+            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.old_state') %></th>
+            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.state') %></th>
+            <th width="25%" class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.note') %></th>
         </tr>
     </thead>
     <tbody>
         <% @state_check.state_check_details.each do |state_check_detail| %>
         <tr>
-            <td class="text-left">
-                <strong><%= link_to state_check_detail.get_product_code, erp_products.edit_backend_product_path(state_check_detail.product), target: '_blank' %></strong>
-            </td>
-            <td class="text-left"><%= state_check_detail.get_product_name %></td>
-            <td class="numeric text-left"><%= state_check_detail.quantity %></td>
-            <td class="text-left"><%= state_check_detail.get_old_state_name %></td>
-            <td class="text-left"><%= state_check_detail.get_state_name %></td>
+            <% if !Erp::Core.available?('ortho_k') %>
+                <td class="text-left bold"><%= state_check_detail.get_product_code %></td>
+            <% end %>
+            <td class="text-left bold"><%= backend_product_link(state_check_detail.product) %></td>
+            <td class="text-center"><%= state_check_detail.get_product_unit %></td>
+            <td class="text-center"><%= state_check_detail.quantity %></td>
+            <td class="text-center"><%= state_check_detail.get_old_state_name %></td>
+            <td class="text-center"><%= state_check_detail.get_state_name %></td>
             <td class="text-left"><%= state_check_detail.note %></td>
         </tr>
         <% end %>

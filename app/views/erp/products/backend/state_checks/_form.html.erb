@@ -4,22 +4,30 @@
             <div class="col-md-6">
                 <div class="portlet light bordered">
                     <div class="portlet-body form">
-                        <%= erp_form_control("text", {
-                            name: 'state_check[name]',
-                            value: state_check.name,
-                            id: "state_check_name",
-                            label: t('.name'),
-                            placeholder: t('.enter_name'),
-                            errors: state_check.errors.full_messages_for(:name)
-                        }) %>
-                        <%= erp_form_control('date', {
-                            name: 'state_check[check_date]',
-                            value: state_check.check_date,
-                            placeholder: t('.choose_check_date'),
-                            label: t('.check_date'),
-                            required: true,
-                            errors: state_check.errors.full_messages_for(:check_date)
-                        }) %>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <%= erp_form_control("text", {
+                                    name: 'state_check[code]',
+                                    value: state_check.code,
+                                    id: "state_check_code",
+                                    label: t('.code'),
+                                    placeholder: t('.enter_code'),
+                                    help: t('.help_code'),
+                                    required: (state_check.id.nil? ? false : true),
+                                    errors: state_check.errors.full_messages_for(:code)
+                                }) %>
+                            </div>
+                            <div class="col-md-6">
+                                <%= erp_form_control('date', {
+                                    name: 'state_check[check_date]',
+                                    value: state_check.check_date,
+                                    placeholder: t('.choose_check_date'),
+                                    label: t('.check_date'),
+                                    required: false,
+                                    errors: state_check.errors.full_messages_for(:check_date)
+                                }) %>
+                            </div>
+                        </div>
                         <% if Erp::Core.available?("warehouses") %>
                             <%= erp_form_control("dataselect", {
                                 name: 'state_check[warehouse_id]',
@@ -63,7 +71,8 @@
                             name: 'state_check[note]',
                             value: state_check.note,
                             label: t('.note'),
-                            placeholder: t('.enter_note')
+                            placeholder: t('.enter_note'),
+                            rows: 1
                         }) %>
                     </div>
                 </div>
@@ -123,8 +132,8 @@
                                         modal_size: "full"
                                     }
                                 }),
-                                thead: "<th>#{t('.code')}</th>
-                                        <th>#{t('.name')}</th>
+                                thead: "#{'<th>' + t('.product_code') + '</th>' if !Erp::Core.available?('ortho_k')}
+                                        <th>#{t('.product_name')}</th>
                                         <th>#{t('.quantity')}</th>
                                         <th>#{t('.old_state')}</th>
                                         <th>#{t('.state')}</th>

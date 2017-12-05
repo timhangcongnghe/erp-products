@@ -30,6 +30,7 @@ module Erp
         def new
           @damage_record = DamageRecord.new
           @damage_record.date = Time.now
+          @damage_record.employee = current_user
         end
     
         # GET /damage_records/1/edit
@@ -206,7 +207,7 @@ module Erp
     
           # Only allow a trusted parameter "white list" through.
           def damage_record_params
-            params.fetch(:damage_record, {}).permit(:code, :date, :warehouse_id, :description,
+            params.fetch(:damage_record, {}).permit(:code, :date, :warehouse_id, :description, :employee_id,
                                             :damage_record_details_attributes => [ :id, :product_id, :damage_record_id, :quantity, :state_id, :note, :_destroy ])
           end
       end

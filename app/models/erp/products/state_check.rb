@@ -1,6 +1,7 @@
 module Erp::Products
   class StateCheck < ApplicationRecord
-    validates :name, :employee_id, :check_date, :presence => true
+    validates :code, uniqueness: true
+    validates :employee_id, :check_date, :presence => true
     belongs_to :creator, class_name: "Erp::User"
     belongs_to :employee, class_name: "Erp::User"
     STATE_CHECK_STATUS_DRAFT = 'draft'
@@ -20,10 +21,10 @@ module Erp::Products
     # Generate code
     before_validation :generate_code
     def generate_code
-			if !name.present?
+			if !code.present?
 				num = StateCheck.where('check_date >= ? AND check_date <= ?', self.check_date.beginning_of_month, self.check_date.end_of_month).count + 1
 
-				self.name = 'KTT' + check_date.strftime("%m") + check_date.strftime("%Y").last(2) + "-" + num.to_s.rjust(3, '0')
+				self.code = 'TT' + check_date.strftime("%m") + check_date.strftime("%Y").last(2) + "-" + num.to_s.rjust(3, '0')
 			end
 		end
     

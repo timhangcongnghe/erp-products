@@ -1,7 +1,9 @@
 module Erp::Products
   class DamageRecord < ApplicationRecord
+    validates :code, uniqueness: true
     validates :date, :warehouse_id, :presence => true
     belongs_to :creator, class_name: "Erp::User"
+    belongs_to :employee, class_name: "Erp::User"
     
     has_many :damage_record_details, inverse_of: :damage_record, dependent: :destroy
     accepts_nested_attributes_for :damage_record_details, :reject_if => lambda { |a| a[:product_id].blank? || a[:quantity].blank? || a[:quantity].to_i <= 0 }
@@ -159,6 +161,10 @@ module Erp::Products
       creator.present? ? creator.name : ''
     end
     
+    def employee_name
+      employee.present? ? employee.name : ''
+    end
+    
     def archive
 			update_attributes(archived: true)
 		end
@@ -204,5 +210,9 @@ module Erp::Products
 		def is_deleted?
 			return self.status == Erp::Products::DamageRecord::STATUS_DELETED
 		end
+		
+		def items_count
+      damage_record_details.sum(:quantity)
+    end
   end
 end

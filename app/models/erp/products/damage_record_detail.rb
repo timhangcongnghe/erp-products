@@ -20,6 +20,10 @@ module Erp::Products
       product.nil? ? '' : product.name
     end
     
+    def product_unit
+      product.nil? ? '' : product.unit_name
+    end
+    
     def state_name
       state.nil? ? '' : state.name
     end

@@ -1,6 +1,7 @@
 module Erp::Products
   class StockCheck < ApplicationRecord
-    validates :code, :adjustment_date, :warehouse_id, :presence => true
+    validates :code, uniqueness: true
+    validates :adjustment_date, :warehouse_id, :presence => true
     belongs_to :creator, class_name: "Erp::User"
     belongs_to :employee, class_name: "Erp::User"
     

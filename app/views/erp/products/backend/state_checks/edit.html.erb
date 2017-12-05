@@ -1,11 +1,11 @@
 <% content_for :title do %>
-    <%= @state_check.name %>
+    <%= @state_check.code %>
 <% end %>
 
 <% content_for :page_title do %>    
     <a href="<%= erp_products.backend_state_checks_path %>">
-    <i class="fa fa-file-text-o"></i> <%= t('.state_checks') %>
-    </a> / <%= @state_check.name %>
+    <i class="fa fa-get-pocket"></i> <%= t('.state_checks') %>
+    </a> / <%= t('.edit') %> # <%= @state_check.code %>
 <% end %>
 
 <% content_for :page_toolbar do %>
