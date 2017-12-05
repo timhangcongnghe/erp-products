@@ -1,39 +1,33 @@
-<div class="col-md-12">
-    <div class="portlet-body">
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped flip-content">
-                <thead class="flip-content">
-                    <tr>
-                        <% if !Erp::Core.available?('ortho_k') %>
-                            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.product_code') %></th>
-                        <% end %>
-                        <th width="30%" class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.product_name') %></th>
-                        <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.unit') %></th>
-                        <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.quantity') %></th>
-                        <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.state') %></th>
-                        <th width="25%" class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.note') %></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="bg-green-jungle bg-font-green-jungle text-center uppercase bold" colspan="2"><strong><%= t('.total_all') %></strong></td>
-                        <td class="bg-green-jungle bg-font-green-jungle text-center bold"><strong><%= @damage_record.items_count %></strong></td>
-                        <td class="bg-green-jungle bg-font-green-jungle text-center" colspan="2"></td>
-                    </tr>
-                    <% @damage_record.damage_record_details.each do |damage_record_detail| %>
-                        <tr>
-                            <% if !Erp::Core.available?('ortho_k') %>
-                                <td class="text-left bold"><%= damage_record_detail.product_code %></td>
-                            <% end %>
-                            <td class="text-left bold"><%= backend_product_link(damage_record_detail.product) %></td>
-                            <td class="text-center"><%= damage_record_detail.product_unit %></td>
-                            <td class="text-center"><%= format_number(damage_record_detail.quantity) %></td>
-                            <td class="text-center"><%= damage_record_detail.state_name %></td>
-                            <td class="text-left"><%= damage_record_detail.note %></td>
-                        </tr>
-                    <% end %>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+<table class="table table-bordered table-striped flip-content">
+    <thead class="flip-content">
+        <tr>
+            <% if !Erp::Core.available?('ortho_k') %>
+                <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.product_code') %></th>
+            <% end %>
+            <th width="30%" class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.product_name') %></th>
+            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.unit') %></th>
+            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.quantity') %></th>
+            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.state') %></th>
+            <th width="25%" class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.note') %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="bg-green-jungle bg-font-green-jungle text-center uppercase bold" colspan="2"><strong><%= t('.total_all') %></strong></td>
+            <td class="bg-green-jungle bg-font-green-jungle text-center bold"><strong><%= @damage_record.items_count %></strong></td>
+            <td class="bg-green-jungle bg-font-green-jungle text-center" colspan="2"></td>
+        </tr>
+        <% @damage_record.damage_record_details.each do |damage_record_detail| %>
+            <tr>
+                <% if !Erp::Core.available?('ortho_k') %>
+                    <td class="text-left bold"><%= damage_record_detail.product_code %></td>
+                <% end %>
+                <td class="text-left bold"><%= backend_product_link(damage_record_detail.product) %></td>
+                <td class="text-center"><%= damage_record_detail.product_unit %></td>
+                <td class="text-center"><%= format_number(damage_record_detail.quantity) %></td>
+                <td class="text-center"><%= damage_record_detail.state_name %></td>
+                <td class="text-left"><%= damage_record_detail.note %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

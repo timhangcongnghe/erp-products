@@ -217,9 +217,12 @@ Erp::Products::Engine.routes.draw do
       resources :stock_checks do
         collection do
           post 'list'
+          get 'stock_check_details'
           get 'dataselect'
           delete 'delete_all'
-          put 'stock_check_confirm'
+          put 'set_draft'
+          put 'set_done'
+          put 'set_deleted'
           put 'archive'
           put 'unarchive'
           put 'archive_all'

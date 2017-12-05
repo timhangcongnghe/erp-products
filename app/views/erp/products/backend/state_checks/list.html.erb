@@ -34,7 +34,7 @@
         </tr>
     </thead>
     <tbody>
-        <% if @state_checks.each do |state_check| %>
+        <% @state_checks.each do |state_check| %>
             <tr class="odd gradeX has-child-table" data-url="<%= erp_products.state_check_details_backend_state_checks_path(id: state_check.id) %>">
                 <td>
                     <%= erp_datalist_check_row(id: state_check.id) %>
@@ -107,12 +107,11 @@
                     ) %>
                 </td>
             </tr>
-        <% end.empty? %>
-            <tr>
-                <td colspan="7"><%= t('.no_matching_records_found') %></td>
-            </tr>
         <% end %>
     </tbody>
 </table>
+<% if @state_checks.empty? %>
+    <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
+<% end %>
         
 <%= erp_datalist_pagination(@state_checks) %>

@@ -2,7 +2,8 @@ module Erp
   module Products
     module Backend
       class StockChecksController < Erp::Backend::BackendController
-        before_action :set_stock_check, only: [:stock_check_confirm, :archive, :unarchive, :show, :edit, :update, :destroy]
+        before_action :set_stock_check, only: [:stock_check_details, :set_draft, :set_done, :set_deleted,
+                                               :archive, :unarchive, :show, :edit, :update]
         before_action :set_stock_checks, only: [:delete_all, :archive_all, :unarchive_all]
 
         # GET /stock_checks
@@ -13,6 +14,11 @@ module Erp
         def list
           @stock_checks = StockCheck.search(params).paginate(:page => params[:page], :per_page => 3)
 
+          render layout: nil
+        end
+        
+        # GET /stock check details
+        def stock_check_details
           render layout: nil
         end
 
@@ -35,6 +41,7 @@ module Erp
         def create
           @stock_check = StockCheck.new(stock_check_params)
           @stock_check.creator = current_user
+          @stock_check.set_draft
 
           if @stock_check.save
             if request.xhr?
@@ -65,21 +72,6 @@ module Erp
             end
           else
             render :edit
-          end
-        end
-
-        # DELETE /stock_checks/1
-        def destroy
-          @stock_check.destroy
-
-          respond_to do |format|
-            format.html { redirect_to erp_products.backend_stock_checks_path, notice: t('.success') }
-            format.json {
-              render json: {
-                'message': t('.success'),
-                'type': 'success'
-              }
-            }
           end
         end
 
@@ -151,9 +143,37 @@ module Erp
           end
         end
 
-        # Confirm /stock_checks/stock_check_confirm?id=1
-        def stock_check_confirm
-          @stock_check.stock_check_confirm
+        # Confirm /stock_checks/set_draft?id=1
+        def set_draft
+          @stock_check.set_draft
+
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end
+        end
+
+        # Confirm /stock_checks/set_done?id=1
+        def set_done
+          @stock_check.set_done
+
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end
+        end
+
+        # Confirm /stock_checks/set_deleted?id=1
+        def set_deleted
+          @stock_check.set_deleted
 
           respond_to do |format|
           format.json {

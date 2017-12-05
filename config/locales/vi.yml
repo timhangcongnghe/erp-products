@@ -980,8 +980,12 @@ vi:
             success: "Các phiếu kiểm kho đã được ẩn thành công."
           unarchive_all:
             success: "Các phiếu kiểm kho đã được hiện ra thành công."
-          stock_check_confirm:
-            success: "Phiếu kiểm kho được duyệt thành công"
+          set_draft:
+            success: "Phiếu kiểm kho đã được lưu tạm thành công"
+          set_done:
+            success: "Phiếu kiểm kho đã được duyệt thành công"
+          set_deleted:
+            success: "Phiếu kiểm kho đã được hủy thành công"
           index:
             stock_checks: "Phiếu kiểm kho"
             create: "Thêm phiếu kiểm kho"
@@ -1035,7 +1039,17 @@ vi:
             real_qty: "Kiểm thực tế"
             quantity: "Chênh lệch"
             state: "Tình trạng"
-            note: "Ghi chú"            
+            note: "Ghi chú"
+          stock_check_details:
+            product_code: "Mã sản phẩm"
+            product_name: "Tên sản phẩm"
+            unit: "ĐVT"
+            stock: "Tồn kho"
+            real: "Kiểm thực tế"
+            quantity: "Chênh lệch"
+            state: "Tình trạng"
+            note: "Ghi chú"
+            total_all: "Tổng cộng"
         stock_check_details:
           stock_check_line_form:
             choose_state: "Chọn tình trạng sản phẩm"

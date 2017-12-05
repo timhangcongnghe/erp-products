@@ -43,6 +43,27 @@
     </div>
 <% end %>
 
+<%
+    actions = []
+    actions << {
+        text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
+        url: erp_products.archive_all_backend_stock_checks_path,
+        data_method: 'PUT'
+    } if !Erp::Core.available?('ortho_k')
+    actions << {
+        text: '<i class="fa fa-eye"></i> '+t('unarchive'),
+        url: erp_products.unarchive_all_backend_stock_checks_path,
+        data_method: 'PUT'
+    } if !Erp::Core.available?('ortho_k')
+    actions << { divider: true } if !Erp::Core.available?('ortho_k')
+    actions << {
+        text: '<i class="fa fa-trash"></i> '+t('.delete'),
+        url: erp_products.delete_all_backend_stock_checks_path,
+        data_method: 'DELETE',
+        data_confirm: t('delete_confirm')
+    } if !Erp::Core.available?('ortho_k')
+%>
+
 <%= erp_datalist(
     url: erp_products.list_backend_stock_checks_path,
     keywords: [
@@ -58,27 +79,7 @@
             }
         }
     ],
-    actions: [
-        {
-            text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
-            url: erp_products.archive_all_backend_stock_checks_path,
-            data_method: 'PUT'
-        },
-        {
-            text: '<i class="fa fa-eye"></i> '+t('unarchive'),
-            url: erp_products.unarchive_all_backend_stock_checks_path,
-            data_method: 'PUT'
-        },
-        {
-            divider: true
-        },
-        {
-            text: '<i class="fa fa-trash"></i> '+t('.delete'),
-            url: erp_products.delete_all_backend_stock_checks_path,
-            data_method: 'DELETE',
-            data_confirm: t('delete_confirm')
-        }
-    ],
+    actions: actions,
     columns: [
         {
             text: t('.code'), name: 'code', value: true, checked: true

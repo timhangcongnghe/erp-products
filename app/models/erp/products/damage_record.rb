@@ -183,17 +183,17 @@ module Erp::Products
     
     # damage record draft
     def set_drart
-      self.update_columns(status: Erp::Products::DamageRecord::STATUS_DRAFT)
+      self.update_attributes(status: Erp::Products::DamageRecord::STATUS_DRAFT)
     end
     
     # damage record confirm
     def set_confirm
-      self.update_columns(status: Erp::Products::DamageRecord::STATUS_DONE)
+      self.update_attributes(status: Erp::Products::DamageRecord::STATUS_DONE)
     end
     
     # damage record delete
     def set_delete
-      self.update_columns(status: Erp::Products::DamageRecord::STATUS_DELETED)
+      self.update_attributes(status: Erp::Products::DamageRecord::STATUS_DELETED)
     end
     
     # check if damage record is draft

@@ -238,7 +238,7 @@ module Erp::Products
 			def self.get_stock_check_query(params={})
         query = Erp::Products::StockCheckDetail.joins(:stock_check)
           .where(erp_products_stock_checks: {
-            status: Erp::Products::StockCheck::STOCK_CHECK_STATUS_DONE,
+            status: Erp::Products::StockCheck::STATUS_DONE,
           })
 
         # product

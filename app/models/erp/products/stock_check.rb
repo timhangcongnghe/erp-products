@@ -13,7 +13,6 @@ module Erp::Products
         warehouse.present? ? warehouse.name : ''
       end
     end
-    after_create  :update_stock_check_status
     
     # display employee name
     def employee_name
@@ -21,8 +20,9 @@ module Erp::Products
     end
     
     # class const
-    STOCK_CHECK_STATUS_DRAFT = 'draft'
-    STOCK_CHECK_STATUS_DONE = 'done'
+    STATUS_DRAFT = 'draft'
+    STATUS_DONE = 'done'
+    STATUS_DELETED = 'deleted'
     
     after_save :update_product_cache_stock
 
@@ -179,14 +179,49 @@ module Erp::Products
 			update_all(archived: false)
 		end
     
-    # update stock check status
-    def update_stock_check_status
-      self.update_columns(status: Erp::Products::StockCheck::STOCK_CHECK_STATUS_DRAFT)
+    # set status is draft
+    def set_draft
+      self.update_attributes(status: Erp::Products::StockCheck::STATUS_DRAFT)
     end
      
-    # stock check confirm
-    def stock_check_confirm
-      self.update_columns(status: Erp::Products::StockCheck::STOCK_CHECK_STATUS_DONE)
+    # set status is done/confirm
+    def set_done
+      self.update_attributes(status: Erp::Products::StockCheck::STATUS_DONE)
+    end
+     
+    # set status is deleted
+    def set_deleted
+      self.update_attributes(status: Erp::Products::StockCheck::STATUS_DELETED)
+    end
+    
+    # check if is draft
+    def is_draft?
+      return self.status == Erp::Products::StockCheck::STATUS_DRAFT
+    end
+     
+    # check if is done
+    def is_done?
+      return self.status == Erp::Products::StockCheck::STATUS_DONE
+    end
+     
+    # check if is deleted
+    def is_deleted?
+      return self.status == Erp::Products::StockCheck::STATUS_DELETED
+    end
+    
+		# total stock
+		def total_stock
+      stock_check_details.sum(:stock)
+    end
+    
+		# total real
+		def total_real
+      stock_check_details.sum(:real)
+    end
+    
+		# total quantity
+		def total_quantity
+      stock_check_details.sum(:quantity)
     end
   end
 end

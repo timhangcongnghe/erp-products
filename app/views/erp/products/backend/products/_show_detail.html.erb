@@ -6,22 +6,19 @@
                 <li class="active">
                     <a href="#tab_<%= tabid %>_1" data-toggle="tab"> <%= t('.general') %> </a>
                 </li>
+                <li>
+                    <a href="#tab_<%= tabid %>_2" data-toggle="tab"> <%= t('.stock') %> </a>
+                </li>
                 <% if false %>
-                    <li>
-                        <a href="#tab_<%= tabid %>_2" data-toggle="tab"> <%= t('.stock') %> </a>
-                    </li>
-                    <li>
-                        <a href="#tab_<%= tabid %>_3" data-toggle="tab"> <%= t('.images') %> </a>
-                    </li>
+                <li>
+                    <a href="#tab_<%= tabid %>_3" data-toggle="tab"> <%= t('.images') %> </a>
+                </li>
                 <% end %>
                 <% if Erp::Core.available?("qdeliveries") and Erp::Core.available?("ortho_k") %>
                     <li>
                         <a href="#tab_<%= tabid %>_4" data-toggle="tab"> <%= t('.import_export_warehouse') %> </a>
                     </li>
                 <% end %>
-                <li>
-                    <a href="#tab_<%= tabid %>_5" data-toggle="tab"> Tồn kho </a>
-                </li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab_<%= tabid %>_1">
@@ -103,7 +100,46 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="tab_<%= tabid %>_2">
-                    Updating...
+                    <table class="table table-advance table-hover table-striped table-checkable order-column">
+                        <tr>
+                            <th></th>
+                            <% Erp::Products::State.all.each do |state| %>
+                                <th class="text-center"><%= state.name %></th>
+                            <% end %>
+                            <th class="text-center">Tổng tồn</th>
+                        </tr>
+                        <% Erp::Warehouses::Warehouse.all.each do |warehouse| %>
+                            <tr>
+                                <th class="text-left"><%= warehouse.name %></th>
+                                <% Erp::Products::State.all.each do |state| %>
+                                    <td class="text-center">
+                                        <%= Erp::Products::CacheStock.get_stock(product.id, options={
+                                            state_id: state.id,
+                                            warehouse_id: warehouse.id,
+                                        }) %>
+                                    </td>
+                                <% end %>
+                                <td class="text-bold text-center">
+                                    <%= Erp::Products::CacheStock.get_stock(product.id, options={
+                                        warehouse_id: warehouse.id,
+                                    }) %>
+                                </td>
+                            </tr>
+                        <% end %>
+                        <tr>
+                            <th class="text-left">Tất cả Kho</th>
+                            <% Erp::Products::State.all.each do |state| %>
+                                <td class="text-bold text-primary text-center">
+                                    <%= Erp::Products::CacheStock.get_stock(product.id, options={
+                                        state_id: state.id,
+                                    }) %>
+                                </td>
+                            <% end %>
+                            <td class="text-bold text-primary text-center">
+                                <%= Erp::Products::CacheStock.get_stock(product.id) %>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="tab-pane" id="tab_<%= tabid %>_3">
                     Updating...
@@ -137,48 +173,6 @@
                         ) %>
                     </div>
                 <% end %>
-                <div class="tab-pane" id="tab_<%= tabid %>_5">
-                    <table class="table table-advance table-hover table-striped table-checkable order-column">
-                        <tr>
-                            <th></th>
-                            <% Erp::Products::State.all.each do |state| %>
-                                <th class="text-center"><%= state.name %></th>
-                            <% end %>
-                            <th class="text-center">Tổng tồn</th>
-                        </tr>
-                        <% Erp::Warehouses::Warehouse.all.each do |warehouse| %>
-                            <tr>
-                                <th class="text-left"><%= warehouse.name %></th>
-                                <% Erp::Products::State.all.each do |state| %>
-                                    <td>
-                                        <%= Erp::Products::CacheStock.get_stock(product.id, options={
-                                            state_id: state.id,
-                                            warehouse_id: warehouse.id,
-                                        }) %>
-                                    </td>
-                                <% end %>
-                                <td class="text-bold">
-                                    <%= Erp::Products::CacheStock.get_stock(product.id, options={
-                                        warehouse_id: warehouse.id,
-                                    }) %>
-                                </td>
-                            </tr>
-                        <% end %>
-                        <tr>
-                            <th class="text-left">Tất cả Kho</th>
-                            <% Erp::Products::State.all.each do |state| %>
-                                <td class="text-bold text-primary">
-                                    <%= Erp::Products::CacheStock.get_stock(product.id, options={
-                                        state_id: state.id,
-                                    }) %>
-                                </td>
-                            <% end %>
-                            <td class="text-bold text-primary">
-                                <%= Erp::Products::CacheStock.get_stock(product.id) %>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
             </div>
         </div>
     </div>
