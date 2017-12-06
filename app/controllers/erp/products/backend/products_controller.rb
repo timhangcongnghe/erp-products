@@ -633,6 +633,13 @@ module Erp
 
         def product_details # @todo if qdeliveries available
         end
+        
+        # Export excel file
+        def xlsx
+          respond_to do |format|
+            format.xlsx
+          end
+        end
 
         private
           # Use callbacks to share common setup or constraints between actions.

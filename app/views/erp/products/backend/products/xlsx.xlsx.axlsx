@@ -1,0 +1,51 @@
+wb = xlsx_package.workbook
+xlsx_package.use_autowidth = true
+
+wb.styles do |s|
+  Erp::Products::Category.all.each do |cat|
+    wb.add_worksheet(name: cat.name) do |sheet|
+      # style
+      bg_info = {:bg_color => "305496", :fg_color => "FF"}
+      text_center = {alignment: { horizontal: :center }}
+      text_left = {alignment: { horizontal: :left }}
+      text_right = {alignment: { horizontal: :right }}
+      
+      # header
+      header = {columns: [], styles: []}
+      footer = {columns: [], styles: []}
+      header[:columns] = []
+      
+      
+      footer[:columns] << ""
+      footer[:styles] << (s.add_style {})
+      sheet.add_row header[:columns], style: header[:styles]
+      
+      header[:columns] << "Mã"
+      header[:styles] << (s.add_style bg_info.deep_merge(text_left))
+      footer[:columns] << ""
+      footer[:styles] << (s.add_style {})
+      
+      header[:columns] << "Đường kính"
+      header[:styles] << (s.add_style bg_info.deep_merge(text_right))
+      footer[:columns] << ""
+      footer[:styles] << (s.add_style {})
+
+      sheet.add_row header[:columns], style: header[:styles]
+      sheet.column_widths 10, 10
+      
+      Erp::Products::Product.where(category_id: cat.id).each do |product|
+        row = {columns: [], styles: []}
+        row[:columns] = []
+        
+        row[:columns] << product.code
+        row[:styles] << (s.add_style border: { style: :thin, color: "00" })
+      
+        row[:columns] << product.get_diameter
+        row[:styles] << (s.add_style border: { style: :thin, color: "00" })
+  
+        sheet.add_row row[:columns], style: row[:styles]
+      end
+      
+    end
+  end
+end

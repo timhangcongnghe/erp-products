@@ -1,153 +1,159 @@
-<div class="">
-    <table class="table table-advance table-hover table-striped table-checkable order-column" id="">
-        <thead>
-            <tr>
-                <th width='1%'>
-                    <%= erp_datalist_check_all %>
+<div class="text-right mb-10">
+  <a target="_blank"
+    href="<%= erp_products.xlsx_backend_products_path(params.to_unsafe_hash.merge({format: 'xlsx'})) %>"
+    target="_blank"
+    class="btn btn-primary"
+  >Xuất excel</a>
+</div>
+
+<table class="table table-advance table-hover table-striped table-checkable order-column" id="">
+    <thead>
+        <tr>
+            <th width='1%'>
+                <%= erp_datalist_check_all %>
+            </th>
+            <% if get_columns(params).include?("code") %>
+                <th>
+                    <%= t('.code') %>
                 </th>
+            <% end %>
+            <% if get_columns(params).include?("name") %>
+                <th class="sortable" sort-by='erp_products_products.name'>
+                    <%= t('.name') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("category") %>
+                <th>
+                    <%= t('.category') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("price") %>
+                <th>
+                    <%= t('.price') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("cost") %>
+                <th>
+                    <%= t('.cost') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("on_hand") %>
+                <th>
+                    <%= t('.on_hand') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("status") %>
+                <th>
+                    <%= t('status') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("creator") %>
+                <th>
+                    <%= t('creator') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("created_at") %>
+                <th class="sortable" sort-by='erp_products_products.created_at'>
+                    <%= t('created_at') %>
+                </th>
+            <% end %>
+            <th width="7%"><%= t('actions') %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @products.each do |product| %>
+            <tr class="<%= 'blurred' if product.archived? %> odd gradeX has-child-table" data-url="<%= erp_products.product_details_backend_products_path(id: product.id) %>">
+                <td>
+                    <%= erp_datalist_check_row(id: product.id) %>
+                </td>
                 <% if get_columns(params).include?("code") %>
-                    <th>
-                        <%= t('.code') %>
-                    </th>
+                    <td><%= product.code %></td>
                 <% end %>
                 <% if get_columns(params).include?("name") %>
-                    <th class="sortable" sort-by='erp_products_products.name'>
-                        <%= t('.name') %>
-                    </th>
+                    <td>
+                        <i class="fa fa-plus expand tr-expand-button"></i>
+                        <%= link_to product.name, erp_products.edit_backend_product_path(product) %>
+                    </td>
                 <% end %>
                 <% if get_columns(params).include?("category") %>
-                    <th>
-                        <%= t('.category') %>
-                    </th>
+                    <td><%= product.category_name %></td>
                 <% end %>
                 <% if get_columns(params).include?("price") %>
-                    <th>
-                        <%= t('.price') %>
-                    </th>
+                    <td><%= format_number(product.price) %></td>
                 <% end %>
                 <% if get_columns(params).include?("cost") %>
-                    <th>
-                        <%= t('.cost') %>
-                    </th>
+                    <td><%= format_number(product.cost) %></td>
                 <% end %>
-                <% if get_columns(params).include?("on_hand") %>
-                    <th>
-                        <%= t('.on_hand') %>
-                    </th>
+                <% if Erp::Core.available?("qdeliveries") %>
+                    <% if get_columns(params).include?("on_hand") %>
+                        <td><%= product.get_stock(params) %></td>
+                    <% end %>
+                <% else %>
+                    <% if get_columns(params).include?("on_hand") %>
+                        <td><%= product.on_hand %></td>
+                    <% end %>
                 <% end %>
                 <% if get_columns(params).include?("status") %>
-                    <th>
-                        <%= t('status') %>
-                    </th>
+                <td>
+                    <% if product.archived == true %>
+                    <span class="label label-sm label-danger"><%= t('.archived') %></span>
+                    <% else %>
+                    <span class="label label-sm label-success"><%= t('.active') %></span>
+                    <% end %>
+                </td>
                 <% end %>
                 <% if get_columns(params).include?("creator") %>
-                    <th>
-                        <%= t('creator') %>
-                    </th>
+                    <td>
+                        <%= erp_component('avatar', {
+                            user: product.creator
+                        }) %>
+                    </td>
                 <% end %>
                 <% if get_columns(params).include?("created_at") %>
-                    <th class="sortable" sort-by='erp_products_products.created_at'>
-                        <%= t('created_at') %>
-                    </th>
+                    <td><%= product.created_at.strftime("%d/%m/%Y") %></td>
                 <% end %>
-                <th width="7%"><%= t('actions') %></th>
+                <td>
+                    <%= erp_datalist_row_actions(
+                        [
+                            {
+                                text: '<i class="fa fa-edit"></i> '+t('edit'),
+                                href: erp_products.edit_backend_product_path(product)
+                            },
+                            {
+                                text: '<i class="fa fa-ban"></i> '+t('archive'),
+                                url: erp_products.archive_backend_products_path(id: product),
+                                data_method: 'PUT',
+                                hide: product.archived,
+                                class: 'ajax-link',
+                                data_confirm: t('.archive_confirm')
+                            },
+                            {
+                                text: '<i class="fa fa-check"></i> '+t('unarchive'),
+                                url: erp_products.unarchive_backend_products_path(id: product),
+                                data_method: 'PUT',
+                                hide: !product.archived,
+                                class: 'ajax-link',
+                                data_confirm: t('.unarchive_confirm')
+                            },
+                            {
+                                divider: true
+                            },
+                            {
+                                text: '<i class="fa fa-trash"></i> '+t('.delete'),
+                                url: erp_products.backend_product_path(product),
+                                data_method: 'DELETE',
+                                class: 'ajax-link',
+                                data_confirm: t('.delete_confirm')
+                            }
+                        ]
+                    ) %>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            <% @products.each do |product| %>
-                <tr class="<%= 'blurred' if product.archived? %> odd gradeX has-child-table" data-url="<%= erp_products.product_details_backend_products_path(id: product.id) %>">
-                    <td>
-                        <%= erp_datalist_check_row(id: product.id) %>
-                    </td>
-                    <% if get_columns(params).include?("code") %>
-                        <td><%= product.code %></td>
-                    <% end %>
-                    <% if get_columns(params).include?("name") %>
-                        <td>
-                            <i class="fa fa-plus expand tr-expand-button"></i>
-                            <%= link_to product.name, erp_products.edit_backend_product_path(product) %>
-                        </td>
-                    <% end %>
-                    <% if get_columns(params).include?("category") %>
-                        <td><%= product.category_name %></td>
-                    <% end %>
-                    <% if get_columns(params).include?("price") %>
-                        <td><%= format_number(product.price) %></td>
-                    <% end %>
-                    <% if get_columns(params).include?("cost") %>
-                        <td><%= format_number(product.cost) %></td>
-                    <% end %>
-                    <% if Erp::Core.available?("qdeliveries") %>
-                        <% if get_columns(params).include?("on_hand") %>
-                            <td><%= product.get_stock(params) %></td>
-                        <% end %>
-                    <% else %>
-                        <% if get_columns(params).include?("on_hand") %>
-                            <td><%= product.on_hand %></td>
-                        <% end %>
-                    <% end %>
-                    <% if get_columns(params).include?("status") %>
-                    <td>
-                        <% if product.archived == true %>
-                        <span class="label label-sm label-danger"><%= t('.archived') %></span>
-                        <% else %>
-                        <span class="label label-sm label-success"><%= t('.active') %></span>
-                        <% end %>
-                    </td>
-                    <% end %>
-                    <% if get_columns(params).include?("creator") %>
-                        <td>
-                            <%= erp_component('avatar', {
-                                user: product.creator
-                            }) %>
-                        </td>
-                    <% end %>
-                    <% if get_columns(params).include?("created_at") %>
-                        <td><%= product.created_at.strftime("%d/%m/%Y") %></td>
-                    <% end %>
-                    <td>
-                        <%= erp_datalist_row_actions(
-                            [
-                                {
-                                    text: '<i class="fa fa-edit"></i> '+t('edit'),
-                                    href: erp_products.edit_backend_product_path(product)
-                                },
-                                {
-                                    text: '<i class="fa fa-ban"></i> '+t('archive'),
-                                    url: erp_products.archive_backend_products_path(id: product),
-                                    data_method: 'PUT',
-                                    hide: product.archived,
-                                    class: 'ajax-link',
-                                    data_confirm: t('.archive_confirm')
-                                },
-                                {
-                                    text: '<i class="fa fa-check"></i> '+t('unarchive'),
-                                    url: erp_products.unarchive_backend_products_path(id: product),
-                                    data_method: 'PUT',
-                                    hide: !product.archived,
-                                    class: 'ajax-link',
-                                    data_confirm: t('.unarchive_confirm')
-                                },
-                                {
-                                    divider: true
-                                },
-                                {
-                                    text: '<i class="fa fa-trash"></i> '+t('.delete'),
-                                    url: erp_products.backend_product_path(product),
-                                    data_method: 'DELETE',
-                                    class: 'ajax-link',
-                                    data_confirm: t('.delete_confirm')
-                                }
-                            ]
-                        ) %>
-                    </td>
-                </tr>
-            <% end %>
-        </tbody>
-    </table>
-    <% if @products.empty? %>
-        <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
-    <% end %>
-</div>
+        <% end %>
+    </tbody>
+</table>
+<% if @products.empty? %>
+    <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
+<% end %>
 
 <%= erp_datalist_pagination(@products) %>
