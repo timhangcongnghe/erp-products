@@ -239,6 +239,7 @@ vi:
           uncheck_is_top_business_choices_all:
             success: "Sản phẩm đã hủy khỏi danh sách lựa chọn hàng đầu."
           index:
+            seo_success: "Đã SEO với"
             archived: "Đã ẩn"
             category: "Chuyên mục"
             products: "Tất cả sản phẩm"
