@@ -29,45 +29,32 @@ wb.styles do |s|
       # header
       header = {columns: [], styles: []}
       footer = {columns: [], styles: []}
-      header[:columns] = []
+      #header[:columns] = []
       
       header[:columns] << "Mã hàng"
       header[:styles] << (s.add_style bg_info.deep_merge(text_left).deep_merge(bold))
-      footer[:columns] << "TỔNG CỘNG"
-      footer[:styles] << (s.add_style border.deep_merge(border).deep_merge(bold).deep_merge(text_center))
       
       header[:columns] << "Đường kính"
       header[:styles] << (s.add_style bg_info.deep_merge(text_right).deep_merge(bold))
-      footer[:columns] << ''
-      footer[:styles] << (s.add_style border)
       
       header[:columns] << "Loại hàng"
       header[:styles] << (s.add_style bg_info.deep_merge(text_right).deep_merge(bold))
-      footer[:columns] << ''
-      footer[:styles] << (s.add_style border)
       
       header[:columns] << "Giá vốn"
       header[:styles] << (s.add_style bg_info.deep_merge(text_right).deep_merge(bold))
-      footer[:columns] << ''
-      footer[:styles] << (s.add_style border)
       
       header[:columns] << "Giá bán"
       header[:styles] << (s.add_style bg_info.deep_merge(text_right).deep_merge(bold))
-      footer[:columns] << ''
-      footer[:styles] << (s.add_style border)
       
       header[:columns] << "Tồn kho"
       header[:styles] << (s.add_style bg_info.deep_merge(text_right).deep_merge(bold))
-      footer[:columns] << ''
-      footer[:styles] << (s.add_style border)
       
       header[:columns] << "Ghi chú"
       header[:styles] << (s.add_style bg_info.deep_merge(text_right).deep_merge(bold))
-      footer[:columns] << ''
-      footer[:styles] << (s.add_style border)
 
       sheet.add_row header[:columns], style: header[:styles]
       t += 1
+      c = 4
       
       @products.where(category_id: cat.id).each do |product|
         row = {columns: [], styles: []}
@@ -96,9 +83,32 @@ wb.styles do |s|
   
         sheet.add_row row[:columns], style: row[:styles]
         t += 1
+        c += 1
       end
       
       # footer
+
+      footer[:columns] << "TỔNG CỘNG"
+      footer[:styles] << (s.add_style border.deep_merge(border).deep_merge(bold).deep_merge(text_center))
+      
+      footer[:columns] << ''
+      footer[:styles] << (s.add_style border)
+      
+      footer[:columns] << ''
+      footer[:styles] << (s.add_style border)
+      
+      footer[:columns] << ''
+      footer[:styles] << (s.add_style border)
+      
+      footer[:columns] << ''
+      footer[:styles] << (s.add_style border)
+      
+      footer[:columns] << "=SUM(F5:F#{c})"
+      footer[:styles] << (s.add_style border.deep_merge(bold))
+      
+      footer[:columns] << ''
+      footer[:styles] << (s.add_style border)
+      
       sheet.add_row footer[:columns], style: footer[:styles]
       t += 1
       
