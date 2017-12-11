@@ -2,50 +2,110 @@ wb = xlsx_package.workbook
 xlsx_package.use_autowidth = true
 
 wb.styles do |s|
-  Erp::Products::Category.all.each do |cat|
+  wb.styles.fonts.first.name = 'Times New Roman'
+  @categories.each do |cat|
     wb.add_worksheet(name: cat.name) do |sheet|
       # style
       bg_info = {:bg_color => "305496", :fg_color => "FF"}
       text_center = {alignment: { horizontal: :center }}
       text_left = {alignment: { horizontal: :left }}
       text_right = {alignment: { horizontal: :right }}
+      number = {format_code: '#,##0'}
+      border = {border: { style: :thin, color: "00", :edges => [:left, :right, :bottom] }}
+      bold = {b: true}
+      t = 1
+      
+      # add empty row
+      sheet.add_row ['']
+      t += 1
+      
+      # Title 1
+      sheet.add_row ['DANH SÁCH SẢN PHẨM'], sz: 16, b: true, style: (s.add_style text_center)
+      
+      # add empty row
+      sheet.add_row ['']
+      t += 1
       
       # header
       header = {columns: [], styles: []}
       footer = {columns: [], styles: []}
       header[:columns] = []
       
-      
-      footer[:columns] << ""
-      footer[:styles] << (s.add_style {})
-      sheet.add_row header[:columns], style: header[:styles]
-      
-      header[:columns] << "Mã"
-      header[:styles] << (s.add_style bg_info.deep_merge(text_left))
-      footer[:columns] << ""
-      footer[:styles] << (s.add_style {})
+      header[:columns] << "Mã hàng"
+      header[:styles] << (s.add_style bg_info.deep_merge(text_left).deep_merge(bold))
+      footer[:columns] << "TỔNG CỘNG"
+      footer[:styles] << (s.add_style border.deep_merge(border).deep_merge(bold).deep_merge(text_center))
       
       header[:columns] << "Đường kính"
-      header[:styles] << (s.add_style bg_info.deep_merge(text_right))
-      footer[:columns] << ""
-      footer[:styles] << (s.add_style {})
+      header[:styles] << (s.add_style bg_info.deep_merge(text_right).deep_merge(bold))
+      footer[:columns] << ''
+      footer[:styles] << (s.add_style border)
+      
+      header[:columns] << "Loại hàng"
+      header[:styles] << (s.add_style bg_info.deep_merge(text_right).deep_merge(bold))
+      footer[:columns] << ''
+      footer[:styles] << (s.add_style border)
+      
+      header[:columns] << "Giá vốn"
+      header[:styles] << (s.add_style bg_info.deep_merge(text_right).deep_merge(bold))
+      footer[:columns] << ''
+      footer[:styles] << (s.add_style border)
+      
+      header[:columns] << "Giá bán"
+      header[:styles] << (s.add_style bg_info.deep_merge(text_right).deep_merge(bold))
+      footer[:columns] << ''
+      footer[:styles] << (s.add_style border)
+      
+      header[:columns] << "Tồn kho"
+      header[:styles] << (s.add_style bg_info.deep_merge(text_right).deep_merge(bold))
+      footer[:columns] << ''
+      footer[:styles] << (s.add_style border)
+      
+      header[:columns] << "Ghi chú"
+      header[:styles] << (s.add_style bg_info.deep_merge(text_right).deep_merge(bold))
+      footer[:columns] << ''
+      footer[:styles] << (s.add_style border)
 
       sheet.add_row header[:columns], style: header[:styles]
-      sheet.column_widths 10, 10
+      t += 1
       
-      Erp::Products::Product.where(category_id: cat.id).each do |product|
+      @products.where(category_id: cat.id).each do |product|
         row = {columns: [], styles: []}
         row[:columns] = []
         
         row[:columns] << product.code
-        row[:styles] << (s.add_style border: { style: :thin, color: "00" })
+        row[:styles] << (s.add_style border)
       
         row[:columns] << product.get_diameter
-        row[:styles] << (s.add_style border: { style: :thin, color: "00" })
+        row[:styles] << (s.add_style border)
+      
+        row[:columns] << product.category_name
+        row[:styles] << (s.add_style border)
+      
+        row[:columns] << product.cost
+        row[:styles] << (s.add_style border.deep_merge(number))
+      
+        row[:columns] << product.get_price
+        row[:styles] << (s.add_style border.deep_merge(number))
+      
+        row[:columns] << product.get_stock
+        row[:styles] << (s.add_style border.deep_merge(number))
+      
+        row[:columns] << ''
+        row[:styles] << (s.add_style border)
   
         sheet.add_row row[:columns], style: row[:styles]
+        t += 1
       end
       
+      # footer
+      sheet.add_row footer[:columns], style: footer[:styles]
+      t += 1
+      
+      # Setup
+      sheet.column_widths 15, 15, 15, 15, 15, 15, 15
+      sheet.merge_cells("A2:G2")
+      sheet.merge_cells("A#{t}:E#{t}")
     end
   end
 end

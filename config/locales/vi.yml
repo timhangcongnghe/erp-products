@@ -300,7 +300,7 @@ vi:
             stock_max: "Tồn tối đa"
             archive_confirm: "Mọi thông tin tồn kho và các lịch sử giao dịch vẫn được giữ lại. <br>Bạn có chắc chắn muốn ngừng sử dụng sản phẩm này?"
             unarchive_confirm: "Bạn có chắc chắn muốn sử dụng trở lại sản phẩm này?"
-            no_matching_records_found: "Danh sách sản phẩm hiện tại đang trống."
+            no_matching_records_found: "Danh sách sản phẩm không được tìm thấy."
             check_is_bestseller: "Thêm vào 'bán chạy'"
             uncheck_is_bestseller: "Hủy khỏi 'bán chạy'"
             check_is_bestseller_confirm: "Bạn muốn thêm sản phẩm vào danh sách bán chạy?"

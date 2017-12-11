@@ -636,8 +636,14 @@ module Erp
         
         # Export excel file
         def xlsx
+          @products = Product.search(params)
+          
+          @categories = Erp::Products::Category.where(id: @products.select(:category_id))
+          
           respond_to do |format|
-            format.xlsx
+            format.xlsx {
+              response.headers['Content-Disposition'] = 'attachment; filename="Danh sach san pham.xlsx"'
+            }
           end
         end
 
