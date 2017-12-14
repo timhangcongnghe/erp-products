@@ -5,11 +5,12 @@
     partial_url: erp_products.stock_check_line_form_backend_stock_check_details_path,
     items: @stock_check.stock_check_details,
     item: :stock_check_detail,
+    no_label: true,
     add_control_selector: "input[name='product_id']",
     add_control: erp_form_control("dataselect", {
         name: 'product_id',
         placeholder: t('.choose_product'),
-        label: t('.product'),
+        label: '',
         help: t('.help_product'),
         url: erp_products.dataselect_backend_products_path(format: 'json'),
         create: {

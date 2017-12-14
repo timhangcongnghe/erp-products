@@ -76,7 +76,7 @@
                     <div class="tab-content stock-check-details">
                         <div class="tab-pane addableform-table active" id="tab_5_1">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <%= erp_form_control("dataselect", {
                                         name: 'default_state',
                                         value: '',
@@ -86,62 +86,61 @@
                                         url: erp_products.dataselect_backend_states_path(format: 'json'),
                                     }) %>
                                 </div>
+                                <div class="col-md-10">
+                                    <% if Erp::Core.available?("ortho_k") %>
+                                        <div class="row addableform-filter">
+                                            <div class="col-md-3">
+                                                <%= erp_form_control("dataselect", {
+                                                    name: 'categories',
+                                                    value: '',
+                                                    text: '',
+                                                    label: 'Loại hàng',
+                                                    placeholder: 'Chọn loại hàng',
+                                                    url: erp_products.dataselect_backend_categories_path(format: 'json'),
+                                                    multiple: true
+                                                }) %>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <% diameter = Erp::Products::Property.where(name: "Đường kính").first %>
+                                                <%= erp_form_control("dataselect", {
+                                                    name: 'diameters',
+                                                    value: '',
+                                                    text: '',
+                                                    label: 'Đường kính',
+                                                    placeholder: 'Chọn đường kính',
+                                                    url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: diameter.id),
+                                                    multiple: true
+                                                }) %>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <% letter = Erp::Products::Property.where(name: "Chữ").first %>
+                                                <%= erp_form_control("dataselect", {
+                                                    name: 'letters',
+                                                    value: '',
+                                                    text: '',
+                                                    label: 'Chữ',
+                                                    placeholder: letter.name,
+                                                    url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: letter.id),
+                                                    multiple: true
+                                                }) %>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <% number = Erp::Products::Property.where(name: "Số").first %>
+                                                <%= erp_form_control("dataselect", {
+                                                    name: 'numbers',
+                                                    value: '',
+                                                    text: '',
+                                                    label: 'Chữ',
+                                                    placeholder: number.name,
+                                                    url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: number.id),
+                                                    multiple: true
+                                                }) %>
+                                            </div>
+                                        </div>
+                                    <% end %>
+                                </div>
                             </div>
                             <hr/>
-
-                            <% if Erp::Core.available?("ortho_k") %>
-                                <div class="row addableform-filter">
-                                    <div class="col-md-3">
-                                        <%= erp_form_control("dataselect", {
-                                            name: 'categories',
-                                            value: '',
-                                            text: '',
-                                            label: 'Loại hàng',
-                                            placeholder: 'Chọn loại hàng',
-                                            url: erp_products.dataselect_backend_categories_path(format: 'json'),
-                                            multiple: true
-                                        }) %>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <% diameter = Erp::Products::Property.where(name: "Đường kính").first %>
-                                        <%= erp_form_control("dataselect", {
-                                            name: 'diameters',
-                                            value: '',
-                                            text: '',
-                                            label: 'Đường kính',
-                                            placeholder: 'Chọn đường kính',
-                                            url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: diameter.id),
-                                            multiple: true
-                                        }) %>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <% letter = Erp::Products::Property.where(name: "Chữ").first %>
-                                        <%= erp_form_control("dataselect", {
-                                            name: 'letters',
-                                            value: '',
-                                            text: '',
-                                            label: 'Chữ',
-                                            placeholder: letter.name,
-                                            url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: letter.id),
-                                            multiple: true
-                                        }) %>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <% number = Erp::Products::Property.where(name: "Số").first %>
-                                        <%= erp_form_control("dataselect", {
-                                            name: 'numbers',
-                                            value: '',
-                                            text: '',
-                                            label: 'Chữ',
-                                            placeholder: number.name,
-                                            url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: number.id),
-                                            multiple: true
-                                        }) %>
-                                    </div>
-                                </div>
-                                <hr>
-                            <% end %>
-
                             <div class="ajax-box"
                                 data-control=".addableform-filter select,.addableform-filter input"
                                 data-url="<%= erp_products.form_check_details_backend_stock_checks_path %>"
