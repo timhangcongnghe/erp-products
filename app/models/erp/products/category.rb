@@ -144,6 +144,10 @@ module Erp::Products
         query = query.where.not(id: params[:current_value].split(','))
       end
 
+      if params[:remove_ids].present?
+        query = query.where.not(id: params[:remove_ids].split(','))
+      end
+
       query = query.limit(20).map{|category| {value: category.id, text: (category.parent_name.empty? ? '' : "#{category.parent_name} / ") + category.name} }
     end
 

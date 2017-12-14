@@ -142,6 +142,10 @@ module Erp::Products
 					query = query.where(erp_orders_order_details: {product_id: params[:product_id]})
 				end
 
+				if params[:customer_id].present?
+					query = query.where(erp_qdeliveries_deliveries: {customer_id: params[:customer_id]})
+				end
+
 				stock = stock + query.sum("erp_qdeliveries_delivery_details.quantity")
 
 				# qdelivery detail without order detail
@@ -149,6 +153,10 @@ module Erp::Products
 
 				if params[:product_id].present?
 					query = query.where(product_id: params[:product_id])
+				end
+
+				if params[:customer_id].present?
+					query = query.where(erp_qdeliveries_deliveries: {customer_id: params[:customer_id]})
 				end
 
 				stock = stock + query.sum("erp_qdeliveries_delivery_details.quantity")
