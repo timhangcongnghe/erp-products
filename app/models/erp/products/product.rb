@@ -284,6 +284,56 @@ module Erp::Products
 			end
 		#end
 
+		# STATE CHECKS if Erp::Core.available?("stock_transfers")
+			def self.get_state_check_query(params={})
+        query = Erp::Products::StateCheckDetail.joins(:state_check)
+          .where(erp_products_state_checks: {
+            status: Erp::Products::StateCheck::STATE_CHECK_STATUS_ACTIVE,
+          })
+
+        # product
+        if params[:product_id].present?
+					query = query.where(product_id: params[:product_id])
+				end
+
+        # from date
+        query = query.where("erp_products_state_checks.created_at >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
+        query = query.where("erp_products_state_checks.created_at <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
+
+				# state ids
+				query = query.where(state_id: params[:state].id) if params[:state].present?
+				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
+
+				# warehouse id
+				query = query.where(erp_products_stock_checks: {warehouse_id: params[:warehouse].id}) if params[:warehouse].present?
+				query = query.where(erp_products_stock_checks: {warehouse_id: params[:warehouse_ids]}) if params[:warehouse_ids].present?
+
+				return query
+      end
+
+			# @todo import
+			def self.get_state_check_import(params={})
+				stock = 0
+
+				query = self.get_state_check_query(params)
+				query = query.where(state_id: params[:state_id])
+				stock = stock + query.sum("erp_products_state_check_details.quantity")
+
+				return stock
+			end
+
+      # @todo import
+			def self.get_state_check_export(params={})
+				stock = 0
+
+				query = self.get_state_check_query(params)
+				query = query.where(old_state_id: params[:state_id])
+				stock = stock - query.sum("erp_products_state_check_details.quantity")
+
+				return stock
+			end
+		#end
+
 		if Erp::Core.available?("gift_givens")
 			def self.get_gift_given_query(params={})
         query = Erp::GiftGivens::GivenDetail.joins(:given)

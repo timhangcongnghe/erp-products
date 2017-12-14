@@ -29,6 +29,7 @@ module Erp
         def create
           @state = State.new(state_params)
           @state.creator = current_user
+          @state.status = State::STATE_STATUS_ACTIVE
 
           if @state.save
             if request.xhr?
@@ -38,7 +39,7 @@ module Erp
                 value: @state.id
               }
             else
-              redirect_to erp_products.edit_backend_state_path(@state), notice: t('.success')
+              redirect_to erp_products.backend_states_path, notice: t('.success')
             end
           else
             render :new
@@ -55,7 +56,7 @@ module Erp
                 value: @state.id
               }
             else
-              redirect_to erp_products.edit_backend_state_path(@state), notice: t('.success')
+              redirect_to erp_products.backend_states_path, notice: t('.success')
             end
           else
             render :edit

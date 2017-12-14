@@ -103,7 +103,7 @@
                     <table class="table table-advance table-hover table-striped table-checkable order-column">
                         <tr>
                             <th></th>
-                            <% Erp::Products::State.all.each do |state| %>
+                            <% Erp::Products::State.all_active.each do |state| %>
                                 <th class="text-center"><%= state.name %></th>
                             <% end %>
                             <th class="text-center">Tổng tồn</th>
@@ -111,7 +111,7 @@
                         <% Erp::Warehouses::Warehouse.all.each do |warehouse| %>
                             <tr>
                                 <th class="text-left"><%= warehouse.name %></th>
-                                <% Erp::Products::State.all.each do |state| %>
+                                <% Erp::Products::State.all_active.each do |state| %>
                                     <td class="text-center">
                                         <%= Erp::Products::CacheStock.get_stock(product.id, options={
                                             state_id: state.id,
@@ -128,7 +128,7 @@
                         <% end %>
                         <tr>
                             <th class="text-left">Tất cả Kho</th>
-                            <% Erp::Products::State.all.each do |state| %>
+                            <% Erp::Products::State.all_active.each do |state| %>
                                 <td class="text-bold text-primary text-center">
                                     <%= Erp::Products::CacheStock.get_stock(product.id, options={
                                         state_id: state.id,

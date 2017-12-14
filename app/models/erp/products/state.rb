@@ -6,6 +6,11 @@ module Erp::Products
     STATE_STATUS_ACTIVE = 'active'
     STATE_STATUS_DELETED = 'deleted'
 
+    # get all active
+    def self.all_active
+      self.where(status: State::STATE_STATUS_ACTIVE)
+    end
+
     # Filters
     def self.filter(query, params)
       params = params.to_unsafe_hash
@@ -84,7 +89,7 @@ module Erp::Products
 
     # data for dataselect ajax
     def self.dataselect(keyword='', params={})
-      query = self.all
+      query = self.all_active
 
       if keyword.present?
         keyword = keyword.strip.downcase
@@ -146,6 +151,10 @@ module Erp::Products
 
     def self.get_active
 			self.where(status: self::STATE_STATUS_ACTIVE)
+		end
+
+    def self.get_new_state
+			self.first
 		end
   end
 end
