@@ -46,7 +46,7 @@
     ],
     filters: [
         {
-            text: t('.archived'), name: 'show_archived', value: true, checked: false
+            text: t('archived'), name: 'show_archived', value: true, checked: false
         },
     ],
     columns: [
@@ -63,16 +63,13 @@
             text: t('.to_date'), name: 'to_date', value: true, checked: true
         },
         {
-            text: t('.description'), name: 'description', value: true, checked: false
+            text: t('status'), name: 'status', value: true, checked: true
         },
         {
-            text: t('.status'), name: 'status', value: true, checked: true
+            text: t('creator'), name: 'creator', value: true, checked: false
         },
         {
-            text: t('.creator'), name: 'creator', value: true, checked: false
-        },
-        {
-            text: t('.created_at'), name: 'created_at', value: true, checked: false
+            text: t('created_at'), name: 'created_at', value: true, checked: false
         }
     ],
     sort: { sort_by: 'erp_products_events.created_at', sort_direction: 'desc' }
