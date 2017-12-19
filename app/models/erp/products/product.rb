@@ -418,6 +418,111 @@ module Erp::Products
 			end
 		#end
 
+		if Erp::Core.available?("consignments")
+      has_many :consignment_details, class_name: 'Erp::Consignments::ConsignmentDetail', dependent: :destroy
+
+      # Get all consignment details
+      def delivered_consignment_details
+        consignment_details.joins(:consignment).
+          where(erp_consignments_consignments: {
+            status: Erp::Consignments::Consignment::STATUS_DELIVERED
+          }
+        )
+      end
+
+      # Get all consignment details
+      def self.delivered_consignment_details
+        Erp::Consignments::ConsignmentDetail.joins(:consignment).
+          where(erp_consignments_consignments: {
+            status: Erp::Consignments::Consignment::STATUS_DELIVERED
+          }
+        )
+      end
+
+			def self.get_consignment_query(params={})
+        query = self.delivered_consignment_details
+
+        # from date
+        query = query.where("erp_consignments_consignment_details.created_at >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
+        query = query.where("erp_consignments_consignment_details.created_at <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
+
+				# warehouse
+				query = query.where(erp_consignments_consignments: {warehouse_id: params[:warehouse].id}) if params[:warehouse].present?
+				# state
+				query = query.where(state_id: params[:state].id) if params[:state].present?
+				# warehouse ids
+				query = query.where(erp_consignments_consignments: {warehouse_id: params[:warehouse_ids]}) if params[:warehouse_ids].present?
+				# state ids
+				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
+
+				return query
+      end
+
+			# @todo export
+			def self.get_consignment_export(params={})
+        stock = 0
+
+				main_query = self.get_consignment_query(params)
+
+				# consignment detail with order detail
+				query = main_query
+
+				if params[:product_id].present?
+					query = query.where(product_id: params[:product_id])
+				end
+
+				stock = stock + query.sum("erp_consignments_consignment_details.quantity")
+
+				return stock
+			end
+
+			# Get all cs details
+      def self.delivered_cs_return_details
+        Erp::Consignments::ReturnDetail.joins(:cs_return).
+          where(erp_consignments_cs_returns: {
+            status: Erp::Consignments::CsReturn::STATUS_ACTIVE
+          }
+        )
+      end
+
+			def self.get_cs_return_query(params={})
+        query = self.delivered_cs_return_details
+
+        # from date
+        query = query.where("erp_consignments_return_details.created_at >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
+        query = query.where("erp_consignments_return_details.created_at <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
+
+				# warehouse
+				query = query.where(erp_consignments_cs_returns: {warehouse_id: params[:warehouse].id}) if params[:warehouse].present?
+				# state
+				query = query.where(state_id: params[:state].id) if params[:state].present?
+				# warehouse ids
+				query = query.where(erp_consignments_cs_returns: {warehouse_id: params[:warehouse_ids]}) if params[:warehouse_ids].present?
+				# state ids
+				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
+
+				return query
+      end
+
+			# @todo export
+			def self.get_cs_return_import(params={})
+        stock = 0
+
+				main_query = self.get_cs_return_query(params)
+
+				# consignment detail with order detail
+				query = main_query.joins(:consignment_detail)
+
+				if params[:product_id].present?
+					query = query.where(erp_consignments_consignment_details: {product_id: params[:product_id]})
+				end
+
+				stock = stock + query.sum("erp_consignments_return_details.quantity")
+
+				return stock
+			end
+		end
+
     # get stock
     def get_stock(params={})
 			stock = 0
@@ -440,6 +545,12 @@ module Erp::Products
 
 			# damange record
 			stock -= Product.get_damage_record_export(params.merge({product_id: self.id}))
+
+			# consignments
+			if Erp::Core.available?("consignments")
+        stock += Product.get_cs_return_import(params.merge({product_id: self.id}))
+        stock -= Product.get_consignment_export(params.merge({product_id: self.id}))
+      end
 
 			return stock
 		end
@@ -553,6 +664,14 @@ module Erp::Products
         number_ids = @global_filters[:numbers].present? ? @global_filters[:numbers] : nil
         @numbers = Erp::Products::PropertiesValue.where(id: number_ids)
 
+        # get degrees
+        degree_ids = @global_filters[:degrees].present? ? @global_filters[:degrees] : nil
+        @degrees = Erp::Products::PropertiesValue.where(id: degree_ids)
+
+        # get numbers
+        degree_k_ids = @global_filters[:degree_ks].present? ? @global_filters[:degree_ks] : nil
+        @degree_ks = Erp::Products::PropertiesValue.where(id: degree_k_ids)
+
         # warehouses
         @warehouses = Erp::Warehouses::Warehouse.all
 
@@ -604,6 +723,36 @@ module Erp::Products
             end
           end
         end
+        # filter by degrees
+        if degree_ids.present?
+          if !degree_ids.kind_of?(Array)
+            query = query.where("erp_products_products.cache_properties LIKE '%[\"#{degree_ids}\",%'")
+          else
+            degree_ids = (degree_ids.reject { |c| c.empty? })
+            if !degree_ids.empty?
+              qs = []
+              degree_ids.each do |x|
+                qs << "(erp_products_products.cache_properties LIKE '%[\"#{x}\",%')"
+              end
+              query = query.where("(#{qs.join(" OR ")})")
+            end
+          end
+        end
+        # filter by degree_ks
+        if degree_k_ids.present?
+          if !degree_k_ids.kind_of?(Array)
+            query = query.where("erp_products_products.cache_properties LIKE '%[\"#{degree_k_ids}\",%'")
+          else
+            degree_k_ids = (degree_k_ids.reject { |c| c.empty? })
+            if !degree_k_ids.empty?
+              qs = []
+              degree_k_ids.each do |x|
+                qs << "(erp_products_products.cache_properties LIKE '%[\"#{x}\",%')"
+              end
+              query = query.where("(#{qs.join(" OR ")})")
+            end
+          end
+        end
 
 			end
       # end// global filter
@@ -647,7 +796,7 @@ module Erp::Products
 
         query = query.order(order)
       else
-				query = query.order('created_at desc')
+				query = query.order('erp_products_products.created_at desc')
       end
 
       return query

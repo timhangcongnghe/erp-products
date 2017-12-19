@@ -58,9 +58,35 @@
                     name: 'numbers',
                     value: '',
                     text: '',
-                    label: 'Chữ',
+                    label: 'Số',
                     placeholder: number.name,
                     url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: number.id),
+                    multiple: true
+                }) %>
+            </div>
+        </div>
+        <div class="row top-datalist">
+            <div class="col-md-3">
+                <% degree = Erp::Products::Property.where(name: "Độ").first %>
+                <%= erp_form_control("dataselect", {
+                    name: 'degrees',
+                    value: '',
+                    text: '',
+                    label: 'Độ',
+                    placeholder: degree.name,
+                    url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: degree.id),
+                    multiple: true
+                }) %>
+            </div>
+            <div class="col-md-3">
+                <% degree_k = Erp::Products::Property.where(name: "Độ K").first %>
+                <%= erp_form_control("dataselect", {
+                    name: 'degree_ks',
+                    value: '',
+                    text: '',
+                    label: 'Độ K',
+                    placeholder: degree_k.name,
+                    url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: degree_k.id),
                     multiple: true
                 }) %>
             </div>
