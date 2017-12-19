@@ -192,6 +192,11 @@ module Erp::Products
     def self.all_unarchive
 			self.where(archived: false)
 		end
+    
+    # get top categories
+    def self.top_categories
+      self.where(parent_id: nil)
+    end
 
     # --------- Report Functions - Start ---------
     # Get sales order details
