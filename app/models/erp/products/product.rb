@@ -443,8 +443,8 @@ module Erp::Products
         query = self.delivered_consignment_details
 
         # from date
-        query = query.where("erp_consignments_consignment_details.created_at >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
-        query = query.where("erp_consignments_consignment_details.created_at <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
+        query = query.where("erp_consignments_consignments.sent_date >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
+        query = query.where("erp_consignments_consignments.sent_date <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
 
 				# warehouse
 				query = query.where(erp_consignments_consignments: {warehouse_id: params[:warehouse].id}) if params[:warehouse].present?
@@ -489,8 +489,8 @@ module Erp::Products
         query = self.delivered_cs_return_details
 
         # from date
-        query = query.where("erp_consignments_return_details.created_at >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
-        query = query.where("erp_consignments_return_details.created_at <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
+        query = query.where("erp_consignments_cs_returns.return_date >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
+        query = query.where("erp_consignments_cs_returns.return_date <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
 
 				# warehouse
 				query = query.where(erp_consignments_cs_returns: {warehouse_id: params[:warehouse].id}) if params[:warehouse].present?
