@@ -2,12 +2,12 @@ module Erp::Products
   class Product < ApplicationRecord
 		attr_accessor :product_property_values
 		#validates :name, :uniqueness => true
-    validates :category_id, :brand_id, :presence => true
+    validates :category_id, :presence => true
     validate :deal_to_date_cannot_be_in_the_past, :deal_price_cannot_blank
 
     belongs_to :creator, class_name: "Erp::User"
     belongs_to :category
-    belongs_to :brand
+    belongs_to :brand, optional: true
     belongs_to :accessory, optional: true
     belongs_to :unit, class_name: 'Erp::Products::Unit', optional: true
 
