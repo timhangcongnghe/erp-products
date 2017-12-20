@@ -523,13 +523,134 @@ module Erp::Products
 			end
 		end
 
+		if Erp::Core.available?("orders")
+      # Get all consignment details
+      def confirmed_order_details
+        order_details.joins(:order).
+          where(erp_orders_orders: {
+            status: Erp::Orders::Order::STATUS_CONFIRMED
+          }
+        )
+      end
+
+      # Get all confirmed_order_details
+      def self.confirmed_order_details
+        Erp::Orders::OrderDetail.joins(:order).
+          where(erp_orders_orders: {
+            status: Erp::Orders::Order::STATUS_CONFIRMED
+          }
+        )
+      end
+
+			def self.get_order_query(params={})
+        query = self.confirmed_order_details
+
+        # from date
+        query = query.where("erp_orders_orders.order_date >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
+        query = query.where("erp_orders_orders.order_date <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
+
+				# warehouse
+				query = query.where(erp_orders_orders: {warehouse_id: params[:warehouse].id}) if params[:warehouse].present?
+				# state
+				query = query.where(state_id: params[:state].id) if params[:state].present?
+				# warehouse ids
+				query = query.where(erp_orders_orders: {warehouse_id: params[:warehouse_ids]}) if params[:warehouse_ids].present?
+				# state ids
+				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
+
+				return query
+      end
+
+			# @todo export
+			def self.get_order_export(params={})
+        stock = 0
+
+				main_query = self.get_order_query(params)
+
+				# consignment detail with order detail
+				query = main_query.where(erp_orders_orders: {supplier_id: Erp::Contacts::Contact::MAIN_CONTACT_ID})
+
+				if params[:product_id].present?
+					query = query.where(product_id: params[:product_id])
+				end
+
+				stock = stock + query.sum("erp_orders_order_details.quantity")
+
+				return stock
+			end
+
+			# @todo export
+			def self.get_order_import(params={})
+        stock = 0
+
+				main_query = self.get_order_query(params)
+
+				# consignment detail with order detail
+				query = main_query.where(erp_orders_orders: {customer_id: Erp::Contacts::Contact::MAIN_CONTACT_ID})
+
+				if params[:product_id].present?
+					query = query.where(product_id: params[:product_id])
+				end
+
+				stock = stock + query.sum("erp_orders_order_details.quantity")
+
+				return stock
+			end
+		end
+
     # get stock
     def get_stock(params={})
 			stock = 0
 
 			# Qdelivery
 			if Erp::Core.available?("qdeliveries")
-				stock += Product.get_qdelivery_import(params.merge({product_id: self.id})) - Product.get_qdelivery_export(params.merge({product_id: self.id}))
+				stock += (
+          Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_PURCHASE_IMPORT, product_id: self.id)) +
+          Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_SALES_IMPORT, product_id: self.id)) -
+          Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_PURCHASE_EXPORT, product_id: self.id)) -
+          Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_SALES_EXPORT, product_id: self.id)) +
+          Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOM_IMPORT, product_id: self.id)) -
+          Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOM_EXPORT, product_id: self.id))
+        )
+			end
+
+			# Transfer
+			if Erp::Core.available?("stock_transfers")
+				stock += Product.get_transfer_import(params.merge({product_id: self.id})) - Product.get_transfer_export(params.merge({product_id: self.id}))
+			end
+
+			# stock check
+			stock += Product.get_stock_check_import(params.merge({product_id: self.id})) - Product.get_stock_check_export(params.merge({product_id: self.id}))
+
+			# gift given
+			stock -= Product.get_gift_given_export(params.merge({product_id: self.id}))
+
+			# damange record
+			stock -= Product.get_damage_record_export(params.merge({product_id: self.id}))
+
+			# consignments
+			if Erp::Core.available?("consignments")
+        stock += Product.get_cs_return_import(params.merge({product_id: self.id}))
+        stock -= Product.get_consignment_export(params.merge({product_id: self.id}))
+      end
+
+			return stock
+		end
+
+    # get stock
+    def get_stock_virtual(params={})
+			stock = 0
+
+			# Qdelivery
+			if Erp::Core.available?("orders")
+				stock += (
+          Product.get_order_import(params.merge({product_id: self.id})) +
+          Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_SALES_IMPORT, product_id: self.id)) -
+          Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_PURCHASE_EXPORT, product_id: self.id)) -
+          Product.get_order_export(params.merge({product_id: self.id})) +
+          Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOM_IMPORT, product_id: self.id)) -
+          Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOM_EXPORT, product_id: self.id))
+        )
 			end
 
 			# Transfer
@@ -584,6 +705,51 @@ module Erp::Products
 
 			# damange record
 			stock -= Product.get_damage_record_export(params)
+
+			# consignments
+			if Erp::Core.available?("consignments")
+        stock += Product.get_cs_return_import(params)
+        stock -= Product.get_consignment_export(params)
+      end
+
+			return stock
+		end
+
+    # get stock
+    def self.get_stock_virtual(params={})
+			stock = 0
+
+			# orders
+			if Erp::Core.available?("orders")
+        stock += (
+          Product.get_order_import(params) +
+          Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_SALES_IMPORT)) -
+          Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_PURCHASE_EXPORT)) -
+          Product.get_order_export(params) +
+          Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOM_IMPORT)) -
+          Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOM_EXPORT))
+        )
+			end
+
+			# Transfer
+			if Erp::Core.available?("stock_transfers")
+				stock += Product.get_transfer_import(params) - Product.get_transfer_export(params)
+			end
+
+			# stock check
+			stock += Product.get_stock_check_import(params) - Product.get_stock_check_export(params)
+
+			# gift given
+			stock -= Product.get_gift_given_export(params)
+
+			# damange record
+			stock -= Product.get_damage_record_export(params)
+
+			# consignments
+			if Erp::Core.available?("consignments")
+        stock += Product.get_cs_return_import(params)
+        stock -= Product.get_consignment_export(params)
+      end
 
 			return stock
 		end
