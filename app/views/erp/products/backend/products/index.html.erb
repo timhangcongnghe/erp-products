@@ -12,6 +12,13 @@
         href: erp_products.new_backend_product_path,
         class: 'btn-noborder'
     }) %>
+    <% if Erp::Core.available?("ortho_k") %>
+        <%= erp_component('button/primary', {
+            text: '<i class="glyphicon glyphicon-import"></i> Nhập từ excel'.html_safe,
+            href: erp_ortho_k.import_backend_products_path,
+            class: 'btn-noborder'
+        }) %>
+    <% end %>
 <% end %>
 
 <% content_for :global_filter do %>
@@ -135,12 +142,6 @@
         },
         {
             text: t('.category'), name: 'category', value: true, checked: true
-        },
-        {
-            text: t('.price'), name: 'price', value: true, checked: true
-        },
-        {
-            text: t('.cost'), name: 'cost', value: true, checked: true
         },
         {
             text: t('.on_hand'), name: 'on_hand', value: true, checked: true
