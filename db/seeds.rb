@@ -16,23 +16,125 @@ unit_tuyp = Erp::Products::Unit.create(name: "Tuýp", creator_id: user.id)
 unit_lo = Erp::Products::Unit.create(name: "Lọ", creator_id: user.id)
 unit_cay = Erp::Products::Unit.create(name: "Cây", creator_id: user.id)
 
-# Create category
-Erp::Products::Category.destroy_all
-len_sta = Erp::Products::Category.create(name: "Standard", creator_id: user.id)
-len_pre = Erp::Products::Category.create(name: "Premium", creator_id: user.id)
-len_tor = Erp::Products::Category.create(name: "Toric", creator_id: user.id)
-len_exp = Erp::Products::Category.create(name: "Express", creator_id: user.id)
-len_2pa = Erp::Products::Category.create(name: "2PA (viễn thị)", creator_id: user.id)
-len_soft = Erp::Products::Category.create(name: "Soft", creator_id: user.id)
-len_liq = Erp::Products::Category.create(name: "Liquid", creator_id: user.id)
-# Len SP
-len_sp = Erp::Products::Category.create(name: "Len SP", creator_id: user.id)
+# Parent categories
 
-len_cats = Erp::Products::Category.all
+# Create categories
+Erp::Products::Category.destroy_all
+
+len_hard_parent = Erp::Products::Category.create(name: "Len cứng", creator_id: user.id)
+  len_sta = Erp::Products::Category.create(name: "Standard", creator_id: user.id, parent_id: len_hard_parent.id)
+  len_pre = Erp::Products::Category.create(name: "Premium", creator_id: user.id, parent_id: len_hard_parent.id)
+  len_tor = Erp::Products::Category.create(name: "Toric", creator_id: user.id, parent_id: len_hard_parent.id)
+  len_exp = Erp::Products::Category.create(name: "Express", creator_id: user.id, parent_id: len_hard_parent.id)
+  len_cus = Erp::Products::Category.create(name: "Custom", creator_id: user.id, parent_id: len_hard_parent.id)
+    len_cus_gov = Erp::Products::Category.create(name: "GOV", creator_id: user.id, parent_id: len_cus.id)
+    len_cus_scl = Erp::Products::Category.create(name: "SCL", creator_id: user.id, parent_id: len_cus.id)
+    len_cus_cus = Erp::Products::Category.create(name: "CUS", creator_id: user.id, parent_id: len_cus.id)
+
+  len_sp = Erp::Products::Category.create(name: "SP", creator_id: user.id, parent_id: len_hard_parent.id)
+  len_other = Erp::Products::Category.create(name: "Len khác", creator_id: user.id, parent_id: len_hard_parent.id)
+
+# Bộ set
+len_set = Erp::Products::Category.create(name: "Bộ sét", creator_id: user.id)
+
+# Len mềm
+len_soft_parent = Erp::Products::Category.create(name: "Len mềm", creator_id: user.id)
+  len_soft = Erp::Products::Category.create(name: "Soft OK", creator_id: user.id, parent_id: len_soft_parent.id)
+
+# Other cats
+dd_cat = Erp::Products::Category.create(name: "Dung dịch", creator_id: user.id)
+bb_cat = Erp::Products::Category.create(name: "Bao bì", creator_id: user.id)
+remover_cat = Erp::Products::Category.create(name: "Len remover", creator_id: user.id)
+other_cat = Erp::Products::Category.create(name: "Sản phẩm khác", creator_id: user.id)
+
+len_cats = Erp::Products::Category.where(parent_id: [len_soft_parent.id, len_hard_parent.id])
 
 # Brand
 Erp::Products::Brand.where(name: "Ortho-K").destroy_all
 brand = Erp::Products::Brand.create(name: "Ortho-K", creator_id: user.id)
+
+
+
+
+
+
+
+
+######################### OTHER PRODUCTS #########################################
+# arrays
+arr_tmp = [
+  {name: "Avizor 15mm (Lacrifresh comfort)", unit_id: unit_chai.id, category_id: dd_cat.id},
+  {name: "Avizor GP multi (60ml)", unit_id: unit_chai.id, category_id: dd_cat.id},
+  {name: "Avizor GP multi (240ml)", unit_id: unit_chai.id, category_id: dd_cat.id},
+  {name: "Natural Ophthalmics Thick (đêm)", unit_id: unit_chai.id, category_id: dd_cat.id},
+  {name: "Natural Ophthalmics Thin (ngày)", unit_id: unit_chai.id, category_id: dd_cat.id},
+  {name: "DD Boston Starter kit", unit_id: unit_chai.id, category_id: dd_cat.id},
+  {name: "DD Boston Simplus(105ml +5ml)", unit_id: unit_chai.id, category_id: dd_cat.id},
+  {name: "DD Boston reweting drops 10ml", unit_id: unit_chai.id, category_id: dd_cat.id},
+  {name: "DD Lacripure (1Hộp=98 tuýp)", unit_id: unit_chai.id, category_id: dd_cat.id},
+  {name: "DD Menicon progent (7 treatment)", unit_id: unit_chai.id, category_id: dd_cat.id},
+  {name: "DD Boston simplus 120ml", unit_id: unit_chai.id, category_id: dd_cat.id},
+  {name: "DD Samilvidone 10ml", unit_id: unit_chai.id, category_id: dd_cat.id},
+  {name: "DD One Step 355ml", unit_id: unit_chai.id, category_id: dd_cat.id},
+  {name: "DD Natural Tear Stimulation Forte", unit_id: unit_chai.id, category_id: dd_cat.id},
+  {name: "Natural Ophthalmics -women's Tear Stimulation (ngày)", unit_id: unit_chai.id, category_id: dd_cat.id},
+
+  {name: "Túi vải fargo", unit_id: unit_cai.id, category_id: bb_cat.id},
+  {name: "Túi giấy", unit_id: unit_cai.id, category_id: bb_cat.id},
+  {name: "Hộp gỗ bộ sét", unit_id: unit_hop.id, category_id: bb_cat.id},
+  {name: "Hộp Gỗ 240", unit_id: unit_hop.id, category_id: bb_cat.id},
+  {name: "Hộp gỗ 60", unit_id: unit_hop.id, category_id: bb_cat.id},
+
+  {name: "Fluorescein sodium(giay nhuom)", unit_id: unit_hop.id, category_id: other_cat.id},
+  {name: "Khay đựng len (khay màu: 105 cái)", unit_id: unit_cai.id, category_id: other_cat.id},
+  {name: "Đèn khám mắt (cay viet)", unit_id: unit_cai.id, category_id: other_cat.id},
+  {name: "ReNovoOculus (Tế bào gốc)", unit_id: unit_hop.id, category_id: other_cat.id},
+  {name: "Hũ đựng len", unit_id: unit_cai.id, category_id: other_cat.id},
+  {name: "Khung hình", unit_id: unit_cai.id, category_id: other_cat.id},
+  {name: "Omega-3 (Fish oil)", unit_id: unit_hop.id, category_id: other_cat.id},
+  {name: "Thước đo giác mạc", unit_id: unit_cai.id, category_id: other_cat.id},
+
+  {name: "Lens remover (thẳng không lỗ)", unit_id: unit_cai.id, category_id: remover_cat.id},
+  {name: "Lens remover (thẳng có lỗ )", unit_id: unit_cai.id, category_id: remover_cat.id},
+  {name: "Lens remover ( xéo )", unit_id: unit_cai.id, category_id: remover_cat.id},
+  {name: "Cây gắn len (Lens remover Scleral)", unit_id: unit_cai.id, category_id: remover_cat.id},
+
+  {name: "Bộ set thử Scleral A ( 16 len/ bộ)", unit_id: unit_bo.id, category_id: len_set.id},
+  {name: "Bộ set thử Scleral B ( 16 len/ bộ)", unit_id: unit_bo.id, category_id: len_set.id},
+  {name: "Bộ sét Scleral Plano  (từ SCL1 - SCL27) Bộ E", unit_id: unit_bo.id, category_id: len_set.id},
+  {name: "Bộ set thử -3 (K5-K29)", unit_id: unit_bo.id, category_id: len_set.id},
+  {name: "Bộ set thử -5 (S5-S29)", unit_id: unit_bo.id, category_id: len_set.id},
+  {name: "Bộ set thử -7 (HI5-HI29)", unit_id: unit_bo.id, category_id: len_set.id},
+  {name: "Bộ set thử -3 Toric (K5-K29)", unit_id: unit_bo.id, category_id: len_set.id},
+]
+
+arr_tmp.each do |item|
+  product = Erp::Products::Product.create(
+    code: item[:name],
+    name: item[:name],
+    category_id: item[:category_id],
+    brand_id: nil,
+    unit_id: item[:unit_id],
+    creator_id: user.id,
+    price: nil,
+  )
+  Erp::Products::Product.find(product.id).update_cache_properties
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # State
 Erp::Products::State.destroy_all
@@ -215,7 +317,7 @@ def create_product(user, brand, letter, number, dk_pv, len_cat, chu_pv, do_pv, s
   Erp::Products::ProductsValue.create(
     product_id: product.id,
     properties_value_id: do_pv.id
-  )
+  ) if do_pv.present?
   Erp::Products::ProductsValue.create(
     product_id: product.id,
     properties_value_id: so_pv.id
@@ -223,7 +325,7 @@ def create_product(user, brand, letter, number, dk_pv, len_cat, chu_pv, do_pv, s
   Erp::Products::ProductsValue.create(
     product_id: product.id,
     properties_value_id: dok_pv.id
-  )
+  ) if dok_pv.present?
   Erp::Products::ProductsValue.create(
     product_id: product.id,
     properties_value_id: dk_pv.id
@@ -232,9 +334,21 @@ def create_product(user, brand, letter, number, dk_pv, len_cat, chu_pv, do_pv, s
   Erp::Products::Product.find(product.id).update_cache_properties
 end
 
+
+
+
+
+
+
+
+
+
+
+
+############################################# LENS IMPORTING ##################################################
 # default lens
 dk_pvs.each do |dk_pv|
-  do_v = 0.75
+  do_v = 0.5
   letters.each do |letter|
     chu_pv = Erp::Products::PropertiesValue.where(property_id: chu_p.id, value: letter).first
     do_pv = Erp::Products::PropertiesValue.where(property_id: do_p.id, value: do_v.to_s).first
@@ -246,13 +360,14 @@ dk_pvs.each do |dk_pv|
       if [10.4, 10.6, 10.8, 11, 11.2, 11.4].include?(dk_pv.value.to_f)
         create_product(user, brand, letter, number, dk_pv, len_sta, chu_pv, do_pv, so_pv, dok_pv, unit_cai)
       end
-      if [10.4, 10.6, 10.8, 11].include?(dk_pv.value.to_f)
+      if [10.4, 10.6, 10.8, 11, 11.2, 11.4].include?(dk_pv.value.to_f)
         create_product(user, brand, letter, number, dk_pv, len_pre, chu_pv, do_pv, so_pv, dok_pv, unit_cai)
       end
-      if [10.6, 10.8, 11, 11.4, 11.6].include?(dk_pv.value.to_f)
+      if [10.4, 10.6, 10.8, 11, 11.2, 11.4].include?(dk_pv.value.to_f)
         create_product(user, brand, letter, number, dk_pv, len_tor, chu_pv, do_pv, so_pv, dok_pv, unit_cai)
       end
-      if [10.5, 10.6].include?(dk_pv.value.to_f)
+
+      if [10.5].include?(dk_pv.value.to_f) and ('B'..'O').include?(letter)
         create_product(user, brand, letter, number, dk_pv, len_exp, chu_pv, do_pv, so_pv, dok_pv, unit_cai)
       end
 
@@ -276,13 +391,14 @@ dk_pvs.each do |dk_pv|
       if [10.4, 10.6, 10.8, 11, 11.2, 11.4].include?(dk_pv.value.to_f)
         create_product(user, brand, letter, number, dk_pv, len_sta, chu_pv, do_pv, so_pv, dok_pv, unit_cai)
       end
-      if [10.4, 10.6, 10.8, 11].include?(dk_pv.value.to_f)
+      if [10.4, 10.6, 10.8, 11, 11.2, 11.4].include?(dk_pv.value.to_f)
         create_product(user, brand, letter, number, dk_pv, len_pre, chu_pv, do_pv, so_pv, dok_pv, unit_cai)
       end
-      if [10.6, 10.8, 11, 11.4, 11.6].include?(dk_pv.value.to_f)
+      if [10.4, 10.6, 10.8, 11, 11.2, 11.4].include?(dk_pv.value.to_f)
         create_product(user, brand, letter, number, dk_pv, len_tor, chu_pv, do_pv, so_pv, dok_pv, unit_cai)
       end
-      if [10.5, 10.6].include?(dk_pv.value.to_f)
+
+      if [10.5].include?(dk_pv.value.to_f) and ('B'..'O').include?(letter)
         create_product(user, brand, letter, number, dk_pv, len_exp, chu_pv, do_pv, so_pv, dok_pv, unit_cai)
       end
 
@@ -293,12 +409,19 @@ dk_pvs.each do |dk_pv|
   end
 end
 
-# add category group
-Erp::Products::CategoriesPgroup.create(
-  category_id: len_soft.id,
-  property_group_id: len_pg.id
-)
 
+
+
+
+
+
+
+
+
+
+
+############################################# LEN SOFT ##################################################
+# add category group
 (1..8).each do |number|
   pv_tmp = Erp::Products::PropertiesValue.create(
     property_id: dk_p.id,
@@ -323,380 +446,360 @@ Erp::Products::CategoriesPgroup.create(
   Erp::Products::Product.find(product.id).update_cache_properties
 end
 
-# Others
-arr_tmp = [
-  {name: "Bộ set thử Scleral A (hộp màu đỏ) 16 len/ bộ", unit_id: unit_bo.id},
-  {name: "Bộ set thử Scleral B (hộp màu đỏ) 16 len/ bộ", unit_id: unit_bo.id},
-  {name: "Bộ sét SCL Plano  (từ SCL1 - SCL27)", unit_id: unit_bo.id},
-  {name: "Bộ set thử -3 (K5-K29)", unit_id: unit_bo.id},
-  {name: "Bộ set thử -5 (S5-S29)", unit_id: unit_bo.id},
-  {name: "Bộ set thử -7 (HI5-HI29)", unit_id: unit_bo.id},
-  {name: "Bộ set thử -3 Tonic (K5-K29)", unit_id: unit_bo.id},
-  {name: "Kinh Adlens", unit_id: unit_cai.id},
-  {name: "Len không mã", unit_id: unit_cai.id},
-  {name: "Bộ kính thị lực", unit_id: unit_bo.id},
-  {name: "Avizor 15mm (Lacrifresh comfort)", unit_id: unit_chai.id},
-  {name: "Avizor GP multi (60ml)", unit_id: unit_chai.id},
-  {name: "Avizor GP multi (240ml)", unit_id: unit_chai.id},
-  {name: "Natural Ophthalmics Thick (đêm)", unit_id: unit_chai.id},
-  {name: "Natural Ophthalmics Thin (ngày)", unit_id: unit_chai.id},
-  {name: "DD Boston Starter kitDD Boston Simplus(105ml +5ml)", unit_id: unit_chai.id},
-  {name: "DD Boston Simplus(105ml +5ml)", unit_id: unit_chai.id},
-  {name: "DD boston reweting drops 10ml", unit_id: unit_chai.id},
-  {name: "Lacripure (1Hộp=98 tuýp)", unit_id: unit_hop.id},
-  {name: "Lacripure (tuýp)", unit_id: unit_tuyp.id},
-  {name: "DD Menicon progent (7 treatment)", unit_id: unit_bo.id},
-  {name: "DD boston simplus 120ml", unit_id: unit_chai.id},
-  {name: "DD Samilvidone 10ml", unit_id: unit_chai.id},
-  {name: "DD One Step 355ml", unit_id: unit_chai.id},
-  {name: "Fluorescein sodium(giay nhuom)", unit_id: unit_hop.id},
-  {name: "Hủ giấy nhuộm", unit_id: unit_lo.id},
-  {name: "Lens remover (không lỗ)", unit_id: unit_cai.id},
-  {name: "Lens remover (có lỗ 60, xéo 19)", unit_id: unit_cai.id},
-  {name: "Lens remover Scleral", unit_id: unit_cai.id},
-  {name: "Khay dung len (khay màu: 105 cái)", unit_id: unit_cai.id},
-  {name: "Đèn khám mắt (cay viet)", unit_id: unit_cay.id},
-  {name: "Hộp Gỗ 240", unit_id: unit_hop.id},
-  {name: "Hộp gỗ bộ sét", unit_id: unit_hop.id},
-  {name: "Túi giấy", unit_id: unit_cai.id},
-  {name: "ReNovoOculus (Tế bào gốc)", unit_id: unit_hop.id},
-  {name: "Hũ đựng len", unit_id: unit_cai.id},
-  {name: "Khung hình", unit_id: unit_cai.id},
-  {name: "Hộp gỗ 60", unit_id: unit_hop.id},
-  {name: "Túi vải fargo", unit_id: unit_cai.id},
-  {name: "Omega-3 (Fish oil)", unit_id: unit_hop.id},
-  {name: "Thước đo giác mạc", unit_id: unit_cai.id},
-]
 
-dd_cat = Erp::Products::Category.create(name: "Dung dịch", creator_id: user.id)
-arr_tmp.each do |item|
-  product = Erp::Products::Product.create(
-    code: item[:name],
-    name: item[:name],
-    category_id: dd_cat.id,
-    brand_id: brand.id,
-    unit_id: item[:unit_id],
-    creator_id: user.id,
-    price: nil,
+
+
+
+
+
+
+#################################### LEN SP #########################################################
+
+
+letters = ['spK', 'SPK', 'spHI', 'SPHI', 'HYPS', 'HYPO', 'HYPG']
+letters.each do |letter|
+  Erp::Products::PropertiesValue.create(
+    property_id: chu_p.id,
+    value: letter
   )
-  Erp::Products::Product.find(product.id).update_cache_properties
 end
 
-
-################################### spK SPK #########################################################
-
-# đường kính + số: spK + SPK
-dk_so_s = [
-  {
-    dk: "10.4",
-    so_s: [
-      "00","0","1","2","3","4","5","6","7","8","9","10","11","12","13"
-    ],
-  },
-  {
-    dk: "10.8",
-    so_s: [
-      "14","15","16","17","18","19"
-    ],
-  },
-  {
-    dk: "11.2",
-    so_s: [
-      "20","21","22","23","24","25","26","27","28","29"
-    ],
-  }
-]
-
-# more property value
-Erp::Products::PropertiesValue.create(
-  property_id: chu_p.id,
-  value: "spK"
-)
-Erp::Products::PropertiesValue.create(
-  property_id: chu_p.id,
-  value: "SPK"
-)
-
-
-# spk import
-['spK','SPK'].each do |code_tmp|
-  dk_so_s.each_with_index do |row|
-    dk_pv = Erp::Products::PropertiesValue.where(property_id: dk_p.id, value: row[:dk]).first
-    row[:so_s].each do |so_tmp|
+dk_pvs.each do |dk_pv|
+  letters.each do |letter|
+    chu_pv = Erp::Products::PropertiesValue.where(property_id: chu_p.id, value: letter).first
+    ["00","0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29"].each do |so_tmp|
       so_tmp = (["00","0"].include?(so_tmp) ? so_tmp : so_tmp.rjust(2, '0'))
-
-      chu_pv = Erp::Products::PropertiesValue.where(property_id: chu_p.id, value: code_tmp).first
       so_pv = Erp::Products::PropertiesValue.where(property_id: so_p.id, value: so_tmp).first
 
-      puts "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}"
+      if (!['HYPS', 'HYPO'].include?(letter) and [10.4, 10.6, 10.8, 11, 11.2, 11.4].include?(dk_pv.value.to_f)) or (['HYPS', 'HYPO'].include?(letter) and [10.6].include?(dk_pv.value.to_f))
+        create_product(user, brand, letter, so_tmp, dk_pv, len_sp, chu_pv, nil, so_pv, nil, unit_cai)
+      end
 
-      product = Erp::Products::Product.create(
-        code: "#{chu_pv.value}#{so_pv.value}",
-        name: "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}",
-        category_id: len_sp.id,
-        brand_id: brand.id,
-        creator_id: user.id,
-        unit_id: unit_cai.id,
-        price: nil, # rand(5..100)*10000
-      )
-      Erp::Products::ProductsValue.create(
-        product_id: product.id,
-        properties_value_id: chu_pv.id
-      )
-      Erp::Products::ProductsValue.create(
-        product_id: product.id,
-        properties_value_id: so_pv.id
-      )
-      Erp::Products::ProductsValue.create(
-        product_id: product.id,
-        properties_value_id: dk_pv.id
-      )
-
-      Erp::Products::Product.find(product.id).update_cache_properties
+      puts "==== #{dk_pv.value} #{letter} #{so_tmp} ===="
     end
   end
 end
 
 
-################################### spHI #########################################################
-
-# đường kính + số: spK + SPK
-dk_so_s = [
-  {
-    dk: "10.8",
-    so_s: [
-      "00","0","1","2","3","4","5","6","7","8","9","10","11","12","13"
-    ],
-  },
-  {
-    dk: "11.2",
-    so_s: [
-      "14","15","16","17","18","19"
-    ],
-  },
-  {
-    dk: "11.6",
-    so_s: [
-      "20","21","22","23","24","25","26","27","28","29"
-    ],
-  },
-]
-
-# more property value
-Erp::Products::PropertiesValue.create(
-  property_id: chu_p.id,
-  value: "spHI"
-)
-
-# spk import
-['spHI'].each do |code_tmp|
-  dk_so_s.each_with_index do |row|
-    dk_pv = Erp::Products::PropertiesValue.where(property_id: dk_p.id, value: row[:dk]).first
-    row[:so_s].each do |so_tmp|
-      so_tmp = (["00","0"].include?(so_tmp) ? so_tmp : so_tmp.rjust(2, '0'))
-
-      chu_pv = Erp::Products::PropertiesValue.where(property_id: chu_p.id, value: code_tmp).first
-      so_pv = Erp::Products::PropertiesValue.where(property_id: so_p.id, value: so_tmp).first
-
-      puts "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}"
-
-      product = Erp::Products::Product.create(
-        code: "#{chu_pv.value}#{so_pv.value}",
-        name: "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}",
-        category_id: len_sp.id,
-        brand_id: brand.id,
-        creator_id: user.id,
-        unit_id: unit_cai.id,
-        price: nil, # rand(5..100)*10000
-      )
-      Erp::Products::ProductsValue.create(
-        product_id: product.id,
-        properties_value_id: chu_pv.id
-      )
-      Erp::Products::ProductsValue.create(
-        product_id: product.id,
-        properties_value_id: so_pv.id
-      )
-      Erp::Products::ProductsValue.create(
-        product_id: product.id,
-        properties_value_id: dk_pv.id
-      )
-
-      Erp::Products::Product.find(product.id).update_cache_properties
-    end
-  end
-end
 
 
-################################### SpHI #########################################################
-
-# đường kính + số: SpHI
-dk_so_s = [
-  {
-    dk: "11.2",
-    so_s: [
-      "20","28","29"
-    ],
-  },
-]
-
-# more property value
-Erp::Products::PropertiesValue.create(
-  property_id: chu_p.id,
-  value: "SpHI"
-)
-
-# spk import
-['SpHI'].each do |code_tmp|
-  dk_so_s.each_with_index do |row|
-    dk_pv = Erp::Products::PropertiesValue.where(property_id: dk_p.id, value: row[:dk]).first
-    row[:so_s].each do |so_tmp|
-      so_tmp = (["00","0"].include?(so_tmp) ? so_tmp : so_tmp.rjust(2, '0'))
-
-      chu_pv = Erp::Products::PropertiesValue.where(property_id: chu_p.id, value: code_tmp).first
-      so_pv = Erp::Products::PropertiesValue.where(property_id: so_p.id, value: so_tmp).first
-
-      puts "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}"
-
-      product = Erp::Products::Product.create(
-        code: "#{chu_pv.value}#{so_pv.value}",
-        name: "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}",
-        category_id: len_sp.id,
-        brand_id: brand.id,
-        creator_id: user.id,
-        unit_id: unit_cai.id,
-        price: nil, # rand(5..100)*10000
-      )
-      Erp::Products::ProductsValue.create(
-        product_id: product.id,
-        properties_value_id: chu_pv.id
-      )
-      Erp::Products::ProductsValue.create(
-        product_id: product.id,
-        properties_value_id: so_pv.id
-      )
-      Erp::Products::ProductsValue.create(
-        product_id: product.id,
-        properties_value_id: dk_pv.id
-      )
-
-      Erp::Products::Product.find(product.id).update_cache_properties
-    end
-  end
-end
 
 
-################################### HYPS #########################################################
 
-# đường kính + số: HYPS
-dk_so_s = [
-  {
-    dk: "10.6",
-    so_s: [
-      "5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","28","29"
-    ],
-  },
-]
-
-# more property value
-Erp::Products::PropertiesValue.create(
-  property_id: chu_p.id,
-  value: "HYPS"
-)
-
-# spk import
-['HYPS'].each do |code_tmp|
-  dk_so_s.each_with_index do |row|
-    dk_pv = Erp::Products::PropertiesValue.where(property_id: dk_p.id, value: row[:dk]).first
-    row[:so_s].each do |so_tmp|
-      so_tmp = (["00","0"].include?(so_tmp) ? so_tmp : so_tmp.rjust(2, '0'))
-
-      chu_pv = Erp::Products::PropertiesValue.where(property_id: chu_p.id, value: code_tmp).first
-      so_pv = Erp::Products::PropertiesValue.where(property_id: so_p.id, value: so_tmp).first
-
-      puts "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}"
-
-      product = Erp::Products::Product.create(
-        code: "#{chu_pv.value}#{so_pv.value}",
-        name: "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}",
-        category_id: len_sp.id,
-        brand_id: brand.id,
-        creator_id: user.id,
-        unit_id: unit_cai.id,
-        price: nil, # rand(5..100)*10000
-      )
-      Erp::Products::ProductsValue.create(
-        product_id: product.id,
-        properties_value_id: chu_pv.id
-      )
-      Erp::Products::ProductsValue.create(
-        product_id: product.id,
-        properties_value_id: so_pv.id
-      )
-      Erp::Products::ProductsValue.create(
-        product_id: product.id,
-        properties_value_id: dk_pv.id
-      )
-
-      Erp::Products::Product.find(product.id).update_cache_properties
-    end
-  end
-end
-
-
-################################### HYPO #########################################################
-
-# đường kính + số: HYPS
-dk_so_s = [
-  {
-    dk: "10.6",
-    so_s: [
-      "5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","28","29"
-    ],
-  },
-]
-
-# more property value
-Erp::Products::PropertiesValue.create(
-  property_id: chu_p.id,
-  value: "HYPO"
-)
-
-# spk import
-['HYPO'].each do |code_tmp|
-  dk_so_s.each_with_index do |row|
-    dk_pv = Erp::Products::PropertiesValue.where(property_id: dk_p.id, value: row[:dk]).first
-    row[:so_s].each do |so_tmp|
-      so_tmp = (["00","0"].include?(so_tmp) ? so_tmp : so_tmp.rjust(2, '0'))
-
-      chu_pv = Erp::Products::PropertiesValue.where(property_id: chu_p.id, value: code_tmp).first
-      so_pv = Erp::Products::PropertiesValue.where(property_id: so_p.id, value: so_tmp).first
-
-      puts "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}"
-
-      product = Erp::Products::Product.create(
-        code: "#{chu_pv.value}#{so_pv.value}",
-        name: "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}",
-        category_id: len_sp.id,
-        brand_id: brand.id,
-        creator_id: user.id,
-        unit_id: unit_cai.id,
-        price: nil, # rand(5..100)*10000
-      )
-      Erp::Products::ProductsValue.create(
-        product_id: product.id,
-        properties_value_id: chu_pv.id
-      )
-      Erp::Products::ProductsValue.create(
-        product_id: product.id,
-        properties_value_id: so_pv.id
-      )
-      Erp::Products::ProductsValue.create(
-        product_id: product.id,
-        properties_value_id: dk_pv.id
-      )
-
-      Erp::Products::Product.find(product.id).update_cache_properties
-    end
-  end
-end
+#################################### spK SPK #########################################################
+#
+## đường kính + số: spK + SPK
+#dk_so_s = [
+#  {
+#    dk: "10.4",
+#    so_s: [
+#      "00","0","1","2","3","4","5","6","7","8","9","10","11","12","13"
+#    ],
+#  },
+#  {
+#    dk: "10.8",
+#    so_s: [
+#      "14","15","16","17","18","19"
+#    ],
+#  },
+#  {
+#    dk: "11.2",
+#    so_s: [
+#      "20","21","22","23","24","25","26","27","28","29"
+#    ],
+#  }
+#]
+#
+## more property value
+#Erp::Products::PropertiesValue.create(
+#  property_id: chu_p.id,
+#  value: "spK"
+#)
+#Erp::Products::PropertiesValue.create(
+#  property_id: chu_p.id,
+#  value: "SPK"
+#)
+#
+#
+## spk import
+#['spK','SPK'].each do |code_tmp|
+#  dk_so_s.each_with_index do |row|
+#    dk_pv = Erp::Products::PropertiesValue.where(property_id: dk_p.id, value: row[:dk]).first
+#    row[:so_s].each do |so_tmp|
+#      so_tmp = (["00","0"].include?(so_tmp) ? so_tmp : so_tmp.rjust(2, '0'))
+#
+#      chu_pv = Erp::Products::PropertiesValue.where(property_id: chu_p.id, value: code_tmp).first
+#      so_pv = Erp::Products::PropertiesValue.where(property_id: so_p.id, value: so_tmp).first
+#
+#      puts "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}"
+#
+#      product = Erp::Products::Product.create(
+#        code: "#{chu_pv.value}#{so_pv.value}",
+#        name: "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}",
+#        category_id: len_sp.id,
+#        brand_id: brand.id,
+#        creator_id: user.id,
+#        unit_id: unit_cai.id,
+#        price: nil, # rand(5..100)*10000
+#      )
+#      Erp::Products::ProductsValue.create(
+#        product_id: product.id,
+#        properties_value_id: chu_pv.id
+#      )
+#      Erp::Products::ProductsValue.create(
+#        product_id: product.id,
+#        properties_value_id: so_pv.id
+#      )
+#      Erp::Products::ProductsValue.create(
+#        product_id: product.id,
+#        properties_value_id: dk_pv.id
+#      )
+#
+#      Erp::Products::Product.find(product.id).update_cache_properties
+#    end
+#  end
+#end
+#
+#
+#################################### spHI #########################################################
+#
+## đường kính + số: spK + SPK
+#dk_so_s = [
+#  {
+#    dk: "10.8",
+#    so_s: [
+#      "00","0","1","2","3","4","5","6","7","8","9","10","11","12","13"
+#    ],
+#  },
+#  {
+#    dk: "11.2",
+#    so_s: [
+#      "14","15","16","17","18","19"
+#    ],
+#  },
+#  {
+#    dk: "11.6",
+#    so_s: [
+#      "20","21","22","23","24","25","26","27","28","29"
+#    ],
+#  },
+#]
+#
+## more property value
+#Erp::Products::PropertiesValue.create(
+#  property_id: chu_p.id,
+#  value: "spHI"
+#)
+#
+## spk import
+#['spHI'].each do |code_tmp|
+#  dk_so_s.each_with_index do |row|
+#    dk_pv = Erp::Products::PropertiesValue.where(property_id: dk_p.id, value: row[:dk]).first
+#    row[:so_s].each do |so_tmp|
+#      so_tmp = (["00","0"].include?(so_tmp) ? so_tmp : so_tmp.rjust(2, '0'))
+#
+#      chu_pv = Erp::Products::PropertiesValue.where(property_id: chu_p.id, value: code_tmp).first
+#      so_pv = Erp::Products::PropertiesValue.where(property_id: so_p.id, value: so_tmp).first
+#
+#      puts "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}"
+#
+#      product = Erp::Products::Product.create(
+#        code: "#{chu_pv.value}#{so_pv.value}",
+#        name: "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}",
+#        category_id: len_sp.id,
+#        brand_id: brand.id,
+#        creator_id: user.id,
+#        unit_id: unit_cai.id,
+#        price: nil, # rand(5..100)*10000
+#      )
+#      Erp::Products::ProductsValue.create(
+#        product_id: product.id,
+#        properties_value_id: chu_pv.id
+#      )
+#      Erp::Products::ProductsValue.create(
+#        product_id: product.id,
+#        properties_value_id: so_pv.id
+#      )
+#      Erp::Products::ProductsValue.create(
+#        product_id: product.id,
+#        properties_value_id: dk_pv.id
+#      )
+#
+#      Erp::Products::Product.find(product.id).update_cache_properties
+#    end
+#  end
+#end
+#
+#
+#################################### SpHI #########################################################
+#
+## đường kính + số: SpHI
+#dk_so_s = [
+#  {
+#    dk: "11.2",
+#    so_s: [
+#      "20","28","29"
+#    ],
+#  },
+#]
+#
+## more property value
+#Erp::Products::PropertiesValue.create(
+#  property_id: chu_p.id,
+#  value: "SpHI"
+#)
+#
+## spk import
+#['SpHI'].each do |code_tmp|
+#  dk_so_s.each_with_index do |row|
+#    dk_pv = Erp::Products::PropertiesValue.where(property_id: dk_p.id, value: row[:dk]).first
+#    row[:so_s].each do |so_tmp|
+#      so_tmp = (["00","0"].include?(so_tmp) ? so_tmp : so_tmp.rjust(2, '0'))
+#
+#      chu_pv = Erp::Products::PropertiesValue.where(property_id: chu_p.id, value: code_tmp).first
+#      so_pv = Erp::Products::PropertiesValue.where(property_id: so_p.id, value: so_tmp).first
+#
+#      puts "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}"
+#
+#      product = Erp::Products::Product.create(
+#        code: "#{chu_pv.value}#{so_pv.value}",
+#        name: "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}",
+#        category_id: len_sp.id,
+#        brand_id: brand.id,
+#        creator_id: user.id,
+#        unit_id: unit_cai.id,
+#        price: nil, # rand(5..100)*10000
+#      )
+#      Erp::Products::ProductsValue.create(
+#        product_id: product.id,
+#        properties_value_id: chu_pv.id
+#      )
+#      Erp::Products::ProductsValue.create(
+#        product_id: product.id,
+#        properties_value_id: so_pv.id
+#      )
+#      Erp::Products::ProductsValue.create(
+#        product_id: product.id,
+#        properties_value_id: dk_pv.id
+#      )
+#
+#      Erp::Products::Product.find(product.id).update_cache_properties
+#    end
+#  end
+#end
+#
+#
+#################################### HYPS #########################################################
+#
+## đường kính + số: HYPS
+#dk_so_s = [
+#  {
+#    dk: "10.6",
+#    so_s: [
+#      "5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","28","29"
+#    ],
+#  },
+#]
+#
+## more property value
+#Erp::Products::PropertiesValue.create(
+#  property_id: chu_p.id,
+#  value: "HYPS"
+#)
+#
+## spk import
+#['HYPS'].each do |code_tmp|
+#  dk_so_s.each_with_index do |row|
+#    dk_pv = Erp::Products::PropertiesValue.where(property_id: dk_p.id, value: row[:dk]).first
+#    row[:so_s].each do |so_tmp|
+#      so_tmp = (["00","0"].include?(so_tmp) ? so_tmp : so_tmp.rjust(2, '0'))
+#
+#      chu_pv = Erp::Products::PropertiesValue.where(property_id: chu_p.id, value: code_tmp).first
+#      so_pv = Erp::Products::PropertiesValue.where(property_id: so_p.id, value: so_tmp).first
+#
+#      puts "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}"
+#
+#      product = Erp::Products::Product.create(
+#        code: "#{chu_pv.value}#{so_pv.value}",
+#        name: "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}",
+#        category_id: len_sp.id,
+#        brand_id: brand.id,
+#        creator_id: user.id,
+#        unit_id: unit_cai.id,
+#        price: nil, # rand(5..100)*10000
+#      )
+#      Erp::Products::ProductsValue.create(
+#        product_id: product.id,
+#        properties_value_id: chu_pv.id
+#      )
+#      Erp::Products::ProductsValue.create(
+#        product_id: product.id,
+#        properties_value_id: so_pv.id
+#      )
+#      Erp::Products::ProductsValue.create(
+#        product_id: product.id,
+#        properties_value_id: dk_pv.id
+#      )
+#
+#      Erp::Products::Product.find(product.id).update_cache_properties
+#    end
+#  end
+#end
+#
+#
+#################################### HYPO #########################################################
+#
+## đường kính + số: HYPS
+#dk_so_s = [
+#  {
+#    dk: "10.6",
+#    so_s: [
+#      "5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","28","29"
+#    ],
+#  },
+#]
+#
+## more property value
+#Erp::Products::PropertiesValue.create(
+#  property_id: chu_p.id,
+#  value: "HYPO"
+#)
+#
+## spk import
+#['HYPO'].each do |code_tmp|
+#  dk_so_s.each_with_index do |row|
+#    dk_pv = Erp::Products::PropertiesValue.where(property_id: dk_p.id, value: row[:dk]).first
+#    row[:so_s].each do |so_tmp|
+#      so_tmp = (["00","0"].include?(so_tmp) ? so_tmp : so_tmp.rjust(2, '0'))
+#
+#      chu_pv = Erp::Products::PropertiesValue.where(property_id: chu_p.id, value: code_tmp).first
+#      so_pv = Erp::Products::PropertiesValue.where(property_id: so_p.id, value: so_tmp).first
+#
+#      puts "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}"
+#
+#      product = Erp::Products::Product.create(
+#        code: "#{chu_pv.value}#{so_pv.value}",
+#        name: "#{chu_pv.value}#{so_pv.value}-#{dk_pv.value}-#{len_sp.name}",
+#        category_id: len_sp.id,
+#        brand_id: brand.id,
+#        creator_id: user.id,
+#        unit_id: unit_cai.id,
+#        price: nil, # rand(5..100)*10000
+#      )
+#      Erp::Products::ProductsValue.create(
+#        product_id: product.id,
+#        properties_value_id: chu_pv.id
+#      )
+#      Erp::Products::ProductsValue.create(
+#        product_id: product.id,
+#        properties_value_id: so_pv.id
+#      )
+#      Erp::Products::ProductsValue.create(
+#        product_id: product.id,
+#        properties_value_id: dk_pv.id
+#      )
+#
+#      Erp::Products::Product.find(product.id).update_cache_properties
+#    end
+#  end
+#end
