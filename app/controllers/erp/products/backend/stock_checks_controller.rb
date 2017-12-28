@@ -16,7 +16,7 @@ module Erp
 
           render layout: nil
         end
-        
+
         # GET /stock check details
         def stock_check_details
           render layout: nil
@@ -41,7 +41,7 @@ module Erp
         def create
           @stock_check = StockCheck.new(stock_check_params)
           @stock_check.creator = current_user
-          @stock_check.set_draft
+          @stock_check.status = Erp::Products::StockCheck::STATUS_DONE
 
           if @stock_check.save
             if request.xhr?
