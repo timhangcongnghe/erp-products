@@ -11,7 +11,7 @@ module Erp
 
         # POST /categories/list
         def list
-          @categories = Category.search(params).paginate(:page => params[:page], :per_page => 10)
+          @categories = Category.search(params).paginate(:page => params[:page], :per_page => 50)
 
           render layout: nil
         end
