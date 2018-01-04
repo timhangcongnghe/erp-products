@@ -622,6 +622,9 @@ module Erp::Products
 			# stock check
 			stock += Product.get_stock_check_import(params.merge({product_id: self.id})) - Product.get_stock_check_export(params.merge({product_id: self.id}))
 
+			# state check
+			stock += Product.get_state_check_import(params.merge({product_id: self.id})) - Product.get_state_check_export(params.merge({product_id: self.id}))
+
 			# gift given
 			stock -= Product.get_gift_given_export(params.merge({product_id: self.id}))
 
@@ -700,6 +703,9 @@ module Erp::Products
 			# stock check
 			stock += Product.get_stock_check_import(params) - Product.get_stock_check_export(params)
 
+			# state check
+			stock += Product.get_state_check_import(params) - Product.get_state_check_export(params)
+
 			# gift given
 			stock -= Product.get_gift_given_export(params)
 
@@ -738,6 +744,9 @@ module Erp::Products
 
 			# stock check
 			stock += Product.get_stock_check_import(params) - Product.get_stock_check_export(params)
+
+			# state check
+			stock += Product.get_state_check_import(params) - Product.get_state_check_export(params)
 
 			# gift given
 			stock -= Product.get_gift_given_export(params)
