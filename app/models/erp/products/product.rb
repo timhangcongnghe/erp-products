@@ -313,8 +313,8 @@ module Erp::Products
 				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
 
 				# warehouse id
-				query = query.where(erp_products_stock_checks: {warehouse_id: params[:warehouse].id}) if params[:warehouse].present?
-				query = query.where(erp_products_stock_checks: {warehouse_id: params[:warehouse_ids]}) if params[:warehouse_ids].present?
+				query = query.where(erp_products_state_checks: {warehouse_id: params[:warehouse].id}) if params[:warehouse].present?
+				query = query.where(erp_products_state_checks: {warehouse_id: params[:warehouse_ids]}) if params[:warehouse_ids].present?
 
 				return query
       end
