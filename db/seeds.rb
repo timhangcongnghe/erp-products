@@ -1,11 +1,5 @@
 user = Erp::User.first
 
-# State
-Erp::Products::State.destroy_all
-Erp::Products::State.create(name: "Mới", status: Erp::Products::State::STATE_STATUS_ACTIVE, creator_id: user.id)
-Erp::Products::State.create(name: "Xước", status: Erp::Products::State::STATE_STATUS_ACTIVE, creator_id: user.id)
-Erp::Products::State.create(name: "Vỡ", status: Erp::Products::State::STATE_STATUS_ACTIVE, creator_id: user.id)
-
 # Unit
 Erp::Products::Unit.destroy_all
 unit_cai = Erp::Products::Unit.create(name: "Cái", creator_id: user.id)
@@ -53,7 +47,51 @@ len_cats = Erp::Products::Category.where(parent_id: [len_soft_parent.id, len_har
 Erp::Products::Brand.where(name: "Ortho-K").destroy_all
 brand = Erp::Products::Brand.create(name: "Ortho-K", creator_id: user.id)
 
+# State
+Erp::Products::State.destroy_all
+states = ['Mới', 'Xước', 'Vỡ', 'Sau 1 năm']
+states.each do |st|
+  Erp::Products::State.create(name: st, creator_id: user.id, status: Erp::Products::State::STATE_STATUS_ACTIVE)
+end
 
+# Property Group
+Erp::Products::PropertyGroup.destroy_all
+len_pg = Erp::Products::PropertyGroup.create(
+  creator_id: user.id,
+  name: "Len"
+)
+
+# CategoriesPgroup
+Erp::Products::CategoriesPgroup.destroy_all
+len_cats.each do |len_cat|
+  len_cpg = Erp::Products::CategoriesPgroup.create(
+    category_id: len_cat.id,
+    property_group_id: len_pg.id
+  )
+end
+
+# Property
+Erp::Products::Property.destroy_all
+so_p = len_pg.properties.create(
+  name: 'Số',
+  creator_id: user.id
+)
+dok_p = len_pg.properties.create(
+  name: 'Độ K',
+  creator_id: user.id
+)
+chu_p = len_pg.properties.create(
+  name: 'Chữ',
+  creator_id: user.id
+)
+do_p = len_pg.properties.create(
+  name: 'Độ',
+  creator_id: user.id
+)
+dk_p = len_pg.properties.create(
+  name: 'Đường kính',
+  creator_id: user.id
+)
 
 
 
@@ -61,6 +99,20 @@ brand = Erp::Products::Brand.create(name: "Ortho-K", creator_id: user.id)
 
 
 ######################### OTHER PRODUCTS #########################################
+unit_cai = Erp::Products::Unit.where(name: "Cái").first
+unit_bo = Erp::Products::Unit.where(name: "Bộ").first
+unit_chai = Erp::Products::Unit.where(name: "Chai").first
+unit_hop = Erp::Products::Unit.where(name: "Hộp").first
+unit_tuyp = Erp::Products::Unit.where(name: "Tuýp").first
+unit_lo = Erp::Products::Unit.where(name: "Lọ").first
+unit_cay = Erp::Products::Unit.where(name: "Cây").first
+
+dd_cat = Erp::Products::Category.where(name: "Dung dịch").first
+bb_cat = Erp::Products::Category.where(name: "Bao bì").first
+remover_cat = Erp::Products::Category.where(name: "Len remover").first
+other_cat = Erp::Products::Category.where(name: "Sản phẩm khác").first
+len_set = Erp::Products::Category.where(name: "Bộ sét").first
+
 # arrays
 arr_tmp = [
   {name: "Avizor 15mm (Lacrifresh comfort)", unit_id: unit_chai.id, category_id: dd_cat.id},
@@ -132,55 +184,6 @@ end
 
 
 
-
-
-
-
-# State
-Erp::Products::State.destroy_all
-states = ['Mới', 'Xước', 'Vỡ', 'Sau 1 năm']
-states.each do |st|
-  Erp::Products::State.create(name: st, creator_id: user.id)
-end
-
-# Property Group
-Erp::Products::PropertyGroup.destroy_all
-len_pg = Erp::Products::PropertyGroup.create(
-  creator_id: user.id,
-  name: "Len"
-)
-
-# CategoriesPgroup
-Erp::Products::CategoriesPgroup.destroy_all
-len_cats.each do |len_cat|
-  len_cpg = Erp::Products::CategoriesPgroup.create(
-    category_id: len_cat.id,
-    property_group_id: len_pg.id
-  )
-end
-
-# Property
-Erp::Products::Property.destroy_all
-so_p = len_pg.properties.create(
-  name: 'Số',
-  creator_id: user.id
-)
-dok_p = len_pg.properties.create(
-  name: 'Độ K',
-  creator_id: user.id
-)
-chu_p = len_pg.properties.create(
-  name: 'Chữ',
-  creator_id: user.id
-)
-do_p = len_pg.properties.create(
-  name: 'Độ',
-  creator_id: user.id
-)
-dk_p = len_pg.properties.create(
-  name: 'Đường kính',
-  creator_id: user.id
-)
 
 # Property Value
 Erp::Products::PropertiesValue.destroy_all
