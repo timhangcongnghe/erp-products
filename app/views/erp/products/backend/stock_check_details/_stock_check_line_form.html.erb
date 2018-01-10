@@ -4,17 +4,23 @@
 <input type="hidden" name="uids[<%= uid %>]" value="<%= uid %>" />
 <td><%= stock_check_detail.product_name %></td>
 <td width='10%'>
-
-    <div class="ajax-box"
-        data-url="<%= erp_products.ajax_stock_col_backend_stock_checks_path %>"
-        data-control="
-            [name='stock_check[warehouse_id]'],
-            [name='stock_check[stock_check_details_attributes][<%= uid %>][product_id]'],
-            [name='stock_check[stock_check_details_attributes][<%= uid %>][state_id]'],
-            [name='uids[<%= uid %>]']
-        "
-    >
-    </div>
+    <% if stock_check_detail.id.nil? %>
+        <div class="ajax-box"
+            data-url="<%= erp_products.ajax_stock_col_backend_stock_checks_path %>"
+            data-control="
+                [name='stock_check[warehouse_id]'],
+                [name='stock_check[stock_check_details_attributes][<%= uid %>][product_id]'],
+                [name='stock_check[stock_check_details_attributes][<%= uid %>][state_id]'],
+                [name='uids[<%= uid %>]']
+            "
+        >
+        </div>
+    <% else %>
+        <input type="hidden" class="line_stock_qty"
+            value="<%= stock_check_detail.stock %>"
+            name="stock_check[stock_check_details_attributes][<%= uid %>][stock]" />
+        <strong><%= stock_check_detail.stock %></strong>
+    <% end %>
 </td>
 <td width='10%'>
     <%= erp_form_control("number", {
