@@ -94,6 +94,9 @@ dk_p = len_pg.properties.create(
 )
 
 
+# products
+Erp::Products::Product.all.destroy_all
+Erp::Products::ProductsValue.destroy_all
 
 
 
@@ -319,9 +322,6 @@ dk_pvs = [
   )
 ]
 
-# products
-Erp::Products::Product.all.destroy_all
-Erp::Products::ProductsValue.destroy_all
 
 def create_product(user, brand, letter, number, dk_pv, len_cat, chu_pv, do_pv, so_pv, dok_pv, unit_cai, is_outside=false)
   product = Erp::Products::Product.create(
