@@ -152,9 +152,5 @@ module Erp::Products
     def self.get_active
 			self.where(status: self::STATE_STATUS_ACTIVE)
 		end
-
-    def self.get_new_state
-			self.first
-		end
   end
 end

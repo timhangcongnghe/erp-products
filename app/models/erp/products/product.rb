@@ -57,6 +57,8 @@ module Erp::Products
     has_many :products_parts, dependent: :destroy
     accepts_nested_attributes_for :products_parts, :reject_if => lambda { |a| a[:part_id].blank? }, :allow_destroy => true
 
+    has_many :parts, through: :products_parts
+
     has_many :products_gifts, dependent: :destroy
     accepts_nested_attributes_for :products_gifts, :reject_if => lambda { |a| a[:gift_id].blank? }, :allow_destroy => true
 
@@ -989,6 +991,11 @@ module Erp::Products
 					query = query.where('LOWER(erp_products_products.name) LIKE ?', '%'+q+'%')
 				end
 			end
+      
+      # has part
+      if params[:has_parts].present? and params[:has_parts] == 'true'
+        query = query.joins(:products_parts).where("erp_products_products_parts.id IS NOT NULL")
+      end
 
 			if Erp::Core.available?("orders")
 				# product from order
@@ -1006,7 +1013,7 @@ module Erp::Products
 				end
 			end
 
-      query = query.order(:name).limit(80).map{|product| {value: product.id, text: product.name} }
+      query = query.distinct.order(:name).limit(80).map{|product| {value: product.id, text: product.name} }
     end
 
     # set archived
