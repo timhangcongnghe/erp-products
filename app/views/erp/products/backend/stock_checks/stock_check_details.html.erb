@@ -11,7 +11,10 @@
             <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.real') %></th>
             <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.quantity') %></th>
             <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.state') %></th>
-            <th width="25%" class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.note') %></th>
+            <% if Erp::Core.available?("ortho_k") %>
+                <th width="15%" class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= 'Số Lô/Sê-ri' %></th>
+            <% end %>
+            <th width="15%" class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.note') %></th>
         </tr>
     </thead>
     <tbody>
@@ -20,7 +23,11 @@
             <td class="bg-green-jungle bg-font-green-jungle text-center bold"><strong><%= format_number(@stock_check.total_stock) %></strong></td>
             <td class="bg-green-jungle bg-font-green-jungle text-center bold"><strong><%= format_number(@stock_check.total_real) %></strong></td>
             <td class="bg-green-jungle bg-font-green-jungle text-center bold"><strong><%= format_number(@stock_check.total_quantity) %></strong></td>
-            <td class="bg-green-jungle bg-font-green-jungle text-center" colspan="2"></td>
+            <td class="bg-green-jungle bg-font-green-jungle text-center"></td>
+            <% if Erp::Core.available?("ortho_k") %>
+                <td class="bg-green-jungle bg-font-green-jungle text-center"></td>
+            <% end %>
+            <td class="bg-green-jungle bg-font-green-jungle text-center"></td>
         </tr>
         <% @stock_check.stock_check_details.each do |stock_check_detail| %>
             <tr>
@@ -33,6 +40,7 @@
                 <td class="text-center"><%= format_number(stock_check_detail.real) %></td>
                 <td class="text-center"><%= format_number(stock_check_detail.quantity) %></td>
                 <td class="text-center"><%= stock_check_detail.state_name %></td>
+                <td class="text-left"><%= stock_check_detail.serials %></td>
                 <td class="text-left"><%= stock_check_detail.note %></td>
             </tr>
         <% end %>

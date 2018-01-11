@@ -30,6 +30,7 @@
             <th>#{t('.real_qty')}</th>
             <th>#{t('.quantity')}</th>
             <th>#{t('.state')}</th>
+            #{'<th>Số Lô/Sê-ri</th>' if Erp::Core.available?("ortho_k")}
             <th>#{t('.note')}</th>
             <th></th>"
 }) %>

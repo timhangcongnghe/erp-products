@@ -307,7 +307,7 @@ module Erp
           # Only allow a trusted parameter "white list" through.
           def stock_check_params
             params.fetch(:stock_check, {}).permit(:code, :adjustment_date, :warehouse_id, :description, :employee_id,
-                                            :stock_check_details_attributes => [ :id, :product_id, :stock_check_id, :quantity, :real, :stock, :state_id, :note, :_destroy ])
+              :stock_check_details_attributes => [ :id, :product_id, :stock_check_id, :quantity, :real, :stock, :state_id, :serials, :note, :_destroy ])
           end
       end
     end

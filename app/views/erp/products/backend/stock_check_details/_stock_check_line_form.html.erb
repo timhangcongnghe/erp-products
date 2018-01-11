@@ -36,7 +36,7 @@
         name="stock_check[stock_check_details_attributes][<%= uid %>][quantity]" />
     <span class="line_difference_qty"></span>
 </td>
-<td width='20%'>
+<td width='15%'>
     <%= erp_form_control("dataselect", {
         name: 'stock_check[stock_check_details_attributes][' + uid + '][state_id]',
         value: stock_check_detail.state_id,
@@ -47,7 +47,17 @@
         required: true
     }) %>
 </td>
-<td width='20%'>
+<% if Erp::Core.available?("ortho_k") %>
+    <td width='15%'>
+        <%= erp_form_control("textarea", {
+            name: 'stock_check[stock_check_details_attributes][' + uid + '][serials]',
+            value: stock_check_detail.serials,
+            text: stock_check_detail.serials,
+            rows: 1
+        }) %>
+    </td>
+<% end %>
+<td width='15%'>
     <%= erp_form_control("textarea", {
         name: 'stock_check[stock_check_details_attributes][' + uid + '][note]',
         value: stock_check_detail.note,
