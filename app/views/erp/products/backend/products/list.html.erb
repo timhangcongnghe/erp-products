@@ -95,10 +95,10 @@
                 <% end %>
                 <% if get_columns(params).include?("status") %>
                 <td>
-                    <% if product.archived == true %>
-                    <span class="label label-sm label-danger"><%= t('.archived') %></span>
+                    <% if product.archived? %>
+                    <span class="label label-sm label-archived"><%= t('.archived') %></span>
                     <% else %>
-                    <span class="label label-sm label-success"><%= t('.active') %></span>
+                    <span class="label label-sm label-unarchived"><%= t('.unarchived') %></span>
                     <% end %>
                 </td>
                 <% end %>
@@ -110,43 +110,10 @@
                     </td>
                 <% end %>
                 <% if get_columns(params).include?("created_at") %>
-                    <td><%= product.created_at.strftime("%d/%m/%Y") %></td>
+                    <td><%= format_date(product.created_at) %></td>
                 <% end %>
                 <td>
-                    <%= erp_datalist_row_actions(
-                        [
-                            {
-                                text: '<i class="fa fa-edit"></i> '+t('edit'),
-                                href: erp_products.edit_backend_product_path(product)
-                            },
-                            {
-                                text: '<i class="fa fa-ban"></i> '+t('archive'),
-                                url: erp_products.archive_backend_products_path(id: product),
-                                data_method: 'PUT',
-                                hide: product.archived,
-                                class: 'ajax-link',
-                                data_confirm: t('.archive_confirm')
-                            },
-                            {
-                                text: '<i class="fa fa-check"></i> '+t('unarchive'),
-                                url: erp_products.unarchive_backend_products_path(id: product),
-                                data_method: 'PUT',
-                                hide: !product.archived,
-                                class: 'ajax-link',
-                                data_confirm: t('.unarchive_confirm')
-                            },
-                            {
-                                divider: true
-                            },
-                            {
-                                text: '<i class="fa fa-trash"></i> '+t('.delete'),
-                                url: erp_products.backend_product_path(product),
-                                data_method: 'DELETE',
-                                class: 'ajax-link',
-                                data_confirm: t('.delete_confirm')
-                            }
-                        ]
-                    ) %>
+                    <%= product_dropdown_actions(product) %>
                 </td>
             </tr>
         <% end %>

@@ -26,8 +26,8 @@
                     </td>
                     <td class="text-center font-yellow-gold"><%= t(".#{row[:record_type]}") if !row[:record_type].nil? %></td>
                     <td width="15%" class="text-left"><%= @product.name %></td>
-                    <td class="text-center font-green-seagreen"><%= format_number(row[:qty_import]) %></td>
-                    <td class="text-center font-green-seagreen"><%= format_number(row[:qty_export]) %></td>
+                    <td class="text-center font-green-seagreen"><%= row[:qty_import].nil? ? '' : format_number(row[:qty_import].abs) %></td>
+                    <td class="text-center font-green-seagreen"><%= row[:qty_export].nil? ? '' : format_number(row[:qty_export].abs) %></td>
                     <td class="text-justify"><%= row[:note] %></td>
                 </tr>
             <% end %>
