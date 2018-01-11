@@ -120,6 +120,9 @@
                         <li>
                             <a href="#tab_5_3" data-toggle="tab"> <%= t('.products_units') %> </a>
                         </li>
+                        <li>
+                            <a href="#tab_5_4" data-toggle="tab"> <%= t('.parts') %> </a>
+                        </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_5_1">
@@ -229,6 +232,42 @@
                                 partial_url: erp_products.form_line_backend_products_units_path,
                                 items: @product.products_units,
                                 item: :products_unit
+                            }) %>
+                        </div>
+                        <div class="tab-pane addableform-table" id="tab_5_4">
+                            <%= erp_form_control("addableform", {
+                                type: 'table',
+                                add_button: t('.add_part'),
+                                partial: 'erp/products/backend/products_parts/part_form',
+                                partial_url: erp_products.part_form_backend_products_parts_path,
+                                items: @product.products_parts,
+                                item: :products_part,
+                                add_control_selector: "input[name='product_id']",
+                                add_control: erp_form_control("dataselect", {
+                                    name: 'product_id',
+                                    value: product.id,
+                                    placeholder: t('.choose_product_part'),
+                                    label: t('.product_part'),
+                                    help: t('.help_product_part'),
+                                    url: erp_products.dataselect_backend_products_path(format: 'json'),
+                                    create: {
+                                        url: erp_products.new_backend_product_path,
+                                        title: t('.create_product_part'),
+                                        container_selector: '.new_product',
+                                        input_selector: 'input[name="product[name]"]'
+                                    },
+                                    edit: {
+                                        url: erp_products.edit_backend_product_path(id: ':value'),
+                                        title: t('.edit_product_part'),
+                                        container_selector: '.edit_product',
+                                    }
+                                }),
+                                thead: "<th>#{t('.part_code')}</th>
+                                        <th>#{t('.part_name')}</th>
+                                        <th>#{t('.quantity')}</th>
+                                        <th>#{t('.cost')}</th>
+                                        <th>#{t('.total')}</th>
+                                        <th>#{t('.action')}</th>"
                             }) %>
                         </div>
                     </div>

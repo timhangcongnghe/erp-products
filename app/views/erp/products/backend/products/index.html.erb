@@ -13,6 +13,22 @@
         class: 'btn-noborder'
     }) %>
     <% if Erp::Core.available?("ortho_k") %>
+        <%=
+            actions = []
+            actions << {
+                text: '<i class="fa fa-compress"></i> ' + t(".combine"),
+                url: erp_products.combine_backend_products_path
+            }
+            actions << {
+                text: '<i class="fa fa-expand"></i> ' + t('.split'),
+                url: erp_products.split_backend_products_path
+            }
+            erp_component('button/actions', {
+            actions: actions,
+            text: t('.combine_split'),
+            class: 'btn-noborder',
+            icon: 'fa fa-clone'
+        }) %>
         <%= erp_component('button/primary', {
             text: '<i class="glyphicon glyphicon-import"></i> Nhập từ excel'.html_safe,
             href: erp_ortho_k.import_backend_products_path,

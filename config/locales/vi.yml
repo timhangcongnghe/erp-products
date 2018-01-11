@@ -238,6 +238,10 @@ vi:
             success: "Sản phẩm đã được thêm vào danh sách lựa chọn hàng đầu."
           uncheck_is_top_business_choices_all:
             success: "Sản phẩm đã hủy khỏi danh sách lựa chọn hàng đầu."
+          do_split:
+            success: "Sản phẩm đã được tách thành công."
+          do_combine:
+            success: "Sản phẩm đã được ghép thành công."
           index:
             seo_success: "Đã SEO với"
             archived: "Đã ẩn"
@@ -285,9 +289,11 @@ vi:
             uncheck_is_top_business_choices: "Hủy khỏi 'lựa chọn hàng đầu'"
             check_is_top_business_choices_confirm: "Bạn muốn thêm sản phẩm vào danh sách lựa chọn hàng đầu?"
             uncheck_is_top_business_choices_confirm: "Bạn muốn hủy sản phẩm khỏi danh sách lựa chọn hàng đầu?"
-            is_top_business_choices: "Sản phẩm lựa chọn hàng đầu"            
+            is_top_business_choices: "Sản phẩm lựa chọn hàng đầu"
           list:
             active: "Đang hiển thị"
+            archived: "Ẩn khỏi d.sách"
+            unarchived: "Đang sử dụng"
             delete_confirm: "Bạn có chắc muốn xóa?"
             delete: "Xóa sản phẩm"
             name: "Tên sản phẩm"
@@ -332,6 +338,8 @@ vi:
             uncheck_is_top_business_choices: "Hủy khỏi 'lựa chọn hàng đầu'"
             check_is_top_business_choices_confirm: "Bạn muốn thêm sản phẩm vào danh sách lựa chọn hàng đầu?"
             uncheck_is_top_business_choices_confirm: "Bạn muốn hủy sản phẩm khỏi danh sách lựa chọn hàng đầu?"
+            combine: "Ghép thành phần"
+            split: "Tách thành phần"
           new:
             products: "Tất cả sản phẩm"
             create: "Thêm sản phẩm"
@@ -493,6 +501,10 @@ vi:
             stock: "Tồn kho"
             images: "Hình ảnh"
             import_export_warehouse: "Lịch sử XNK"
+          combine:
+            products: "Danh sách sản phẩm"
+          split:
+            products: "Danh sách sản phẩm"
         manufacturings:
           create:
             success: "Thêm phiếu sản xuất thành công."
