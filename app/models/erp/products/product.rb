@@ -257,8 +257,8 @@ module Erp::Products
 				end
 
         # from date
-        query = query.where("erp_products_stock_checks.created_at >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
-        query = query.where("erp_products_stock_checks.created_at <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
+        query = query.where("erp_products_stock_checks.adjustment_date >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
+        query = query.where("erp_products_stock_checks.adjustment_date <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
 
 				# state ids
 				query = query.where(state_id: params[:state].id) if params[:state].present?
