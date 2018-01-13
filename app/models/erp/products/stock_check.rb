@@ -223,5 +223,38 @@ module Erp::Products
 		def total_quantity
       stock_check_details.sum(:quantity)
     end
+		
+		# get stock check details
+		def get_check_details(params={})
+      query = self.stock_check_details.joins(:product)
+      
+      if params[:category_id].present?
+        query = query.where(erp_products_products: {category_id: params[:category_id]})
+      end
+      
+      if params[:categories].present?
+        query = query.where(erp_products_products: {category_id: params[:categories]})
+      end
+      
+      # filter by properties
+      [params[:diameters],params[:letters],params[:numbers]].each do |ids|
+        if ids.present?
+          if !ids.kind_of?(Array)
+            query = query.where("erp_products_products.cache_properties LIKE '%[\"#{ids}\",%'")
+          else
+            ids = (ids.reject { |c| c.empty? })
+            if !ids.empty?
+              qs = []
+              ids.each do |x|
+                qs << "(erp_products_products.cache_properties LIKE '%[\"#{x}\",%')"
+              end
+              query = query.where("(#{qs.join(" OR ")})")
+            end
+          end
+        end
+      end
+        
+      return query
+    end
   end
 end

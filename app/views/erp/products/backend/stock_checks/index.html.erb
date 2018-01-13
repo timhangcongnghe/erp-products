@@ -80,6 +80,14 @@
         }
     ],
     actions: actions,
+    filters: [
+        {
+            text: t('.done'), name: 'erp_products_stock_checks.status', value: Erp::Products::StockCheck::STATUS_DONE, checked: true
+        },
+        {
+            text: t('.deleted'), name: 'erp_products_stock_checks.status', value: Erp::Products::StockCheck::STATUS_DELETED, checked: false
+        }
+    ],
     columns: [
         {
             text: t('.code'), name: 'code', value: true, checked: true
@@ -100,5 +108,5 @@
             text: t('created_at'), name: 'created_at', value: true, checked: true
         }
     ],
-    sort: { sort_by: 'erp_products_stock_checks.created_at', sort_direction: 'desc' }
+    sort: { sort_by: 'erp_products_stock_checks.adjustment_date', sort_direction: 'desc' }
 ) %>    

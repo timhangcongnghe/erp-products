@@ -1,7 +1,7 @@
 <% if params.to_unsafe_hash[:more_filter][:from_date].present? ||
       params.to_unsafe_hash[:more_filter][:to_date].present? %>
     
-    <table class="table table-bordered order-column">
+    <table class="table table-bordered order-column mt-10">
         <thead class="flip-content">
             <tr>
                 <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap">Ngày XNK</th>
@@ -37,5 +37,5 @@
         </tbody>
     </table>
 <% else %>
-    <div class="alert alert-warning text-left"><%= t('.please_select_filter') %></div>
+    <div class="alert alert-warning text-left no-margin mt-10"><%= t('.please_select_filter') %></div>
 <% end %>

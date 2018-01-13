@@ -3,7 +3,7 @@ module Erp
     module Backend
       class StockChecksController < Erp::Backend::BackendController
         before_action :set_stock_check, only: [:stock_check_details, :set_draft, :set_done, :set_deleted,
-                                               :archive, :unarchive, :show, :edit, :update]
+                                               :table_stock_check_details, :archive, :unarchive, :show, :edit, :update]
         before_action :set_stock_checks, only: [:delete_all, :archive_all, :unarchive_all]
 
         # GET /stock_checks
@@ -12,13 +12,22 @@ module Erp
 
         # POST /stock_checks/list
         def list
-          @stock_checks = StockCheck.search(params).paginate(:page => params[:page], :per_page => 3)
+          @stock_checks = StockCheck.search(params).paginate(:page => params[:page], :per_page => 10)
 
           render layout: nil
         end
 
         # GET /stock check details
         def stock_check_details
+          render layout: nil
+        end
+
+        # GET /stock check details
+        def table_stock_check_details
+          filters = params.to_unsafe_hash[:more_filter]
+          
+          @stock_check_details = @stock_check.get_check_details(filters).paginate(:page => params[:page], :per_page => 20)
+          
           render layout: nil
         end
 

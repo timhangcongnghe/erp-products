@@ -1,48 +1,56 @@
-
-<table class="table table-bordered table-striped flip-content">
-    <thead class="flip-content">
-        <tr>
-            <% if !Erp::Core.available?('ortho_k') %>
-                <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.product_code') %></th>
-            <% end %>
-            <th width="25%" class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.product_name') %></th>
-            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.unit') %></th>
-            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.stock') %></th>
-            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.real') %></th>
-            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.quantity') %></th>
-            <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.state') %></th>
-            <% if Erp::Core.available?("ortho_k") %>
-                <th width="15%" class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= 'Số Lô/Sê-ri' %></th>
-            <% end %>
-            <th width="15%" class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.note') %></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="bg-green-jungle bg-font-green-jungle text-center uppercase bold" colspan="2"><strong><%= t('.total_all') %></strong></td>
-            <td class="bg-green-jungle bg-font-green-jungle text-center bold"><strong><%= format_number(@stock_check.total_stock) %></strong></td>
-            <td class="bg-green-jungle bg-font-green-jungle text-center bold"><strong><%= format_number(@stock_check.total_real) %></strong></td>
-            <td class="bg-green-jungle bg-font-green-jungle text-center bold"><strong><%= format_number(@stock_check.total_quantity) %></strong></td>
-            <td class="bg-green-jungle bg-font-green-jungle text-center"></td>
-            <% if Erp::Core.available?("ortho_k") %>
-                <td class="bg-green-jungle bg-font-green-jungle text-center"></td>
-            <% end %>
-            <td class="bg-green-jungle bg-font-green-jungle text-center"></td>
-        </tr>
-        <% @stock_check.stock_check_details.each do |stock_check_detail| %>
-            <tr>
-                <% if !Erp::Core.available?('ortho_k') %>
-                    <td class="text-left bold"><%= stock_check_detail.product_code %></td>
-                <% end %>
-                <td class="text-left bold"><%= backend_product_link(stock_check_detail.product) %></td>
-                <td class="text-center"><%= stock_check_detail.product_unit %></td>
-                <td class="text-center"><%= format_number(stock_check_detail.stock) %></td>
-                <td class="text-center"><%= format_number(stock_check_detail.real) %></td>
-                <td class="text-center"><%= format_number(stock_check_detail.quantity) %></td>
-                <td class="text-center"><%= stock_check_detail.state_name %></td>
-                <td class="text-left"><%= stock_check_detail.serials %></td>
-                <td class="text-left"><%= stock_check_detail.note %></td>
-            </tr>
+<form class="more-filter">
+    <div class="row">
+        <div class="col-md-3 text-left">
+           <%= erp_form_control("dataselect", {
+                name: 'categories',
+                value: '',
+                text: '',
+                label: 'Loại hàng',
+                placeholder: 'Chọn loại hàng',
+                url: erp_products.dataselect_backend_categories_path(format: 'json'),
+                multiple: true
+            }) %>
+        </div>
+        <% if Erp::Core.available?('ortho_k') %>
+            <div class="col-md-3 text-left">
+                <% diameter = Erp::Products::Property.where(name: "Đường kính").first %>
+                <%= erp_form_control("dataselect", {
+                    name: 'diameters',
+                    value: '',
+                    text: '',
+                    label: 'Đường kính',
+                    placeholder: 'Chọn đường kính',
+                    url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: diameter.id),
+                    multiple: true
+                }) %>
+            </div>
+            <div class="col-md-3 text-left">
+                <% letter = Erp::Products::Property.where(name: "Chữ").first %>
+                <%= erp_form_control("dataselect", {
+                    name: 'letters',
+                    value: '',
+                    text: '',
+                    label: 'Chữ',
+                    placeholder: letter.name,
+                    url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: letter.id),
+                    multiple: true
+                }) %>
+            </div>
+            <div class="col-md-3 text-left">
+                <% number = Erp::Products::Property.where(name: "Số").first %>
+                <%= erp_form_control("dataselect", {
+                    name: 'numbers',
+                    value: '',
+                    text: '',
+                    label: 'Số',
+                    placeholder: number.name,
+                    url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: number.id),
+                    multiple: true
+                }) %>
+            </div>
         <% end %>
-    </tbody>
-</table>
+    </div>
+</form>
+<%= erp_datalist(
+    url: erp_products.table_stock_check_details_backend_stock_checks_path(id: @stock_check.id)
+) %>

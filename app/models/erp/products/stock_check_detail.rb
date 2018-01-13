@@ -27,5 +27,20 @@ module Erp::Products
     def state_name
       state.nil? ? '' : state.name
     end
+    
+		# total stock
+		def self.total_stock
+      self.sum(:stock)
+    end
+    
+		# total real
+		def self.total_real
+      self.sum(:real)
+    end
+    
+		# total quantity
+		def self.total_quantity
+      self.sum(:quantity)
+    end
   end
 end

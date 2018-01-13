@@ -10,7 +10,7 @@
                 </th>
             <% end %>
             <% if get_columns(params).include?("adjustment_date") %>
-                <th>
+                <th class="sortable" sort-by='erp_products_stock_checks.adjustment_date'>
                     <%= t('.adjustment_date') %>
                 </th>
             <% end %>

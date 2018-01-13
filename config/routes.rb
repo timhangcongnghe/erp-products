@@ -231,6 +231,7 @@ Erp::Products::Engine.routes.draw do
           get 'ajax_stock_col'
 
           get 'form_check_details'
+          post 'table_stock_check_details'
         end
       end
       resources :stock_check_details do

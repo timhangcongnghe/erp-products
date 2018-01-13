@@ -996,7 +996,7 @@ vi:
           set_draft:
             success: "Phiếu kiểm kho đã được lưu tạm thành công"
           set_done:
-            success: "Phiếu kiểm kho đã được duyệt thành công"
+            success: "Phiếu kiểm kho đã được xác nhận thành công"
           set_deleted:
             success: "Phiếu kiểm kho đã được hủy thành công"
           index:
@@ -1007,6 +1007,8 @@ vi:
             warehouse: "Kho"
             employee: "NV phụ trách"
             description: "Mô tả"
+            done: "Đã xác nhận"
+            deleted: "Đã bị hủy"
           list:
             code: "Mã phiếu"
             adjustment_date: "Ngày kiểm kho"
@@ -1015,9 +1017,9 @@ vi:
             description: "Mô tả"
             status: "Trạng thái"
             draft: "Phiếu tạm"
-            done: "Hoàn thành"
-            deleted: "Đã bị xóa"
-            delete: "Xóa phiếu"
+            done: "Xác nhận"
+            deleted: "Đã bị hủy"
+            delete: "Hủy phiếu"
             no_matching_records_found: "Danh sách phiếu kiểm kho hiện tại đang trống."
           new:
             stock_checks: "Phiếu kiểm kho"
@@ -1026,8 +1028,8 @@ vi:
             stock_checks: "Phiếu kiểm kho"
             create: "Thêm phiếu kiểm kho"
           form:
-            code: "Mã phiếu kiểm kho"
-            help_code: "Mã phiếu kiểm kho sẽ tự động tạo mặc định nếu nội dung này bị để trống."
+            code: "Mã kiểm kho"
+            help_code: "Mã phiếu sẽ tự động tạo mặc định nếu bạn để trống."
             adjustment_date: "Ngày cân bằng"
             warehouse: "Kho hàng"
             status: "Trạng thái"
@@ -1054,6 +1056,8 @@ vi:
             state: "Tình trạng"
             note: "Ghi chú"
           stock_check_details:
+            categories: "Loại hàng"
+          table_stock_check_details:
             product_code: "Mã sản phẩm"
             product_name: "Tên sản phẩm"
             unit: "ĐVT"
