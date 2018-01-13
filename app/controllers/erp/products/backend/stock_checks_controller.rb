@@ -12,7 +12,7 @@ module Erp
 
         # POST /stock_checks/list
         def list
-          @stock_checks = StockCheck.search(params).paginate(:page => params[:page], :per_page => 10)
+          @stock_checks = StockCheck.search(params).paginate(:page => params[:page], :per_page => 20)
 
           render layout: nil
         end
