@@ -849,8 +849,10 @@ module Erp::Products
         degree_k_ids = @global_filters[:degree_ks].present? ? @global_filters[:degree_ks] : nil
         @degree_ks = Erp::Products::PropertiesValue.where(id: degree_k_ids)
 
-        # warehouses
-        @warehouses = Erp::Warehouses::Warehouse.all
+        if Erp::Core.available?("warehouses")
+          # warehouses
+          @warehouses = Erp::Warehouses::Warehouse.all
+        end
 
 
         # product query
