@@ -993,7 +993,7 @@ module Erp::Products
 					query = query.where('LOWER(erp_products_products.name) LIKE ?', '%'+q+'%')
 				end
 			end
-      
+
       # has part
       if params[:has_parts].present? and params[:has_parts] == 'true'
         query = query.joins(:products_parts).where("erp_products_products_parts.id IS NOT NULL")
@@ -1015,7 +1015,19 @@ module Erp::Products
 				end
 			end
 
-      query = query.distinct.order(:name).limit(80).map{|product| {value: product.id, text: product.name} }
+      if Erp::Core.available?("ortho_k")
+        if params[:show_stock] == 'true'
+          query = query.distinct.order(:name).limit(80).map{|product| {value: product.id, text: product.name_with_stock} }
+        else
+          query = query.distinct.order(:name).limit(80).map{|product| {value: product.id, text: product.name} }
+        end
+      else
+        query = query.distinct.order(:name).limit(80).map{|product| {value: product.id, text: product.name} }
+      end
+    end
+
+    def name_with_stock
+      self.name + " (#{self.cache_stock})"
     end
 
     # set archived
