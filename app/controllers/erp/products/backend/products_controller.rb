@@ -70,6 +70,10 @@ module Erp
               @product.set_default_code
             end
 
+            if Erp::Core.available?('online_store')
+              @product.hkerp_set_cache_thcn_properties
+            end
+
             if request.xhr?
               render json: {
                 status: 'success',
@@ -101,6 +105,10 @@ module Erp
               @product.update_cache_properties
               @product.set_default_name
               @product.set_default_code
+            end
+
+            if Erp::Core.available?('online_store')
+              @product.hkerp_set_cache_thcn_properties
             end
 
             if request.xhr?
@@ -633,13 +641,13 @@ module Erp
 
         def product_details # @todo if qdeliveries available
         end
-        
+
         # Export excel file
         def xlsx
           @products = Product.search(params)
-          
+
           @categories = Erp::Products::Category.where(id: @products.select(:category_id))
-          
+
           respond_to do |format|
             format.xlsx {
               response.headers['Content-Disposition'] = 'attachment; filename="Danh sach san pham.xlsx"'
