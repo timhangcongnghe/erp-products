@@ -39,6 +39,7 @@ module Erp
         def create
           @state_check = StateCheck.new(state_check_params)
           @state_check.creator = current_user
+          @state_check.status = Erp::Products::StateCheck::STATE_CHECK_STATUS_ACTIVE
 
           if @state_check.save
             if request.xhr?

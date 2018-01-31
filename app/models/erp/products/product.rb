@@ -307,12 +307,12 @@ module Erp::Products
 				end
 
         # from date
-        query = query.where("erp_products_state_checks.created_at >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
-        query = query.where("erp_products_state_checks.created_at <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
+        query = query.where("erp_products_state_checks.check_date >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
+        query = query.where("erp_products_state_checks.check_date <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
 
-				# state ids
-				query = query.where(state_id: params[:state].id) if params[:state].present?
-				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
+				## state ids
+				#query = query.where(state_id: params[:state].id) if params[:state].present?
+				#query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
 
 				# warehouse id
 				query = query.where(erp_products_state_checks: {warehouse_id: params[:warehouse].id}) if params[:warehouse].present?
@@ -324,9 +324,13 @@ module Erp::Products
 			# @todo import
 			def self.get_state_check_import(params={})
 				stock = 0
+				
+				return 0 if !params[:state_id].present? and !params[:state_ids].present? and !params[:state].present?
 
 				query = self.get_state_check_query(params)
-				query = query.where(state_id: params[:state_id])
+				query = query.where(state_id: params[:state_id]) if params[:state_id].present?
+				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
+				query = query.where(state_id: params[:state].id) if params[:state].present?
 				stock = stock + query.sum("erp_products_state_check_details.quantity")
 
 				return stock
@@ -335,10 +339,14 @@ module Erp::Products
       # @todo import
 			def self.get_state_check_export(params={})
 				stock = 0
+				
+				return 0 if !params[:state_id].present? and !params[:state_ids].present?  and !params[:state].present?
 
 				query = self.get_state_check_query(params)
-				query = query.where(old_state_id: params[:state_id])
-				stock = stock - query.sum("erp_products_state_check_details.quantity")
+				query = query.where(old_state_id: params[:state_id]) if params[:state_id].present?
+				query = query.where(old_state_id: params[:state_ids]) if params[:state_ids].present?
+				query = query.where(old_state_id: params[:state].id) if params[:state].present?
+				stock = stock + query.sum("erp_products_state_check_details.quantity")
 
 				return stock
 			end

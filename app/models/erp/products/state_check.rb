@@ -11,6 +11,7 @@ module Erp::Products
     has_many :state_check_details, inverse_of: :state_check, dependent: :destroy
     accepts_nested_attributes_for :state_check_details, :reject_if => lambda { |a| a[:product_id].blank? || a[:state_id].blank? || a[:quantity].blank? || a[:quantity].to_i <= 0 }, :allow_destroy => true
     
+    after_save :update_product_cache_stock
     # update product cache stock
     def update_product_cache_stock
 			self.state_check_details.each do |scd|
