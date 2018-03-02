@@ -228,6 +228,11 @@ module Erp::Products
           query = self.get_transfer_query(params).where(erp_stock_transfers_transfers: {destination_warehouse_id: params[:warehouse_ids]})
           stock = stock + query.sum("erp_stock_transfers_transfer_details.quantity")
         end
+				
+				if params[:warehouse].present?
+          query = self.get_transfer_query(params).where(erp_stock_transfers_transfers: {destination_warehouse_id: params[:warehouse].id})
+          stock = stock + query.sum("erp_stock_transfers_transfer_details.quantity")
+        end
 
 				return stock
 			end
@@ -237,6 +242,11 @@ module Erp::Products
 
 				if params[:warehouse_ids].present?
           query = self.get_transfer_query(params).where(erp_stock_transfers_transfers: {source_warehouse_id: params[:warehouse_ids]})
+          stock = stock + query.sum("erp_stock_transfers_transfer_details.quantity")
+        end
+				
+				if params[:warehouse].present?
+          query = self.get_transfer_query(params).where(erp_stock_transfers_transfers: {source_warehouse_id: params[:warehouse].id})
           stock = stock + query.sum("erp_stock_transfers_transfer_details.quantity")
         end
 
