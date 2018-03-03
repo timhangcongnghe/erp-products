@@ -79,6 +79,12 @@ module Erp::Products
     def deal_price=(new_price)
       self[:deal_price] = new_price.to_s.gsub(/\,/, '')
     end
+    def name=(string)
+      self[:name] = string.strip
+    end
+    def code=(string)
+      self[:code] = string.strip
+    end
 
     if Erp::Core.available?("qdeliveries")
       has_many :delivery_details, class_name: 'Erp::Qdeliveries::DeliveryDetail', dependent: :destroy
@@ -334,7 +340,7 @@ module Erp::Products
 			# @todo import
 			def self.get_state_check_import(params={})
 				stock = 0
-				
+
 				return 0 if !params[:state_id].present? and !params[:state_ids].present? and !params[:state].present?
 
 				query = self.get_state_check_query(params)
@@ -349,7 +355,7 @@ module Erp::Products
       # @todo import
 			def self.get_state_check_export(params={})
 				stock = 0
-				
+
 				return 0 if !params[:state_id].present? and !params[:state_ids].present?  and !params[:state].present?
 
 				query = self.get_state_check_query(params)
