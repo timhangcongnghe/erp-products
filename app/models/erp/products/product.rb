@@ -234,7 +234,7 @@ module Erp::Products
           query = self.get_transfer_query(params).where(erp_stock_transfers_transfers: {destination_warehouse_id: params[:warehouse_ids]})
           stock = stock + query.sum("erp_stock_transfers_transfer_details.quantity")
         end
-				
+
 				if params[:warehouse].present?
           query = self.get_transfer_query(params).where(erp_stock_transfers_transfers: {destination_warehouse_id: params[:warehouse].id})
           stock = stock + query.sum("erp_stock_transfers_transfer_details.quantity")
@@ -250,7 +250,7 @@ module Erp::Products
           query = self.get_transfer_query(params).where(erp_stock_transfers_transfers: {source_warehouse_id: params[:warehouse_ids]})
           stock = stock + query.sum("erp_stock_transfers_transfer_details.quantity")
         end
-				
+
 				if params[:warehouse].present?
           query = self.get_transfer_query(params).where(erp_stock_transfers_transfers: {source_warehouse_id: params[:warehouse].id})
           stock = stock + query.sum("erp_stock_transfers_transfer_details.quantity")
@@ -974,7 +974,8 @@ module Erp::Products
 				keyword.split(' ').each do |q|
 					q = q.strip
 					# query = query.where('LOWER(erp_products_products.cache_search) LIKE ?', '%'+q+'%')
-					query = query.where('LOWER(erp_products_products.name) LIKE ? OR LOWER(erp_products_products.name) LIKE ? OR LOWER(erp_products_products.name) LIKE ?', q+'%', ' '+q+'%', '%-'+q+'%')
+					# query = query.where('LOWER(erp_products_products.name) LIKE ? OR LOWER(erp_products_products.name) LIKE ? OR LOWER(erp_products_products.name) LIKE ?', q+'%', ' '+q+'%', '%-'+q+'%')
+					query = query.where('LOWER(erp_products_products.cache_search) LIKE ? OR LOWER(erp_products_products.cache_search) LIKE ? OR LOWER(erp_products_products.cache_search) LIKE ?', q+'%', '% '+q+'%', '%-'+q+'%')
 				end
 			end
 
