@@ -237,6 +237,8 @@ Erp::Products::Engine.routes.draw do
       resources :stock_check_details do
 				collection do
           get 'stock_check_line_form'
+          post 'inline_update'
+          delete 'delete'
 				end
 			end
       resources :brands do

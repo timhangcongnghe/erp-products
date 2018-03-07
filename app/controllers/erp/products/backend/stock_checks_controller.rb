@@ -25,9 +25,10 @@ module Erp
         # GET /stock check details
         def table_stock_check_details
           filters = params.to_unsafe_hash[:more_filter]
-          
-          @stock_check_details = @stock_check.get_check_details(filters).paginate(:page => params[:page], :per_page => 20)
-          
+
+          @stock_check_details_all = @stock_check.get_check_details(filters)
+          @stock_check_details = @stock_check.get_check_details(filters).order('created_at').paginate(:page => params[:page], :per_page => 20)
+
           render layout: nil
         end
 
