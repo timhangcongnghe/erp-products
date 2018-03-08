@@ -1009,7 +1009,7 @@ module Erp::Products
 
     # data for dataselect ajax
     def self.dataselect(keyword='', params={})
-      query = self.all
+      query = self.where(archived: false)
 
       # single keyword
       if keyword.present?
@@ -1536,7 +1536,7 @@ module Erp::Products
 
 		# data for dataselect ajax
     def self.dataselect_code(params={})
-      query = self.all
+      query = self.where()
 
       if params[:keyword].present?
         keyword = params[:keyword].strip.downcase
