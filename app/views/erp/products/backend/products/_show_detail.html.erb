@@ -70,14 +70,35 @@
                                 Thông tin giao dịch
                             </h5>
                             <hr class="mt-10">
-                            <p class="mb-5 text-left">
-                                <label class="bold">Giá vốn:</label>
-                                <span><%= format_number(product.cost) %></span>
-                            </p>
-                            <p class="no-margin mb-5 text-left">
-                                <label class="bold">Giá bán:</label>
-                                <span><%= format_number(product.price) %></span>
-                            </p>
+                            <% if Erp::Core.available?("ortho_k") %>
+                                <% if Erp::Core.available?("prices") %>
+                                    <p class="mb-5 text-left">
+                                        <label class="bold">Giá vốn:</label>
+                                        <span style="margin-top: -10px;">
+                                            <% product.get_related_purchase_prices_rows(contact_id: -1).each do |p_row| %>
+                                                <span style='display: block; padding-left: 40px'><%= p_row[:min_max] %>: <%= format_price(p_row[:price]) %></span>
+                                            <% end %>
+                                        </span>
+                                    </p>
+                                    <p class="no-margin mb-5 text-left">
+                                        <label class="bold">Giá bán:</label>
+                                        <span style="margin-top: -10px;">
+                                            <% product.get_related_sales_prices_rows(contact_id: -1).each do |p_row| %>
+                                                <span style='display: block; padding-left: 40px'><%= p_row[:min_max] %>: <%= format_price(p_row[:price]) %></span>
+                                            <% end %>
+                                        </span>
+                                    </p>
+                                <% end %>
+                            <% else %>
+                                <p class="mb-5 text-left">
+                                    <label class="bold">Giá vốn:</label>
+                                    <span><%= format_number(product.cost) %></span>
+                                </p>
+                                <p class="no-margin mb-5 text-left">
+                                    <label class="bold">Giá bán:</label>
+                                    <span><%= format_number(product.price) %></span>
+                                </p>
+                            <% end %>
                         </div>
                         <div class="col-md-4">
                             <h5 class="font-yellow-mint bold mb-15 text-left">
