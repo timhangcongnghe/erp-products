@@ -30,16 +30,16 @@ module Erp::Products
 
         Erp::Products::CacheStock.update_stock(self, self.get_stock)
 
-        ## update cache stock for state warehouse
-        #Erp::Products::State.all.each do |state|
-        #  Erp::Products::CacheStock.update_stock(self, self.get_stock(state: state), {state_id: state.id})
-        #  Erp::Warehouses::Warehouse.all.each do |warehouse|
-        #    Erp::Products::CacheStock.update_stock(self, self.get_stock(warehouse: warehouse, state: state), {warehouse_id: warehouse.id, state_id: state.id})
-        #  end
-        #end
-        #Erp::Warehouses::Warehouse.all.each do |warehouse|
-        #  Erp::Products::CacheStock.update_stock(self, self.get_stock(warehouse: warehouse), {warehouse_id: warehouse.id})
-        #end
+        # update cache stock for state warehouse
+        Erp::Products::State.all.each do |state|
+          Erp::Products::CacheStock.update_stock(self, self.get_stock(state: state), {state_id: state.id})
+          Erp::Warehouses::Warehouse.all.each do |warehouse|
+            Erp::Products::CacheStock.update_stock(self, self.get_stock(warehouse: warehouse, state: state), {warehouse_id: warehouse.id, state_id: state.id})
+          end
+        end
+        Erp::Warehouses::Warehouse.all.each do |warehouse|
+          Erp::Products::CacheStock.update_stock(self, self.get_stock(warehouse: warehouse), {warehouse_id: warehouse.id})
+        end
       end
     end
 
