@@ -28,47 +28,49 @@
                                     help: t('.help_product_short_name'),
                                     placeholder: t('.placeholder_product_short_name')
                                 }) %>
-                                <div class="row form-control-mb-0">
-                                    <div class="col-md-6">
-                                        <%= erp_form_control('checkbox', {
-                                            name: 'product[can_be_sold]',
-                                            id: 'product_can_be_sold',
-                                            value: product.can_be_sold,
-                                            not_selected_value: 'false',
-                                            options: [{value: 'true', text: t('.can_be_sold')}]
-                                        }) %>
+                                <% if !Erp::Core.available?("ortho_k") %>
+                                    <div class="row form-control-mb-0">
+                                        <div class="col-md-6">
+                                            <%= erp_form_control('checkbox', {
+                                                name: 'product[can_be_sold]',
+                                                id: 'product_can_be_sold',
+                                                value: product.can_be_sold,
+                                                not_selected_value: 'false',
+                                                options: [{value: 'true', text: t('.can_be_sold')}]
+                                            }) %>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <%= erp_form_control('checkbox', {
+                                                name: 'product[can_be_purchased]',
+                                                id: 'product_can_be_purchased',
+                                                value: product.can_be_purchased,
+                                                not_selected_value: 'false',
+                                                options: [{value: 'true', text: t('.can_be_purchased')}]
+                                            }) %>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <%= erp_form_control('checkbox', {
-                                            name: 'product[can_be_purchased]',
-                                            id: 'product_can_be_purchased',
-                                            value: product.can_be_purchased,
-                                            not_selected_value: 'false',
-                                            options: [{value: 'true', text: t('.can_be_purchased')}]
-                                        }) %>
+                                    <div class="row form-control-mb-0">
+                                        <div class="col-md-6">
+                                            <%= erp_form_control('checkbox', {
+                                                name: 'product[is_for_pos]',
+                                                id: 'product_is_for_pos',
+                                                value: product.is_for_pos,
+                                                not_selected_value: 'false',
+                                                options: [{value: 'true', text: t('.is_for_pos')}],
+                                                help: t('.help_is_for_pos')
+                                            }) %>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <%= erp_form_control('checkbox', {
+                                                name: 'product[point_enabled]',
+                                                id: 'product_point_enabled',
+                                                value: product.point_enabled,
+                                                not_selected_value: 'false',
+                                                options: [{value: 'true', text: t('.point_enabled')}]
+                                            }) %>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row form-control-mb-0">
-                                    <div class="col-md-6">
-                                        <%= erp_form_control('checkbox', {
-                                            name: 'product[is_for_pos]',
-                                            id: 'product_is_for_pos',
-                                            value: product.is_for_pos,
-                                            not_selected_value: 'false',
-                                            options: [{value: 'true', text: t('.is_for_pos')}],
-                                            help: t('.help_is_for_pos')
-                                        }) %>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <%= erp_form_control('checkbox', {
-                                            name: 'product[point_enabled]',
-                                            id: 'product_point_enabled',
-                                            value: product.point_enabled,
-                                            not_selected_value: 'false',
-                                            options: [{value: 'true', text: t('.point_enabled')}]
-                                        }) %>
-                                    </div>
-                                </div>
+                                <% end %>
                                 <% if Erp::Core.available?("ortho_k") %>
                                     <div class="row form-control-mb-0">
                                         <div class="col-md-6">
