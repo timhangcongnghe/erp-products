@@ -112,6 +112,15 @@ module Erp::Products
 			query = query.where(archived: false) if show_archived == false
 
       query = query.where(and_conds.join(' AND ')) if !and_conds.empty?
+      
+      # single keyword
+      if params[:keyword].present?
+				keyword = params[:keyword].strip.downcase
+				keyword.split(' ').each do |q|
+					q = q.strip
+					query = query.where('LOWER(erp_products_categories.name) LIKE ?', '%'+q+'%')
+				end
+			end
 
       return query
     end
@@ -196,6 +205,11 @@ module Erp::Products
     # get top categories
     def self.top_categories
       self.where(parent_id: nil)
+    end
+    
+    # get categories has parent
+    def self.has_parent_categories
+      self.where.not(parent_id: nil)
     end
 
     # --------- Report Functions - Start ---------
