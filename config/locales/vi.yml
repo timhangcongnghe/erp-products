@@ -917,7 +917,7 @@ vi:
             date: "Thời gian"
             warehouse: "Kho xuất"
             employee: "NV phụ trách"
-            description: "Mô tả"
+            description: "Ghi chú/Mô tả"
             status: "Trạng thái"
             draft: "Phiếu tạm"
             done: "Hoàn thành"
@@ -928,7 +928,7 @@ vi:
             date: "Ngày xuất hủy"
             warehouse: "Kho"
             employee: "N.viên phụ trách"
-            description: "Mô tả"
+            description: "Ghi chú/Mô tả"
             status: "Trạng thái"
             draft: "Phiếu tạm"
             done: "Hoàn thành"
@@ -1006,7 +1006,7 @@ vi:
             adjustment_date: "Ngày kiểm kho"
             warehouse: "Kho"
             employee: "NV phụ trách"
-            description: "Mô tả"
+            description: "Ghi chú/Mô tả"
             done: "Đã xác nhận"
             deleted: "Đã bị hủy"
           list:
@@ -1014,7 +1014,7 @@ vi:
             adjustment_date: "Ngày kiểm kho"
             warehouse: "Kho"
             employee: "NV phụ trách"
-            description: "Mô tả"
+            description: "Ghi chú/Mô tả"
             status: "Trạng thái"
             draft: "Phiếu tạm"
             done: "Xác nhận"
@@ -1309,7 +1309,7 @@ vi:
           status_active_all:
             success: "Phiếu kiểm tra sản phẩm đã chọn được xác nhận thành công."
           status_deleted_all:
-            success: "'hiếu kiểm tra sản phẩm được chọn đã được hủy."
+            success: "Phiếu kiểm tra sản phẩm được chọn đã được hủy."
           index:
             state_checks: "Kiểm tra trạng thái sản phẩm"
             change_draft: "Lưu tạm"
@@ -1325,7 +1325,7 @@ vi:
             check_date: "Ngày kiểm tra"
             warehouse: "Kho kiểm tra"
             employee: "N.viên phụ trách"
-            note: "Mô tả"
+            note: "Ghi chú/Mô tả"
           state_check_details:
             state_check_details: "Chi tiết phiếu kiểm tra sản phẩm"
             code: "Mã sản phẩm"
@@ -1340,7 +1340,7 @@ vi:
             check_date: "Ngày kiểm tra"
             warehouse: "Kho"
             employee: "N.viên phụ trách"
-            note: "Mô tả"
+            note: "Ghi chú/Mô tả"
             no_matching_records_found: "Danh sách kiểm tra không được tìm thấy."
             draft: "Phiếu tạm"
             active: "Đã xác nhận"

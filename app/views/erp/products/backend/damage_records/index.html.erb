@@ -82,6 +82,17 @@
         }
     ],
     actions: actions,
+    filters: [
+        {
+            text: t('.draft'), name: 'erp_products_damage_records.status', value: Erp::Products::DamageRecord::STATUS_DRAFT, checked: false
+        },
+        {
+            text: t('.done'), name: 'erp_products_damage_records.status', value: Erp::Products::DamageRecord::STATUS_DONE, checked: true
+        },
+        {
+            text: t('.deleted'), name: 'erp_products_damage_records.status', value: Erp::Products::DamageRecord::STATUS_DELETED, checked: false
+        }
+    ],
     columns: [
         {
             text: t('.code'), name: 'code', value: true, checked: true

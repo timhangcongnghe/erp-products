@@ -41,6 +41,7 @@ module Erp
         def create
           @damage_record = DamageRecord.new(damage_record_params)
           @damage_record.creator = current_user
+          @damage_record.status = Erp::Products::DamageRecord::STATUS_DONE
     
           if @damage_record.save
             if request.xhr?

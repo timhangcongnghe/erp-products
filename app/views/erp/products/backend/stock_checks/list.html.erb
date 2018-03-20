@@ -19,6 +19,16 @@
                     <%= t('.warehouse') %>
                 </th>
             <% end %>
+            <% if get_columns(params).include?("employee") %>
+                <th>
+                    <%= t('.employee') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("description") %>
+                <th>
+                    <%= t('.description') %>
+                </th>
+            <% end %>
             <% if get_columns(params).include?("status") %>
                 <th>
                     <%= t('status') %>
@@ -54,6 +64,12 @@
                 <% end %>
                 <% if get_columns(params).include?("warehouse") %>
                     <td><%= stock_check.warehouse_name %></td>
+                <% end %>
+                <% if get_columns(params).include?("employee") %>
+                    <td><%= stock_check.employee_name %></td>
+                <% end %>
+                <% if get_columns(params).include?("description") %>
+                    <td><%= raw stock_check.description %></td>
                 <% end %>
                 <% if get_columns(params).include?("status") %>
                 <td>

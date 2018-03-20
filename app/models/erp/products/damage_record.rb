@@ -13,7 +13,7 @@ module Erp::Products
         warehouse.present? ? warehouse.name : ''
       end
     end
-    after_create  :set_drart
+    #after_create  :set_drart
     
     # class const
     DAMAGE_RECORD_STATUS_PENDING = 'pending'
