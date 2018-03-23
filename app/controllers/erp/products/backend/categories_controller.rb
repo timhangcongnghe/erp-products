@@ -2,7 +2,7 @@ module Erp
   module Products
     module Backend
       class CategoriesController < Erp::Backend::BackendController
-        before_action :set_category, only: [:archive, :unarchive, :edit, :update, :destroy, :move_up, :move_down]
+        before_action :set_category, only: [:archive, :unarchive, :edit, :update, :move_up, :move_down]
         before_action :set_categories, only: [:delete_all, :archive_all, :unarchive_all]
 
         # GET /categories
@@ -71,19 +71,19 @@ module Erp
         end
 
         # DELETE /categories/1
-        def destroy
-          @category.destroy
-
-          respond_to do |format|
-            format.html { redirect_to erp_products.backend_categories_path, notice: t('.success') }
-            format.json {
-              render json: {
-                'message': t('.success'),
-                'type': 'success'
-              }
-            }
-          end
-        end
+        #def destroy
+        #  @category.destroy
+        #
+        #  respond_to do |format|
+        #    format.html { redirect_to erp_products.backend_categories_path, notice: t('.success') }
+        #    format.json {
+        #      render json: {
+        #        'message': t('.success'),
+        #        'type': 'success'
+        #      }
+        #    }
+        #  end
+        #end
 
         # Archive /categories/archive?id=1
         def archive

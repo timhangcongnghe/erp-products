@@ -101,16 +101,6 @@
                                 hide: !category.archived,
                                 class: 'ajax-link',
                                 data_confirm: t('.unarchive_confirm')
-                            },
-                            {
-                                divider: true
-                            },
-                            {
-                                text: '<i class="fa fa-trash"></i> '+t('.delete'),
-                                url: erp_products.backend_category_path(category),
-                                data_method: 'DELETE',
-                                class: 'ajax-link',
-                                data_confirm: t('delete_confirm')
                             }
                         ]
                     ) %>
