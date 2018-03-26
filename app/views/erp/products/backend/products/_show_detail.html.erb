@@ -134,16 +134,16 @@
                                 <th class="text-left"><%= warehouse.name %></th>
                                 <% Erp::Products::State.all_active.each do |state| %>
                                     <td class="text-center">
-                                        <%= Erp::Products::CacheStock.get_stock(product.id, options={
-                                            state_id: state.id,
-                                            warehouse_id: warehouse.id,
-                                        }) %>
+                                        <%= product.get_stock(
+                                            state_ids: state.id,
+                                            warehouse_ids: warehouse.id,
+                                        ) %>
                                     </td>
                                 <% end %>
                                 <td class="text-bold text-center">
-                                    <%= Erp::Products::CacheStock.get_stock(product.id, options={
-                                        warehouse_id: warehouse.id,
-                                    }) %>
+                                    <%= product.get_stock(
+                                        warehouse_ids: warehouse.id,
+                                    ) %>
                                 </td>
                             </tr>
                         <% end %>
@@ -151,13 +151,13 @@
                             <th class="text-left">Tất cả Kho</th>
                             <% Erp::Products::State.all_active.each do |state| %>
                                 <td class="text-bold text-primary text-center">
-                                    <%= Erp::Products::CacheStock.get_stock(product.id, options={
-                                        state_id: state.id,
-                                    }) %>
+                                    <%= product.get_stock(
+                                        state_ids: state.id,
+                                    ) %>
                                 </td>
                             <% end %>
                             <td class="text-bold text-primary text-center">
-                                <%= Erp::Products::CacheStock.get_stock(product.id) %>
+                                <%= product.get_stock %>
                             </td>
                         </tr>
                     </table>
