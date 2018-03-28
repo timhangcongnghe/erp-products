@@ -1021,6 +1021,7 @@ vi:
             deleted: "Đã bị hủy"
             delete: "Hủy phiếu"
             no_matching_records_found: "Danh sách phiếu kiểm kho hiện tại đang trống."
+            view_print: "Xem & In"
           new:
             stock_checks: "Phiếu kiểm kho"
             create: "Thêm phiếu kiểm kho"
@@ -1067,6 +1068,35 @@ vi:
             state: "Tình trạng"
             note: "Ghi chú"
             total_all: "Tổng cộng"
+          show:
+            show: "Chi tiết"
+            stock_checks: "Kiểm kho - Số lượng"
+            show_stock_check: "Chi tiết kiểm kho"
+            options: "Tùy chọn"
+            edit: "Chỉnh sửa"
+            delete: "Hủy bỏ"
+            delete_confirm: "Bạn thực sự muốn hủy phiếu này?"
+            ordinal_number: "Số thứ tự"
+            items: "Sản phẩm"
+            warehouse: "Kho nhập/xuất"
+            state: "Tình trạng"
+            units: "Đơn vị tính"
+            quantity: "Chênh lệch"
+            stock: 'Tồn kho'
+            real: 'Thực tế'
+            note: 'Ghi chú'
+            serials: 'Lô'
+          pdf:
+            ordinal_number: "Số thứ tự"
+            items: "Sản phẩm"
+            warehouse: "Kho nhập/xuất"
+            state: "Tình trạng"
+            units: "Đơn vị tính"
+            quantity: "Chênh lệch"
+            stock: 'Tồn kho'
+            real: 'Thực tế'
+            note: 'Ghi chú'
+            serials: 'Lô'
         stock_check_details:
           stock_check_line_form:
             choose_state: "Chọn tình trạng sản phẩm"

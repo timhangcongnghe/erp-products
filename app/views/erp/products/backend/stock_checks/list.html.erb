@@ -94,6 +94,11 @@
                                 href: erp_products.edit_backend_stock_check_path(stock_check)
                             },
                             {
+                                text: '<i class="fa fa-print"></i> '+t('.view_print'),
+                                url: erp_products.backend_stock_check_path(stock_check),
+                                target: '_blank'
+                            },
+                            {
                                 text: '<i class="fa fa-check"></i> '+t('confirm'),
                                 url: erp_products.set_done_backend_stock_checks_path(id: stock_check),
                                 data_method: 'PUT',

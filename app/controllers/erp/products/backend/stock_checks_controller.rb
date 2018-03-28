@@ -3,7 +3,7 @@ module Erp
     module Backend
       class StockChecksController < Erp::Backend::BackendController
         before_action :set_stock_check, only: [:stock_check_details, :set_draft, :set_done, :set_deleted,
-                                               :table_stock_check_details, :archive, :unarchive, :show, :edit, :update]
+                                               :table_stock_check_details, :archive, :unarchive, :show, :show_list, :pdf, :edit, :update]
         before_action :set_stock_checks, only: [:delete_all, :archive_all, :unarchive_all]
 
         # GET /stock_checks
@@ -34,6 +34,48 @@ module Erp
 
         # GET /stock_checks/1
         def show
+          respond_to do |format|
+            format.html
+            format.pdf do
+              render pdf: "show_list",
+                layout: 'erp/backend/pdf'
+            end
+          end
+        end
+
+        # GET /orders/1
+        def pdf
+          #authorize! :read, @delivery
+
+          respond_to do |format|
+            format.html
+            format.pdf do
+              if @stock_check.stock_check_details.count < 8
+                render pdf: "#{@stock_check.code}",
+                  title: "#{@stock_check.code}",
+                  layout: 'erp/backend/pdf',
+                  page_size: 'A5',
+                  orientation: 'Landscape',
+                  margin: {
+                    top: 7,                     # default 10 (mm)
+                    bottom: 7,
+                    left: 7,
+                    right: 7
+                  }
+              else
+                render pdf: "#{@stock_check.code}",
+                  title: "#{@stock_check.code}",
+                  layout: 'erp/backend/pdf',
+                  page_size: 'A4',
+                  margin: {
+                    top: 7,                     # default 10 (mm)
+                    bottom: 7,
+                    left: 7,
+                    right: 7
+                  }
+              end
+            end
+          end
         end
 
         # GET /stock_checks/new

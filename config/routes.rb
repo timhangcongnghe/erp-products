@@ -232,6 +232,9 @@ Erp::Products::Engine.routes.draw do
 
           get 'form_check_details'
           post 'table_stock_check_details'
+
+          post 'show_list'
+          get 'pdf'
         end
       end
       resources :stock_check_details do

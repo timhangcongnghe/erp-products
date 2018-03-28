@@ -1,0 +1,139 @@
+<% content_for :title_line_1 do %>
+    <%= 'PHIẾU KIỂM KHO' %>
+<% end %>
+
+<% content_for :title_line_2 do %>
+    <i>Ngày <%= @stock_check.adjustment_date.strftime('%d') %>
+      tháng <%= @stock_check.adjustment_date.strftime('%m') %>
+      năm <%= @stock_check.adjustment_date.strftime('%Y') %></i>
+    <div>Số: <%= @stock_check.code %></div>
+<% end %>
+
+<% content_for :main_info_col_1 do %>
+  <p>
+    <label>Người kiểm kho:</label>
+    <span><%= @stock_check.employee_name %></span>
+  </p>
+  <p>
+    <label>Ghi chú:</label>
+    <span><%= @stock_check.description %></span>
+  </p>
+<% end %>
+
+<% content_for :main_info_col_2 do %>
+
+<% end %>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="custom-invoice invoice-content-2 bordered">
+            <div class="row invoice-body">
+                <div class="col-xs-12 table-responsive">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <% if get_columns(params).include?("ordinal_number") %>
+                                    <th class="invoice-title uppercase text-center"><%= t('.ordinal_number') %></th>
+                                <% end %>
+                                <% if get_columns(params).include?("items") %>
+                                    <th class="invoice-title uppercase text-center"><%= t('.items') %></th>
+                                <% end %>
+                                <% if get_columns(params).include?("warehouse") %>
+                                    <th class="invoice-title uppercase text-center"><%= t('.warehouse') %></th>
+                                <% end %>
+                                <% if get_columns(params).include?("state") %>
+                                    <th class="invoice-title uppercase text-center"><%= t('.state') %></th>
+                                <% end %>
+                                <% if get_columns(params).include?("serials") %>
+                                    <th class="invoice-title uppercase text-center"><%= t('.serials') %></th>
+                                <% end %>
+                                <% if get_columns(params).include?("units") %>
+                                    <th class="invoice-title uppercase text-center"><%= t('.units') %></th>
+                                <% end %>
+                                <% if get_columns(params).include?("stock") %>
+                                    <th class="invoice-title uppercase text-center"><%= t('.stock') %></th>
+                                <% end %>
+                                <% if get_columns(params).include?("real") %>
+                                    <th class="invoice-title uppercase text-center"><%= t('.real') %></th>
+                                <% end %>
+                                <% if get_columns(params).include?("quantity") %>
+                                    <th class="invoice-title uppercase text-center"><%= t('.quantity') %></th>
+                                <% end %>
+                                <% if get_columns(params).include?("record") %>
+                                    <th class="invoice-title uppercase text-center"><%= t('.record') %></th>
+                                <% end %>
+                                <% if get_columns(params).include?("note") %>
+                                    <th class="invoice-title uppercase text-center"><%= t('.note') %></th>
+                                <% end %>
+                            </tr>
+                            <% @stock_check.stock_check_details.each_with_index do |stock_check_detail,index| %>
+                                <tr>
+                                    <% if get_columns(params).include?("ordinal_number") %>
+                                        <td class="text-center"><%= index+1 %></td>
+                                    <% end %>
+                                    <% if get_columns(params).include?("items") %>
+                                        <td>
+                                            <p><%= stock_check_detail.product.name %></p>
+                                        </td>
+                                    <% end %>
+                                    <% if get_columns(params).include?("warehouse") %>
+                                        <td class="text-center"><%= @stock_check.warehouse.name %></td>
+                                    <% end %>
+                                    <% if get_columns(params).include?("state") %>
+                                        <td class="text-center"><%= stock_check_detail.state.name %></td>
+                                    <% end %>
+                                    <% if get_columns(params).include?("serials") %>
+                                        <td class="text-center"><%= stock_check_detail.serials %></td>
+                                    <% end %>
+                                    <% if get_columns(params).include?("units") %>
+                                        <td class="text-center"><%= stock_check_detail.product.unit_name %></td>
+                                    <% end %>
+                                    <% if get_columns(params).include?("stock") %>
+                                        <td class="text-center"><%= stock_check_detail.stock %></td>
+                                    <% end %>
+                                    <% if get_columns(params).include?("real") %>
+                                        <td class="text-center"><%= stock_check_detail.real %></td>
+                                    <% end %>
+                                    <% if get_columns(params).include?("quantity") %>
+                                        <td class="text-center"><%= stock_check_detail.quantity %></td>
+                                    <% end %>
+                                    <% if get_columns(params).include?("note") %>
+                                        <td class="text-left"><%= stock_check_detail.note %></td>
+                                    <% end %>
+                                </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-footer">
+    <div class="line">
+        <label>Tổng chênh lệch:</label>
+        <span class="text-right"><%= format_number(@stock_check.total_quantity) %></span>
+    </div>
+</div>
+<% content_for :footer do %>
+    <div class="col text-center" style="width: 33%">
+        <p>
+            <strong>Người lập phiếu</strong><br/>
+            <i>(Ký, họ tên)</i>
+        </p>
+        <p class="sign_name"><%= @stock_check.creator_name %></p>
+    </div>
+    <div class="col text-center" style="width: 33%">
+        <p>
+            <strong>Người kiểm kho</strong><br/>
+            <i>(Ký, họ tên)</i>
+        </p>
+    </div>
+    <div class="col text-center" style="width: 33%">
+        <p>
+            <strong>Thủ kho</strong><br/>
+            <i>(Ký, họ tên)</i>
+        </p>
+        <p class="sign_name"> </p>
+    </div>
+<% end %>
