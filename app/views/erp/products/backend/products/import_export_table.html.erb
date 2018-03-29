@@ -18,7 +18,13 @@
             <% @rows.each_with_index do |row,index| %>
                 <tr>
                     <td width="10%" class="text-center"><%= format_date(row[:voucher_date]) %></td>
-                    <td class="text-center"><%= row[:voucher_code] %></td>
+                    <td class="text-center">
+                        <% if row[:delivery].present? %>
+                            <%= qdelivery_link(row[:delivery]) %>
+                        <% else %>
+                            <%= row[:voucher_code] %>
+                        <% end %>
+                    </td>
                     <td class="text-center">
                         <%= row[:source_warehouse] %>
                         <%= raw '<i class="glyphicon glyphicon-arrow-right"></i>' if (!row[:source_warehouse].nil? || !row[:destination_warehouse].nil?) %>
