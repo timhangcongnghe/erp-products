@@ -9,6 +9,7 @@
                 <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap">Kho xuất nhập</th>
                 <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap">Loại XNK</th>
                 <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap">Sản phẩm</th>
+                <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap">Tình trạng</th>
                 <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap">SL nhập</th>
                 <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap">SL xuất</th>
                 <th class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap">Ghi chú</th>
@@ -32,6 +33,7 @@
                     </td>
                     <td class="text-center font-yellow-gold"><%= t(".#{row[:record_type]}") if !row[:record_type].nil? %></td>
                     <td width="15%" class="text-left"><%= @product.name %></td>
+                    <td width="15%" class="text-center"><%= row[:state] %></td>
                     <td class="text-center font-green-seagreen"><%= row[:qty_import].nil? ? '' : format_number(row[:qty_import].abs) %></td>
                     <td class="text-center font-green-seagreen"><%= row[:qty_export].nil? ? '' : format_number(row[:qty_export].abs) %></td>
                     <td class="text-justify"><%= row[:note] %></td>
