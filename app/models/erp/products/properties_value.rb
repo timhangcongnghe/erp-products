@@ -52,7 +52,7 @@ module Erp::Products
 				query = query.where(property_id: params[:group_by_property])
 			end
 
-      query = query.map{|properties_value| {value: properties_value.id, text: properties_value.value} }
+      query = query.order(:value).map{|properties_value| {value: properties_value.id, text: properties_value.value} }
     end
 
     def self.create_if_not_exists(prop_id, name)
