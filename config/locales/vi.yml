@@ -1009,6 +1009,7 @@ vi:
             description: "Ghi chú/Mô tả"
             done: "Đã xác nhận"
             deleted: "Đã bị hủy"
+            quantity: "Chênh lệch"
           list:
             code: "Mã phiếu"
             adjustment_date: "Ngày kiểm kho"
@@ -1022,6 +1023,7 @@ vi:
             delete: "Hủy phiếu"
             no_matching_records_found: "Danh sách phiếu kiểm kho hiện tại đang trống."
             view_print: "Xem & In"
+            quantity: "Chênh lệch"
           new:
             stock_checks: "Phiếu kiểm kho"
             create: "Thêm phiếu kiểm kho"
