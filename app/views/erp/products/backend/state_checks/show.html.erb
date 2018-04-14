@@ -1,0 +1,67 @@
+<% content_for :title do %>
+    <%= t('.show') %> # <%= @state_check.code %>
+<% end %>
+
+<% content_for :page_title do %>
+    <a href="
+        <%= erp_products.backend_state_checks_path %>
+    ">
+    <i class="glyphicon glyphicon-shopping-cart"></i> <%= t('.state_checks') %>
+    </a> / <%= t('.show_state_check') %> # <%= @state_check.code %>
+    <%= status_label(@state_check.status) %>
+<% end %>
+
+<% content_for :page_toolbar do %>
+
+    <%= erp_component('button/actions', {
+        actions:
+        [
+            {
+                text: '<i class="fa fa-edit"></i> '+t('.edit'),
+                url: erp_products.edit_backend_state_check_path(@state_check),
+                hide: false,
+            },
+            {
+                text: '<i class="fa fa-close"></i> '+t('.delete'),
+                href: erp_products.status_deleted_backend_state_checks_path(id: @state_check.id),
+                data_method: 'PUT',
+                data_confirm: t('.delete_confirm'),
+                hide: false,
+                class: 'ajax-link'
+            }
+        ],
+        text: t('.options'),
+        class: 'btn-noborder'
+    }) %>
+
+<% end %>
+
+<%= erp_datalist(
+    url: erp_products.show_list_backend_state_checks_path(id: @state_check.id),
+    columns: [
+        {
+            text: t('.ordinal_number'), name: 'ordinal_number', value: true, checked: true
+        },
+        {
+            text: t('.items'), name: 'items', value: true, checked: true
+        },
+        {
+            text: t('.units'), name: 'units', value: true, checked: true
+        },
+        {
+            text: t('.warehouse'), name: 'warehouse', value: true, checked: true
+        },
+        {
+            text: t('.quantity'), name: 'quantity', value: true, checked: true
+        },
+        {
+            text: t('.old_state'), name: 'old_state', value: true, checked: true
+        },
+        {
+            text: t('.state'), name: 'state', value: true, checked: true
+        },
+        {
+            text: t('.note'), name: 'note', value: true, checked: true
+        }
+    ]
+) %>

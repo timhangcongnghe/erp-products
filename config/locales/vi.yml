@@ -1078,6 +1078,9 @@ vi:
             edit: "Chỉnh sửa"
             delete: "Hủy bỏ"
             delete_confirm: "Bạn thực sự muốn hủy phiếu này?"
+            draft: "Lưu tạm"
+            done: "Đã xác nhận"
+            deleted: "Đã bị hủy"
             ordinal_number: "Số thứ tự"
             items: "Sản phẩm"
             warehouse: "Kho nhập/xuất"
@@ -1374,6 +1377,7 @@ vi:
             employee: "N.viên phụ trách"
             note: "Ghi chú/Mô tả"
             no_matching_records_found: "Danh sách kiểm tra không được tìm thấy."
+            view_print: "Xem và In"
             draft: "Phiếu tạm"
             active: "Đã xác nhận"
             deleted: "Đã bị hủy"
@@ -1417,6 +1421,36 @@ vi:
             old_state: "Trạng thái trước kiểm"
             state: "Trạng thái thực tế"
             action: "Thao tác"
+          show:
+            show: "Chi tiết"
+            state_checks: "Kiểm kho - Trạng thái"
+            show_state_check: "Chi tiết kiểm tra"
+            draft: "Lưu tạm"
+            active: "Đã xác nhận"
+            deleted: "Đã bị hủy"
+            options: "Tùy chọn"
+            edit: "Chỉnh sửa"
+            delete: "Hủy bỏ"
+            delete_confirm: "Bạn thực sự muốn hủy phiếu này?"
+            ordinal_number: "Số thứ tự"
+            items: "Sản phẩm"
+            units: "Đơn vị tính"
+            serials: 'Lô'
+            warehouse: "Kho"
+            quantity: "Số lượng"
+            old_state: "Trạng thái trước"
+            state: "Trạng thái kiểm"
+            note: 'Ghi chú'
+          pdf:
+            ordinal_number: "STT"
+            items: "Sản phẩm"
+            units: "Đơn vị tính"
+            serials: 'Lô'
+            warehouse: "Kho"
+            quantity: "Số lượng"
+            old_state: "Trạng thái trước"
+            state: "Trạng thái kiểm"
+            note: 'Ghi chú'
         state_check_details:
           state_check_detail_line_form:
             choose_state: "Chọn trạng thái sản phẩm"

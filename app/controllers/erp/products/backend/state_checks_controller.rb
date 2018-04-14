@@ -2,7 +2,7 @@ module Erp
   module Products
     module Backend
       class StateChecksController < Erp::Backend::BackendController
-        before_action :set_state_check, only: [:archive, :unarchive, :status_draft, :status_active, :status_deleted, :edit, :update, :destroy]
+        before_action :set_state_check, only: [:archive, :unarchive, :status_draft, :status_active, :status_deleted, :edit, :update, :show, :show_list, :pdf]
         before_action :set_state_checks, only: [:delete_all, :archive_all, :unarchive_all, :status_draft_all, :status_active_all, :status_deleted_all]
 
         # GET /state_checks
@@ -22,6 +22,41 @@ module Erp
           @state_check = StateCheck.find(params[:id])
 
           render layout: nil
+        end
+        
+        # GET /orders/1
+        def pdf
+          #authorize! :read, @state_check
+
+          respond_to do |format|
+            format.html
+            format.pdf do
+              if @state_check.state_check_details.count < 8
+                render pdf: "#{@state_check.code}",
+                  title: "#{@state_check.code}",
+                  layout: 'erp/backend/pdf',
+                  page_size: 'A5',
+                  orientation: 'Landscape',
+                  margin: {
+                    top: 7,                     # default 10 (mm)
+                    bottom: 7,
+                    left: 7,
+                    right: 7
+                  }
+              else
+                render pdf: "#{@state_check.code}",
+                  title: "#{@state_check.code}",
+                  layout: 'erp/backend/pdf',
+                  page_size: 'A4',
+                  margin: {
+                    top: 7,                     # default 10 (mm)
+                    bottom: 7,
+                    left: 7,
+                    right: 7
+                  }
+              end
+            end
+          end
         end
 
         # GET /state_checks/new

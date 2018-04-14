@@ -33,5 +33,10 @@ module Erp::Products
       state.present? ? state.name : ''
     end
     
+		# total quantity
+		def self.total_quantity
+      self.sum(:quantity)
+    end
+    
   end
 end

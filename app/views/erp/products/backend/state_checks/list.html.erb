@@ -73,38 +73,48 @@
                     <td><%= format_date(state_check.created_at) %></td>
                 <% end %>
                 <td>
-                    <%= erp_datalist_row_actions(
-                        [
-                            {
-                                text: '<i class="fa fa-edit"></i> '+t('.edit'),
-                                href: erp_products.edit_backend_state_check_path(state_check)
-                            },
-                            {
-                                text: '<i class="fa fa-file-o"></i> '+t('.change_draft'),
-                                url: erp_products.status_draft_backend_state_checks_path(id: state_check),
-                                data_method: 'PUT',
-                                hide: state_check.status == Erp::Products::StateCheck::STATE_CHECK_STATUS_DRAFT,
-                                class: 'ajax-link'
-                            },
-                            {
-                                text: '<i class="fa fa-check"></i> '+t('.change_active'),
-                                url: erp_products.status_active_backend_state_checks_path(id: state_check),
-                                data_method: 'PUT',
-                                hide: state_check.status == Erp::Products::StateCheck::STATE_CHECK_STATUS_ACTIVE,
-                                class: 'ajax-link'
-                            },
-                            {
-                                divider: true
-                            },
-                            {
-                                text: '<i class="fa fa-trash"></i> '+t('.change_deleted'),
-                                url: erp_products.status_deleted_backend_state_checks_path(id: state_check),
-                                data_method: 'PUT',
-                                class: 'ajax-link',
-                                data_confirm: t('.change_deleted_confirm')
-                            }
-                        ]
-                    ) %>
+                    <%
+                        actions = []
+                        actions << {
+                            text: '<i class="fa fa-print"></i> '+t('.view_print'),
+                            url: erp_products.backend_state_check_path(state_check),
+                            class: 'modal-link'
+                        } if [Erp::Products::StateCheck::STATE_CHECK_STATUS_ACTIVE].include?(state_check.status)
+                            
+                        actions << {
+                            text: '<i class="fa fa-edit"></i> '+t('.edit'),
+                            href: erp_products.edit_backend_state_check_path(state_check)
+                        }  if ![Erp::Products::StateCheck::STATE_CHECK_STATUS_DELETED].include?(state_check.status)
+                        
+                        actions << {
+                            text: '<i class="fa fa-file-o"></i> '+t('.change_draft'),
+                            url: erp_products.status_draft_backend_state_checks_path(id: state_check),
+                            data_method: 'PUT',
+                            class: 'ajax-link'
+                        } if ![Erp::Products::StateCheck::STATE_CHECK_STATUS_DRAFT,
+                            Erp::Products::StateCheck::STATE_CHECK_STATUS_ACTIVE].include?(state_check.status)
+                        
+                        actions << {
+                            text: '<i class="fa fa-check"></i> '+t('.change_active'),
+                            url: erp_products.status_active_backend_state_checks_path(id: state_check),
+                            data_method: 'PUT',
+                            class: 'ajax-link'
+                        } if ![Erp::Products::StateCheck::STATE_CHECK_STATUS_ACTIVE].include?(state_check.status)
+                        
+                        actions << {
+                            divider: true
+                        } if ![Erp::Products::StateCheck::STATE_CHECK_STATUS_DELETED].include?(state_check.status)
+                        
+                        actions << {
+                            text: '<i class="fa fa-trash"></i> '+t('.change_deleted'),
+                            url: erp_products.status_deleted_backend_state_checks_path(id: state_check),
+                            data_method: 'PUT',
+                            class: 'ajax-link',
+                            data_confirm: t('.change_deleted_confirm')
+                        } if ![Erp::Products::StateCheck::STATE_CHECK_STATUS_DELETED].include?(state_check.status)
+                    %>
+                    
+                    <%= erp_datalist_row_actions(actions) %>
                 </td>
             </tr>
         <% end %>

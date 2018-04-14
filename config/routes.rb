@@ -123,6 +123,8 @@ Erp::Products::Engine.routes.draw do
 					put 'archive_all'
 					put 'unarchive_all'
 					get 'state_check_details'
+					post 'show_list'
+					get 'pdf'
 				end
 			end
       resources :state_check_details do

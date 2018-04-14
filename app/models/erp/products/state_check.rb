@@ -201,6 +201,11 @@ module Erp::Products
     def self.unarchive_all
 			update_all(archived: false)
 		end
+    
+		# total quantity
+		def total_quantity
+      state_check_details.sum(:quantity)
+    end
 
   end
 end
