@@ -202,9 +202,11 @@
             var difference_qty = 0;
             var stock = customParseFloat(row.find('.line_stock_qty').val());
             var real = customParseFloat(row.find('.line_real_qty').val());
-            if (real) {
-                var difference_qty=real-stock;
+            if (row.find('.line_real_qty').val() == '') {
+                real = 0;
             }
+            
+            var difference_qty=real-stock;
             row.find('.line_difference_qty').html(difference_qty);
             row.find('.line_difference_qty').val(difference_qty);
 
