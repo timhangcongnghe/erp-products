@@ -116,8 +116,8 @@ module Erp::Products
           })
 
         # from date
-        query = query.where("erp_qdeliveries_deliveries.created_at >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
-        query = query.where("erp_qdeliveries_deliveries.created_at <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
+        query = query.where("erp_qdeliveries_deliveries.date >= ?", params[:from_date].to_date.beginning_of_day) if params[:from_date].present?
+        query = query.where("erp_qdeliveries_deliveries.date <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
 
 				# warehouse
 				query = query.where(warehouse_id: params[:warehouse].id) if params[:warehouse].present?
@@ -1548,6 +1548,41 @@ module Erp::Products
       query = query.limit(8).pluck(:code).uniq
 
       query = query.map{|code| {value: code, text: code} }
+    end
+    
+    # get all sales products
+    def self.get_sales_products(options={})
+      query = self.get_active
+      
+      order_detail_query = Erp::Orders::OrderDetail.get_sales_confirmed_order_details(options).select(:product_id)
+			
+			query = query.where("erp_products_products.id IN (?)", order_detail_query)
+			
+			query
+    end
+    
+    # get all confirmed order details
+    def get_sales_confirmed_order_details(options={})
+      Erp::Orders::OrderDetail.get_sales_confirmed_order_details(options)
+        .where(product_id: self.id)
+    end
+    
+    # get all returned products
+    def self.get_returned_products(options={})
+      query = self.get_active
+      
+      delivery_detail_query = Erp::Qdeliveries::DeliveryDetail.get_returned_confirmed_delivery_details(options).select(:product_id)
+			
+			query = query.where("erp_products_products.id IN (?)", delivery_detail_query)
+			
+			query
+    end
+    
+    
+    # get_returned_confirmed_delivery_details
+    def get_returned_confirmed_delivery_details(options={})
+      Erp::Qdeliveries::DeliveryDetail.get_returned_confirmed_delivery_details(options)
+        .where(product_id: self.id)
     end
   end
 end
