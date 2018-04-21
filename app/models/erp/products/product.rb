@@ -577,12 +577,10 @@ module Erp::Products
 
 				# warehouse
 				query = query.where(erp_orders_orders: {warehouse_id: params[:warehouse].id}) if params[:warehouse].present?
-				# state
-				query = query.where(state_id: params[:state].id) if params[:state].present?
+				## state
+				#query = query.where(state_id: Erp::Products::State.get_new_state.id) if params[:state].present?
 				# warehouse ids
 				query = query.where(erp_orders_orders: {warehouse_id: params[:warehouse_ids]}) if params[:warehouse_ids].present?
-				# state ids
-				query = query.where(state_id: params[:state_ids]) if params[:state_ids].present?
 
 				return query
       end
@@ -691,6 +689,9 @@ module Erp::Products
 
 			# stock check
 			stock += Product.get_stock_check_import(params.merge({product_id: self.id})) - Product.get_stock_check_export(params.merge({product_id: self.id}))
+			
+			# state check
+			stock += Product.get_state_check_import(params.merge({product_id: self.id})) - Product.get_state_check_export(params.merge({product_id: self.id}))
 
 			# gift given
 			if Erp::Core.available?("gift_givens")
