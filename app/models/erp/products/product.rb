@@ -506,7 +506,7 @@ module Erp::Products
       def self.delivered_cs_return_details
         Erp::Consignments::ReturnDetail.joins(:cs_return).
           where(erp_consignments_cs_returns: {
-            status: Erp::Consignments::CsReturn::STATUS_ACTIVE
+            status: Erp::Consignments::CsReturn::STATUS_DELIVERED
           }
         )
       end

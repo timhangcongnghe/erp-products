@@ -330,7 +330,7 @@ module Erp
           end
 
           if category_ids.present? and diameter_ids.present? and letter_ids.present?
-            @products = @product_query.order("erp_products_categories.name, cache_diameter, code")
+            @products = @product_query.order("erp_products_products.ordered_code, erp_products_categories.name, cache_diameter, code").uniq
           else
             @products = []
           end
