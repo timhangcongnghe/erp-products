@@ -90,7 +90,7 @@
                                     <div class="col-md-10">
                                         <% if Erp::Core.available?("ortho_k") %>
                                             <div class="row addableform-filter">
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     <%= erp_form_control("dataselect", {
                                                         name: 'categories',
                                                         value: '',
@@ -131,11 +131,14 @@
                                                         name: 'numbers',
                                                         value: '',
                                                         text: '',
-                                                        label: 'Chữ',
+                                                        label: 'Số',
                                                         placeholder: number.name,
                                                         url: erp_products.dataselect_backend_properties_values_path(format: 'json', property_id: number.id),
                                                         multiple: true
                                                     }) %>
+                                                </div>
+                                                <div class="col-md-1 mt-25">
+                                                    <a class="btn btn-xs btn-danger mb-10 ajax-box-button-123">Tìm</a>
                                                 </div>
                                             </div>
                                         <% end %>
@@ -143,6 +146,7 @@
                                 </div>
                                 <hr/>
                                 <div class="ajax-box"
+                                     data-button="ajax-box-button-123"
                                     data-control=".addableform-filter select,.addableform-filter input"
                                     data-url="<%= erp_products.form_check_details_backend_stock_checks_path %>"
                                 >

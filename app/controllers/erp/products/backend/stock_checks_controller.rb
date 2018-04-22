@@ -329,8 +329,8 @@ module Erp
             end
           end
 
-          if category_ids.present? and diameter_ids.present?
-            @products = @product_query.limit(20).order("erp_products_categories.name, cache_diameter, code")
+          if category_ids.present? and diameter_ids.present? and letter_ids.present?
+            @products = @product_query.order("erp_products_categories.name, cache_diameter, code")
           else
             @products = []
           end
