@@ -140,6 +140,8 @@ module Erp::Products
       if params[:sort_by].present?
         order = params[:sort_by]
         order += " #{params[:sort_direction]}" if params[:sort_direction].present?
+        order += ", erp_products_stock_checks.code"
+        order += " #{params[:sort_direction]}" if params[:sort_direction].present?
         
         query = query.order(order)
       end
