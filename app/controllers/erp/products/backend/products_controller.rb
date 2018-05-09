@@ -28,7 +28,7 @@ module Erp
         # GET /products/new
         def new
           @product = Product.new
-          8.times do
+          12.times do
             @product.product_images.build
           end
           @product.deal_from_date = ''
@@ -43,7 +43,7 @@ module Erp
         # GET /products/1/edit
         def edit
           # default product images
-          (8 - @product.product_images.count).times do
+          (12 - @product.product_images.count).times do
             @product.product_images.build
           end
         end
