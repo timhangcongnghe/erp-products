@@ -130,6 +130,10 @@ module Erp::Products
 
 				# delivery type
 				query = query.where(erp_qdeliveries_deliveries: {delivery_type: params[:delivery_type]}) if params[:delivery_type].present?
+				
+				if params[:no_order] == true
+          query = query.where(order_detail_id: nil)
+        end
 
 				return query
       end
@@ -673,23 +677,25 @@ module Erp::Products
 			# Qdelivery
 			if Erp::Core.available?("orders")
 				stock += (
+          Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_PURCHASE_IMPORT, product_id: self.id, no_order: true)) +
           Product.get_order_import(params.merge({product_id: self.id})) +
           Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_SALES_IMPORT, product_id: self.id)) -
           Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_PURCHASE_EXPORT, product_id: self.id)) -
+          Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_SALES_EXPORT, product_id: self.id, no_order: true)) -
           Product.get_order_export(params.merge({product_id: self.id})) +
           Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOM_IMPORT, product_id: self.id)) -
           Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOM_EXPORT, product_id: self.id))
         )
 			end
 
-			# Transfer
+      # Transfer
 			if Erp::Core.available?("stock_transfers")
 				stock += Product.get_transfer_import(params.merge({product_id: self.id})) - Product.get_transfer_export(params.merge({product_id: self.id}))
 			end
 
 			# stock check
 			stock += Product.get_stock_check_import(params.merge({product_id: self.id})) - Product.get_stock_check_export(params.merge({product_id: self.id}))
-			
+
 			# state check
 			stock += Product.get_state_check_import(params.merge({product_id: self.id})) - Product.get_state_check_export(params.merge({product_id: self.id}))
 
