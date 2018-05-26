@@ -584,7 +584,7 @@ module Erp::Products
 				## state
 				#query = query.where(state_id: Erp::Products::State.get_new_state.id) if params[:state].present?
 				# warehouse ids
-				query = query.where(erp_orders_orders: {warehouse_id: params[:warehouse_ids]}) if params[:warehouse_ids].present?
+				query = query.where(warehouse_id: params[:warehouse_ids]) if params[:warehouse_ids].present?
 
 				return query
       end
