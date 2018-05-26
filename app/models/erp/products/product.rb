@@ -580,7 +580,7 @@ module Erp::Products
         query = query.where("erp_orders_orders.order_date <= ?", params[:to_date].to_date.end_of_day) if params[:to_date].present?
 
 				# warehouse
-				query = query.where(erp_orders_orders: {warehouse_id: params[:warehouse].id}) if params[:warehouse].present?
+				query = query.where(warehouse_id: params[:warehouse].id) if params[:warehouse].present?
 				## state
 				#query = query.where(state_id: Erp::Products::State.get_new_state.id) if params[:state].present?
 				# warehouse ids
