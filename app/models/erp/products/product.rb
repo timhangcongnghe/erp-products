@@ -767,9 +767,11 @@ module Erp::Products
 			# orders
 			if Erp::Core.available?("orders")
         stock += (
+          Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_PURCHASE_IMPORT, no_order: true)) +
           Product.get_order_import(params) +
           Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_SALES_IMPORT)) -
           Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_PURCHASE_EXPORT)) -
+          Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_SALES_EXPORT, no_order: true)) -
           Product.get_order_export(params) +
           Product.get_qdelivery_import(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOM_IMPORT)) -
           Product.get_qdelivery_export(params.merge(delivery_type: Erp::Qdeliveries::Delivery::TYPE_CUSTOM_EXPORT))
