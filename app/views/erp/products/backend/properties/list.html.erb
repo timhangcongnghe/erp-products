@@ -82,38 +82,36 @@
                     }) %>
                 </td>
                 <td class="text-right">
-                    <%= erp_datalist_row_actions(
-                        [
-                            {
-                                text: '<i class="fa fa-edit"></i> '+t('edit'),
-                                href: erp_products.edit_backend_property_path(property)
-                            },
-                            {
-                                text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
-                                url: erp_products.archive_backend_properties_path(id: property),
-                                data_method: 'PUT',
-                                hide: property.archived,
-                                class: 'ajax-link'
-                            },
-                            {
-                                text: '<i class="fa fa-eye"></i> '+t('unarchive'),
-                                url: erp_products.unarchive_backend_properties_path(id: property),
-                                data_method: 'PUT',
-                                hide: !property.archived,
-                                class: 'ajax-link'
-                            },
-                            {
-                                divider: true
-                            },
-                            {
-                                text: '<i class="fa fa-trash"></i> '+t('.delete'),
-                                url: erp_products.backend_property_path(property),
-                                data_method: 'DELETE',
-                                class: 'ajax-link',
-                                data_confirm: t('delete_confirm')
-                            }
-                        ]
-                    ) %>
+                    <%
+                        actions = []
+                        actions << {
+                            text: '<i class="fa fa-edit"></i> '+t('edit'),
+                            href: erp_products.edit_backend_property_path(property)
+                        }
+                        actions << {
+                            text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
+                            url: erp_products.archive_backend_properties_path(id: property),
+                            data_method: 'PUT',
+                            hide: property.archived,
+                            class: 'ajax-link'
+                        }
+                        actions << {
+                            text: '<i class="fa fa-eye"></i> '+t('unarchive'),
+                            url: erp_products.unarchive_backend_properties_path(id: property),
+                            data_method: 'PUT',
+                            hide: !property.archived,
+                            class: 'ajax-link'
+                        }
+                        actions << { divider: true } if Erp::Core.available?("online_store")
+                        actions << {
+                            text: '<i class="fa fa-trash"></i> '+t('.delete'),
+                            url: erp_products.backend_property_path(property),
+                            data_method: 'DELETE',
+                            class: 'ajax-link',
+                            data_confirm: t('delete_confirm')
+                        } if Erp::Core.available?("online_store")
+                    %>
+                    <%= erp_datalist_row_actions(actions) %>
                 </td>
             </tr>
         <% end %>

@@ -57,8 +57,19 @@
                 multiple: true
             }) %>
         </div>
+        <div class="col-md-3">
+                <%= erp_form_control("dataselect", {
+                    name: 'brands',
+                    value: '',
+                    text: '',
+                    label: 'Thương hiệu',
+                    placeholder: 'Chọn thương hiệu',
+                    url: erp_products.dataselect_backend_brands_path(format: 'json'),
+                    multiple: true
+                }) %>
+            </div>
         <% if Erp::Core.available?("ortho_k") %>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <% diameter = Erp::Products::Property.where(name: "Đường kính").first %>
                 <%= erp_form_control("dataselect", {
                     name: 'diameters',
@@ -70,7 +81,7 @@
                     multiple: true
                 }) %>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <% letter = Erp::Products::Property.where(name: "Chữ").first %>
                 <%= erp_form_control("dataselect", {
                     name: 'letters',
@@ -82,7 +93,7 @@
                     multiple: true
                 }) %>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <% number = Erp::Products::Property.where(name: "Số").first %>
                 <%= erp_form_control("dataselect", {
                     name: 'numbers',
@@ -157,15 +168,6 @@
             url: erp_products.unarchive_all_backend_products_path,
             data_method: 'PUT',
             data_confirm: t('.unarchive_confirm')
-        },
-        {
-            divider: true
-        },
-        {
-            text: '<i class="fa fa-trash"></i> '+t('.delete'),
-            url: erp_products.delete_all_backend_products_path,
-            data_method: 'DELETE',
-            data_confirm: t('.delete_confirm')
         }
     ],
     filters: [

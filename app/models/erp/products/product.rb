@@ -865,6 +865,10 @@ module Erp::Products
         @global_filters = global_filter
 
         # get categories
+        brand_ids = @global_filters[:brands].present? ? @global_filters[:brands] : nil
+        @brands = Erp::Products::Brand.where(id: brand_ids)
+
+        # get categories
         category_ids = @global_filters[:categories].present? ? @global_filters[:categories] : nil
         @categories = Erp::Products::Category.where(id: category_ids)
 
@@ -895,6 +899,7 @@ module Erp::Products
 
 
         # product query
+        query = query.where(brand_id: brand_ids) if brand_ids.present?
         query = query.where(category_id: category_ids) if category_ids.present?
         # filter by diameters
         if diameter_ids.present?

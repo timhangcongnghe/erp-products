@@ -29,27 +29,6 @@
             }
         }
     ],
-    actions: [
-        {
-            text: '<i class="fa fa-file-o"></i> '+t('.change_draft'),
-            url: erp_products.status_draft_all_backend_states_path,
-            data_method: 'PUT'
-        },
-        {
-            text: '<i class="fa fa-file-text-o"></i> '+t('.change_active'),
-            url: erp_products.status_active_all_backend_states_path,
-            data_method: 'PUT'
-        },
-        {
-            divider: true
-        },
-        {
-            text: '<i class="fa fa-trash"></i> '+t('.change_deleted'),
-            url: erp_products.status_deleted_all_backend_states_path,
-            data_method: 'PUT',
-            data_confirm: t('.change_deleted_confirm')
-        }
-    ],
     filters: [
         {
             text: t('.is_draft'), name: 'erp_products_states.status', value: 'draft', checked: false
