@@ -7,10 +7,17 @@ module Erp
     
         # GET /brands
         def index
+          if Erp::Core.available?("ortho_k")
+            authorize! :inventory_products_brands_index, nil
+          end
         end
     
         # POST /brands/list
         def list
+          if Erp::Core.available?("ortho_k")
+            authorize! :inventory_products_brands_index, nil
+          end
+          
           @brands = Brand.search(params).paginate(:page => params[:page], :per_page => 10)
           
           render layout: nil
@@ -19,15 +26,21 @@ module Erp
         # GET /brands/new
         def new
           @brand = Brand.new
+          
+          authorize! :create, @brand
         end
     
         # GET /brands/1/edit
         def edit
+          authorize! :update, @brand
         end
     
         # POST /brands
         def create
           @brand = Brand.new(brand_params)
+          
+          authorize! :create, @brand
+          
           @brand.creator = current_user
     
           if @brand.save
@@ -47,6 +60,8 @@ module Erp
     
         # PATCH/PUT /brands/1
         def update
+          authorize! :update, @brand
+          
           if @brand.update(brand_params)
             if request.xhr?
               render json: {
@@ -64,6 +79,8 @@ module Erp
     
         # DELETE /brands/1
         def destroy
+          authorize! :destroy, @brand
+          
           @brand.destroy
 
           respond_to do |format|

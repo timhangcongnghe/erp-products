@@ -7,12 +7,36 @@
 <% end %>
 
 <% content_for :page_toolbar do %>
-    <%= erp_component('button/create', {
-        text: t('.create'),
-        href: erp_products.new_backend_brand_path,
-        class: 'btn-noborder'
-    }) %>
+    <% if !Erp::Core.available?("ortho_k") %>
+        <%= erp_component('button/create', {
+            text: t('.create'),
+            href: erp_products.new_backend_brand_path,
+            class: 'btn-noborder'
+        }) %>
+    <% else %>
+        <% if can? :inventory_products_brands_create, nil %>
+            <%= erp_component('button/create', {
+                text: t('.create'),
+                href: erp_products.new_backend_brand_path,
+                class: 'btn-noborder'
+            }) %>
+        <% end %>
+    <% end %>
 <% end %>
+
+<%
+    actions = []
+    actions << {
+        text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
+        url: erp_products.archive_all_backend_brands_path,
+        data_method: 'PUT'
+    } if !Erp::Core.available?("ortho_k")
+    actions << {
+        text: '<i class="fa fa-eye"></i> '+t('unarchive'),
+        url: erp_products.unarchive_all_backend_brands_path,
+        data_method: 'PUT'
+    } if !Erp::Core.available?("ortho_k")
+%>
 
 <%= erp_datalist(
     url: erp_products.list_backend_brands_path,
@@ -29,18 +53,7 @@
             }
         }
     ],
-    actions: [
-        {
-            text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
-            url: erp_products.archive_all_backend_brands_path,
-            data_method: 'PUT'
-        },
-        {
-            text: '<i class="fa fa-eye"></i> '+t('unarchive'),
-            url: erp_products.unarchive_all_backend_brands_path,
-            data_method: 'PUT'
-        }
-    ],
+    actions: actions,
     filters: [
         {
             text: t('archived'), name: 'show_archived', value: false, checked: false

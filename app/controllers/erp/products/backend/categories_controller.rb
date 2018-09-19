@@ -7,10 +7,17 @@ module Erp
 
         # GET /categories
         def index
+          if Erp::Core.available?("ortho_k")
+            authorize! :inventory_products_categories_index, nil
+          end
         end
 
         # POST /categories/list
         def list
+          if Erp::Core.available?("ortho_k")
+            authorize! :inventory_products_categories_index, nil
+          end
+          
           @categories = Category.search(params).paginate(:page => params[:page], :per_page => 50)
 
           render layout: nil
@@ -19,6 +26,8 @@ module Erp
         # GET /categories/new
         def new
           @category = Category.new
+          
+          authorize! :create, @category
 
           if request.xhr?
             render '_form', layout: nil, locals: {category: @category}
@@ -27,11 +36,15 @@ module Erp
 
         # GET /categories/1/edit
         def edit
+          authorize! :update, @category
         end
 
         # POST /categories
         def create
           @category = Category.new(category_params)
+          
+          authorize! :create, @category
+          
           @category.creator = current_user
 
           if @category.save
@@ -55,6 +68,8 @@ module Erp
 
         # PATCH/PUT /categories/1
         def update
+          authorize! :create, @category
+          
           if @category.update(category_params)
             if request.xhr?
               render json: {
@@ -87,6 +102,8 @@ module Erp
 
         # Archive /categories/archive?id=1
         def archive
+          authorize! :archive, @category
+          
           @category.archive
 
           respond_to do |format|
@@ -101,6 +118,8 @@ module Erp
 
         # Unarchive /categories/unarchive?id=1
         def unarchive
+          authorize! :unarchive, @category
+          
           @category.unarchive
 
           respond_to do |format|

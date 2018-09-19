@@ -2,15 +2,18 @@ module Erp
   module Products
     module Backend
       class StatesController < Erp::Backend::BackendController
-        before_action :set_state, only: [:archive, :unarchive, :status_draft, :status_active, :status_deleted, :edit, :update, :destroy]
-        before_action :set_states, only: [:delete_all, :archive_all, :unarchive_all, :status_draft_all, :status_active_all, :status_deleted_all]
+        before_action :set_state, only: [:archive, :unarchive, :set_draft, :set_active, :set_deleted, :edit, :update]
+        before_action :set_states, only: [:delete_all, :archive_all, :unarchive_all, :set_draft_all, :set_active_all, :set_deleted_all]
 
         # GET /states
         def index
+          authorize! :inventory_products_states_index, nil
         end
 
         # POST /states/list
         def list
+          authorize! :inventory_products_states_index, nil
+          
           @states = State.search(params).paginate(:page => params[:page], :per_page => 10)
 
           render layout: nil
@@ -19,17 +22,23 @@ module Erp
         # GET /states/new
         def new
           @state = State.new
+          
+          authorize! :create, @state
         end
 
         # GET /states/1/edit
         def edit
+          authorize! :update, @state
         end
 
         # POST /states
         def create
           @state = State.new(state_params)
+          
+          authorize! :create, @state
+          
           @state.creator = current_user
-          @state.status = State::STATE_STATUS_ACTIVE
+          @state.set_active
 
           if @state.save
             if request.xhr?
@@ -48,6 +57,8 @@ module Erp
 
         # PATCH/PUT /states/1
         def update
+          authorize! :update, @state
+          
           if @state.update(state_params)
             if request.xhr?
               render json: {
@@ -64,19 +75,19 @@ module Erp
         end
 
         # DELETE /states/1
-        def destroy
-          @state.destroy
-
-          respond_to do |format|
-            format.html { redirect_to erp_products.backend_states_path, notice: t('.success') }
-            format.json {
-              render json: {
-                'message': t('.success'),
-                'type': 'success'
-              }
-            }
-          end
-        end
+        #def destroy
+        #  @state.destroy
+        #
+        #  respond_to do |format|
+        #    format.html { redirect_to erp_products.backend_states_path, notice: t('.success') }
+        #    format.json {
+        #      render json: {
+        #        'message': t('.success'),
+        #        'type': 'success'
+        #      }
+        #    }
+        #  end
+        #end
 
         # ARCHIVE /states/archive?id=1
         def archive
@@ -104,9 +115,11 @@ module Erp
           end
         end
 
-        # STATUS DRAFT /states/status_draft?id=1
-        def status_draft
-          @state.status_draft
+        # STATUS DRAFT /states/set_draft?id=1
+        def set_draft
+          authorize! :set_draft, @state
+          
+          @state.set_draft
           respond_to do |format|
             format.json {
               render json: {
@@ -117,9 +130,11 @@ module Erp
           end
         end
 
-        # STATUS ACTIVE /states/status_active?id=1
-        def status_active
-          @state.status_active
+        # STATUS ACTIVE /states/set_active?id=1
+        def set_active
+          authorize! :set_active, @state
+          
+          @state.set_active
           respond_to do |format|
             format.json {
               render json: {
@@ -130,9 +145,11 @@ module Erp
           end
         end
 
-        # STATUS DELETED /states/status_deleted?id=1
-        def status_deleted
-          @state.status_deleted
+        # STATUS DELETED /states/set_deleted?id=1
+        def set_deleted
+          authorize! :set_deleted, @state
+          
+          @state.set_deleted
           respond_to do |format|
             format.json {
               render json: {
@@ -185,9 +202,9 @@ module Erp
           end
         end
 
-        # STATUS DRAFT ALL /states/status_draft_all?ids=1,2,3
-        def status_draft_all
-          @states.status_draft_all
+        # STATUS DRAFT ALL /states/set_draft_all?ids=1,2,3
+        def set_draft_all
+          @states.set_draft_all
 
           respond_to do |format|
             format.json {
@@ -199,9 +216,9 @@ module Erp
           end
         end
 
-        # STATUS ACTIVE ALL /states/status_active_all?ids=1,2,3
-        def status_active_all
-          @states.status_active_all
+        # STATUS ACTIVE ALL /states/set_active_all?ids=1,2,3
+        def set_active_all
+          @states.set_active_all
 
           respond_to do |format|
             format.json {
@@ -213,9 +230,9 @@ module Erp
           end
         end
 
-        # STATUS DELETED ALL /states/status_deleted_all?ids=1,2,3
-        def status_deleted_all
-          @states.status_deleted_all
+        # STATUS DELETED ALL /states/set_deleted_all?ids=1,2,3
+        def set_deleted_all
+          @states.set_deleted_all
 
           respond_to do |format|
             format.json {

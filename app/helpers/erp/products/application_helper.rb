@@ -190,6 +190,145 @@ module Erp
           actions
         )
       end
+      
+      # Product state dropdown actions
+      def state_dropdown_actions(state)
+        actions = []
+        actions << {
+          text: '<i class="fa fa-edit"></i> '+t('.edit'),
+          href: erp_products.edit_backend_state_path(state)
+        } if can? :update, state
+        actions << {
+          text: '<i class="fa fa-clipboard"></i> '+t('.set_draft'),
+          url: erp_products.set_draft_backend_states_path(id: state),
+          data_method: 'PUT',
+          class: 'ajax-link'
+        } if can? :set_draft, state
+        actions << {
+          text: '<i class="fa fa-check"></i> '+t('.set_active'),
+          url: erp_products.set_active_backend_states_path(id: state),
+          data_method: 'PUT',
+          class: 'ajax-link'
+        } if can? :set_active, state
+        
+        if can? :set_deleted, state
+          if (can? :update, state) or (can? :set_draft, state) or (can? :set_active, state)
+            actions << { divider: true }
+          end
+        end
+        actions << {
+          text: '<i class="fa fa-trash"></i> '+t('.set_deleted'),
+          url: erp_products.set_deleted_backend_states_path(id: state),
+          data_method: 'PUT',
+          class: 'ajax-link',
+          data_confirm: t('.set_deleted_confirm')
+        } if can? :set_deleted, state
+        
+        erp_datalist_row_actions(
+          actions
+        )
+      end
+      
+      # Product brand dropdown actions
+      def brand_dropdown_actions(brand)
+        actions = []
+        actions << {
+          text: '<i class="fa fa-edit"></i> '+t('edit'),
+          href: erp_products.edit_backend_brand_path(brand)
+        } if can? :update, brand
+        actions << {
+          text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
+          url: erp_products.archive_backend_brands_path(id: brand),
+          data_method: 'PUT',
+          hide: brand.archived,
+          class: 'ajax-link',
+          data_confirm: t('.archive_confirm')
+        } if !Erp::Core.available?("ortho_k")
+        actions << {
+          text: '<i class="fa fa-eye"></i> '+t('unarchive'),
+          url: erp_products.unarchive_backend_brands_path(id: brand),
+          data_method: 'PUT',
+          hide: !brand.archived,
+          class: 'ajax-link',
+          data_confirm: t('.unarchive_confirm')
+        } if !Erp::Core.available?("ortho_k")
+        actions << { divider: true } if Erp::Core.available?("online_store")
+        actions << {
+          text: '<i class="fa fa-trash"></i> '+t('.delete'),
+          url: erp_products.backend_brand_path(brand),
+          data_method: 'DELETE',
+          class: 'ajax-link',
+          data_confirm: t('delete_confirm')
+        } if Erp::Core.available?("online_store")
+        
+        erp_datalist_row_actions(
+          actions
+        )
+      end
+      
+      # Product category dropdown actions
+      def category_dropdown_actions(category)
+        actions = []
+        actions << {
+          text: '<i class="fa fa-edit"></i> '+t('edit'),
+          href: erp_products.edit_backend_category_path(category)
+        } if can? :update, category
+        actions << {
+          text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
+          url: erp_products.archive_backend_categories_path(id: category),
+          data_method: 'PUT',
+          #hide: category.archived,
+          class: 'ajax-link',
+          data_confirm: t('.archive_confirm')
+        } if can? :archive, category
+        actions << {
+          text: '<i class="fa fa-eye"></i> '+t('unarchive'),
+          url: erp_products.unarchive_backend_categories_path(id: category),
+          data_method: 'PUT',
+          #hide: !category.archived,
+          class: 'ajax-link',
+          data_confirm: t('.unarchive_confirm')
+        } if can? :unarchive, category
+        
+        erp_datalist_row_actions(
+          actions
+        )
+      end
+      
+      # Product property dropdown actions
+      def property_dropdown_actions(property)
+        actions = []
+        actions << {
+          text: '<i class="fa fa-edit"></i> '+t('edit'),
+          href: erp_products.edit_backend_property_path(property)
+        } if can? :update, property
+        actions << {
+          text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
+          url: erp_products.archive_backend_properties_path(id: property),
+          data_method: 'PUT',
+          hide: property.archived,
+          class: 'ajax-link'
+        } if !Erp::Core.available?("ortho_k")
+        actions << {
+          text: '<i class="fa fa-eye"></i> '+t('unarchive'),
+          url: erp_products.unarchive_backend_properties_path(id: property),
+          data_method: 'PUT',
+          hide: !property.archived,
+          class: 'ajax-link'
+        } if !Erp::Core.available?("ortho_k")
+        actions << { divider: true } if Erp::Core.available?("online_store")
+        actions << {
+          text: '<i class="fa fa-trash"></i> '+t('.delete'),
+          url: erp_products.backend_property_path(property),
+          data_method: 'DELETE',
+          class: 'ajax-link',
+          data_confirm: t('delete_confirm')
+        } if Erp::Core.available?("online_store")
+        
+        erp_datalist_row_actions(
+          actions
+        )
+      end
     end
   end
 end

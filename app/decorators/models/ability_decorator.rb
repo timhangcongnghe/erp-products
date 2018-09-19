@@ -146,5 +146,118 @@ Erp::Ability.class_eval do
       user.get_permission(:inventory, :products, :warehouse_checks_with_state, :delete) == 'yes'
     end
     # -- State Check -- End
+    
+    # Product state -- Start
+    can :create, Erp::Products::State do |state|
+      user.get_permission(:inventory, :products, :states, :create) == 'yes'
+    end
+    
+    can :update, Erp::Products::State do |state|
+      (state.is_draft? or state.is_active?) and
+      user.get_permission(:inventory, :products, :states, :update) == 'yes'
+    end
+    
+    can :set_draft, Erp::Products::State do |state|
+      false
+    end
+    
+    can :set_active, Erp::Products::State do |state|
+      state.is_draft?
+    end
+    
+    can :set_deleted, Erp::Products::State do |state|
+      (state.is_draft? or state.is_active?) and
+      user.get_permission(:inventory, :products, :states, :delete) == 'yes'
+    end
+    # Product state -- End
+    
+    # Property -- Start
+    can :create, Erp::Products::Property do |property|
+      if Erp::Core.available?("ortho_k")
+        false
+      else
+        true
+      end
+    end
+    
+    can :update, Erp::Products::Property do |property|
+      if Erp::Core.available?("ortho_k")
+        false
+      else
+        true
+      end
+    end
+    
+    can :destroy, Erp::Products::Property do |property|
+      if Erp::Core.available?("ortho_k")
+        false
+      else
+        true
+      end
+    end
+    # Property -- End
+    
+    # Brand -- Start
+    can :create, Erp::Products::Brand do |brand|
+      if Erp::Core.available?("ortho_k")
+        user.get_permission(:inventory, :products, :brands, :create) == 'yes'
+      else
+        true
+      end
+    end
+    
+    can :update, Erp::Products::Brand do |brand|
+      if Erp::Core.available?("ortho_k")
+        user.get_permission(:inventory, :products, :brands, :update) == 'yes'
+      else
+        true
+      end
+    end
+    
+    can :destroy, Erp::Products::Brand do |brand|
+      if Erp::Core.available?("ortho_k")
+        false
+      else
+        true
+      end
+    end
+    # Brand -- End
+    
+    # Category -- Start
+    can :create, Erp::Products::Category do |category|
+      if Erp::Core.available?("ortho_k")
+        user.get_permission(:inventory, :products, :categories, :create) == 'yes'
+      else
+        true
+      end
+    end
+    
+    can :update, Erp::Products::Category do |category|
+      if Erp::Core.available?("ortho_k")
+        user.get_permission(:inventory, :products, :categories, :update) == 'yes'
+      else
+        true
+      end
+    end
+    
+    can :archive, Erp::Products::Category do |category|
+      !category.archived and
+      if Erp::Core.available?("ortho_k")
+        user.get_permission(:inventory, :products, :categories, :archive) == 'yes'
+      else
+        true
+      end
+    end
+    
+    can :unarchive, Erp::Products::Category do |category|
+      category.archived and
+      if Erp::Core.available?("ortho_k")
+        user.get_permission(:inventory, :products, :categories, :unarchive) == 'yes'
+      else
+        true
+      end
+    end
+    # Category -- End
+    
   end
 end

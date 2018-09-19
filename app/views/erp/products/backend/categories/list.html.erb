@@ -43,7 +43,13 @@
                     <%= erp_datalist_check_row(id: category.id) %>
                 </td>
                 <% if get_columns(params).include?("name") %>
-                    <td><%= link_to category.full_name, erp_products.edit_backend_category_path(category), class: 'title' %></td>
+                    <td>
+                        <% if can? :create, category %>
+                            <%= link_to category.full_name, erp_products.edit_backend_category_path(category), class: 'title' %>
+                        <% else %>
+                            <strong><%= category.full_name %></strong>
+                        <% end %>
+                    </td>
                 <% end %>
                 <% if get_columns(params).include?("product_count") %>
                     <td><%= category.product_count %></td>
@@ -80,30 +86,7 @@
                     }) %>
                 </td>
                 <td class="text-right">
-                    <%= erp_datalist_row_actions(
-                        [
-                            {
-                                text: '<i class="fa fa-edit"></i> '+t('edit'),
-                                href: erp_products.edit_backend_category_path(category)
-                            },
-                            {
-                                text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
-                                url: erp_products.archive_backend_categories_path(id: category),
-                                data_method: 'PUT',
-                                hide: category.archived,
-                                class: 'ajax-link',
-                                data_confirm: t('.archive_confirm')
-                            },
-                            {
-                                text: '<i class="fa fa-eye"></i> '+t('unarchive'),
-                                url: erp_products.unarchive_backend_categories_path(id: category),
-                                data_method: 'PUT',
-                                hide: !category.archived,
-                                class: 'ajax-link',
-                                data_confirm: t('.unarchive_confirm')
-                            }
-                        ]
-                    ) %>
+                    <%= category_dropdown_actions(category) %>
                 </td>
             </tr>
         <% end %>

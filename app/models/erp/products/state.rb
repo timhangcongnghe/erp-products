@@ -2,13 +2,13 @@ module Erp::Products
   class State < ApplicationRecord
     validates :name, :presence => true
     belongs_to :creator, class_name: "Erp::User"
-    STATE_STATUS_DRAFT = 'draft'
-    STATE_STATUS_ACTIVE = 'active'
-    STATE_STATUS_DELETED = 'deleted'
+    STATUS_DRAFT = 'draft'
+    STATUS_ACTIVE = 'active'
+    STATUS_DELETED = 'deleted'
 
     # get all active
     def self.all_active
-      self.where(status: State::STATE_STATUS_ACTIVE)
+      self.where(status: State::STATUS_ACTIVE)
     end
 
     # Filters
@@ -108,29 +108,42 @@ module Erp::Products
     end
 
     # STATUS
-    def status_draft
-			update_attributes(status: Erp::Products::State::STATE_STATUS_DRAFT)
+    def set_draft
+			update_attributes(status: Erp::Products::State::STATUS_DRAFT)
 		end
 
-    def status_active
-			update_attributes(status: Erp::Products::State::STATE_STATUS_ACTIVE)
+    def set_active
+			update_attributes(status: Erp::Products::State::STATUS_ACTIVE)
 		end
 
-    def status_deleted
-			update_attributes(status: Erp::Products::State::STATE_STATUS_DELETED)
+    def set_deleted
+			update_attributes(status: Erp::Products::State::STATUS_DELETED)
 		end
 
-    def self.status_draft_all
-			update_all(status: Erp::Products::State::STATE_STATUS_DRAFT)
+    def self.set_draft_all
+			update_all(status: Erp::Products::State::STATUS_DRAFT)
 		end
 
-    def self.status_active_all
-			update_all(status: Erp::Products::State::STATE_STATUS_ACTIVE)
+    def self.set_active_all
+			update_all(status: Erp::Products::State::STATUS_ACTIVE)
 		end
 
-    def self.status_deleted_all
-			update_all(status: Erp::Products::State::STATE_STATUS_DELETED)
+    def self.set_deleted_all
+			update_all(status: Erp::Products::State::STATUS_DELETED)
 		end
+    
+    # check status is true/false
+    def is_draft?
+      return self.status == Erp::Products::State::STATUS_DRAFT
+    end
+    
+    def is_active?
+      return self.status == Erp::Products::State::STATUS_ACTIVE
+    end
+    
+    def is_deleted?
+      return self.status == Erp::Products::State::STATUS_DELETED
+    end
 
     # ARCHIVE
     def archive
@@ -150,7 +163,7 @@ module Erp::Products
 		end
 
     def self.get_active
-			self.where(status: self::STATE_STATUS_ACTIVE)
+			self.where(status: self::STATUS_ACTIVE)
 		end
   end
 end

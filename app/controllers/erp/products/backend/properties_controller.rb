@@ -7,10 +7,17 @@ module Erp
 
         # GET /properties
         def index
+          if Erp::Core.available?("ortho_k")
+            authorize! :inventory_products_properties_index, nil
+          end
         end
 
         # POST /properties/list
         def list
+          if Erp::Core.available?("ortho_k")
+            authorize! :inventory_products_properties_index, nil
+          end
+          
           @properties = Property.search(params).paginate(:page => params[:page], :per_page => 10)
 
           render layout: nil
@@ -19,15 +26,21 @@ module Erp
         # GET /properties/new
         def new
           @property = Property.new
+          
+          authorize! :create, @property
         end
 
         # GET /properties/1/edit
         def edit
+          authorize! :update, @property
         end
 
         # POST /properties
         def create
           @property = Property.new(property_params)
+          
+          authorize! :create, @property
+          
           @property.creator = current_user
 
           if @property.save
@@ -47,6 +60,8 @@ module Erp
 
         # PATCH/PUT /properties/1
         def update
+          authorize! :update, @property
+          
           if @property.update(property_params)
             if request.xhr?
               render json: {
@@ -64,6 +79,8 @@ module Erp
 
         # DELETE /properties/1
         def destroy
+          authorize! :destroy, @property
+          
           @property.destroy
 
           respond_to do |format|

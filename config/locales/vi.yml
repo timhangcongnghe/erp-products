@@ -649,6 +649,7 @@ vi:
             delete: "Xóa thương hiệu"
           list:
             name: "Tên thương hiệu"
+            archived: "Không sử dụng"
             delete: "Xóa thương hiệu"
             archive_confirm: "Bạn có chắc muốn ẩn thương hiệu này?"
             unarchive_confirm: "Bạn muốn hiển thị lại thương hiệu này?"
@@ -908,6 +909,10 @@ vi:
             success: "Các phiếu xuất hủy đã được ẩn thành công."
           unarchive_all:
             success: "Các phiếu xuất hủy đã được hiện ra thành công."
+          set_draft:
+            success: "Phiếu xuất hủy đã được lưu tạm thành công."
+          set_pending:
+            success: "Phiếu xuất hủy đã gửi yêu cầu chờ xác nhận thành công."
           set_confirm:
             success: "Phiếu xuất hủy đã được xác nhận hoàn thành."
           set_delete:
@@ -922,6 +927,7 @@ vi:
             description: "Ghi chú/Mô tả"
             status: "Trạng thái"
             draft: "Phiếu tạm"
+            pending: "Đang chờ duyệt"
             done: "Hoàn thành"
             deleted: "Đã bị xóa"
             delete: "Xóa phiếu"
@@ -931,9 +937,13 @@ vi:
             warehouse: "Kho"
             employee: "N.viên phụ trách"
             description: "Ghi chú/Mô tả"
+            set_draft: "Lưu tạm"
+            set_pending: "Yêu cầu duyệt"
+            approve: "Xác nhận (duyệt)"
             status: "Trạng thái"
             draft: "Phiếu tạm"
-            done: "Hoàn thành"
+            pending: "Đang chờ duyệt"
+            done: "Đã xác nhận"
             deleted: "Đã bị xóa"
             delete: "Xóa phiếu"
             no_matching_records_found: "Danh sách hiện không có kết quả nào được tìm thấy"
@@ -997,6 +1007,8 @@ vi:
             success: "Các phiếu kiểm kho đã được hiện ra thành công."
           set_draft:
             success: "Phiếu kiểm kho đã được lưu tạm thành công"
+          set_pending:
+            success: "Phiếu kiểm kho đã gửi yêu cầu kiểm duyệt thành công"
           set_done:
             success: "Phiếu kiểm kho đã được xác nhận thành công"
           set_deleted:
@@ -1009,6 +1021,8 @@ vi:
             warehouse: "Kho"
             employee: "NV phụ trách"
             description: "Ghi chú/Mô tả"
+            draft: "Phiếu tạm"
+            pending: "Đang chờ duyệt"
             done: "Đã xác nhận"
             deleted: "Đã bị hủy"
             quantity: "Chênh lệch"
@@ -1019,8 +1033,12 @@ vi:
             employee: "NV phụ trách"
             description: "Ghi chú/Mô tả"
             status: "Trạng thái"
+            set_draft: "Lưu tạm"
+            set_pending: "Yêu cầu duyệt"
+            approve: "Xác nhận (duyệt)"
             draft: "Phiếu tạm"
-            done: "Xác nhận"
+            pending: "Đang chờ duyệt"
+            done: "Đã xác nhận"
             deleted: "Đã bị hủy"
             delete: "Hủy phiếu"
             no_matching_records_found: "Danh sách phiếu kiểm kho hiện tại đang trống."
@@ -1271,17 +1289,17 @@ vi:
             success: "Ẩn trạng thái sản phẩm được chọn thành công."
           unarchive_all:
             success: "Hiện trạng thái sản phẩm được chọn thành công."
-          status_draft:
+          set_draft:
             success: "Thay đổi trạng thái sản phẩm thành nháp thành công."
-          status_active:
+          set_active:
             success: "Trạng thái sản phẩm được xác nhận thành công."
-          status_deleted:
+          set_deleted:
             success: "Trạng thái sản phẩm đã được hủy."
-          status_draft_all:
+          set_draft_all:
             success: "Thay đổi trạng thái sản phẩm đã chọn thành nháp thành công."
-          status_active_all:
+          set_active_all:
             success: "Trạng thái sản phẩm đã chọn được xác nhận thành công."
-          status_deleted_all:
+          set_deleted_all:
             success: "Trạng thái sản phẩm được chọn đã được hủy."
           index:
             change_draft: "Lưu tạm"
@@ -1289,30 +1307,29 @@ vi:
             change_deleted: "Hủy bỏ"
             change_deleted_confirm: "Bạn có chắc muốn hủy các trạng thái sản phẩm được chọn?"
             states: "Tất cả trạng thái sản phẩm"
-            create: "Thêm mới"
+            create: "Thêm trạng thái"
             delete: "Xóa trạng thái"
             name: "Tên trạng thái"        
-            is_draft: "Lưu tạm"
+            is_draft: "Phiếu tạm"
             is_active: "Đã xác nhận"
             is_deleted: "Đã bị hủy"            
           list:
-            change_draft: "Lưu tạm"
-            change_active: "Xác nhận"
-            change_deleted: "Hủy bỏ"
-            change_deleted_confirm: "Bạn có chắc muốn hủy các trạng thái sản phẩm được chọn?"
-            draft: "Bản lưu tạm"
+            set_draft: "Lưu tạm"
+            set_active: "Xác nhận"
+            set_deleted: "Hủy trạng thái"
+            set_deleted_confirm: "Bạn chắc chắn muốn hủy trạng thái này của sản phẩm?"
+            draft: "Phiếu tạm"
             active: "Đã xác nhận"
             deleted: "Đã bị hủy"
-            delete: "Xóa trạng thái"
             edit: "Cập nhật"
             name: "Tên trạng thái"          
             no_matching_records_found: "Không tìm thấy kết quả."
           new:
             states: "Tất cả trạng thái sản phẩm"
-            create: "Thêm mới"
+            create: "Thêm trạng thái"
           edit:
             states: "Tất cả trạng thái sản phẩm"
-            create: "Thêm mới"           
+            create: "Thêm trạng thái"           
           form:
             name: "Tên trạng thái"
             enter_name: "Nhập tên trạng thái của sản phẩm"
@@ -1335,28 +1352,30 @@ vi:
             success: "Ẩn phiếu kiểm tra sản phẩm được chọn thành công."
           unarchive_all:
             success: "Hiện trạng thái sản phẩm được chọn thành công."
-          status_draft:
+          set_draft:
             success: "Thay đổi phiếu kiểm tra sản phẩm thành nháp thành công."
-          status_active:
+          set_active:
             success: "Phiếu kiểm tra sản phẩm được xác nhận thành công."
-          status_deleted:
+          set_deleted:
             success: "Phiếu kiểm tra sản phẩm đã được hủy."
-          status_draft_all:
+          set_draft_all:
             success: "Thay đổi phiếu kiểm tra sản phẩm đã chọn thành nháp thành công."
-          status_active_all:
+          set_active_all:
             success: "Phiếu kiểm tra sản phẩm đã chọn được xác nhận thành công."
-          status_deleted_all:
+          set_deleted_all:
             success: "Phiếu kiểm tra sản phẩm được chọn đã được hủy."
           index:
             state_checks: "Kiểm tra trạng thái sản phẩm"
             change_draft: "Lưu tạm"
-            change_active: "Xác nhận"
+            change_pending: "Yêu cầu duyệt"
+            change_active: "Xác nhận (duyệt)"
             change_deleted: "Hủy phiếu"
             change_deleted_confirm: "Bạn có chắc muốn hủy các phiếu đã chọn?"
             create: "Tạo phiếu kiểm tra"
-            is_draft: "Phiếu lưu tạm"
-            is_active: "Phiếu đã xác nhận"
-            is_deleted: "Phiếu đã bị hủy"
+            is_draft: "Phiếu tạm"
+            is_pending: "Đang chờ duyệt"
+            is_active: "Đã xác nhận"
+            is_deleted: "Đã bị hủy"
             code: "Mã phiếu"
             state_check_date: "Ngày kiểm tra"
             check_date: "Ngày kiểm tra"
@@ -1381,14 +1400,18 @@ vi:
             no_matching_records_found: "Danh sách kiểm tra không được tìm thấy."
             view_print: "Xem và In"
             draft: "Phiếu tạm"
+            pending: "Đang chờ duyệt"
             active: "Đã xác nhận"
             deleted: "Đã bị hủy"
             edit: "Chỉnh sửa"
             delete: "Hủy phiếu"
-            change_draft: "Lưu nháp"
-            change_active: "Xác nhận"
-            change_deleted: "Hủy phiếu"
-            change_deleted_confirm: "Phiếu kiểm tra trạng thái sản phẩm sẽ bị hủy. Bạn có chắc muốn hủy?"
+            set_draft: "Lưu tạm"
+            set_pending: "Yêu cầu duyệt"
+            approve: "Xác nhận (duyệt)"
+            #change_draft: "Lưu nháp"
+            #change_active: "Xác nhận"
+            #change_deleted: "Hủy phiếu"
+            #change_deleted_confirm: "Phiếu kiểm tra trạng thái sản phẩm sẽ bị hủy. Bạn có chắc muốn hủy?"
           new:
             state_checks: "Kiểm tra trạng thái sản phẩm"
             create: "Tạo phiếu kiểm tra"
@@ -1428,6 +1451,7 @@ vi:
             state_checks: "Kiểm kho - Trạng thái"
             show_state_check: "Chi tiết kiểm tra"
             draft: "Lưu tạm"
+            pending: "Đang chờ"
             active: "Đã xác nhận"
             deleted: "Đã bị hủy"
             options: "Tùy chọn"
