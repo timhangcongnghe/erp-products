@@ -74,8 +74,8 @@
                         </li>
                     </ul>
                     <div class="tab-content stock-check-details">
-                        <% if stock_check.id.nil? %>
-                            <div class="tab-pane addableform-table active" id="tab_5_1">
+                        <div class="tab-pane addableform-table active" id="tab_5_1">
+                            <% if stock_check.id.nil? %>
                                 <div class="row">
                                     <div class="col-md-2">
                                         <%= erp_form_control("dataselect", {

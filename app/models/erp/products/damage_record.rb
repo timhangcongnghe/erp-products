@@ -13,12 +13,10 @@ module Erp::Products
         warehouse.present? ? warehouse.name : ''
       end
     end
-    #after_create  :set_drart
     
     # class const
-    DAMAGE_RECORD_STATUS_PENDING = 'pending'
-    DAMAGE_RECORD_STATUS_DONE = 'done'
     STATUS_DRAFT = 'draft'
+    STATUS_PENDING = 'pending'
     STATUS_DONE = 'done'
     STATUS_DELETED = 'deleted'
     
@@ -29,7 +27,12 @@ module Erp::Products
 			self.damage_record_details.each do |drd|
         drd.update_product_cache_stock
       end
-		end    
+		end
+    
+    # update confirmed at
+    def update_confirmed_at
+      self.update_columns(confirmed_at: Time.now)
+    end
     
     # Generate code
     before_validation :generate_code
@@ -182,8 +185,13 @@ module Erp::Products
 		end
     
     # damage record draft
-    def set_drart
+    def set_draft
       self.update_attributes(status: Erp::Products::DamageRecord::STATUS_DRAFT)
+    end
+    
+    # damage record pending
+    def set_pending
+      self.update_attributes(status: Erp::Products::DamageRecord::STATUS_PENDING)
     end
     
     # damage record confirm
@@ -201,6 +209,11 @@ module Erp::Products
 			return self.status == Erp::Products::DamageRecord::STATUS_DRAFT
 		end
     
+    # check if damage record is pending
+		def is_pending?
+			return self.status == Erp::Products::DamageRecord::STATUS_PENDING
+		end
+    
     # check if damage record is done
 		def is_done?
 			return self.status == Erp::Products::DamageRecord::STATUS_DONE
@@ -213,6 +226,10 @@ module Erp::Products
 		
 		def items_count
       damage_record_details.sum(:quantity)
+    end
+		
+		def self.get_pending_damage_records
+      self.where(status: Erp::Products::DamageRecord::STATUS_PENDING)
     end
   end
 end

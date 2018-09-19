@@ -18,8 +18,10 @@
                 <% if Erp::Core.available?("ortho_k") %>
                     <th width="15%" class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= 'Số Lô/Sê-ri' %></th>
                 <% end %>
-                <th width="15%" class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.note') %></th>
-                <td class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"></td>
+                <th width="20%" class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"><%= t('.note') %></th>
+                <% if false %>
+                    <td class="text-center bg-yellow-mint bg-font-yellow-mint text-nowrap"></td>
+                <% end %>
             </tr>
         </thead>
         <tbody>
@@ -33,7 +35,9 @@
                     <td class="bg-green-jungle bg-font-green-jungle text-center"></td>
                 <% end %>
                 <td class="bg-green-jungle bg-font-green-jungle text-center"></td>
-                <td class="bg-green-jungle bg-font-green-jungle text-center"></td>
+                <% if false %>
+                    <td class="bg-green-jungle bg-font-green-jungle text-center"></td>
+                <% end %>
             </tr>
             <% @stock_check_details.each do |stock_check_detail| %>
                 <tr>
@@ -50,7 +54,8 @@
                             text: stock_check_detail.real,
                             class: "line_real_qty inline down-focus",
                             required: true
-                        }) %>
+                        }) if false %>
+                        <%= format_number(stock_check_detail.real) %>
                     </td>
                     <td class="text-center"><%= format_number(stock_check_detail.quantity) %></td>
                     <td class="text-center"><%= stock_check_detail.state_name %></td>
@@ -58,10 +63,14 @@
                         <td class="text-left"><%= stock_check_detail.serials %></td>
                     <% end %>
                     <td class="text-left"><%= stock_check_detail.note %></td>
-                    <td class="text-left">
-                        <a data-method="POST" href="<%= erp_products.inline_update_backend_stock_check_details_path(id: stock_check_detail.id) %>" class="btn btn-xs btn-primary ajax-datalist-inline-action"> Lưu</a>
-                        <a data-method="DELETE" href="<%= erp_products.delete_backend_stock_check_details_path(id: stock_check_detail.id) %>" class="btn btn-xs btn-danger ajax-datalist-inline-action"> Xóa</a>
-                    </td>
+                    <% if false %>
+                        <td class="text-left">
+                            <% if can? :update, @stock_check %>
+                                <a data-method="POST" href="<%= erp_products.inline_update_backend_stock_check_details_path(id: stock_check_detail.id) %>" class="btn btn-xs btn-primary ajax-datalist-inline-action"> Lưu</a>
+                                <a data-method="DELETE" href="<%= erp_products.delete_backend_stock_check_details_path(id: stock_check_detail.id) %>" class="btn btn-xs btn-danger ajax-datalist-inline-action"> Xóa</a>
+                            <% end %>
+                        </td>
+                    <% end %>
                 </tr>
             <% end %>
         </tbody>

@@ -7,11 +7,13 @@
 <% end %>
 
 <% content_for :page_toolbar do %>
-    <%= erp_component('button/create', {
-        text: t('.create'),
-        href: erp_products.new_backend_damage_record_path,
-        class: 'btn-noborder'
-    }) %>
+    <% if can? :inventory_products_warehouse_checks_with_damage_create, nil %>
+        <%= erp_component('button/create', {
+            text: t('.create'),
+            href: erp_products.new_backend_damage_record_path,
+            class: 'btn-noborder'
+        }) %>
+    <% end %>
 <% end %>
 
 <% content_for :global_filter do %>
@@ -85,6 +87,9 @@
     filters: [
         {
             text: t('.draft'), name: 'erp_products_damage_records.status', value: Erp::Products::DamageRecord::STATUS_DRAFT, checked: false
+        },
+        {
+            text: t('.pending'), name: 'erp_products_damage_records.status', value: Erp::Products::DamageRecord::STATUS_PENDING, checked: true
         },
         {
             text: t('.done'), name: 'erp_products_damage_records.status', value: Erp::Products::DamageRecord::STATUS_DONE, checked: true

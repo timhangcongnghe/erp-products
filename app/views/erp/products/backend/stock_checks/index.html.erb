@@ -7,11 +7,13 @@
 <% end %>
 
 <% content_for :page_toolbar do %>
-    <%= erp_component('button/create', {
-        text: t('.create'),
-        href: erp_products.new_backend_stock_check_path,
-        class: 'btn-noborder'
-    }) %>
+    <% if can? :inventory_products_warehouse_checks_with_stock_create, nil %>
+        <%= erp_component('button/create', {
+            text: t('.create'),
+            href: erp_products.new_backend_stock_check_path,
+            class: 'btn-noborder'
+        }) %>
+    <% end %>
 <% end %>
 
 <% content_for :global_filter do %>
@@ -81,6 +83,12 @@
     ],
     actions: actions,
     filters: [
+        {
+            text: t('.draft'), name: 'erp_products_stock_checks.status', value: Erp::Products::StockCheck::STATUS_DRAFT, checked: false
+        },
+        {
+            text: t('.pending'), name: 'erp_products_stock_checks.status', value: Erp::Products::StockCheck::STATUS_PENDING, checked: true
+        },
         {
             text: t('.done'), name: 'erp_products_stock_checks.status', value: Erp::Products::StockCheck::STATUS_DONE, checked: true
         },

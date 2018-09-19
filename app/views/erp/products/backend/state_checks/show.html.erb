@@ -12,24 +12,23 @@
 <% end %>
 
 <% content_for :page_toolbar do %>
-
+    
+    <%
+        actions = []
+        actions << {
+            text: '<i class="fa fa-edit"></i> '+t('.edit'),
+            url: erp_products.edit_backend_state_check_path(@state_check)
+        } if can? :update, @state_check
+        actions << {
+            text: '<i class="fa fa-close"></i> '+t('.delete'),
+            href: erp_products.set_deleted_backend_state_checks_path(id: @state_check.id),
+            data_method: 'PUT',
+            data_confirm: t('.delete_confirm'),
+            class: 'ajax-link'
+        } if can? :set_deleted, @state_check
+    %>
     <%= erp_component('button/actions', {
-        actions:
-        [
-            {
-                text: '<i class="fa fa-edit"></i> '+t('.edit'),
-                url: erp_products.edit_backend_state_check_path(@state_check),
-                hide: false,
-            },
-            {
-                text: '<i class="fa fa-close"></i> '+t('.delete'),
-                href: erp_products.status_deleted_backend_state_checks_path(id: @state_check.id),
-                data_method: 'PUT',
-                data_confirm: t('.delete_confirm'),
-                hide: false,
-                class: 'ajax-link'
-            }
-        ],
+        actions: actions,
         text: t('.options'),
         class: 'btn-noborder'
     }) %>

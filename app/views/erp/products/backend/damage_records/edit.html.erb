@@ -9,10 +9,12 @@
 <% end %>
 
 <% content_for :page_toolbar do %>
-    <%= erp_component('button/create', {
-        text: t('.create'),
-        href: erp_products.new_backend_damage_record_path
-    }) %>
+    <% if can? :create, @damage_record %>
+        <%= erp_component('button/create', {
+            text: t('.create'),
+            href: erp_products.new_backend_damage_record_path
+        }) %>
+    <% end %>
 <% end %>
 
 <div class="row">

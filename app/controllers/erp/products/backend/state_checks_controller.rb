@@ -2,15 +2,19 @@ module Erp
   module Products
     module Backend
       class StateChecksController < Erp::Backend::BackendController
-        before_action :set_state_check, only: [:archive, :unarchive, :status_draft, :status_active, :status_deleted, :edit, :update, :show, :show_list, :pdf]
-        before_action :set_state_checks, only: [:delete_all, :archive_all, :unarchive_all, :status_draft_all, :status_active_all, :status_deleted_all]
+        before_action :set_state_check, only: [:archive, :unarchive, :set_draft, :set_pending, :set_active, :set_deleted,
+                                               :edit, :update, :show, :show_list, :pdf]
+        before_action :set_state_checks, only: [:delete_all, :archive_all, :unarchive_all, :set_draft_all, :set_pending_all, :set_active_all, :set_deleted_all]
 
         # GET /state_checks
         def index
+          authorize! :inventory_products_warehouse_checks_with_state_index, nil
         end
 
         # POST /state_checks/list
         def list
+          authorize! :inventory_products_warehouse_checks_with_state_index, nil
+          
           @state_checks = StateCheck.search(params).paginate(:page => params[:page], :per_page => 10)
           if params.to_unsafe_hash[:global_filter].present? and params.to_unsafe_hash[:global_filter][:state_check_date].present?
             @state_checks = @state_checks.where('check_date >= ?', params.to_unsafe_hash[:global_filter][:state_check_date].to_date.beginning_of_day)
@@ -26,7 +30,7 @@ module Erp
         
         # GET /orders/1
         def pdf
-          #authorize! :read, @state_check
+          authorize! :print, @state_check
 
           respond_to do |format|
             format.html
@@ -64,17 +68,23 @@ module Erp
           @state_check = StateCheck.new
           @state_check.check_date = Time.now
           @state_check.employee_id = current_user.id
+          
+          authorize! :create, @state_check
         end
 
         # GET /state_checks/1/edit
         def edit
+          authorize! :update, @state_check
         end
 
         # POST /state_checks
         def create
           @state_check = StateCheck.new(state_check_params)
+          
+          authorize! :create, @state_check
+          
           @state_check.creator = current_user
-          @state_check.status = Erp::Products::StateCheck::STATE_CHECK_STATUS_ACTIVE
+          @state_check.set_pending
 
           if @state_check.save
             if request.xhr?
@@ -93,7 +103,13 @@ module Erp
 
         # PATCH/PUT /state_checks/1
         def update
+          authorize! :update, @state_check
+          
           if @state_check.update(state_check_params)
+            
+            # neu update thi phai duyet lai
+            @state_check.set_pending if @state_check.is_active?
+            
             if request.xhr?
               render json: {
                 status: 'success',
@@ -108,20 +124,20 @@ module Erp
           end
         end
 
-        # DELETE /state_checks/1
-        def destroy
-          @state_check.destroy
-
-          respond_to do |format|
-            format.html { redirect_to erp_products.backend_state_checks_path, notice: t('.success') }
-            format.json {
-              render json: {
-                'message': t('.success'),
-                'type': 'success'
-              }
-            }
-          end
-        end
+        ## DELETE /state_checks/1
+        #def destroy
+        #  @state_check.destroy
+        #
+        #  respond_to do |format|
+        #    format.html { redirect_to erp_products.backend_state_checks_path, notice: t('.success') }
+        #    format.json {
+        #      render json: {
+        #        'message': t('.success'),
+        #        'type': 'success'
+        #      }
+        #    }
+        #  end
+        #end
 
         # ARCHIVE /state_checks/archive?id=1
         def archive
@@ -149,9 +165,11 @@ module Erp
           end
         end
 
-        # STATUS DRAFT /state_checks/status_draft?id=1
-        def status_draft
-          @state_check.status_draft
+        # STATUS DRAFT /state_checks/set_draft?id=1
+        def set_draft
+          authorize! :set_draft, @state_check
+          
+          @state_check.set_draft
           respond_to do |format|
             format.json {
               render json: {
@@ -162,9 +180,11 @@ module Erp
           end
         end
 
-        # STATUS ACTIVE /state_checks/status_active?id=1
-        def status_active
-          @state_check.status_active
+        # STATUS PENDING /state_checks/set_pending?id=1
+        def set_pending
+          authorize! :set_pending, @state_check
+          
+          @state_check.set_pending
           respond_to do |format|
             format.json {
               render json: {
@@ -175,9 +195,26 @@ module Erp
           end
         end
 
-        # STATUS DELETED /state_checks/status_deleted?id=1
-        def status_deleted
-          @state_check.status_deleted
+        # STATUS ACTIVE /state_checks/set_active?id=1
+        def set_active
+          authorize! :set_active, @state_check
+          
+          @state_check.set_active
+          respond_to do |format|
+            format.json {
+              render json: {
+                'message': t('.success'),
+                'type': 'success'
+              }
+            }
+          end
+        end
+
+        # STATUS DELETED /state_checks/set_deleted?id=1
+        def set_deleted
+          authorize! :set_deleted, @state_check
+          
+          @state_check.set_deleted
           respond_to do |format|
             format.json {
               render json: {
@@ -189,18 +226,18 @@ module Erp
         end
 
         # DELETE ALL /state_checks/delete_all?ids=1,2,3
-        def delete_all
-          @state_checks.destroy_all
-
-          respond_to do |format|
-            format.json {
-              render json: {
-                'message': t('.success'),
-                'type': 'success'
-              }
-            }
-          end
-        end
+        #def delete_all
+        #  @state_checks.destroy_all
+        #
+        #  respond_to do |format|
+        #    format.json {
+        #      render json: {
+        #        'message': t('.success'),
+        #        'type': 'success'
+        #      }
+        #    }
+        #  end
+        #end
 
         # ARCHIVE ALL /state_checks/archive_all?ids=1,2,3
         def archive_all
@@ -230,9 +267,9 @@ module Erp
           end
         end
 
-        # STATUS DRAFT ALL /state_checks/status_draft_all?ids=1,2,3
-        def status_draft_all
-          @state_checks.status_draft_all
+        # STATUS DRAFT ALL /state_checks/set_draft_all?ids=1,2,3
+        def set_draft_all
+          @state_checks.set_draft_all
 
           respond_to do |format|
             format.json {
@@ -244,9 +281,9 @@ module Erp
           end
         end
 
-        # STATUS ACTIVE ALL /state_checks/status_active_all?ids=1,2,3
-        def status_active_all
-          @state_checks.status_active_all
+        # STATUS PENDING ALL /state_checks/set_pending_all?ids=1,2,3
+        def set_pending_all
+          @state_checks.set_pending_all
 
           respond_to do |format|
             format.json {
@@ -258,9 +295,23 @@ module Erp
           end
         end
 
-        # STATUS DELETED ALL /state_checks/status_deleted_all?ids=1,2,3
-        def status_deleted_all
-          @state_checks.status_deleted_all
+        # STATUS ACTIVE ALL /state_checks/set_active_all?ids=1,2,3
+        def set_active_all
+          @state_checks.set_active_all
+
+          respond_to do |format|
+            format.json {
+              render json: {
+                'message': t('.success'),
+                'type': 'success'
+              }
+            }
+          end
+        end
+
+        # STATUS DELETED ALL /state_checks/set_deleted_all?ids=1,2,3
+        def set_deleted_all
+          @state_checks.set_deleted_all
 
           respond_to do |format|
             format.json {

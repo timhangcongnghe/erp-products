@@ -95,37 +95,7 @@
                     <td><%= format_date(stock_check.created_at) %></td>
                 <% end %>
                 <td>
-                    <%= erp_datalist_row_actions(
-                        [
-                            {
-                                text: '<i class="fa fa-edit"></i> '+t('edit'),
-                                href: erp_products.edit_backend_stock_check_path(stock_check)
-                            },
-                            {
-                                text: '<i class="fa fa-print"></i> '+t('.view_print'),
-                                url: erp_products.backend_stock_check_path(stock_check),
-                                target: '_blank'
-                            },
-                            {
-                                text: '<i class="fa fa-check"></i> '+t('confirm'),
-                                url: erp_products.set_done_backend_stock_checks_path(id: stock_check),
-                                data_method: 'PUT',
-                                hide: stock_check.is_done?,
-                                class: 'ajax-link'
-                            },
-                            {
-                                divider: true
-                            },
-                            {
-                                text: '<i class="fa fa-trash"></i> '+t('.delete'),
-                                url: erp_products.set_deleted_backend_stock_checks_path(id: stock_check),
-                                data_method: 'PUT',
-                                data_confirm: t('delete_confirm'),
-                                hide: stock_check.is_deleted?,
-                                class: 'ajax-link',
-                            }
-                        ]
-                    ) %>
+                    <%= stock_check_dropdown_actions(stock_check) %>
                 </td>
             </tr>
         <% end %>

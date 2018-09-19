@@ -2,16 +2,19 @@ module Erp
   module Products
     module Backend
       class StockChecksController < Erp::Backend::BackendController
-        before_action :set_stock_check, only: [:stock_check_details, :set_draft, :set_done, :set_deleted,
+        before_action :set_stock_check, only: [:stock_check_details, :set_draft, :set_pending, :set_done, :set_deleted,
                                                :table_stock_check_details, :archive, :unarchive, :show, :show_list, :pdf, :edit, :update]
         before_action :set_stock_checks, only: [:delete_all, :archive_all, :unarchive_all]
 
         # GET /stock_checks
         def index
+          authorize! :inventory_products_warehouse_checks_with_stock_index, nil
         end
 
         # POST /stock_checks/list
         def list
+          authorize! :inventory_products_warehouse_checks_with_stock_index, nil
+          
           @stock_checks = StockCheck.search(params).paginate(:page => params[:page], :per_page => 20)
 
           render layout: nil
@@ -45,7 +48,7 @@ module Erp
 
         # GET /orders/1
         def pdf
-          #authorize! :read, @delivery
+          authorize! :print, @stock_check
 
           respond_to do |format|
             format.html
@@ -83,17 +86,23 @@ module Erp
           @stock_check = StockCheck.new
           @stock_check.adjustment_date = Time.now
           @stock_check.employee = current_user
+          
+          authorize! :create, @stock_check
         end
 
         # GET /stock_checks/1/edit
         def edit
+          authorize! :update, @stock_check
         end
 
         # POST /stock_checks
         def create
           @stock_check = StockCheck.new(stock_check_params)
+          
+          authorize! :create, @stock_check
+          
           @stock_check.creator = current_user
-          @stock_check.status = Erp::Products::StockCheck::STATUS_DONE
+          @stock_check.set_pending
 
           if @stock_check.save
             if request.xhr?
@@ -112,7 +121,13 @@ module Erp
 
         # PATCH/PUT /stock_checks/1
         def update
+          authorize! :update, @stock_check
+          
           if @stock_check.update(stock_check_params)
+            
+            # neu update thi phai duyet lai
+            @stock_check.set_pending if @stock_check.is_done?
+            
             if request.xhr?
               render json: {
                 status: 'success',
@@ -197,7 +212,25 @@ module Erp
 
         # Confirm /stock_checks/set_draft?id=1
         def set_draft
+          authorize! :set_draft, @stock_check
+          
           @stock_check.set_draft
+
+          respond_to do |format|
+          format.json {
+            render json: {
+            'message': t('.success'),
+            'type': 'success'
+            }
+          }
+          end
+        end
+
+        # Confirm /stock_checks/set_pending?id=1
+        def set_pending
+          authorize! :set_pending, @stock_check
+          
+          @stock_check.set_pending
 
           respond_to do |format|
           format.json {
@@ -211,7 +244,10 @@ module Erp
 
         # Confirm /stock_checks/set_done?id=1
         def set_done
+          authorize! :set_done, @stock_check
+          
           @stock_check.set_done
+          @stock_check.update_confirmed_at
 
           respond_to do |format|
           format.json {
@@ -225,6 +261,8 @@ module Erp
 
         # Confirm /stock_checks/set_deleted?id=1
         def set_deleted
+          authorize! :set_deleted, @stock_check
+          
           @stock_check.set_deleted
 
           respond_to do |format|

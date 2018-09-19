@@ -21,6 +21,7 @@ module Erp::Products
     
     # class const
     STATUS_DRAFT = 'draft'
+    STATUS_PENDING = 'pending'
     STATUS_DONE = 'done'
     STATUS_DELETED = 'deleted'
     
@@ -32,6 +33,11 @@ module Erp::Products
         scd.update_product_cache_stock
       end
 		end
+    
+    # update confirmed at
+    def update_confirmed_at
+      self.update_columns(confirmed_at: Time.now)
+    end
     
     # Generate code
     before_validation :generate_code
@@ -185,6 +191,11 @@ module Erp::Products
     def set_draft
       self.update_attributes(status: Erp::Products::StockCheck::STATUS_DRAFT)
     end
+    
+    # set status is pending
+    def set_pending
+      self.update_attributes(status: Erp::Products::StockCheck::STATUS_PENDING)
+    end
      
     # set status is done/confirm
     def set_done
@@ -194,6 +205,11 @@ module Erp::Products
     # set status is deleted
     def set_deleted
       self.update_attributes(status: Erp::Products::StockCheck::STATUS_DELETED)
+    end
+    
+    # check if is pending
+    def is_pending?
+      return self.status == Erp::Products::StockCheck::STATUS_PENDING
     end
     
     # check if is draft
@@ -257,6 +273,10 @@ module Erp::Products
       end
         
       return query
+    end
+		
+		def self.get_pending_stock_checks
+      self.where(status: Erp::Products::StockCheck::STATUS_PENDING)
     end
   end
 end

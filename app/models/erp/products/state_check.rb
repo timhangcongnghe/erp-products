@@ -7,6 +7,11 @@ module Erp::Products
     STATE_CHECK_STATUS_DRAFT = 'draft'
     STATE_CHECK_STATUS_ACTIVE = 'active'
     STATE_CHECK_STATUS_DELETED = 'deleted'
+    
+    STATUS_DRAFT = 'draft'
+    STATUS_PENDING = 'pending'
+    STATUS_ACTIVE = 'active'
+    STATUS_DELETED = 'deleted'
 
     has_many :state_check_details, inverse_of: :state_check, dependent: :destroy
     accepts_nested_attributes_for :state_check_details, :reject_if => lambda { |a| a[:product_id].blank? || a[:state_id].blank? || a[:quantity].blank? || a[:quantity].to_i <= 0 }, :allow_destroy => true
@@ -161,29 +166,54 @@ module Erp::Products
     end
 
     # STATUS
-    def status_draft
-			update_attributes(status: Erp::Products::StateCheck::STATE_CHECK_STATUS_DRAFT)
+    def set_draft
+			update_attributes(status: Erp::Products::StateCheck::STATUS_DRAFT)
 		end
 
-    def status_active
-			update_attributes(status: Erp::Products::StateCheck::STATE_CHECK_STATUS_ACTIVE)
+    def set_pending
+			update_attributes(status: Erp::Products::StateCheck::STATUS_PENDING)
 		end
 
-    def status_deleted
-			update_attributes(status: Erp::Products::StateCheck::STATE_CHECK_STATUS_DELETED)
+    def set_active
+			update_attributes(status: Erp::Products::StateCheck::STATUS_ACTIVE)
 		end
 
-    def self.status_draft_all
-			update_all(status: Erp::Products::StateCheck::STATE_CHECK_STATUS_DRAFT)
+    def set_deleted
+			update_attributes(status: Erp::Products::StateCheck::STATUS_DELETED)
 		end
 
-    def self.status_active_all
-			update_all(status: Erp::Products::StateCheck::STATE_CHECK_STATUS_ACTIVE)
+    def self.set_draft_all
+			update_all(status: Erp::Products::StateCheck::STATUS_DRAFT)
 		end
 
-    def self.status_deleted_all
-			update_all(status: Erp::Products::StateCheck::STATE_CHECK_STATUS_DELETED)
+    def self.set_pending_all
+			update_all(status: Erp::Products::StateCheck::STATUS_PENDING)
 		end
+
+    def self.set_active_all
+			update_all(status: Erp::Products::StateCheck::STATUS_ACTIVE)
+		end
+
+    def self.set_deleted_all
+			update_all(status: Erp::Products::StateCheck::STATUS_DELETED)
+		end
+    
+    # check status is true/false
+    def is_draft?
+      return self.status == Erp::Products::StateCheck::STATUS_DRAFT
+    end
+    
+    def is_pending?
+      return self.status == Erp::Products::StateCheck::STATUS_PENDING
+    end
+    
+    def is_active?
+      return self.status == Erp::Products::StateCheck::STATUS_ACTIVE
+    end
+    
+    def is_deleted?
+      return self.status == Erp::Products::StateCheck::STATUS_DELETED
+    end
 
     # ARCHIVE
     def archive
@@ -206,6 +236,9 @@ module Erp::Products
 		def total_quantity
       state_check_details.sum(:quantity)
     end
-
+    
+		def self.get_pending_state_checks
+      self.where(status: Erp::Products::StateCheck::STATUS_PENDING)
+    end
   end
 end

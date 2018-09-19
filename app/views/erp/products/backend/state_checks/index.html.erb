@@ -7,11 +7,13 @@
 <% end %>
 
 <% content_for :page_toolbar do %>
-    <%= erp_component('button/create', {
-        text: t('.create'),
-        href: erp_products.new_backend_state_check_path,
-        class: 'btn-noborder'
-    }) %>
+    <% if can? :inventory_products_warehouse_checks_with_state_create, nil %>
+        <%= erp_component('button/create', {
+            text: t('.create'),
+            href: erp_products.new_backend_state_check_path,
+            class: 'btn-noborder'
+        }) %>
+    <% end %>
 <% end %>
 
 <% content_for :global_filter do %>
@@ -43,6 +45,32 @@
     </div>
 <% end %>
 
+<%
+    actions = []
+    actions << {
+        text: '<i class="fa fa-clipboard"></i> '+t('.change_draft'),
+        url: erp_products.set_draft_all_backend_state_checks_path,
+        data_method: 'PUT'
+    } if !Erp::Core.available?('ortho_k')
+    actions << {
+        text: '<i class="fa fa-hand-pointer-o"></i> '+t('.change_pending'),
+        url: erp_products.set_pending_all_backend_state_checks_path,
+        data_method: 'PUT'
+    } if !Erp::Core.available?('ortho_k')
+    actions << {
+        text: '<i class="fa fa-check"></i> '+t('.change_active'),
+        url: erp_products.set_active_all_backend_state_checks_path,
+        data_method: 'PUT'
+    } if !Erp::Core.available?('ortho_k')
+    actions << { divider: true } if !Erp::Core.available?('ortho_k')
+    actions << {
+        text: '<i class="fa fa-trash"></i> '+t('.change_deleted'),
+        url: erp_products.set_deleted_all_backend_state_checks_path,
+        data_method: 'PUT',
+        data_confirm: t('.change_deleted_confirm')
+    } if !Erp::Core.available?('ortho_k')
+%>
+
 <%= erp_datalist(
     url: erp_products.list_backend_state_checks_path,
     keywords: [
@@ -66,36 +94,19 @@
             }
         }
     ],
-    actions: [
-        {
-            text: '<i class="fa fa-file-o"></i> '+t('.change_draft'),
-            url: erp_products.status_draft_all_backend_state_checks_path,
-            data_method: 'PUT'
-        },
-        {
-            text: '<i class="fa fa-check"></i> '+t('.change_active'),
-            url: erp_products.status_active_all_backend_state_checks_path,
-            data_method: 'PUT'
-        },
-        {
-            divider: true
-        },
-        {
-            text: '<i class="fa fa-trash"></i> '+t('.change_deleted'),
-            url: erp_products.status_deleted_all_backend_state_checks_path,
-            data_method: 'PUT',
-            data_confirm: t('.change_deleted_confirm')
-        }
-    ],
+    actions: actions,
     filters: [
         {
-            text: t('.is_draft'), name: 'erp_products_state_checks.status', value: 'draft', checked: false
+            text: t('.is_draft'), name: 'erp_products_state_checks.status', value: Erp::Products::StateCheck::STATUS_DRAFT, checked: false
         },
         {
-            text: t('.is_active'), name: 'erp_products_state_checks.status', value: 'active', checked: true
+            text: t('.is_pending'), name: 'erp_products_state_checks.status', value: Erp::Products::StateCheck::STATUS_PENDING, checked: true
         },
         {
-            text: t('.is_deleted'), name: 'erp_products_state_checks.status', value: 'deleted', checked: false
+            text: t('.is_active'), name: 'erp_products_state_checks.status', value: Erp::Products::StateCheck::STATUS_ACTIVE, checked: true
+        },
+        {
+            text: t('.is_deleted'), name: 'erp_products_state_checks.status', value: Erp::Products::StateCheck::STATUS_DELETED, checked: false
         }
     ],
     columns: [

@@ -88,20 +88,19 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane addableform-table active" id="tab_5_1">
-
                             <% if Erp::Core.available?("ortho_k") %>
                                 <div class="row">
-                                  <div class="col-md-3">
-                                    <%= erp_form_control("dataselect", {
-                                        name: 'default_state',
-                                        value: '',
-                                        text: '',
-                                        label: 'Tình trạng mặc định',
-                                        placeholder: 'Chọn tình trạng',
-                                        url: erp_products.dataselect_backend_states_path(format: 'json'),
-                                    }) %>
-                                  </div>
-                            </div>
+                                    <div class="col-md-3">
+                                        <%= erp_form_control("dataselect", {
+                                            name: 'default_state',
+                                            value: '',
+                                            text: '',
+                                            label: 'Tình trạng mặc định',
+                                            placeholder: 'Chọn tình trạng',
+                                            url: erp_products.dataselect_backend_states_path(format: 'json'),
+                                        }) %>
+                                    </div>
+                                </div>
                             <% end %>
 
                             <%= erp_form_control("addableform", {
