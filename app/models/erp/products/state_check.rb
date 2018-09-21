@@ -24,6 +24,11 @@ module Erp::Products
       end
 		end
     
+    # update confirmed at
+    def update_confirmed_at
+      self.update_columns(confirmed_at: Time.now)
+    end
+    
     # Generate code
     before_validation :generate_code
     def generate_code

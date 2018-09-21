@@ -200,6 +200,8 @@ module Erp
           authorize! :set_active, @state_check
           
           @state_check.set_active
+          @state_check.update_confirmed_at
+          
           respond_to do |format|
             format.json {
               render json: {
