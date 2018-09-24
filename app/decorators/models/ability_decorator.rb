@@ -1,29 +1,53 @@
 Erp::Ability.class_eval do
   def products_ability(user)
     
+    # -- Product -- Start
     can :read, Erp::Products::Product
+    
+    can :create, Erp::Products::Product do |product|
+      if Erp::Core.available?("ortho_k")
+        user.get_permission(:inventory, :products, :products, :create) == 'yes'
+      else
+        true
+      end
+    end
 
     can :update, Erp::Products::Product do |product|
-      !product.archived?
+      if Erp::Core.available?("ortho_k")
+        !product.archived? and user.get_permission(:inventory, :products, :products, :update) == 'yes'
+      else
+        !product.archived?
+      end
     end
 
     can :archive, Erp::Products::Product do |product|
-      !product.archived?
+      if Erp::Core.available?("ortho_k")
+        !product.archived? and user.get_permission(:inventory, :products, :products, :archive) == 'yes'
+      else
+        !product.archived?
+      end
     end
 
     can :unarchive, Erp::Products::Product do |product|
-      product.archived?
+      if Erp::Core.available?("ortho_k")
+        product.archived? and user.get_permission(:inventory, :products, :products, :unarchive) == 'yes'
+      else
+        product.archived?
+      end
     end
     
     if Erp::Core.available?("ortho_k")
       can :combine, Erp::Products::Product do |product|
-        !product.archived? and !product.parts.empty?
+        (!product.archived? and !product.parts.empty?) and
+        user.get_permission(:inventory, :products, :products, :combine) == 'yes'
       end
   
       can :split, Erp::Products::Product do |product|
-        !product.archived? and !product.parts.empty?
+        (!product.archived? and !product.parts.empty?) and
+        user.get_permission(:inventory, :products, :products, :split) == 'yes'
       end
     end
+    # -- Product -- End
     
     # -- Damage Record -- Start
     # damage record /create

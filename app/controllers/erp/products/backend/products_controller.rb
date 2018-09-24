@@ -12,10 +12,17 @@ module Erp
 
         # GET /products
         def index
+          if Erp::Core.available?("ortho_k")
+            authorize! :inventory_products_products_index, nil
+          end
         end
 
         # POST /products/list
         def list
+          if Erp::Core.available?("ortho_k")
+            authorize! :inventory_products_products_index, nil
+          end
+          
           @products = Product.search(params).paginate(:page => params[:page], :per_page => 20)
 
           render layout: nil
@@ -28,6 +35,9 @@ module Erp
         # GET /products/new
         def new
           @product = Product.new
+          
+          authorize! :create, @product
+          
           12.times do
             @product.product_images.build
           end
@@ -42,6 +52,8 @@ module Erp
 
         # GET /products/1/edit
         def edit
+          authorize! :update, @product
+          
           # default product images
           (12 - @product.product_images.count).times do
             @product.product_images.build
@@ -51,6 +63,9 @@ module Erp
         # POST /products
         def create
           @product = Product.new(product_params)
+          
+          authorize! :create, @product
+          
           @product.creator = current_user
           8.times do
             @product.product_images.build
@@ -91,6 +106,8 @@ module Erp
 
         # PATCH/PUT /products/1
         def update
+          authorize! :update, @product
+          
           @product.product_property_values = params.to_unsafe_hash[:product_property_values]
           @product.assign_attributes(product_params)
 
@@ -142,6 +159,8 @@ module Erp
 
         # Archive /products/archive?id=1
         def archive
+          authorize! :archive, @product
+          
           @product.archive
 
           respond_to do |format|
@@ -156,6 +175,8 @@ module Erp
 
         # Unarchive /products/unarchive?id=1
         def unarchive
+          authorize! :unarchive, @product
+          
           @product.unarchive
 
           respond_to do |format|
@@ -644,6 +665,10 @@ module Erp
 
         # Export excel file
         def xlsx
+          if Erp::Core.available?("ortho_k")
+            authorize! :inventory_products_products_export_to_excel, nil
+          end
+          
           @products = Product.search(params)
 
           @categories = Erp::Products::Category.where(id: @products.select(:category_id))

@@ -6,15 +6,17 @@
                 <li class="active">
                     <a href="#tab_<%= tabid %>_1" data-toggle="tab"> <%= t('.general') %> </a>
                 </li>
-                <li>
-                    <a href="#tab_<%= tabid %>_2" data-toggle="tab"> <%= t('.stock') %> </a>
-                </li>
+                <% if Erp::Core.available?("ortho_k") ? (can? :inventory_products_products_view_stock, nil) : true  %>
+                    <li>
+                        <a href="#tab_<%= tabid %>_2" data-toggle="tab"> <%= t('.stock') %> </a>
+                    </li>
+                <% end %>
                 <% if false %>
                 <li>
                     <a href="#tab_<%= tabid %>_3" data-toggle="tab"> <%= t('.images') %> </a>
                 </li>
                 <% end %>
-                <% if Erp::Core.available?("qdeliveries") and Erp::Core.available?("ortho_k") %>
+                <% if Erp::Core.available?("qdeliveries") and Erp::Core.available?("ortho_k") and (can? :inventory_products_products_import_export_history, nil) %>
                     <li>
                         <a href="#tab_<%= tabid %>_4" data-toggle="tab"> <%= t('.import_export_warehouse') %> </a>
                     </li>
@@ -120,52 +122,57 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane" id="tab_<%= tabid %>_2">
-                    <table class="table table-advance table-hover table-striped table-checkable order-column">
-                        <tr>
-                            <th></th>
-                            <% Erp::Products::State.all_active.each do |state| %>
-                                <th class="text-center"><%= state.name %></th>
-                            <% end %>
-                            <th class="text-center">Tổng tồn</th>
-                        </tr>
-                        <% Erp::Warehouses::Warehouse.all.each do |warehouse| %>
+                
+                <% if Erp::Core.available?("ortho_k") ? (can? :inventory_products_products_view_stock, nil) : true  %>
+                    <div class="tab-pane" id="tab_<%= tabid %>_2">
+                        <table class="table table-advance table-hover table-striped table-checkable order-column">
                             <tr>
-                                <th class="text-left"><%= warehouse.name %></th>
+                                <th></th>
                                 <% Erp::Products::State.all_active.each do |state| %>
-                                    <td class="text-center">
+                                    <th class="text-center"><%= state.name %></th>
+                                <% end %>
+                                <th class="text-center">Tổng tồn</th>
+                            </tr>
+                            <% Erp::Warehouses::Warehouse.all.each do |warehouse| %>
+                                <tr>
+                                    <th class="text-left"><%= warehouse.name %></th>
+                                    <% Erp::Products::State.all_active.each do |state| %>
+                                        <td class="text-center">
+                                            <%= product.get_stock(
+                                                state_ids: state.id,
+                                                warehouse_ids: warehouse.id,
+                                            ) %>
+                                        </td>
+                                    <% end %>
+                                    <td class="text-bold text-center">
                                         <%= product.get_stock(
-                                            state_ids: state.id,
                                             warehouse_ids: warehouse.id,
                                         ) %>
                                     </td>
+                                </tr>
+                            <% end %>
+                            <tr>
+                                <th class="text-left">Tất cả Kho</th>
+                                <% Erp::Products::State.all_active.each do |state| %>
+                                    <td class="text-bold text-primary text-center">
+                                        <%= product.get_stock(
+                                            state_ids: state.id,
+                                        ) %>
+                                    </td>
                                 <% end %>
-                                <td class="text-bold text-center">
-                                    <%= product.get_stock(
-                                        warehouse_ids: warehouse.id,
-                                    ) %>
+                                <td class="text-bold text-primary text-center">
+                                    <%= product.get_stock %>
                                 </td>
                             </tr>
-                        <% end %>
-                        <tr>
-                            <th class="text-left">Tất cả Kho</th>
-                            <% Erp::Products::State.all_active.each do |state| %>
-                                <td class="text-bold text-primary text-center">
-                                    <%= product.get_stock(
-                                        state_ids: state.id,
-                                    ) %>
-                                </td>
-                            <% end %>
-                            <td class="text-bold text-primary text-center">
-                                <%= product.get_stock %>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                        </table>
+                    </div>
+                <% end %>
+                
                 <div class="tab-pane" id="tab_<%= tabid %>_3">
                     Updating...
                 </div>
-                <% if Erp::Core.available?("qdeliveries") and Erp::Core.available?("ortho_k") %>
+                
+                <% if Erp::Core.available?("qdeliveries") and Erp::Core.available?("ortho_k") and (can? :inventory_products_products_import_export_history, nil) %>
                     <div class="tab-pane" id="tab_<%= tabid %>_4">
                         <h5 class="font-yellow-mint bold mb-15 text-left">
                             Lịch sử xuất nhập kho
