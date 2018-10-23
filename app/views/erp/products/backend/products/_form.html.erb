@@ -248,7 +248,7 @@
                                 item: :products_unit
                             }) %>
                         </div>
-                        <div class="tab-pane addableform-table" id="tab_5_4">
+                        <div class="tab-pane addableform-table products-parts-details" id="tab_5_4">
                             <%= erp_form_control("addableform", {
                                 type: 'table',
                                 add_button: t('.add_part'),
@@ -283,6 +283,18 @@
                                         <th>#{t('.total')}</th>
                                         <th>#{t('.action')}</th>"
                             }) %>
+                            
+                            <hr />
+                            <table class="table">
+                                <tr>
+                                    <td width="90%" class="text-right text-semibold">Tổng số lượng:</td>
+                                    <td class="text-right">
+                                        <h4 class="no-margin">
+                                            <span class="part_quantity text-bold text-primary"></span>
+                                        </h4>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -296,4 +308,44 @@
         text: t('cancel'),
         href: erp_products.backend_products_path
     }) %>
+    
+    <% content_for :page_script do %>
+        <script>
+            function calculateTotalLine(container) {
+                var rows = container.find('table tbody tr:visible');
+                var quantity = 0;
+                rows.each(function() {
+                    var row = $(this);
+                    var line_qty = customParseFloat(row.find('.line_quantity').val());
+
+                    // Update total (amount/quantity)
+                    if(line_qty) {
+                        quantity += line_qty;
+                    }
+                });
+                // update line total
+                container.find('.part_quantity').html(quantity);
+            }
+            $(document).ready(function() {
+                setInterval(function() {
+                    $('.products-parts-details').each(function() {
+                        calculateTotalLine($(this));
+                    });
+                }, 1000);
+
+                // Change event on order line
+                $(document).on('change keyup', '.products-parts-details input, .products-parts-details select', function(e) {
+                    var container = $(this).parents('.products-parts-details');
+                    calculateTotalLine(container);
+                });
+
+                // Click event nested remove button
+                $(document).on('click', '.nested-remove-button', function(e) {
+                    var container = $(this).parents('.products-parts-details');
+                    setTimeout(function() {calculateTotalLine(container);}, 100);
+                });
+            });
+        </script>
+    <% end %>
+    
 <% end %>

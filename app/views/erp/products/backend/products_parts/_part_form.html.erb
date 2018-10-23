@@ -8,7 +8,8 @@
     <%= erp_form_control("text", {
         name: 'product[products_parts_attributes][' + uid + '][quantity]',
         value: products_part.quantity,
-        text: products_part.quantity
+        text: products_part.quantity,
+        class: "line_quantity",
     }) %>
 </td>
 <td>
