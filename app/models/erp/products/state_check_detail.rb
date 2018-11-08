@@ -38,5 +38,8 @@ module Erp::Products
       self.sum(:quantity)
     end
     
+    def quantity=(new_price)
+      self[:quantity] = new_price.to_s.gsub(/\,/, '')
+    end    
   end
 end

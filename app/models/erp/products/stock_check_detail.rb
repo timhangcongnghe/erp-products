@@ -42,5 +42,17 @@ module Erp::Products
 		def self.total_quantity
       self.sum(:quantity)
     end
+		
+		def quantity=(new_price)
+      self[:quantity] = new_price.to_s.gsub(/\,/, '')
+    end
+    
+    def real=(new_price)
+      self[:real] = new_price.to_s.gsub(/\,/, '')
+    end
+    
+    def stock=(new_price)
+      self[:stock] = new_price.to_s.gsub(/\,/, '')
+    end
   end
 end
