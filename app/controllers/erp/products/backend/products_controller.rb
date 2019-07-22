@@ -655,6 +655,23 @@ module Erp
           filters = params.to_unsafe_hash[:more_filter]
 
           @rows = @product.import_export_report(filters.merge({not_filters: 'stock_transfer'}))[:data]
+          
+          if filters[:sort_by].present?
+            if filters[:sort_by] == Erp::Products::Product::GROUPED_BY_VOUCHER_CODE
+              sort_value = :voucher_code
+            else #filters[:sort_by] == Erp::Products::Product::SORT_BY_VOUCHER_DATE
+              sort_value = :voucher_date
+            end
+          end
+          
+          if filters[:order_by].present?
+            if filters[:order_by] == Erp::Products::Product::ORDER_BY_ASC
+              @rows = @rows.sort_by{|e| e[sort_value]}
+            else #filters[:order_by] == Erp::Products::Product::ORDER_BY_DESC
+              @rows = @rows.sort_by{|e| e[sort_value]}.reverse
+            end
+          end
+          
           @totals = @product.import_export_report(filters)[:total]
 
           render layout: nil

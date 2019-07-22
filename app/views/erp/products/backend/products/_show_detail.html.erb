@@ -194,6 +194,29 @@
                                         placeholder: 'Chọn lọc đến ngày cuối'
                                     }) %>
                                 </div>
+                                <div class="col-md-3 text-left">
+                                    <%= erp_form_control('select', {
+                                        name: 'sort_by',
+                                        label: 'Sắp xếp theo',
+                                        placeholder: 'Chọn sắp xếp theo...',
+                                        options: [{
+                                            text: 'Loại XNK (hoặc Mã XNK)',
+                                            value: Erp::Products::Product::GROUPED_BY_VOUCHER_CODE
+                                        },
+                                        {
+                                            text: 'Ngày XNK',
+                                            value: Erp::Products::Product::SORT_BY_VOUCHER_DATE
+                                        }]
+                                    }) %>
+                                </div>
+                                <div class="col-md-3 text-left">
+                                    <%= erp_form_control('select', {
+                                        name: 'order_by',
+                                        label: 'Hướng (Tăng/Giảm)',
+                                        placeholder: 'Chọn hướng sắp xếp...',
+                                        options: Erp::Products::Product.get_order_direction
+                                    }) %>
+                                </div>
                             </div>
                         </form>
                         <%= erp_datalist(
