@@ -199,14 +199,16 @@
                                         name: 'sort_by',
                                         label: 'Sắp xếp theo',
                                         placeholder: 'Chọn sắp xếp theo...',
-                                        options: [{
-                                            text: 'Loại XNK (hoặc Mã XNK)',
-                                            value: Erp::Products::Product::GROUPED_BY_VOUCHER_CODE
-                                        },
-                                        {
-                                            text: 'Ngày XNK',
-                                            value: Erp::Products::Product::SORT_BY_VOUCHER_DATE
-                                        }]
+                                        options: [
+                                            {
+                                                text: 'Ngày XNK',
+                                                value: Erp::Products::Product::SORT_BY_VOUCHER_DATE
+                                            },
+                                            {
+                                                text: 'Loại XNK (hoặc Mã XNK)',
+                                                value: Erp::Products::Product::GROUPED_BY_VOUCHER_CODE
+                                            }
+                                        ]
                                     }) %>
                                 </div>
                                 <div class="col-md-3 text-left">
