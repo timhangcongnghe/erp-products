@@ -34,7 +34,18 @@
     filters: [
     ],
     columns: [
-
+        {
+            text: t('.property'), name: 'property', value: true, checked: true
+        },
+        {
+            text: t('.value'), name: 'value', value: true, checked: true
+        },
+        {
+            text: t('.product_count'), name: 'product_count', value: true, checked: true
+        },
+        {
+            text: t('.show_filter'), name: 'show_filter', value: true, checked: true
+        }
     ],
     sort: { sort_by: 'erp_products_properties_values.property_id', sort_direction: 'desc' }
 ) %>

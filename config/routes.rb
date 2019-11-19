@@ -153,6 +153,9 @@ Erp::Products::Engine.routes.draw do
           get 'dataselect'
           post 'list'
           get 'export_products'
+          
+          put 'move_up'
+          put 'move_down'
         end
       end
       resources :manufacturings do

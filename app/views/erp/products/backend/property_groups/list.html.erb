@@ -9,6 +9,9 @@
                     <%= t('.name') %>
                 </th>
             <% end %>
+            <% if get_columns(params).include?("show_name") %>
+                <th><%= t('.show_name') %></th>
+            <% end %>
             <% if get_columns(params).include?("status") %>
                 <th><%= t('status') %></th>
             <% end %>
@@ -34,7 +37,12 @@
                 </td>
                 <% if get_columns(params).include?("name") %>
                     <td>
-                        <%= link_to property_group.name, erp_products.edit_backend_property_group_path(property_group), class: 'title' %>
+                        <%= link_to property_group.get_name, erp_products.edit_backend_property_group_path(property_group), class: 'title' %>
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("show_name") %>
+                    <td>
+                        <%= property_group.get_show_name %>
                     </td>
                 <% end %>
                 <% if get_columns(params).include?("status") %>

@@ -42,7 +42,7 @@
                     <div class="tab-pane addableform-table active" id="tab_property_group">
                         <%= erp_form_control("dataselect", {
                             name: 'category[property_group_ids][]',
-                            values: (category.property_groups.map {|property_group| {text: property_group.name, value: property_group.id}}),
+                            values: (category.property_groups.map {|property_group| {text: property_group.get_name, value: property_group.id}}),
                             multiple: true,
                             label: t('.property_groups'),
                             placeholder: t('.choose_property_groups'),

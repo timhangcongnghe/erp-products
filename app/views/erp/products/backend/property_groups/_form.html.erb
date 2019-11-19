@@ -2,14 +2,29 @@
     <div class="form-body">
         <div class="portlet light bordered">
             <div class="portlet-body form">
-                <%= erp_form_control("text", {
-                    name: 'property_group[name]',
-                    value: property_group.name,                   
-                    label: t('.name'),
-                    placeholder: t('.enter_name'),
-                    required: true,
-                    errors: property_group.errors.full_messages_for(:name)
-                }) %>
+                <div class="row">
+                    <div class="col-md-6">
+                        <%= erp_form_control("text", {
+                            name: 'property_group[name]',
+                            value: property_group.name,                   
+                            label: t('.name'),
+                            placeholder: t('.enter_name'),
+                            required: true,
+                            errors: property_group.errors.full_messages_for(:name)
+                        }) %>
+                    </div>
+                    <div class="col-md-6">
+                        <%= erp_form_control("text", {
+                            name: 'property_group[show_name]',
+                            value: property_group.show_name,                   
+                            label: t('.show_name'),
+                            placeholder: t('.enter_show_name'),
+                            required: true,
+                            errors: property_group.errors.full_messages_for(:show_name)
+                        }) %>
+                    </div>
+                </div>
+                
                 <%= erp_form_control("editor", {
                     name: 'property_group[description]',
                     value: property_group.description,                   

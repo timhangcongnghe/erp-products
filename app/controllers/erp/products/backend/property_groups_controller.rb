@@ -190,7 +190,7 @@ module Erp
 
           # Only allow a trusted parameter "white list" through.
           def property_group_params
-            params.fetch(:property_group, {}).permit(:name, :description)
+            params.fetch(:property_group, {}).permit(:name, :show_name, :description)
           end
       end
     end

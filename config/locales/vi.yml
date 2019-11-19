@@ -150,11 +150,18 @@ vi:
             create: "Thêm giá trị thuộc tính"
             delete: "Xóa giá trị thuộc tính"
             name: "Tên thuộc tính"
-            property: "Thuộc tính"
+            property: "Nhóm thuộc tính"
+            value: "Giá trị thuộc tính"
+            product_count: "Số lượng sản phẩm"
+            show_filter: "Hiển thị ngoài bộ lọc"
           list:
             delete: "Xóa thuộc tính"
+            property: "Nhóm thuộc tính"
             value: "Giá trị thuộc tính"
-            property: "Thuộc tính"
+            product_count: "Số lượng sản phẩm"
+            show_filter: "Hiển thị ngoài bộ lọc"
+            order: "Sắp xếp vị trí"
+            export: "Xuất file excel"
             no_matching_records_found: "Danh sách giá trị thuộc tính hiện tại đang trống."
           new:
             properties_values: "Tất cả giá trị thuộc tính"
@@ -731,9 +738,11 @@ vi:
             property_groups: "Nhóm thuộc tính"
             create: "Thêm nhóm thuộc tính"
             name: "Tên nhóm thuộc tính"
+            show_name: "Tên hiển thị"
             delete: "Xóa nhóm thuộc tính"
           list:
             name: "Tên nhóm thuộc tính"
+            show_name: "Tên hiển thị"
             delete: "Xóa nhóm thuộc tính"
             archive_confirm: "Bạn có chắc muốn ẩn nhóm thuộc tính này?"
             unarchive_confirm: "Bạn muốn hiển thị lại nhóm thuộc tính này?"
@@ -747,8 +756,10 @@ vi:
           form:
             name: "Tên nhóm thuộc tính"
             enter_name: "Nhập tên nhóm thuộc tính..."
-            description: "Mô tả"
-            enter_description: "Nhập mô tả..."
+            show_name: "Tên hiển thị"
+            enter_show_name: "Nhập tên hiển thị..."
+            description: "Mô tả nhóm thuộc tính"
+            enter_description: "Nhập mô tả nhóm thuộc tính..."
         accessories:
           create:
             success: "Thêm nhóm phụ kiện thành công."

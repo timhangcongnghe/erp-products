@@ -2,7 +2,7 @@ module Erp
   module Products
     module Backend
       class PropertiesValuesController < Erp::Backend::BackendController
-        before_action :set_properties_value, only: [:export_products, :edit, :update, :destroy]
+        before_action :set_properties_value, only: [:export_products, :edit, :update, :destroy, :move_up, :move_down]
 
         # GET /properties
         def index
@@ -10,7 +10,7 @@ module Erp
 
         # POST /properties/list
         def list
-          @properties_values = PropertiesValue.search(params).paginate(:page => params[:page], :per_page => 10)
+          @properties_values = PropertiesValue.search(params).paginate(:page => params[:page], :per_page => 20)
 
           render layout: nil
         end
@@ -91,6 +91,30 @@ module Erp
               header: ["id", "name", "property"],
               rows: (@products.map {|product| [product.id, product.name, @properties_value.value] })
             }
+        end
+        
+        # Move up /@properties_values/up?id=1
+        def move_up
+          @properties_value.move_up
+
+          respond_to do |format|
+          format.json {
+            render json: {
+            }
+          }
+          end
+        end
+
+        # Move down /property_groups/up?id=1
+        def move_down
+          @properties_value.move_down
+
+          respond_to do |format|
+          format.json {
+            render json: {
+            }
+          }
+          end
         end
 
         private

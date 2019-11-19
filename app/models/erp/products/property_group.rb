@@ -3,6 +3,7 @@ module Erp::Products
 		include Erp::CustomOrder
 
     validates :name, :presence => true
+    validates :show_name, :presence => true
     belongs_to :creator, class_name: "Erp::User"
     has_and_belongs_to_many :categories, class_name: "Erp::Products::Category", :join_table => 'erp_products_categories_pgroups'
     has_many :properties, -> { order 'erp_products_properties.custom_order' }
@@ -88,6 +89,14 @@ module Erp::Products
 
       query = query.limit(8).map{|property_group| {value: property_group.id, text: property_group.name} }
     end
+    
+    def get_name
+			self.nil? ? '' : self.name
+		end
+    
+    def get_show_name
+			self.nil? ? '' : self.show_name
+		end
 
     def self.get_brands
 			self.where(archived: false).order("created_at DESC")

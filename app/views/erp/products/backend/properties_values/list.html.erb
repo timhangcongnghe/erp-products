@@ -4,10 +4,23 @@
             <th width='1%'>
                 <%= erp_datalist_check_all %>
             </th>
-            <th><%= t('.property') %></th>
-            <th><%= t('.value') %></th>
-            <th><%= t('.product_count') %></th>
-            <th><%= t('.status') %></th>
+            <% if get_columns(params).include?("property") %>
+                <th class="sortable" sort-by='erp_products_properties_values.property_name'>
+                    <%= t('.property') %>
+                </th>
+            <% end %>
+            <% if get_columns(params).include?("value") %>
+                <th class="text-center"><%= t('.value') %></th>
+            <% end %>
+            <% if get_columns(params).include?("product_count") %>
+                <th class="text-center"><%= t('.product_count') %></th>
+            <% end %>
+            <% if get_columns(params).include?("show_filter") %>
+                <th class="text-center"><%= t('.show_filter') %></th>
+            <% end %>
+            <th width="7%" class="sortable text-nowrap text-center" sort-by='erp_products_properties_values.custom_order'>
+                <%= t('custom_order') %>
+            </th>
             <th width="7%"><%= t('actions') %></th>
         </tr>
     </thead>
@@ -17,24 +30,38 @@
                 <td>
                     <%= erp_datalist_check_row(id: properties_value.id) %>
                 </td>
-                <td>
-                    <a href="<%= erp_products.edit_backend_properties_value_path(properties_value) %>">
-                    <%= properties_value.property_group_name %> / <%= properties_value.property_name %>
-                    </a>
-                </td>
-                <td>
-                    <%= properties_value.value %>
-                </td>
-                <td>
-                    <%= properties_value.product_count %>
-                    / <a target="_blank" href="<%= erp_products.export_products_backend_properties_values_path(id: properties_value.id) %>">
-                        export
-                    </a>
-                </td>
-                <td>
-                    <% if properties_value.is_show_website == true %>
-                        <span class="label label-sm label-info">Hiển thị bộ lọc</span>
-                    <% end %>
+                <% if get_columns(params).include?("property") %>
+                    <td>
+                        <a href="<%= erp_products.edit_backend_properties_value_path(properties_value) %>">
+                        <%= properties_value.property_group_name %> / <%= properties_value.property_name %>
+                        </a>
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("value") %>
+                    <td class="text-center"><%= properties_value.value %></td>
+                <% end %>
+                <% if get_columns(params).include?("product_count") %>
+                    <td class="text-center">
+                        <%= properties_value.product_count %><br>
+                        <a target="_blank" href="<%= erp_products.export_products_backend_properties_values_path(id: properties_value.id) %>">
+                            <%= t('.export') %>
+                        </a>
+                    </td>
+                <% end %>
+                <% if get_columns(params).include?("show_filter") %>
+                    <td class="text-center">
+                        <% if properties_value.is_show_website == true %>
+                            <span class="label label-sm label-info">Hiển thị giá trị</span>
+                        <% end %>
+                    </td>
+                <% end %>
+                <td class="text-center text-semibold">
+                    <%= erp_datalist_order_column({
+                        item: properties_value,
+                        move_up_url: erp_products.move_up_backend_properties_values_path(id: properties_value),
+                        move_down_url: erp_products.move_down_backend_properties_values_path(id: properties_value),
+                        sort_by: 'erp_products_properties_values.custom_order'
+                    }) %>
                 </td>
                 <td class="text-right">
                     <%= erp_datalist_row_actions(

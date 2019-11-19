@@ -1,5 +1,7 @@
 module Erp::Products
   class PropertiesValue < ApplicationRecord
+		include Erp::CustomOrder
+		
     belongs_to :property
     has_many  :products_values, dependent: :destroy
     has_many :products, through: :products_values, class_name: "Erp::Products::Product"

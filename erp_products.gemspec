@@ -7,15 +7,11 @@ require "erp/products/version"
 Gem::Specification.new do |s|
   s.name        = "erp_products"
   s.version     = Erp::Products::VERSION
-  s.authors     = ["Luan Pham",
-                  "Son Nguyen",
-                  "Hung Nguyen"]
-  s.email       = ["luanpm@hoangkhang.com.vn",
-                  "sonnn@hoangkhang.com.vn",
-                  "hungnt@hoangkhang.com.vn"]
-  s.homepage    = "http://globalnaturesoft.com/"
-  s.summary     = "Products features of Erp System."
-  s.description = "Products features of Erp System."
+  s.authors     = ["Nguyen Ngoc Son"]
+  s.email       = ["sonnn@hoangkhang.com.vn"]
+  s.homepage    = "http://timhangcongnghe.com/"
+  s.summary     = "Products - Tim Hang Cong Nghe"
+  s.description = "Products - Tim Hang Cong Nghe"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
