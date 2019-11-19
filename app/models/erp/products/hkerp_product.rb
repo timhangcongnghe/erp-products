@@ -4,6 +4,11 @@ module Erp::Products
 
     def self.get_product_by_hkerp_product_id(pid)
       hkp = self.where(hkerp_product_id: pid).first
+      
+      if hkp.present? and !hkp.product.present?
+        hkp.destroy
+      end
+      
       return hkp.nil? ? nil : hkp.product
     end
     def self.get_status_by_hkerp_product_id(pid)

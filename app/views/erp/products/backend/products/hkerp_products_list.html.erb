@@ -45,6 +45,7 @@
                     </td>
                     <td>
                         <% if erp_product.nil? %>
+                            <% Erp::Products::Product.check_hkerp_product_imported(product["id"]) %>
                             <span class="label label-sm bg-grey">new</span>
                         <% else %>
                             <span class="label label-sm label-success">imported</span>
