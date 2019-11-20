@@ -1471,7 +1471,11 @@ module Erp::Products
       return [] if self.category.nil?
 			self.category.property_groups.each do |group|
 				row = {}
-				row[:name] = group.get_show_name
+				if group.show_name.present?
+					row[:name] = group.get_show_name
+				else
+					row[:name] = group.get_name
+				end
 				row[:values] = []
 				group.properties.where(is_show_detail: true).each do |property|
 					values = self.products_values_by_property(property).map {|pv| pv.properties_value.value }
