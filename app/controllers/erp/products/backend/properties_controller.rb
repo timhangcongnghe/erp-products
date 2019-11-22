@@ -18,7 +18,7 @@ module Erp
             authorize! :inventory_products_properties_index, nil
           end
           
-          @properties = Property.search(params).paginate(:page => params[:page], :per_page => 10)
+          @properties = Property.search(params).paginate(:page => params[:page], :per_page => 20)
 
           render layout: nil
         end

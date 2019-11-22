@@ -110,6 +110,9 @@ vi:
             delete: "Xóa thuộc tính"
             name: "Tên thuộc tính"
             property_group: "Nhóm thuộc tính"
+            is_show_list: "Hiển thị trang danh sách"
+            is_show_detail: "Hiển thị trang chi tiết"
+            is_show_website: "Lọc theo thuộc tính"
           list:
             delete: "Xóa thuộc tính"
             name: "Tên thuộc tính"
@@ -122,16 +125,16 @@ vi:
             properties: "Tất cả thuộc tính"
             create: "Thêm thuộc tính"
           form:
-            property_is_show_list: "Thuộc tính trang danh sách"
-            property_is_show_detail: "Thuộc tính trang chi tiết"
-            is_show_list: "Hiển thị trang danh sách"
-            is_show_detail: "Hiển thị trang chi tiết"
+            property_is_show_list: "Thuộc tính trong trang danh sách"
+            property_is_show_detail: "Thuộc tính trong trang chi tiết"
+            is_show_list: "Cho phép hiển thị"
+            is_show_detail: "Cho phép hiển thị"
+            is_show_website: "Lọc sản phẩm theo thuộc tính"
             name: "Tên thuộc tính"
             property_group: "Nhóm thuộc tính"
             help_property_group: "Thuộc tính sản phẩm thuộc nhóm nào?"
             choose_property_group: "Chọn nhóm thuộc tính"
-            is_show_website: "Hiển thị thuộc tính ngoài trang danh sách"
-            help_is_show_website: "Chọn để hiển thị thuộc tính trên bộ lọc trang sản phẩm"
+            help_is_show_website: "Cho phép lọc thuộc tính"
         properties_values:
           create:
             success: "Thêm giá trị thuộc tính thành công."
@@ -154,6 +157,7 @@ vi:
             value: "Giá trị thuộc tính"
             product_count: "Số lượng sản phẩm"
             show_filter: "Hiển thị ngoài bộ lọc"
+            is_show_website: "Hiển thị bộ lọc"
           list:
             delete: "Xóa thuộc tính"
             property: "Nhóm thuộc tính"
@@ -178,7 +182,7 @@ vi:
             property: "Thuộc tính"
             help_property: "Thuộc tính sản phẩm thuộc nhóm nào?"
             choose_property: "Chọn Thuộc tính"
-            is_show_website: "Hiển thị ngoài trang danh sách"
+            is_show_website: "Hiển thị bộ lọc"
             help_is_show_website: "Chọn để hiển thị giá trị thuộc tính trên bộ lọc trang sản phẩm"
         products:
           create:

@@ -11,7 +11,7 @@ module Erp
 
         # POST /property_groups/list
         def list
-          @property_groups = PropertyGroup.search(params).paginate(:page => params[:page], :per_page => 10)
+          @property_groups = PropertyGroup.search(params).paginate(:page => params[:page], :per_page => 20)
 
           render layout: nil
         end
