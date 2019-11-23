@@ -38,7 +38,7 @@ module Erp
           
           authorize! :create, @product
           
-          12.times do
+          15.times do
             @product.product_images.build
           end
           @product.deal_from_date = ''
@@ -55,7 +55,7 @@ module Erp
           authorize! :update, @product
           
           # default product images
-          (12 - @product.product_images.count).times do
+          (15 - @product.product_images.count).times do
             @product.product_images.build
           end
         end
@@ -67,7 +67,7 @@ module Erp
           authorize! :create, @product
           
           @product.creator = current_user
-          8.times do
+          15.times do
             @product.product_images.build
           end
           @product.product_property_values = params.to_unsafe_hash[:product_property_values]
@@ -715,6 +715,7 @@ module Erp
               # frontend
               :specs, :is_deal, :is_stock_inventory, :deal_price, :deal_percent, :short_description, :brand_id, :is_new, :accessory_id, :short_name, :product_intro_link,
               :deal_from_date, :deal_to_date, :meta_keywords, :meta_description, :is_bestseller, :is_business_choices, :is_top_business_choices, :is_sold_out, :is_call,
+              :dimentions, :weights, :warranty,
               # end frontend
               :stock_min, :stock_max, :description, :internal_note, :point_enabled, :category_id,
               customer_tax_ids: [], vendor_tax_ids: [],

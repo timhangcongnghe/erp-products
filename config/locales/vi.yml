@@ -379,7 +379,6 @@ vi:
             cost: "Giá vốn"
             category: "Chuyên mục"
             choose_category: "Chọn chuyên mục"
-            weight: "Cân nặng (kg)"
             volume: "Thể tích (m3)"
             sale_conditions: "Điều kiện bán hàng"
             customer_lead_time: "Thời gian chờ"
