@@ -1212,20 +1212,10 @@ module Erp::Products
 			creator.present? ? creator.name : ''
 		end
 
-    # category name
-    def category_name
-			category.present? ? category.name : ''
-		end
-
     # unit name
     def unit_name
 			unit.present? ? unit.name : ''
-		end
-
-    # brand name
-    def brand_name
-			brand.present? ? brand.name : ''
-		end
+		end    
 
     # accessory name
     def accessory_name

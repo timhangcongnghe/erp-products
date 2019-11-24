@@ -5,7 +5,7 @@
                 <%= erp_datalist_check_all %>
             </th>
             <% if get_columns(params).include?("property") %>
-                <th class="sortable" sort-by='erp_products_properties_values.property_name'>
+                <th width='25%' class="sortable" sort-by='erp_products_properties_values.property_name'>
                     <%= t('.property') %>
                 </th>
             <% end %>
@@ -44,7 +44,7 @@
                     <td class="text-center">
                         <%= properties_value.product_count %><br>
                         <a target="_blank" href="<%= erp_products.export_products_backend_properties_values_path(id: properties_value.id) %>">
-                            <%= t('.export') %>
+                            <em><%= t('.export') %></em>
                         </a>
                     </td>
                 <% end %>
