@@ -55,8 +55,8 @@
                         <% else %>
                             <span class="label label-sm label-success"><%= t('active') %></span>
                         <% end %>
-                        <% if !Erp::Core.available?("ortho_k") %>
-                            <br><% if brand.is_main? %><span class="label label-sm label-info">Đang hiển thị tại website</span><% end %>
+                        <% if brand.is_main.present? %>
+                            <br><span class="label label-sm label-orange">Hiển thị ngoài website</span>
                         <% end %>
                     </td>
                 <% end %>
@@ -77,6 +77,7 @@
         <% end %>
     </tbody>
 </table>
+
 <% if @brands.empty? %>
     <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
 <% end %>

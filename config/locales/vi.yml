@@ -658,6 +658,7 @@ vi:
             brands: "Thương hiệu"
             create: "Thêm thương hiệu"
             name: "Tên thương hiệu"
+            is_main: "Hiển thị ngoài website"
             delete: "Xóa thương hiệu"
           list:
             name: "Tên thương hiệu"

@@ -5,13 +5,13 @@
                 <th width='1%'>
                     <%= erp_datalist_check_all %>
                 </th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Hkerp price</th>
-                <th>Price</th>
-                <th class="sortable" sort-by='products.stock'>Stock</th>
-                <th>Warr</th>
-                <th>Status</th>
+                <th class="text-center">Code</th>
+                <th class="text-center" width='40%'>Name</th>
+                <th class="text-center">HK-Erp Price</th>
+                <th class="text-center">THCN Price</th>
+                <th class="sortable text-center" sort-by='products.stock'>Stock</th>
+                <th class="text-center">Warranty</th>
+                <th class="text-center">Status</th>
                 <th width="7%"><%= t('.actions') %></th>
             </tr>
         </thead>
@@ -22,28 +22,35 @@
                     <td>
                         <%= erp_datalist_check_row(id: erp_product.id) if erp_product.present? %>
                     </td>
-                    <td>
+                    <td class="text-center">
                         <%= product["id"] %>
                     </td>
                     <td>
-                        <%= product["display_name"] %>
+                        <span><%= product["display_name"] %></span>
                         <% if !erp_product.nil? %>
                             <div class="" style="color: #999"><%= erp_product.name %></div>
                         <% end %>
                     </td>
-                    <td class="text-nowrap text-right">
+                    <td class="text-nowrap text-center">
                         <%= format_price(product["price"]) %>
                     </td>
-                    <td class="text-nowrap text-right">
+                    <td class="text-nowrap text-center">
                         <%= format_price(erp_product.price) if erp_product.present? %>
                     </td>
                     <td>
                         <%= product["stock"] %>
                     </td>
-                    <td>
+                    <td class="text-center">
                         <%= product["warranty"] %>
+                        <% if !erp_product.nil? %>
+                            <% if erp_product.warranty.present? %>
+                                <div class="" style="color: #999"><%= erp_product.warranty %></div>
+                            <% else %>
+                                <div class="" style="color: #999">Chưa update</div>
+                            <% end %>
+                        <% end %>
                     </td>
-                    <td>
+                    <td class="text-center">
                         <% if erp_product.nil? %>
                             <% Erp::Products::Product.check_hkerp_product_imported(product["id"]) %>
                             <span class="label label-sm bg-grey">new</span>

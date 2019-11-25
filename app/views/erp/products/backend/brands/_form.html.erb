@@ -13,8 +13,7 @@
                     </div>
                     <div class="col-md-10">
                         <div class="row">
-                            <% ismain_colnum = (!Erp::Core.available?("ortho_k") ? 4 : 0) %>
-                            <div class="col-md-<%= 12 - ismain_colnum %>">
+                            <div class="col-md-6">
                                 <%= erp_form_control("text", {
                                     name: 'brand[name]',
                                     value: brand.name,                   
@@ -24,17 +23,15 @@
                                     errors: brand.errors.full_messages_for(:name)
                                 }) %>
                             </div>
-                            <% if !Erp::Core.available?("ortho_k") %>
-                                <div class="col-md-<%= ismain_colnum %>">
-                                    <%= erp_form_control('checkbox', {
-                                        name: 'brand[is_main]',
-                                        value: brand.is_main,
-                                        not_selected_value: 'false',
-                                        label: t('.brand_is_main'),
-                                        options: [{value: 'true', text: t('.is_main')}]
-                                    }) %>
-                                </div>
-                            <% end %>
+                            <div class="col-md-6">
+                                <%= erp_form_control('checkbox', {
+                                    name: 'brand[is_main]',
+                                    value: brand.is_main,
+                                    not_selected_value: 'false',
+                                    label: t('.brand_is_main'),
+                                    options: [{value: 'true', text: t('.is_main')}]
+                                }) %>
+                            </div>
                         </div>
                         <%= erp_form_control("editor", {
                             name: 'brand[description]',
