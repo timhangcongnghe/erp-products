@@ -28,7 +28,13 @@
                     <td>
                         <span><%= product["display_name"] %></span>
                         <% if !erp_product.nil? %>
+                            <% str1 = product["display_name"] %>
+                            <% str2 = erp_product.name %>
+                            <% if str1 == str2 %>
                             <div class="" style="color: #999"><%= erp_product.name %></div>
+                            <% else %>
+                            <div class="" style="color: #ff0000"><%= erp_product.name %></div>
+                            <% end %>
                         <% end %>
                     </td>
                     <td class="text-nowrap text-center">
