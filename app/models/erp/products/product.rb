@@ -2,6 +2,8 @@ module Erp::Products
   class Product < ApplicationRecord
 		attr_accessor :product_property_values
 		#validates :name, :uniqueness => true
+		validates :name, :presence => true
+		validates :short_name, :presence => true
     validates :category_id, :presence => true
     validate :deal_to_date_cannot_be_in_the_past, :deal_price_cannot_blank
 
