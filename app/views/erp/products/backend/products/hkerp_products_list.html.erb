@@ -26,7 +26,7 @@
                         <%= product["id"] %>
                     </td>
                     <td>
-                        <span><%= product["display_name"] %></span>
+                        <span style="font-weight: 500"><%= product["display_name"] %></span>
                         <% if !erp_product.nil? %>
                             <% str1 = product["display_name"] %>
                             <% str2 = erp_product.name %>
@@ -34,6 +34,9 @@
                             <div class="" style="color: #999"><%= erp_product.name %></div>
                             <% else %>
                             <div class="" style="color: #ff0000"><%= erp_product.name %></div>
+                            <% end %>
+                            <% if erp_product.short_name.present? %>
+                            <em style="color: #999"><strong>Tên rút gọn: </strong><%= erp_product.short_name %></em>
                             <% end %>
                         <% end %>
                     </td>
@@ -50,9 +53,14 @@
                         <%= product["warranty"] %>
                         <% if !erp_product.nil? %>
                             <% if erp_product.warranty.present? %>
-                                <div class="" style="color: #999"><%= erp_product.warranty %></div>
+                                <br><span><%= erp_product.warranty %></span>
                             <% else %>
-                                <div class="" style="color: #999">Chưa update</div>
+                                <br><span style="color: #ff0000">Chưa update</span>
+                            <% end %>
+                            <% if erp_product.meta_description.present? %>
+                                <br><span style="color: #1bbc9b">Đã SEO</span>
+                            <% else %>
+                                <br><span style="color: #ff0000">Chưa SEO</span>
                             <% end %>
                         <% end %>
                     </td>
