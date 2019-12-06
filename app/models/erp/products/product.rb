@@ -1428,7 +1428,7 @@ module Erp::Products
 		end
 
 		def create_alias
-			name = self.short_name.present? ? self.short_name : self.name
+			name = self.name
 			self.update_column(:alias, name.to_ascii.downcase.to_s.gsub(/[^0-9a-z ]/i, '').gsub(/ +/i, '-').strip)
 		end
 
