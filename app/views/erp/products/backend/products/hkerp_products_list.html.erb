@@ -12,7 +12,7 @@
                 <th class="sortable text-center" sort-by='products.stock'>Stock</th>
                 <th class="text-center">Warranty</th>
                 <th class="text-center">Status</th>
-                <th width="7%"><%= t('.actions') %></th>
+                <th class="text-right" width="7%"><%= t('.actions') %></th>
             </tr>
         </thead>
         <tbody>
@@ -30,13 +30,19 @@
                         <% if !erp_product.nil? %>
                             <% str1 = product["display_name"] %>
                             <% str2 = erp_product.name %>
+                            
                             <% if str1 == str2 %>
-                            <div class="" style="color: #999"><%= erp_product.name %></div>
+                                <div class="" style="color: #999"><%= erp_product.name %></div>
                             <% else %>
-                            <div class="" style="color: #ff0000"><%= erp_product.name %></div>
+                                <div class="" style="color: #d91e18"><%= erp_product.name %></div>
                             <% end %>
                             <% if erp_product.short_name.present? %>
-                            <em style="color: #999"><strong>Tên rút gọn: </strong><%= erp_product.short_name %></em>
+                                <% str3 = erp_product.short_name %>
+                                <% if str2 == str3 %>
+                                    <em style="color: #999"><strong>Tên rút gọn: </strong><%= erp_product.short_name %></em>
+                                <% else %>
+                                    <em style="color: #c49f47"><strong>Tên rút gọn: </strong><%= erp_product.short_name %></em>
+                                <% end %>
                             <% end %>
                         <% end %>
                     </td>
@@ -53,14 +59,14 @@
                         <%= product["warranty"] %>
                         <% if !erp_product.nil? %>
                             <% if erp_product.warranty.present? %>
-                                <br><span><%= erp_product.warranty %></span>
+                                <br><span style="color: #1ba39c"><%= erp_product.warranty %></span>
                             <% else %>
-                                <br><span style="color: #ff0000">Chưa update</span>
+                                <br><span style="color: #d91e18">Chưa update</span>
                             <% end %>
                             <% if erp_product.meta_description.present? %>
-                                <br><span style="color: #1bbc9b">Đã SEO</span>
+                                <br><span style="color: #1ba39c">Đã SEO</span>
                             <% else %>
-                                <br><span style="color: #ff0000">Chưa SEO</span>
+                                <br><span style="color: #d91e18">Chưa SEO</span>
                             <% end %>
                         <% end %>
                     </td>
