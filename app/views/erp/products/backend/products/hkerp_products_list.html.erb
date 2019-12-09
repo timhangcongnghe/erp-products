@@ -1,117 +1,115 @@
-<div class="">
-    <table class="table table-advance table-hover table-striped table-checkable order-column" id="">
-        <thead>
-            <tr>
-                <th class="text-left" width='1%'>
-                    <%= erp_datalist_check_all %>
-                </th>
-                <th class="text-center" width='5%'>Code</th>
-                <th class="text-center" width='40%'>Name</th>
-                <th class="text-center">HK-Erp Price</th>
-                <th class="text-center">THCN Price</th>
-                <th class="sortable text-center" sort-by='products.stock'>Stock</th>
-                <th class="text-center" width="7%">Warranty</th>
-                <th class="text-right" width="7%">Status</th>
+<table class="table table-advance table-hover table-striped table-checkable order-column">
+    <thead>
+        <tr>
+            <th class="text-left" width='1%'>
+                <%= erp_datalist_check_all %>
+            </th>
+            <th class="text-center" width='5%'>Code</th>
+            <th class="text-center" width='40%'>Name</th>
+            <th class="text-center">HK-Erp Price</th>
+            <th class="text-center">THCN Price</th>
+            <th class="sortable text-center" sort-by='products.stock'>Stock</th>
+            <th class="text-center" width="7%">Warranty</th>
+            <th class="text-right" width="7%">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @products["products"].each do |product| %>
+            <% erp_product = Erp::Products::HkerpProduct.get_product_by_hkerp_product_id(product["id"]) %>
+            <tr class="odd gradeX">
+                <td class="text-left">
+                    <%= erp_datalist_check_row(id: erp_product.id) if erp_product.present? %>
+                </td>
+                <td class="text-center">
+                    <%= product["id"] %>
+                </td>
+                <td class="text-left">                        
+                    <% if !erp_product.nil? %>
+                        <span style="font-weight: 500">
+                            <%= link_to product["display_name"],
+                                erp_products.edit_backend_product_path(erp_product),
+                                target: '_blank' %>
+                        </span>
+                        
+                        <% str1 = product["display_name"] %>
+                        <% str2 = erp_product.name %>
+                        
+                        <% if str1 == str2 %>
+                            <br><span style="color: #999"><%= erp_product.name %></span>
+                        <% else %>
+                            <br><span style="color: #d91e18"><%= erp_product.name %></span>
+                        <% end %>
+                        <% if erp_product.short_name.present? %>
+                            <% str3 = erp_product.short_name %>
+                            <% if str2 == str3 %>
+                                <br><em style="color: #d91e18"><strong>Tên rút gọn: </strong><%= erp_product.short_name %></em>
+                            <% else %>
+                                <br><em style="color: #999"><strong>Tên rút gọn: </strong><%= erp_product.short_name %></em>
+                            <% end %>
+                        <% end %>
+                    <% else %>
+                    <span style="font-weight: 500"><%= product["display_name"] %></span>
+                    <br><em><%= link_to 'Import sản phẩm',
+                                erp_products.new_backend_product_path(hkerp_id: product["id"]),
+                                target: '_blank', style: 'color: #1ba39c; font-weight: 500;' %></em>
+                    <% end %>
+                </td>
+                <td class="text-nowrap text-center">
+                    <%= format_price(product["price"]) %>
+                </td>
+                <td class="text-nowrap text-center">
+                    <%= format_price(erp_product.price) if erp_product.present? %>
+                </td>
+                <td class="text-center">
+                    <%= product["stock"] %>
+                </td>
+                <td class="text-center">
+                    <%= product["warranty"] %>
+                    <% if !erp_product.nil? %>
+                        <% if erp_product.warranty.present? %>
+                            <br><span style="color: #1ba39c; font-size: 12px;"><%= erp_product.warranty %></span>
+                        <% else %>
+                            <br><span style="color: #d91e18; font-size: 12px;">Warranty</span>
+                        <% end %>
+                        <% if erp_product.meta_description.present? %>
+                            <br><span style="color: #1ba39c; font-size: 12px;">SEO OK</span>
+                        <% else %>
+                            <br><span style="color: #d91e18; font-size: 12px;">SEO Non-OK</span>
+                        <% end %>
+                    <% end %>
+                </td>
+                <td class="text-right">
+                    <% if erp_product.nil? %>
+                        <% Erp::Products::Product.check_hkerp_product_imported(product["id"]) %>
+                        <span class="label label-sm bg-info">New</span>
+                    <% else %>
+                        <span class="label label-sm label-success">Imported</span>
+                        <% if erp_product.price.to_f == product["price"].to_f %>
+                            <br><span class="label label-sm label-success">Price Updated</span>
+                        <% else %>
+                            <br><span class="label label-sm label-warning">Price Oudated</span>
+                        <% end %>
+                        <% if erp_product.is_sold_out %>
+                            <br><span class="label label-sm label-warning">Sold Out</span>
+                        <% end %>
+                    <% end %>
+                    <% if product["out_of_date"] == true %>
+                        <br><span class="label label-sm label-danger">Outdated</span>
+                    <% end %>
+                    <% if product["suspended"] %>
+                        <br><span class="label label-sm label-danger">Suspended</span>
+                    <% end %>
+                    <% if product["status"].to_i == 0 %>
+                        <br><span class="label label-sm bg-dark">Trashed</span>
+                    <% end %>
+                </td>                    
             </tr>
-        </thead>
-        <tbody>
-            <% @products["products"].each do |product| %>
-                <% erp_product = Erp::Products::HkerpProduct.get_product_by_hkerp_product_id(product["id"]) %>
-                <tr class="odd gradeX">
-                    <td class="text-left">
-                        <%= erp_datalist_check_row(id: erp_product.id) if erp_product.present? %>
-                    </td>
-                    <td class="text-center">
-                        <%= product["id"] %>
-                    </td>
-                    <td class="text-left">                        
-                        <% if !erp_product.nil? %>
-                            <span style="font-weight: 500">
-                                <%= link_to product["display_name"],
-                                    erp_products.edit_backend_product_path(erp_product),
-                                    target: '_blank' %>
-                            </span>
-                            
-                            <% str1 = product["display_name"] %>
-                            <% str2 = erp_product.name %>
-                            
-                            <% if str1 == str2 %>
-                                <br><span style="color: #999"><%= erp_product.name %></span>
-                            <% else %>
-                                <br><span style="color: #d91e18"><%= erp_product.name %></span>
-                            <% end %>
-                            <% if erp_product.short_name.present? %>
-                                <% str3 = erp_product.short_name %>
-                                <% if str2 == str3 %>
-                                    <br><em style="color: #d91e18"><strong>Tên rút gọn: </strong><%= erp_product.short_name %></em>
-                                <% else %>
-                                    <br><em style="color: #999"><strong>Tên rút gọn: </strong><%= erp_product.short_name %></em>
-                                <% end %>
-                            <% end %>
-                        <% else %>
-                        <span style="font-weight: 500"><%= product["display_name"] %></span>
-                        <br><em><%= link_to 'Import sản phẩm',
-                                    erp_products.new_backend_product_path(hkerp_id: product["id"]),
-                                    target: '_blank', style: 'color: #1ba39c; font-weight: 500;' %></em>
-                        <% end %>
-                    </td>
-                    <td class="text-nowrap text-center">
-                        <%= format_price(product["price"]) %>
-                    </td>
-                    <td class="text-nowrap text-center">
-                        <%= format_price(erp_product.price) if erp_product.present? %>
-                    </td>
-                    <td class="text-center">
-                        <%= product["stock"] %>
-                    </td>
-                    <td class="text-center">
-                        <%= product["warranty"] %>
-                        <% if !erp_product.nil? %>
-                            <% if erp_product.warranty.present? %>
-                                <br><span style="color: #1ba39c; font-size: 10px;"><%= erp_product.warranty %></span>
-                            <% else %>
-                                <br><span style="color: #d91e18; font-size: 10px;">Warranty</span>
-                            <% end %>
-                            <% if erp_product.meta_description.present? %>
-                                <br><span style="color: #1ba39c; font-size: 10px;">SEO OK</span>
-                            <% else %>
-                                <br><span style="color: #d91e18; font-size: 10px;">SEO Non-OK</span>
-                            <% end %>
-                        <% end %>
-                    </td>
-                    <td class="text-right">
-                        <% if erp_product.nil? %>
-                            <% Erp::Products::Product.check_hkerp_product_imported(product["id"]) %>
-                            <span class="label label-sm bg-info">New</span>
-                        <% else %>
-                            <span class="label label-sm label-success">Imported</span>
-                            <% if erp_product.price.to_f == product["price"].to_f %>
-                                <br><span class="label label-sm label-success">Price Updated</span>
-                            <% else %>
-                                <br><span class="label label-sm label-danger">Price Oudated</span>
-                            <% end %>
-                            <% if erp_product.is_sold_out %>
-                                <br><span class="label label-sm bg-danger">Sold Out</span>
-                            <% end %>
-                        <% end %>
-                        <% if product["out_of_date"] == true %>
-                            <br><span class="label label-sm label-danger">Outdated</span>
-                        <% end %>
-                        <% if product["suspended"] %>
-                            <br><span class="label label-sm label-danger">Suspended</span>
-                        <% end %>
-                        <% if product["status"].to_i == 0 %>
-                            <br><span class="label label-sm bg-dark">Trashed</span>
-                        <% end %>
-                    </td>                    
-                </tr>
-            <% end %>
-        </tbody>
-    </table>
-    <% if @products.empty? %>
-        <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
-    <% end %>
-</div>
+        <% end %>
+    </tbody>
+</table>
+<% if @products.empty? %>
+    <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
+<% end %>
 
 <ul class="pagination">
     <li class="prev disabled"><span><i class="fa fa-angle-left"></i></span></li>
