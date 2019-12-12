@@ -9,7 +9,7 @@
             <th class="text-center">HK-Erp Price</th>
             <th class="text-center">THCN Price</th>
             <th class="sortable text-center" sort-by='products.stock'>Stock</th>
-            <th class="text-center" width="7%">Warranty</th>
+            <th class="text-center" width="10%">Warranty</th>
             <th class="text-right" width="7%">Status</th>
         </tr>
     </thead>
@@ -67,14 +67,19 @@
                     <%= product["warranty"] %>
                     <% if !erp_product.nil? %>
                         <% if erp_product.warranty.present? %>
-                            <br><span style="color: #1ba39c; font-size: 12px;"><%= erp_product.warranty %></span>
+                            <br><span style="color: #1ba39c; font-size: 12px;">Warranty (<%= erp_product.warranty %>)</span>
                         <% else %>
-                            <br><span style="color: #d91e18; font-size: 12px;">Warranty</span>
+                            <br><span style="color: #d91e18; font-size: 12px;">Warranty Non-OK</span>
                         <% end %>
                         <% if erp_product.meta_description.present? %>
                             <br><span style="color: #1ba39c; font-size: 12px;">SEO OK</span>
                         <% else %>
                             <br><span style="color: #d91e18; font-size: 12px;">SEO Non-OK</span>
+                        <% end %>
+                        <% if erp_product.datasheet.present? %>
+                            <br><span style="color: #1ba39c; font-size: 12px;">PDF OK</span>
+                        <% else %>
+                            <br><span style="color: #d91e18; font-size: 12px;">PDF Non-OK</span>
                         <% end %>
                     <% end %>
                 </td>
