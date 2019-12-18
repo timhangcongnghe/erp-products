@@ -35,9 +35,9 @@
                         <% str2 = erp_product.name %>
                         
                         <% if str1 == str2 %>
-                            <br><span style="color: #999"><%= erp_product.name %></span>
+                            <br><span style="color: #999; font-weight: 500"><%= erp_product.name %></span>
                         <% else %>
-                            <br><span style="color: #d91e18"><%= erp_product.name %></span>
+                            <br><span style="color: #d91e18; font-weight: 500"><%= erp_product.name %></span>
                         <% end %>
                         <% if erp_product.short_name.present? %>
                             <% str3 = erp_product.short_name %>
@@ -67,7 +67,11 @@
                     <%= product["warranty"] %>
                     <% if !erp_product.nil? %>
                         <% if erp_product.warranty.present? %>
+                            <% if product["warranty"] == erp_product.warranty %>
                             <br><span style="color: #1ba39c; font-size: 12px;">Warranty (<%= erp_product.warranty %>)</span>
+                            <% else %>
+                            <br><span style="color: #d91e18; font-size: 12px;">Warranty (<%= erp_product.warranty %>)</span>
+                            <% end %>
                         <% else %>
                             <br><span style="color: #d91e18; font-size: 12px;">Warranty Non-OK</span>
                         <% end %>
