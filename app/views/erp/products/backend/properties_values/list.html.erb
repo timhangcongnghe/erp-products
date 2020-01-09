@@ -42,7 +42,7 @@
                 <% end %>
                 <% if get_columns(params).include?("product_count") %>
                     <td class="text-center">
-                        <%= properties_value.product_count %><br>
+                        <%= properties_value.products.count %><br>
                         <a target="_blank" href="<%= erp_products.export_products_backend_properties_values_path(id: properties_value.id) %>">
                             <em><%= t('.export') %></em>
                         </a>
