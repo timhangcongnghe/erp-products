@@ -76,9 +76,14 @@
                             <br><span style="color: #d91e18; font-size: 12px;">Warranty Non-OK</span>
                         <% end %>
                         <% if erp_product.meta_description.present? %>
-                            <br><span style="color: #1ba39c; font-size: 12px;">SEO OK</span>
+                            <br><span style="color: #1ba39c; font-size: 12px;">Meta Description</span>
                         <% else %>
-                            <br><span style="color: #d91e18; font-size: 12px;">SEO Non-OK</span>
+                            <br><span style="color: #d91e18; font-size: 12px;">Meta Description</span>
+                        <% end %>
+                        <% if erp_product.meta_keywords.present? %>
+                            <br><span style="color: #1ba39c; font-size: 12px;">Meta Keywords</span>
+                        <% else %>
+                            <br><span style="color: #d91e18; font-size: 12px;">Meta Keywords</span>
                         <% end %>
                         <% if erp_product.datasheet.present? %>
                             <br><span style="color: #1ba39c; font-size: 12px;">PDF OK</span>
