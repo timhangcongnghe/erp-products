@@ -114,6 +114,7 @@ vi:
             is_show_detail: "Hiển thị trang chi tiết"
             is_show_website: "Lọc theo thuộc tính"
             is_meta_description: "Chọn vào thẻ meta description"
+            is_short_description: "Chọn vào mô tả ngắn"
           list:
             delete: "Xóa thuộc tính"
             name: "Tên thuộc tính"
@@ -138,6 +139,8 @@ vi:
             property_is_show_website: "Hiển thị lọc theo thuộc tính"
             is_meta_description: "Meta description"
             property_is_meta_description: "Thêm thuộc tính vào thẻ meta"
+            is_short_description: "Mô tả ngắn"
+            property_is_short_description: "Thêm vào mô tả ngắn"
         properties_values:
           create:
             success: "Thêm giá trị thuộc tính thành công."

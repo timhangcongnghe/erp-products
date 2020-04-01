@@ -713,7 +713,7 @@ module Erp
               :code, :name, :can_be_sold, :can_be_purchased, :product_type, :barcode, :is_outside,
               :price, :cost, :on_hand, :weight, :volume, :is_for_pos, :unit_id,
               # frontend
-              :specs, :is_deal, :is_stock_inventory, :deal_price, :deal_percent, :short_description, :brand_id, :is_new, :accessory_id, :short_name, :product_intro_link,
+              :specs, :is_deal, :is_stock_inventory, :deal_price, :deal_percent, :brand_id, :is_new, :accessory_id, :short_name, :product_intro_link,
               :deal_from_date, :deal_to_date, :meta_keywords, :is_bestseller, :is_business_choices, :is_top_business_choices, :is_sold_out, :is_call,
               :dimentions, :weights, :warranty, :datasheet,
               # end frontend

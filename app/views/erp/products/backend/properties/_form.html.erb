@@ -9,11 +9,12 @@
     <div class="row">
         <div class="col-md-6">
             <%= erp_form_control('checkbox', {
-                name: 'property[is_show_list]',
-                value: property.is_show_list,
+                name: 'property[is_meta_description]',
+                id: 'property_is_meta_description',
+                value: property.is_meta_description,
                 not_selected_value: 'false',
-                label: t('.property_is_show_list'),
-                options: [{value: 'true', text: t('.is_show_list')}]
+                label: t('.property_is_meta_description'),
+                options: [{value: 'true', text: t('.is_meta_description')}]
             }) %>
         </div>
         <div class="col-md-6">
@@ -30,22 +31,22 @@
     <div class="row">
         <div class="col-md-6">
             <%= erp_form_control('checkbox', {
+                name: 'property[is_short_description]',
+                id: 'property_is_short_description',
+                value: property.is_short_description,
+                not_selected_value: 'false',
+                label: t('.property_is_short_description'),
+                options: [{value: 'true', text: t('.is_short_description')}]
+            }) %>
+        </div>
+        <div class="col-md-6">
+            <%= erp_form_control('checkbox', {
                 name: 'property[is_show_website]',
                 id: 'property_is_show_website',
                 value: property.is_show_website,
                 not_selected_value: 'false',
                 label: t('.property_is_show_website'),
                 options: [{value: 'true', text: t('.is_show_website')}]
-            }) %>
-        </div>
-        <div class="col-md-6">
-            <%= erp_form_control('checkbox', {
-                name: 'property[is_meta_description]',
-                id: 'property_is_meta_description',
-                value: property.is_meta_description,
-                not_selected_value: 'false',
-                label: t('.property_is_meta_description'),
-                options: [{value: 'true', text: t('.is_meta_description')}]
             }) %>
         </div>
     </div>
