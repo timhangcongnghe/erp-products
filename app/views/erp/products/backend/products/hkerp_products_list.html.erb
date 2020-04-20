@@ -47,6 +47,9 @@
                                 <br><em style="color: #999"><strong>Tên rút gọn: </strong><%= erp_product.short_name %></em>
                             <% end %>
                         <% end %>
+                        <% if erp_product.product_intro_link.present? %>
+                            <br><em style="color: #009688"><strong>Video giới thiệu: </strong><%= link_to 'Xem video', erp_product.product_intro_link, target: '_blank' %></em>
+                        <% end %>
                     <% else %>
                     <span style="font-weight: 500"><%= product["display_name"] %></span>
                     <br><em><%= link_to 'Import sản phẩm',
