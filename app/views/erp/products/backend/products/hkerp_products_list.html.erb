@@ -1,9 +1,7 @@
 <table class="table table-advance table-hover table-striped table-checkable order-column">
     <thead>
         <tr>
-            <th class="text-left" width='1%'>
-                <%= erp_datalist_check_all %>
-            </th>
+            <th class="text-left" width='1%'><%= erp_datalist_check_all %></th>
             <th class="text-center" width='5%'>Code</th>
             <th class="text-center" width='40%'>Name</th>
             <th class="text-center">HK-Erp Price</th>
@@ -87,11 +85,6 @@
                             <br><span style="color: #1ba39c; font-size: 12px;">Meta Keywords</span>
                         <% else %>
                             <br><span style="color: #d91e18; font-size: 12px;">Meta Keywords</span>
-                        <% end %>
-                        <% if erp_product.datasheet.present? %>
-                            <br><span style="color: #1ba39c; font-size: 12px;">PDF OK</span>
-                        <% else %>
-                            <br><span style="color: #d91e18; font-size: 12px;">PDF Non-OK</span>
                         <% end %>
                     <% end %>
                 </td>
