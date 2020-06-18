@@ -1373,7 +1373,6 @@ module Erp::Products
 		end
 
 		after_save :update_cache_search
-		after_create :create_alias
 
 		def update_cache_search
 			str = []
@@ -1383,15 +1382,6 @@ module Erp::Products
 			str << brand_name.to_s.downcase.strip
 			str << category_name.to_s.downcase.strip
 			self.update_column(:cache_search, str.join(" ") + " " + str.join(" ").to_ascii)
-		end
-
-		def create_alias
-      if self.short_name.present?
-        name = self.short_name
-      else
-        name = self.name
-      end
-			self.update_column(:alias, name.to_ascii.downcase.to_s.gsub(/[^0-9a-z \/]/i, '').gsub(/[ \/]+/i, '-').strip)
 		end
 
 		def products_values_by_property(property)
