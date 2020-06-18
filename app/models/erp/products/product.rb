@@ -1343,23 +1343,6 @@ module Erp::Products
 			self.get_active.where(is_stock_inventory: true)
 		end
 
-    def product_price
-			# product is not deal
-			return self.price if !self.is_deal
-			
-			# product is deal
-			from_conds = !self.deal_from_date.present? || (self.deal_from_date.present? && Time.now >= self.deal_from_date.beginning_of_day)
-			to_conds = !self.deal_to_date.present? || (self.deal_to_date.present? && Time.now <= self.deal_to_date.end_of_day)
-			
-			if from_conds && to_conds
-				return self.deal_price
-			else
-				# auto uncheck is_deal
-				self.update_column(:is_deal, false)
-				return self.price
-			end
-		end
-
     # get product price
     def get_price
 			return self.price
@@ -1389,30 +1372,6 @@ module Erp::Products
 			Property.where(id: (self.products_values.joins(:properties_value).select("erp_products_properties_values.property_id as property_id").map {|pv| pv.property_id}).uniq)
 		end
 
-		def ratings_active
-			ratings.where(archived: false)
-		end
-
-    # count stars
-		def count_stars
-			self.ratings_active.map(&:star)
-		end
-
-		# average stars
-		def average_stars
-			# calculate average stars
-			(count_stars.empty? ? 0 : count_stars.inject(0, :+).to_f / count_stars.length).round(1)
-		end
-
-		def percentage_stars(score=0)
-			percentage=0
-			num = self.ratings_active.where(star: score).count
-			if num > 0
-				percentage = num*100 / count_stars.length
-			end
-			return percentage
-		end
-
 		after_save :update_cache_search
 		after_create :create_alias
 
@@ -1423,7 +1382,6 @@ module Erp::Products
 			str << short_name.to_s.downcase.strip
 			str << brand_name.to_s.downcase.strip
 			str << category_name.to_s.downcase.strip
-
 			self.update_column(:cache_search, str.join(" ") + " " + str.join(" ").to_ascii)
 		end
 
@@ -1433,54 +1391,11 @@ module Erp::Products
       else
         name = self.name
       end
-			self.update_column(:alias, name.to_ascii.downcase.to_s.gsub(/[^0-9a-z ]/i, '').gsub(/ +/i, '-').strip)
+			self.update_column(:alias, name.to_ascii.downcase.to_s.gsub(/[^0-9a-z \/]/i, '').gsub(/[ \/]+/i, '-').strip)
 		end
 
 		def products_values_by_property(property)
 			self.products_values.joins(:properties_value).where(erp_products_properties_values: {property_id: property.id})
-		end
-
-		# Get full product properties array
-		def product_values_array
-			groups = []
-			self.category.property_groups.each do |group|
-				row = {}
-				row[:group] = group
-				row[:properties] = []
-				group.properties.each do |property|
-					row2 = {}
-					row2[:property] = property
-					row2[:values] = self.products_values_by_property(property).map {|pv| pv.properties_value.value }
-
-					row[:properties] << row2 if !row2[:values].empty?
-				end
-
-				groups << row if !row[:properties].empty?
-			end
-
-			return groups
-		end
-
-		# Get product properties short description
-		def product_short_descipriton_values_array
-			groups = []
-      return [] if self.category.nil?
-			self.category.property_groups.each do |group|
-				row = {}
-				if group.show_name.present?
-					row[:name] = group.get_show_name
-				else
-					row[:name] = group.get_name
-				end
-				row[:values] = []
-				group.properties.where(is_show_detail: true).each do |property|
-					values = self.products_values_by_property(property).map {|pv| pv.properties_value.value }
-					row[:values] += values if !values.empty?
-				end
-				groups << row if !row[:values].empty?
-			end
-
-			return groups
 		end
 
 		# Get product properties for list
@@ -1605,7 +1520,6 @@ module Erp::Products
 			
 			query
     end
-    
     
     # get_returned_confirmed_delivery_details
     def get_returned_confirmed_delivery_details(options={})
