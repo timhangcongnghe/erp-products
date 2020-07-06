@@ -6,33 +6,21 @@
                 <%= erp_datalist_check_all %>
             </th>
             <% if get_columns(params).include?("name") %>
-                <th class="sortable" sort-by='erp_products_categories.name'>
-                    <%= t('.name') %>
-                </th>
+                <th class="sortable" sort-by='erp_products_categories.name'><%= t('.name') %></th>
             <% end %>
             <% if get_columns(params).include?("product_count") %>
-                <th>
-                    <%= t('.product_count') %>
-                </th>
+                <th><%= t('.product_count') %></th>
             <% end %>
             <% if get_columns(params).include?("status") %>
-                <th>
-                    <%= t('status') %>
-                </th>
+                <th><%= t('status') %></th>
             <% end %>
             <% if get_columns(params).include?("creator") %>
-                <th>
-                    <%= t('creator') %>
-                </th>
+                <th><%= t('creator') %></th>
             <% end %>
             <% if get_columns(params).include?("created_at") %>
-                <th class="sortable" sort-by='erp_products_categories.created_at'>
-                    <%= t('created_at') %>
-                </th>
+                <th class="sortable" sort-by='erp_products_categories.created_at'><%= t('created_at') %></th>
             <% end %>
-            <th width="7%" class="sortable text-nowrap" sort-by='erp_products_categories.custom_order'>
-                <%= t('custom_order') %>
-            </th>
+            <th width="7%" class="sortable text-nowrap" sort-by='erp_products_categories.custom_order'><%= t('custom_order') %></th>
             <th width="7%"><%= t('actions') %></th>
         </tr>
     </thead>
@@ -63,6 +51,15 @@
                     <% else %>
                         <%= erp_component('label/success', {
                             text: t('active')
+                        }) %>
+                    <% end %>
+                    <% if category.unique_specs == true %>
+                        <%= erp_component('label/success', {
+                            text: t('.specs_OK')
+                        }) %>
+                    <% else %>
+                        <%= erp_component('label/danger', {
+                            text: t('.specs_nonOK')
                         }) %>
                     <% end %>
                 </td>
