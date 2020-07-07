@@ -32,6 +32,18 @@
                         <% else %>
                             <strong><%= category.full_name %></strong>
                         <% end %>
+                        <% if category.menus.count > 0 %>
+                            <% count = category.menus.count %>
+                            <br><em><strong>Menus: </strong>
+                                <% category.menus.each_with_index do |menu,index| %>
+                                    <% if count == (index+1) %>
+                                        <%= menu.name %>
+                                    <% else %>
+                                        <%= menu.name %>,
+                                    <% end %>
+                                <% end %>
+                            </em>
+                        <% end %>
                     </td>
                 <% end %>
                 <% if get_columns(params).include?("product_count") %>

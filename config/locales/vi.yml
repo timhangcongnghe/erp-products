@@ -61,13 +61,15 @@ vi:
             name: "Tên chuyên mục"
             archive_confirm: "Bạn có chắc chắn muốn ẩn chuyên mục này khỏi danh sách các lựa chọn sau này?"
             unarchive_confirm: "Bạn có chắc chắn muốn khôi phục hiển thị cho chuyên mục?"
+            ok_unique_specs: "Có thông số kỹ thuật"
+            nonok_unique_specs: "Không có thông số kỹ thuật"
           list:
             delete: "Xóa chuyên mục"
             product_count: "Số sản phẩm"
             name: "Tên chuyên mục"
             archive_confirm: "Bạn có chắc chắn muốn ẩn chuyên mục này khỏi danh sách các lựa chọn sau này?"
             unarchive_confirm: "Bạn có chắc chắn muốn khôi phục hiển thị cho chuyên mục?"
-            no_matching_records_found: "Danh sách chuyên mục hiện tại đang trống."
+            no_matching_records_found: "Danh sách chuyên mục hiện tại đang trống."            
           new:
             categories: "Tất cả chuyên mục"
             create: "Thêm chuyên mục"

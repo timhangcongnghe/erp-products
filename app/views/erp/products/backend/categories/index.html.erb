@@ -59,6 +59,15 @@
     actions: actions,
     filters: [
         {
+            text: t('.ok_unique_specs'), name: 'erp_products_categories.unique_specs', value: true, checked: false
+        },
+        {
+            text: t('.nonok_unique_specs'), name: 'erp_products_categories.unique_specs', value: false, checked: false
+        },
+        {
+            divider: true
+        },
+        {
             text: t('archived'), name: 'show_archived', value: true, checked: false
         }
     ],
