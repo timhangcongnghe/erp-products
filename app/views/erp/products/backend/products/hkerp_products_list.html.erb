@@ -76,7 +76,7 @@
                         <% else %>
                             <br><span style="color: #d91e18; font-size: 12px;">Warranty Non-OK</span>
                         <% end %>
-                        <% if erp_product.meta_description.present? %>
+                        <% if (erp_product.meta_description.present?) && (erp_product.meta_description.length > 80) %>
                             <br><span style="color: #1ba39c; font-size: 12px;">Meta Description</span>
                         <% else %>
                             <br><span style="color: #d91e18; font-size: 12px;">Meta Description</span>
