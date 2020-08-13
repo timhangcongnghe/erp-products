@@ -183,7 +183,7 @@ module Erp
             @categories = Category.where(id: params[:ids])
           end
           def category_params
-            params.fetch(:category, {}).permit(:name, :parent_id, :unique_specs, property_group_ids: [])
+            params.fetch(:category, {}).permit(:name, :parent_id, :unique_specs, :short_meta_description, property_group_ids: [])
           end
       end
     end

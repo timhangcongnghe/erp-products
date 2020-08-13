@@ -44,6 +44,7 @@
                                 <% end %>
                             </em>
                         <% end %>
+                        <% if category.short_meta_description.present? %><br><em><strong>Meta Description (<%= category.short_meta_description.length %>): </strong><%= category.short_meta_description %><% end %>
                     </td>
                 <% end %>
                 <% if get_columns(params).include?("product_count") %>

@@ -96,6 +96,8 @@ vi:
             category_unique_specs: "Đã có thuộc tính"
             unique_specs: Đã có
             add_property_group: "Thêm nhóm thuộc tính"
+            short_meta_description: "Short Meta Description"
+            enter_short_meta_description: "Nhập short meta description"
         properties:
           create:
             success: "Thêm thuộc tính thành công."

@@ -7,7 +7,7 @@
             <th class="text-center">HK-Erp Price</th>
             <th class="text-center">THCN Price</th>
             <th class="sortable text-center" sort-by='products.stock'>Stock</th>
-            <th class="text-center" width="10%">Warranty</th>
+            <th class="text-center" width="15%">Warranty</th>
             <th class="text-right" width="7%">Status</th>
         </tr>
     </thead>
@@ -77,9 +77,9 @@
                             <br><span style="color: #d91e18; font-size: 12px;">Warranty Non-OK</span>
                         <% end %>
                         <% if (erp_product.meta_description.present?) && (erp_product.meta_description.length > 80) %>
-                            <br><span style="color: #1ba39c; font-size: 12px;">Meta Description</span>
+                            <br><span style="color: #1ba39c; font-size: 12px;">Meta Description (<%= erp_product.meta_description.length %>)</span>
                         <% else %>
-                            <br><span style="color: #d91e18; font-size: 12px;">Meta Description</span>
+                            <br><span style="color: #d91e18; font-size: 12px;">Meta Description (<%= erp_product.meta_description.length %>)</span>
                         <% end %>
                         <% if erp_product.description.present? %>
                             <br><span style="color: #1ba39c; font-size: 12px;">Có bài GT</span>

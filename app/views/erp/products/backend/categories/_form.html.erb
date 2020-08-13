@@ -33,6 +33,12 @@
                             label: t('.category_unique_specs'),
                             options: [{value: 'true', text: t('.unique_specs')}]
                         }) %>
+                        <%= erp_form_control("textarea", {
+                            name: 'category[short_meta_description]',
+                            value: category.short_meta_description,                   
+                            label: t('.short_meta_description'),
+                            placeholder: t('.enter_short_meta_description')
+                        }) %>
                     </div>
                 </div>
             </div>
