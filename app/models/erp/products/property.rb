@@ -56,7 +56,11 @@ module Erp::Products
       query = query.joins(:creator).joins(:property_group)
 
       # showing archived items if show_archived is not true
-			query = query.where(archived: false) if show_archived == false
+			if show_archived == true
+        query = query.where(archived: true)
+      else
+        query = query.where(archived: false)
+      end
 
       query = query.where(and_conds.join(' AND ')) if !and_conds.empty?
 
