@@ -84,6 +84,9 @@
                         <% if erp_product.description.present? %>
                             <br><span style="color: #1ba39c; font-size: 12px;">Có bài mô tả</span>
                         <% end %>
+                        <% if erp_product.product_images.count == 0 %>
+                            <br><span style="color: #d91e18; font-size: 12px;">Chưa có hình ảnh</span>
+                        <% end %>
                     <% end %>
                 </td>
                 <td class="text-right">
