@@ -21,7 +21,7 @@ module Erp::Products
       return [] if self.nil?
 			self.property_groups.get_active.each do |group|
 				row = {}
-				row[:name] = group.name
+				row[:name] = group.show_name
 				row[:values] = []
 				group.properties.get_properties_for_filter.each do |property|
 					values = property.properties_values.get_property_values_for_filter.map {|pv| pv }

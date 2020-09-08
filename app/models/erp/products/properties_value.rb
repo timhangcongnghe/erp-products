@@ -20,7 +20,7 @@ module Erp::Products
 		end
 
     def self.get_property_values_for_filter
-			self.where(is_show_website: true)
+			self.order("value asc")
 		end
 
     # Get property name
