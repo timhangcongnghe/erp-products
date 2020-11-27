@@ -21,20 +21,20 @@
                 <td class="text-center">
                     <%= product["id"] %>
                 </td>
-                <td class="text-left">                        
+                <td class="text-left">
                     <% if !erp_product.nil? %>
                         <span style="font-weight: 500">
                             <%= link_to product["display_name"],
                                 erp_products.edit_backend_product_path(erp_product),
                                 target: '_blank' %>
-                        </span>                        
+                        </span>
                         <% str1 = product["display_name"] %>
-                        <% str2 = erp_product.name %>                        
+                        <% str2 = erp_product.name %>
                         <% if str1 == str2 %><br><span style="color: #999; font-weight: 500"><%= erp_product.name %></span>
                         <% else %><br><span style="color: #d91e18; font-weight: 500"><%= erp_product.name %></span><% end %>
                         <% if erp_product.short_name.present? %>
                             <% str3 = erp_product.short_name %>
-                            <% if (str2 == str3) || (str3.length < 69) || (str3.length > 75) %>
+                            <% if (str2 == str3) || (str3.length > 64) %>
                                 <br><em style="color: #d91e18"><strong>Tên rút gọn (<%= erp_product.short_name.length %>): </strong><%= erp_product.short_name %></em>
                             <% else %>
                                 <br><em style="color: #999"><strong>Tên rút gọn (<%= erp_product.short_name.length %>): </strong><%= erp_product.short_name %></em>
@@ -108,7 +108,7 @@
                     <% if product["status"].to_i == 0 %>
                         <br><span class="label label-sm bg-dark">Trashed</span>
                     <% end %>
-                </td>                    
+                </td>
             </tr>
         <% end %>
     </tbody>
