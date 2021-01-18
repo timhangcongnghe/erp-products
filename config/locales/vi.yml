@@ -35,6 +35,42 @@ vi:
       values_of_property: "Các giá trị của thuộc tính"
       property_values: "Giá trị thuộc tính"
       backend:
+        # Start
+        properties_values:
+          create:
+            success: "Thêm giá trị thuộc tính thành công."
+          update:
+            success: "Cập nhật giá trị thuộc tính thành công."
+          destroy:
+            success: "Xóa giá trị thuộc tính thành công."
+          index:
+            products: "Quản lý sản phẩm"
+            properties_values: "Giá trị thuộc tính"
+            create: "Thêm giá trị thuộc tính"
+            name: "Nhóm giá trị / Nhóm thuộc tính"
+            value: "Giá trị thuộc tính"
+            product_count: "Số lượng sản phẩm"
+          list:
+            name: "Nhóm giá trị / Nhóm thuộc tính"
+            value: "Giá trị thuộc tính"
+            product_count: "Số sản phẩm"
+            export: "export file"
+            edit: "Cập nhật giá trị"
+            delete: "Xóa giá trị"
+            no_matching_records_found: "Danh sách giá trị thuộc tính hiện tại đang trống."
+          new:
+            products: "Quản lý sản phẩm"
+            properties_values: "Giá trị thuộc tính"
+            create: "Thêm giá trị thuộc tính"
+          edit:
+            products: "Quản lý sản phẩm"
+            properties_values: "Giá trị thuộc tính"
+            create: "Thêm giá trị thuộc tính"
+          form:
+            value: "Giá trị thuộc tính"
+            property: "Nhóm giá trị"
+            choose_property: "Chọn nhóm giá trị"
+        # End fix trans
         categories:
           create:
             success: "Thêm chuyên mục thành công."
@@ -69,7 +105,7 @@ vi:
             name: "Tên chuyên mục"
             archive_confirm: "Bạn có chắc chắn muốn ẩn chuyên mục này khỏi danh sách các lựa chọn sau này?"
             unarchive_confirm: "Bạn có chắc chắn muốn khôi phục hiển thị cho chuyên mục?"
-            no_matching_records_found: "Danh sách chuyên mục hiện tại đang trống."            
+            no_matching_records_found: "Danh sách chuyên mục hiện tại đang trống."
           new:
             categories: "Tất cả chuyên mục"
             create: "Thêm chuyên mục"
@@ -148,55 +184,6 @@ vi:
             property_is_meta_description: "Thêm thuộc tính vào thẻ meta"
             is_short_description: "Mô tả ngắn"
             property_is_short_description: "Thêm vào mô tả ngắn"
-        properties_values:
-          create:
-            success: "Thêm giá trị thuộc tính thành công."
-          update:
-            success: "Cập nhật giá trị thuộc tính thành công."
-          destroy:
-            success: "Xóa giá trị thuộc tính thành công."
-          delete_all:
-            success: "Xóa giá trị thuộc tính được chọn thành công."
-          archive_all:
-            success: "Ẩn giá trị thuộc tính được chọn thành công."
-          unarchive_all:
-            success: "Hiện giá trị thuộc tính được chọn thành công."
-          index:
-            properties_values: "Tất cả giá trị thuộc tính"
-            create: "Thêm giá trị thuộc tính"
-            delete: "Xóa giá trị thuộc tính"
-            name: "Tên thuộc tính"
-            property: "Nhóm thuộc tính"
-            value: "Giá trị thuộc tính"
-            product_count: "Số lượng sản phẩm"
-            show_filter: "Hiển thị ngoài bộ lọc"
-            is_show_website: "Hiển thị bộ lọc"
-          list:
-            delete: "Xóa thuộc tính"
-            property: "Nhóm thuộc tính"
-            value: "Giá trị thuộc tính"
-            product_count: "Số lượng sản phẩm"
-            show_filter: "Hiển thị ngoài bộ lọc"
-            order: "Sắp xếp vị trí"
-            export: "Xuất file excel"
-            no_matching_records_found: "Danh sách giá trị thuộc tính hiện tại đang trống."
-          new:
-            properties_values: "Tất cả giá trị thuộc tính"
-            create: "Thêm thuộc tính"
-          edit:
-            properties_values: "Tất cả giá trị thuộc tính"
-            create: "Thêm giá trị thuộc tính"
-          form:
-            property_is_show_list: "Thuộc tính trang danh sách"
-            property_is_show_detail: "Thuộc tính trang chi tiết"
-            is_show_list: "Hiển thị trang danh sách"
-            is_show_detail: "Hiển thị trang chi tiết"
-            value: "Giá trị thuộc tính"
-            property: "Thuộc tính"
-            help_property: "Thuộc tính sản phẩm thuộc nhóm nào?"
-            choose_property: "Chọn Thuộc tính"
-            is_show_website: "Hiển thị bộ lọc"
-            help_is_show_website: "Chọn để hiển thị giá trị thuộc tính trên bộ lọc trang sản phẩm"
         products:
           create:
             success: "Thêm sản phẩm thành công."
@@ -777,6 +764,8 @@ vi:
             enter_show_name: "Nhập tên hiển thị..."
             description: "Mô tả nhóm thuộc tính"
             enter_description: "Nhập mô tả nhóm thuộc tính..."
+            filter_specs: "Nhóm thuộc tính để lọc"
+            is_filter_specs: "Lựa chọn để lọc"
         accessories:
           create:
             success: "Thêm nhóm phụ kiện thành công."
@@ -883,7 +872,7 @@ vi:
           new:
             price_lists: "Cấu hình bảng giá"
             create: "Thêm bảng giá"
-          edit: 
+          edit:
             price_lists: "Cấu hình bảng giá"
             create: "Thêm bảng giá"
           show:
@@ -1095,10 +1084,10 @@ vi:
             real_total: "Kiểm thực tế"
             diff_qty_total: "Chênh lệch"
             stock_check_details: "Chi tiết kiểm kho"
-            product: "Sản phẩm" 
+            product: "Sản phẩm"
           form_check_details:
             choose_product: "Chọn sản phẩm"
-            help_product: "Chọn sản phẩm cần thêm để kiểm tra và cân bằng kho"            
+            help_product: "Chọn sản phẩm cần thêm để kiểm tra và cân bằng kho"
             add: "Thêm"
             product_name: "Sản phẩm"
             stock: "Tồn kho"
@@ -1154,15 +1143,15 @@ vi:
           stock_check_line_form:
             choose_state: "Chọn tình trạng sản phẩm"
         comments:
-          archive: 
+          archive:
             success: "Bình luận đã được ẩn thành công."
-          unarchive: 
+          unarchive:
             success: "Bình luận đã được hiển thị thành công."
-          archive_all: 
+          archive_all:
             success: "Bình luận đã được ẩn thành công."
-          unarchive_all: 
+          unarchive_all:
             success: "Bình luận đã được hiển thị thành công."
-          destroy: 
+          destroy:
             success: "Bình luận đã được xóa thành công."
           delete_all:
             success: "Bình luận đã được xóa thành công."
@@ -1337,10 +1326,10 @@ vi:
             states: "Tất cả trạng thái sản phẩm"
             create: "Thêm trạng thái"
             delete: "Xóa trạng thái"
-            name: "Tên trạng thái"        
+            name: "Tên trạng thái"
             is_draft: "Phiếu tạm"
             is_active: "Đã xác nhận"
-            is_deleted: "Đã bị hủy"            
+            is_deleted: "Đã bị hủy"
           list:
             set_draft: "Lưu tạm"
             set_active: "Xác nhận"
@@ -1350,14 +1339,14 @@ vi:
             active: "Đã xác nhận"
             deleted: "Đã bị hủy"
             edit: "Cập nhật"
-            name: "Tên trạng thái"          
+            name: "Tên trạng thái"
             no_matching_records_found: "Không tìm thấy kết quả."
           new:
             states: "Tất cả trạng thái sản phẩm"
             create: "Thêm trạng thái"
           edit:
             states: "Tất cả trạng thái sản phẩm"
-            create: "Thêm trạng thái"           
+            create: "Thêm trạng thái"
           form:
             name: "Tên trạng thái"
             enter_name: "Nhập tên trạng thái của sản phẩm"
@@ -1642,7 +1631,7 @@ vi:
           attributes:
             value:
               blank: "không được để trống."
-              invalid: "đã tồn tại cho thuộc tính này"              
+              invalid: "đã tồn tại cho thuộc tính này"
             property_id:
               blank: "không được để trống."
         erp/products/manufacturing:
@@ -1739,7 +1728,7 @@ vi:
       erp/products/brand_group:
         name: "Tên nhóm"
       erp/products/accessory:
-        name: "Tên nhóm"      
+        name: "Tên nhóm"
       erp/products/category:
         name: "Tên chuyên mục"
       erp/products/property:

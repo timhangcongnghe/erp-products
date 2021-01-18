@@ -1,16 +1,15 @@
 module Erp::Products
   class PropertiesValue < ApplicationRecord
 		include Erp::CustomOrder
-		
+
     belongs_to :property
     has_many  :products_values, dependent: :destroy
-    has_many :products, through: :products_values, class_name: "Erp::Products::Product"
+    has_many :products, through: :products_values, class_name: 'Erp::Products::Product'
+    has_many :products, through: :products_values
 
     validates :value, :presence => true
     validates :property_id, :presence => true
     validate :value_check
-
-    has_many :products, through: :products_values
 
     def value_check
 			exist = PropertiesValue.where.not(id: self.id).where(property_id: self.property_id).where('value = ?', self.value).first
@@ -132,7 +131,7 @@ module Erp::Products
         .where(erp_products_products: {is_sold_out: false, category_id: menu.categories.first})
         .where(properties_value: self.id).count
 		end
-    
+
     def product_count_by_menu_brand(menu)
 			Erp::Products::ProductsValue.includes(:product)
         .where(erp_products_products: {is_sold_out: false, category_id: menu.categories.first, brand_id: menu.brand.id})

@@ -1,105 +1,76 @@
 <table class="table table-advance table-hover table-striped table-checkable order-column">
     <thead>
         <tr>
-            <th width='1%'>
-                <%= erp_datalist_check_all %>
-            </th>
             <% if get_columns(params).include?("name") %>
-                <th class="sortable" sort-by='erp_products_properties.name'>
-                    <%= t('.name') %>
-                </th>
-            <% end %>
-            <% if get_columns(params).include?("property_group") %>
-                <th><%= t('.property_group') %></th>
+                <th width='30%' class="text-left"><%= t('.name') %></th>
             <% end %>
             <% if get_columns(params).include?("status") %>
-                <th><%= t('status') %></th>
+                <th class="text-center"><%= t('status') %></th>
             <% end %>
             <% if get_columns(params).include?("creator") %>
-                <th><%= t('creator') %></th>
+                <th class="text-center"><%= t('creator') %></th>
             <% end %>
             <% if get_columns(params).include?("created_at") %>
-                <th class="sortable" sort-by='erp_products_properties.created_at'>
-                    <%= t('created_at') %>
-                </th>
+                <th class="text-center"><%= t('created_at') %></th>
             <% end %>
-            <th width="7%" class="sortable text-nowrap" sort-by='erp_products_properties.custom_order'>
-                <%= t('custom_order') %>
-            </th>
-            <th width="7%"><%= t('actions') %></th>
+            <th width="7%" class="sortable text-nowrap text-center" sort-by='erp_products_properties.custom_order'><%= t('custom_order') %></th>
+            <th width="7%" class="text-right"><%= t('actions') %></th>
         </tr>
     </thead>
     <tbody>
         <% @properties.each do |property| %>
             <tr class="odd gradeX">
-                <td>
-                    <%= erp_datalist_check_row(id: property.id) %>
-                </td>
                 <% if get_columns(params).include?("name") %>
-                    <td>
-                        <% if can? :create, property %>
-                            <%= link_to property.name, erp_products.edit_backend_property_path(property), class: 'title' %>
-                        <% else %>
-                            <span class="title"><%= property.name %></span>
-                        <% end %>
-                    </td>
-                <% end %>
-                <% if get_columns(params).include?("property_group") %>
-                    <td>
-                        <%= property.property_group_name %>
+                    <td width='30%' class="text-left">
+                        <%= link_to property.name, erp_products.edit_backend_property_path(property), class: 'title' %><br>
+                        <em>
+                            <strong>Nhóm thuộc tính: </strong>
+                            <%= link_to property.property_group_name, erp_products.edit_backend_property_group_path(property.property_group) %>
+                        </em>
                     </td>
                 <% end %>
                 <% if get_columns(params).include?("status") %>
-                    <td>
+                    <td class="text-center">
                         <% if property.archived == true %>
                             <span class="label label-sm label-danger"><%= t('archived') %></span>
                         <% else %>
                             <span class="label label-sm label-success"><%= t('active') %></span>
                         <% end %>
                         <% if property.is_show_detail == true %>
-                            <br><span class="label label-sm label-info">Hiển thị trong trang chi tiết</span>
+                            <br><span class="label label-sm label-info">Hiển thị trong trang sản phẩm</span>
                         <% end %>
                         <% if property.is_show_list == true %>
-                            <br><span class="label label-sm label-info">Hiển thị trong trang danh sách</span>
+                            <br><span class="label label-sm label-info">Hiển thị trong trang chuyên mục</span>
                         <% end %>
                         <% if property.is_show_website == true %>
-                            <br><span class="label label-sm label-info">Lọc theo thuộc tính</span>
+                            <br><span class="label label-sm label-info">Chọn vào bộ lọc</span>
                         <% end %>
                         <% if property.is_meta_description == true %>
                             <br><span class="label label-sm label-info">Thêm vào meta description</span>
                         <% end %>
                         <% if property.is_short_description == true %>
-                            <br><span class="label label-sm label-info">Thêm vào mô tả ngắn</span>
+                            <br><span class="label label-sm label-info">Thêm vào mô tả ngắn sản phẩm</span>
                         <% end %>
                     </td>
                 <% end %>
                 <% if get_columns(params).include?("creator") %>
-                    <td>
-                        <%= erp_component('avatar', {
-                            user: property.creator
-                        }) %>
-                    </td>
+                    <td class="text-center"><%= erp_component('avatar', { user: property.creator }) %></td>
                 <% end %>
                 <% if get_columns(params).include?("created_at") %>
-                    <td><%= property.created_at.strftime("%d/%m/%Y") %></td>
+                    <td class="text-center"><%= property.created_at.strftime("%d/%m/%Y") %></td>
                 <% end %>
                 <td class="text-center text-semibold">
                     <%= erp_datalist_order_column({
                         item: property,
                         move_up_url: erp_products.move_up_backend_properties_path(id: property),
                         move_down_url: erp_products.move_down_backend_properties_path(id: property),
-                        sort_by: 'erp_products_properties.custom_order'
-                    }) %>
+                        sort_by: 'erp_products_properties.custom_order' }) %>
                 </td>
-                <td class="text-right">
-                    <%= property_dropdown_actions(property) %>
-                </td>
+                <td class="text-right"><%= property_dropdown_actions(property) %></td>
             </tr>
         <% end %>
     </tbody>
 </table>
-<% if @properties.empty? %>
-    <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
-<% end %>
 
+<% if @properties.empty? %><div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div><% end %>
 <%= erp_datalist_pagination(@properties) %>

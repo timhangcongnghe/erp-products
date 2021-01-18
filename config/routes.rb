@@ -148,16 +148,17 @@ Erp::Products::Engine.routes.draw do
           put 'move_down'
         end
       end
+
       resources :properties_values do
         collection do
-          get 'dataselect'
           post 'list'
+          get 'dataselect'
           get 'export_products'
-          
           put 'move_up'
           put 'move_down'
         end
       end
+
       resources :manufacturings do
 				collection do
 					post 'list'

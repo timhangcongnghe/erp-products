@@ -1,7 +1,7 @@
-<%= form_for([erp_products, :backend, property]) do |f| %>    
+<%= form_for([erp_products, :backend, property]) do |f| %>
     <%= erp_form_control("text", {
         name: 'property[name]',
-        value: property.name,                   
+        value: property.name,
         label: t('.name'),
         required: true,
         errors: property.errors.full_messages_for(:name)
@@ -58,21 +58,10 @@
         label: t('.property_group'),
         help: t('.help_property_group'),
         url: erp_products.dataselect_backend_property_groups_path(format: 'json'),
-        create: {
-            url: erp_products.new_backend_property_group_path,
-            title: t('.create_property_group'),
-            container_selector: '.new_property_group',
-            input_selector: 'input[name="property_group[name]"]'
-        },
         required: true,
         errors: property.errors.full_messages_for(:property_group_id)
     }) %>
     <hr>
-    <%= erp_component('button/save', {
-        text: t('submit')
-    }) %>
-    <%= erp_component('button/cancel', {
-        text: t('cancel'),
-        href: erp_products.backend_properties_path
-    }) %>
+    <%= erp_component('button/save', { text: t('submit') }) %>
+    <%= erp_component('button/cancel', { text: t('cancel'), href: erp_products.backend_properties_path }) %>
 <% end %>

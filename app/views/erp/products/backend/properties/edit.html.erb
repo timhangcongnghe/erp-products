@@ -1,34 +1,20 @@
-<% content_for :title do %>
-    <%= @property.name %>
-<% end %>
+<% content_for :title do %><%= @property.name %><% end %>
 
-<% content_for :page_title do %>    
-    <a href="<%= erp_products.backend_properties_path %>">
-    <i class="fa fa-gg"></i> <%= t('.properties') %>
-    </a> / <%= @property.name %>
+<% content_for :page_title do %>
+    <a href="<%= erp.backend_path %>"><i class="fa fa-th"></i> <%= t('.products') %></a> /
+    <a href="<%= erp_products.backend_properties_path %>"><%= t('.properties') %></a> /
+    Cập nhật: <%= @property.name %>
 <% end %>
 
 <% content_for :page_toolbar do %>
-    <% if can? :create, @property %>
-        <%= erp_component('button/create', {
-            text: t('.create'),
-            href: erp_products.new_backend_property_path,
-            class: 'btn-sm'
-        }) %>
-    <% end %>
+    <%= erp_component('button/create', { text: t('.create'), href: erp_products.new_backend_property_path, class: 'btn-sm' }) %>
 <% end %>
 
 <div class="row">
     <div class="col-md-6">
-        <% if @property.errors.any? %>
-            <%= erp_form_control("form_error_message") %>
-        <% end %>
-        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <% if @property.errors.any? %><%= erp_form_control("form_error_message") %><% end %>
         <div class="portlet light bordered">
-            <div class="portlet-body">
-                <%= render 'form', property: @property %>
-            </div>
+            <div class="portlet-body"><%= render 'form', property: @property %></div>
         </div>
-        <!-- END SAMPLE FORM PORTLET-->
     </div>
 </div>

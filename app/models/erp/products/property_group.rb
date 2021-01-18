@@ -10,8 +10,12 @@ module Erp::Products
 
     def self.get_active
 			self.where(archived: false)
-		end
+    end
     
+    def self.get_for_filter
+      self.get_active.where(is_filter_specs: true)
+    end
+
     def self.get_properties_for_filter
 			self.get_active
 		end

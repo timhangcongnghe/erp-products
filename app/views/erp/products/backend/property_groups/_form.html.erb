@@ -3,7 +3,7 @@
         <div class="portlet light bordered">
             <div class="portlet-body form">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <%= erp_form_control("text", {
                             name: 'property_group[name]',
                             value: property_group.name,                   
@@ -13,7 +13,7 @@
                             errors: property_group.errors.full_messages_for(:name)
                         }) %>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <%= erp_form_control("text", {
                             name: 'property_group[show_name]',
                             value: property_group.show_name,                   
@@ -23,23 +23,20 @@
                             errors: property_group.errors.full_messages_for(:show_name)
                         }) %>
                     </div>
+                    <div class="col-md-4">
+                        <%= erp_form_control('checkbox', {
+                            name: 'property_group[is_filter_specs]',
+                            id: 'property_group_is_filter_specs',
+                            value: property_group.is_filter_specs,
+                            not_selected_value: 'false',
+                            options: [{value: 'true', text: t('.is_filter_specs')}],
+                            label: t('.filter_specs')
+                        }) %>
+                    </div>
                 </div>
-                
-                <%= erp_form_control("editor", {
-                    name: 'property_group[description]',
-                    value: property_group.description,                   
-                    label: t('.description'),
-                    placeholder: t('.enter_description'),
-                    type: "tiny"
-                }) %>
             </div>
         </div>
     </div>
-    <%= erp_component('button/save', {
-        text: t('submit')
-    }) %>
-    <%= erp_component('button/cancel', {
-        text: t('cancel'),
-        href: erp_products.backend_property_groups_path
-    }) %>
+    <%= erp_component('button/save', { text: t('submit') }) %>
+    <%= erp_component('button/cancel', { text: t('cancel'), href: erp_products.backend_property_groups_path }) %>
 <% end %>

@@ -10,7 +10,7 @@ module Erp::Products
     def self.get_active
 			self.where(archived: false)
 		end
-    
+
     def self.get_properties_for_filter
 			self.where(archived: false)
 					.where(is_show_website: true).order("custom_order asc")
@@ -91,7 +91,7 @@ module Erp::Products
         query = query.where('LOWER(name) LIKE ?', "%#{keyword}%")
       end
 
-      query = query.limit(8).map{|property| {value: property.id, text: property.name} }
+      query = query.limit(30).map{|property| {value: property.id, text: ("#{property.property_group_name} / ") + property.name} }
     end
 
     # property group name
