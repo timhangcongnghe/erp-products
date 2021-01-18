@@ -24,7 +24,7 @@ module Erp::Products
         row = {}
         row[:name] = property.name
         row[:values] = []
-        values = property.properties_values.get_property_values_for_filter.map {|pv| pv }
+        values = property.properties_values.order("custom_order ASC").get_property_values_for_filter.map {|pv| pv }
         row[:values] += values if !values.empty?
         groups << row if !row[:values].empty?
       end
