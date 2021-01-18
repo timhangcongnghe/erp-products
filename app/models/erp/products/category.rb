@@ -24,10 +24,8 @@ module Erp::Products
         row = {}
         row[:name] = property.name
         row[:values] = []
-        property.properties_values.each do |properties_value|
-          values = properties_value.property_name.map {|pv| pv }
-          row[:values] += values if !values.empty?
-        end
+        values = property.properties_values.get_property_values_for_filter.map {|pv| pv }
+        row[:values] += values if !values.empty?
         groups << row if !row[:values].empty?
       end
 
