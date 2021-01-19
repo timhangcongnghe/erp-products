@@ -34,7 +34,7 @@
                         <% else %><br><span style="color: #d91e18; font-weight: 500"><%= erp_product.name %></span><% end %>
                         <% if erp_product.short_name.present? %>
                             <% str3 = erp_product.short_name %>
-                            <% if (str2 == str3) || (str3.length > 65) || (str3.length < 35) %>
+                            <% if (str2 == str3) || (str3.length > 70) || (str3.length < 35) %>
                                 <br><em style="color: #d91e18"><strong>Tên rút gọn (<%= erp_product.short_name.length %>): </strong><%= erp_product.short_name %></em>
                             <% else %>
                                 <br><em style="color: #999"><strong>Tên rút gọn (<%= erp_product.short_name.length %>): </strong><%= erp_product.short_name %></em>
