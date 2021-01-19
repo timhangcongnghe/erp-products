@@ -7,7 +7,7 @@
                 <th><%= t('.product_count') %></th>
             <% end %>
             <% if get_columns(params).include?("status") %>
-                <th><%= t('status') %></th>
+                <th class="text-center"><%= t('status') %></th>
             <% end %>
             <% if get_columns(params).include?("creator") %>
                 <th><%= t('creator') %></th>
@@ -22,9 +22,7 @@
     <tbody>
         <% @categories.each do |category| %>
             <tr class="odd gradeX">
-                <td>
-                    <%= erp_datalist_check_row(id: category.id) %>
-                </td>
+                <td><%= erp_datalist_check_row(id: category.id) %></td>
                 <% if get_columns(params).include?("name") %>
                     <td>
                         <% if can? :create, category %>
@@ -51,7 +49,7 @@
                     <td><%= category.product_count %></td>
                 <% end %>
                 <% if get_columns(params).include?("status") %>
-                <td>
+                <td class="text-center">
                     <% if category.archived == true %>
                         <%= erp_component('label/danger', {
                             text: t('archived')
@@ -62,12 +60,21 @@
                         }) %>
                     <% end %>
                     <% if category.unique_specs == true %>
-                        <%= erp_component('label/success', {
+                        <br><%= erp_component('label/success', {
                             text: t('.specs_OK')
                         }) %>
                     <% else %>
-                        <%= erp_component('label/danger', {
+                        <br><%= erp_component('label/danger', {
                             text: t('.specs_nonOK')
+                        }) %>
+                    <% end %>
+                    <% if category.is_new_specs == true %>
+                        <br><%= erp_component('label/success', {
+                            text: t('.is_new_specs_OK')
+                        }) %>
+                    <% else %>
+                        <br><%= erp_component('label/danger', {
+                            text: t('.is_new_specs_nonOK')
                         }) %>
                     <% end %>
                 </td>

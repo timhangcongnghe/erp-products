@@ -125,53 +125,34 @@ module Erp
         def archive_all
           @categories.archive_all
           respond_to do |format|
-            format.json {
-              render json: {
-                'message': t('.success'),
-                'type': 'success'
-              }
-            }
+            format.json { render json: {'message': t('.success'), 'type': 'success'} }
           end
         end
 
         def unarchive_all
           @categories.unarchive_all
           respond_to do |format|
-            format.json {
-              render json: {
-                'message': t('.success'),
-                'type': 'success'
-              }
-            }
+            format.json { render json: {'message': t('.success'), 'type': 'success'} }
           end
         end
 
         def dataselect
           respond_to do |format|
-            format.json {
-              render json: Category.dataselect(params[:keyword].split('/').last.to_s.strip, params)
-            }
+            format.json { render json: Category.dataselect(params[:keyword].split('/').last.to_s.strip, params) }
           end
         end
 
         def move_up
           @category.move_up
           respond_to do |format|
-          format.json {
-            render json: {
-            }
-          }
+          format.json { render json: {} }
           end
         end
 
         def move_down
           @category.move_down
-
           respond_to do |format|
-          format.json {
-            render json: {
-            }
-          }
+          format.json { render json: {} }
           end
         end
         
@@ -183,7 +164,7 @@ module Erp
             @categories = Category.where(id: params[:ids])
           end
           def category_params
-            params.fetch(:category, {}).permit(:name, :parent_id, :unique_specs, :short_meta_description, property_group_ids: [])
+            params.fetch(:category, {}).permit(:name, :parent_id, :unique_specs, :is_new_specs, :short_meta_description, property_group_ids: [])
           end
       end
     end

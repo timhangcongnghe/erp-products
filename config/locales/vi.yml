@@ -99,6 +99,7 @@ vi:
             unarchive_confirm: "Bạn có chắc chắn muốn khôi phục hiển thị cho chuyên mục?"
             ok_unique_specs: "Có thông số kỹ thuật"
             nonok_unique_specs: "Không có thông số kỹ thuật"
+            is_new_specs_OK: "Sử dụng thuộc tính mới"
           list:
             delete: "Xóa chuyên mục"
             product_count: "Số sản phẩm"
@@ -106,6 +107,8 @@ vi:
             archive_confirm: "Bạn có chắc chắn muốn ẩn chuyên mục này khỏi danh sách các lựa chọn sau này?"
             unarchive_confirm: "Bạn có chắc chắn muốn khôi phục hiển thị cho chuyên mục?"
             no_matching_records_found: "Danh sách chuyên mục hiện tại đang trống."
+            is_new_specs_OK: "Sử dụng thuộc tính mới"
+            is_new_specs_nonOK: "Chưa sử dụng thuộc tính mới"
           new:
             categories: "Tất cả chuyên mục"
             create: "Thêm chuyên mục"
@@ -134,6 +137,8 @@ vi:
             add_property_group: "Thêm nhóm thuộc tính"
             short_meta_description: "Short Meta Description"
             enter_short_meta_description: "Nhập short meta description"
+            category_is_new_specs: "Bộ thuộc tính mới"
+            is_new_specs: "Sử dụng thuộc tính mới"
         properties:
           create:
             success: "Thêm thuộc tính thành công."

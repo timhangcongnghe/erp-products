@@ -25,14 +25,29 @@
                                 input_selector: 'input[name="category[name]"]'
                             }
                         }) %>
-                        <%= erp_form_control('checkbox', {
-                            name: 'category[unique_specs]',
-                            id: 'category_unique_specs',
-                            value: category.unique_specs,
-                            not_selected_value: 'false',
-                            label: t('.category_unique_specs'),
-                            options: [{value: 'true', text: t('.unique_specs')}]
-                        }) %>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <%= erp_form_control('checkbox', {
+                                    name: 'category[unique_specs]',
+                                    id: 'category_unique_specs',
+                                    value: category.unique_specs,
+                                    not_selected_value: 'false',
+                                    label: t('.category_unique_specs'),
+                                    options: [{value: 'true', text: t('.unique_specs')}]
+                                }) %>
+                            </div>
+                            <div class="col-md-6">
+                                <%= erp_form_control('checkbox', {
+                                    name: 'category[is_new_specs]',
+                                    id: 'category_is_new_specs',
+                                    value: category.is_new_specs,
+                                    not_selected_value: 'false',
+                                    label: t('.category_is_new_specs'),
+                                    options: [{value: 'true', text: t('.is_new_specs')}]
+                                }) %>
+                            </div>
+                        </div>
+                        
                         <%= erp_form_control("textarea", {
                             name: 'category[short_meta_description]',
                             value: category.short_meta_description,                   
@@ -73,11 +88,6 @@
             </div>
         </div>
     </div>
-    <%= erp_component('button/save', {
-        text: t('submit')
-    }) %>
-    <%= erp_component('button/cancel', {
-        text: t('cancel'),
-        href: erp_products.backend_categories_path
-    }) %>
+    <%= erp_component('button/save', { text: t('submit') }) %>
+    <%= erp_component('button/cancel', { text: t('cancel'), href: erp_products.backend_categories_path }) %>
 <% end %>
