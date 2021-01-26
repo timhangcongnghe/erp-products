@@ -51,31 +51,19 @@
                 <% if get_columns(params).include?("status") %>
                 <td class="text-center">
                     <% if category.archived == true %>
-                        <%= erp_component('label/danger', {
-                            text: t('archived')
-                        }) %>
+                        <span class="label label-danger"><%= t('archived') %></span>
                     <% else %>
-                        <%= erp_component('label/success', {
-                            text: t('active')
-                        }) %>
+                        <span class="label label-success"><%= t('active') %></span>
                     <% end %>
                     <% if category.unique_specs == true %>
-                        <br><%= erp_component('label/success', {
-                            text: t('.specs_OK')
-                        }) %>
+                        <br><span class="label label-success"><%= t('.specs_OK') %></span>
                     <% else %>
-                        <br><%= erp_component('label/danger', {
-                            text: t('.specs_nonOK')
-                        }) %>
+                        <br><span class="label label-danger"><%= t('.specs_nonOK') %></span>
                     <% end %>
                     <% if category.is_new_specs == true %>
-                        <br><%= erp_component('label/success', {
-                            text: t('.is_new_specs_OK')
-                        }) %>
+                        <br><span class="label label-success"><%= t('.is_new_specs_OK') %></span>
                     <% else %>
-                        <br><%= erp_component('label/danger', {
-                            text: t('.is_new_specs_nonOK')
-                        }) %>
+                        <br><span class="label label-danger"><%= t('.is_new_specs_nonOK') %></span>
                     <% end %>
                 </td>
                 <% end %>
@@ -90,14 +78,42 @@
                     <td><%= category.created_at.strftime("%d/%m/%Y") %></td>
                 <% end %>
                 <td class="text-center text-semibold">
-                    <%= erp_datalist_order_column({
-                        item: category,
-                        move_up_url: erp_products.move_up_backend_categories_path(id: category),
-                        move_down_url: erp_products.move_down_backend_categories_path(id: category),
-                        sort_by: 'erp_products_categories.custom_order'
-                    }) %>
+                    <%= category.custom_order %><br>
+                    <% if params[:sort_by] == 'erp_products_categories.custom_order' %>
+                        <%= link_to '<i class="fa fa-caret-square-o-up icon-big"></i>'.html_safe, 
+                            erp_products.move_up_backend_categories_path(id: category), method: 'PUT', class: 'ajax-link' %>
+                        <%= link_to '<i class="fa fa-caret-square-o-down icon-big"></i>'.html_safe, 
+                            erp_products.move_down_backend_categories_path(id: category), method: 'PUT', class: 'ajax-link' %>
+                    <% end %>
                 </td>
-                <td class="text-right"><%= category_dropdown_actions(category) %></td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <i class="fa fa-cog"></i><%= t('core.options') %><i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <%= link_to '<i class="fa fa-edit"></i> '.html_safe + t('.edit'), 
+                                    erp_products.edit_backend_category_path(category) %>
+                            </li>
+                            <li class="divider"></li>
+                            <% if !category.archived %>
+                                <li>
+                                    <%= link_to '<i class="fa fa-eye-slash"></i> '.html_safe + t('archive'), 
+                                        erp_products.archive_backend_categories_path(category),
+                                        method: 'PUT', data: {confirm: t('.archive_confirm')}, class: 'ajax-link' %>
+                                </li>
+                            <% end %>
+                            <% if category.archived %>
+                                <li>
+                                    <%= link_to '<i class="fa fa-eye"></i> '.html_safe + t('unarchive'), 
+                                        erp_products.unarchive_backend_categories_path(category),
+                                        method: 'PUT', data: {confirm: t('.unarchive_confirm')}, class: 'ajax-link' %>
+                                </li>
+                            <% end %>
+                        </ul>
+                    </div>
+                </td>
             </tr>
         <% end %>
     </tbody>

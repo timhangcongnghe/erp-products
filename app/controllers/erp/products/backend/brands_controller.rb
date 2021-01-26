@@ -18,7 +18,7 @@ module Erp
             authorize! :inventory_products_brands_index, nil
           end
           
-          @brands = Brand.search(params).paginate(:page => params[:page], :per_page => 10)
+          @brands = Brand.search(params).paginate(:page => params[:page], :per_page => 20)
           
           render layout: nil
         end

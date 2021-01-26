@@ -34,9 +34,11 @@
                 </td>
                 <% if get_columns(params).include?("image") %>
                     <td>
-                        <%= erp_component('image', {
-                            object: brand
-                        }) %>
+                        <% if !brand.image_url.nil? %>
+                            <img class="image-datalist" src="<%= brand.image_url.system_logo %>">
+                        <% else %>
+                            <img class="image-datalist" src="/backend/img/image-coming-soon.jpg">
+                        <% end %>
                     </td>
                 <% end %>
                 <% if get_columns(params).include?("name") %>
@@ -71,7 +73,22 @@
                     <td><%= brand.created_at.strftime("%d/%m/%Y") %></td>
                 <% end %>
                 <td class="text-right">
-                    <%= brand_dropdown_actions(brand) %>
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <i class="fa fa-cog"></i><%= t('core.options') %><i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <%= link_to '<i class="fa fa-edit"></i>'.html_safe + t('.edit'), 
+                                    erp_products.edit_backend_brand_path(brand) %>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <%= link_to '<i class="fa fa-trash"></i>'.html_safe + t('.delete'), 
+                                    erp_products.backend_brand_path(brand), method: 'DELETE', data: {confirm: t('delete_confirm')}, class: 'ajax-link' %>
+                            </li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
         <% end %>

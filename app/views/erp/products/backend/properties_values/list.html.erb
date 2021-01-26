@@ -17,7 +17,7 @@
                     <em>
                         <strong>Nhóm thuộc tính: </strong>
                         <%= link_to properties_value.property_group_name,
-                                    erp_products.edit_backend_property_group_path(properties_value.property.property_group) %>
+                            erp_products.edit_backend_property_group_path(properties_value.property.property_group) %>
                     </em>
                 </td>
                 <td class="text-center"><%= link_to properties_value.value, erp_products.edit_backend_properties_value_path(properties_value) %></td>
@@ -28,13 +28,32 @@
                     </a>
                 </td>
                 <td class="text-center text-semibold">
-                    <%= erp_datalist_order_column({
-                        item: properties_value,
-                        move_up_url: erp_products.move_up_backend_properties_values_path(id: properties_value),
-                        move_down_url: erp_products.move_down_backend_properties_values_path(id: properties_value),
-                        sort_by: 'erp_products_properties_values.custom_order' }) %>
+                    <%= properties_value.custom_order %><br>
+                    <% if params[:sort_by] == 'erp_products_properties_values.custom_order' %>
+                        <%= link_to '<i class="fa fa-caret-square-o-up icon-big"></i>'.html_safe, 
+                            erp_products.move_up_backend_properties_values_path(id: properties_value), method: 'PUT', class: 'ajax-link' %>
+                        <%= link_to '<i class="fa fa-caret-square-o-down icon-big"></i>'.html_safe, 
+                            erp_products.move_down_backend_properties_values_path(id: properties_value), method: 'PUT', class: 'ajax-link' %>
+                    <% end %>
                 </td>
-                <td class="text-right"><%= properties_value_dropdown_actions(properties_value) %></td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <i class="fa fa-cog"></i><%= t('core.options') %><i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <%= link_to '<i class="fa fa-edit"></i>'.html_safe + t('.edit'), 
+                                    erp_products.edit_backend_properties_value_path(properties_value) %>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <%= link_to '<i class="fa fa-trash"></i>'.html_safe + t('.delete'), 
+                                    erp_products.backend_properties_value_path(properties_value), method: 'DELETE', data: {confirm: t('delete_confirm')}, class: 'ajax-link' %>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
             </tr>
         <% end %>
     </tbody>

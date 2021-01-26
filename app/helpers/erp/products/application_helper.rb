@@ -229,43 +229,6 @@ module Erp
         )
       end
 
-      # Product brand dropdown actions
-      def brand_dropdown_actions(brand)
-        actions = []
-        actions << {
-          text: '<i class="fa fa-edit"></i> '+t('edit'),
-          href: erp_products.edit_backend_brand_path(brand)
-        } if can? :update, brand
-        actions << {
-          text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
-          url: erp_products.archive_backend_brands_path(id: brand),
-          data_method: 'PUT',
-          hide: brand.archived,
-          class: 'ajax-link',
-          data_confirm: t('.archive_confirm')
-        } if !Erp::Core.available?("ortho_k")
-        actions << {
-          text: '<i class="fa fa-eye"></i> '+t('unarchive'),
-          url: erp_products.unarchive_backend_brands_path(id: brand),
-          data_method: 'PUT',
-          hide: !brand.archived,
-          class: 'ajax-link',
-          data_confirm: t('.unarchive_confirm')
-        } if !Erp::Core.available?("ortho_k")
-        actions << { divider: true } if Erp::Core.available?("online_store")
-        actions << {
-          text: '<i class="fa fa-trash"></i> '+t('.delete'),
-          url: erp_products.backend_brand_path(brand),
-          data_method: 'DELETE',
-          class: 'ajax-link',
-          data_confirm: t('delete_confirm')
-        } if Erp::Core.available?("online_store")
-
-        erp_datalist_row_actions(
-          actions
-        )
-      end
-
       # Product category dropdown actions
       def category_dropdown_actions(category)
         actions = []
@@ -291,24 +254,6 @@ module Erp
         } if can? :unarchive, category
 
         erp_datalist_row_actions(actions)
-      end
-
-      def properties_value_dropdown_actions(properties_value)
-        actions = []
-        actions << { text: '<i class="fa fa-edit"></i> ' + t('.edit'), href: erp_products.edit_backend_properties_value_path(properties_value) }
-        actions << { divider: true }
-        actions << { text: '<i class="fa fa-trash"></i> ' + t('.delete'), url: erp_products.backend_properties_value_path(properties_value),
-                     data_method: 'DELETE', class: 'ajax-link', data_confirm: t('delete_confirm') }
-         erp_datalist_row_actions( actions )
-      end
-
-      def property_dropdown_actions(property)
-        actions = []
-        actions << { text: '<i class="fa fa-edit"></i> ' + t('edit'), href: erp_products.edit_backend_property_path(property) }
-        actions << { divider: true }
-        actions << { text: '<i class="fa fa-trash"></i> ' + t('.delete'), url: erp_products.backend_property_path(property),
-                     data_method: 'DELETE', class: 'ajax-link', data_confirm: t('delete_confirm') }
-        erp_datalist_row_actions( actions )
       end
     end
   end

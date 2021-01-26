@@ -65,53 +65,35 @@
                     <td><%= property_group.created_at.strftime("%d/%m/%Y") %></td>
                 <% end %>
                 <td class="text-center text-semibold">
-                    <%= erp_datalist_order_column({
-                        item: property_group,
-                        move_up_url: erp_products.move_up_backend_property_groups_path(id: property_group),
-                        move_down_url: erp_products.move_down_backend_property_groups_path(id: property_group),
-                        sort_by: 'erp_products_property_groups.custom_order'
-                    }) %>
+                    <%= property_group.custom_order %><br>
+                    <% if params[:sort_by] == 'erp_products_property_groups.custom_order' %>
+                        <%= link_to '<i class="fa fa-caret-square-o-up icon-big"></i>'.html_safe, 
+                            erp_products.move_up_backend_property_groups_path(id: property_group), method: 'PUT', class: 'ajax-link' %>
+                        <%= link_to '<i class="fa fa-caret-square-o-down icon-big"></i>'.html_safe, 
+                            erp_products.move_down_backend_property_groups_path(id: property_group), method: 'PUT', class: 'ajax-link' %>
+                    <% end %>
                 </td>
                 <td class="text-right">
-                    <%= erp_datalist_row_actions(
-                        [
-                            {
-                                text: '<i class="fa fa-edit"></i> '+t('edit'),
-                                href: erp_products.edit_backend_property_group_path(property_group)
-                            },
-                            {
-                                text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
-                                url: erp_products.archive_backend_property_groups_path(id: property_group),
-                                data_method: 'PUT',
-                                hide: property_group.archived,
-                                class: 'ajax-link'
-                            },
-                            {
-                                text: '<i class="fa fa-eye"></i> '+t('unarchive'),
-                                url: erp_products.unarchive_backend_property_groups_path(id: property_group),
-                                data_method: 'PUT',
-                                hide: !property_group.archived,
-                                class: 'ajax-link'
-                            },
-                            {
-                                divider: true
-                            },
-                            {
-                                text: '<i class="fa fa-trash"></i> '+t('.delete'),
-                                url: erp_products.backend_property_group_path(property_group),
-                                data_method: 'DELETE',
-                                class: 'ajax-link',
-                                data_confirm: t('delete_confirm')
-                            }
-                        ]
-                    ) %>
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <i class="fa fa-cog"></i><%= t('core.options') %><i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <%= link_to '<i class="fa fa-edit"></i>'.html_safe + t('.edit'), 
+                                    erp_products.edit_backend_property_group_path(property_group) %>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <%= link_to '<i class="fa fa-trash"></i>'.html_safe + t('.delete'), 
+                                    erp_products.backend_property_group_path(property_group), method: 'DELETE', data: {confirm: t('delete_confirm')}, class: 'ajax-link' %>
+                            </li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
         <% end %>
     </tbody>
 </table>
-<% if @property_groups.empty? %>
-    <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
-<% end %>
-
+<% if @property_groups.empty? %><div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div><% end %>
 <%= erp_datalist_pagination(@property_groups) %>

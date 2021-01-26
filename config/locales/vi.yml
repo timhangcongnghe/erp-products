@@ -153,6 +153,7 @@ vi:
           unarchive_all:
             success: "Hiện thuộc tính được chọn thành công."
           index:
+            products: "Quản lý sản phẩm"
             properties: "Tất cả thuộc tính"
             create: "Thêm thuộc tính"
             delete: "Xóa thuộc tính"
@@ -167,6 +168,8 @@ vi:
             delete: "Xóa thuộc tính"
             name: "Tên thuộc tính"
             property_group: "Nhóm thuộc tính"
+            edit: "Cập nhật giá trị"
+            delete: "Xóa giá trị"
             no_matching_records_found: "Danh sách thuộc tính hiện tại đang trống."
           new:
             properties: "Tất cả thuộc tính"
@@ -753,6 +756,8 @@ vi:
             name: "Tên nhóm thuộc tính"
             show_name: "Tên hiển thị"
             delete: "Xóa nhóm thuộc tính"
+            edit: "Cập nhật giá trị"
+            delete: "Xóa giá trị"
             archive_confirm: "Bạn có chắc muốn ẩn nhóm thuộc tính này?"
             unarchive_confirm: "Bạn muốn hiển thị lại nhóm thuộc tính này?"
             no_matching_records_found: "Danh sách nhóm thuộc tính hiện tại đang trống."
