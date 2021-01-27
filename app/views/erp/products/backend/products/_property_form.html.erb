@@ -5,9 +5,7 @@
             <div class="row pl-20">
                 <div class="col-md-3">
                     <strong><%= property.name %></strong>
-                    <input type="hidden" id="property_<%= property.id %>"
-                        name="product_property_values[<%= property.id %>][property_id]"
-                        value="<%= property.id %>" />
+                    <input type="hidden" id="property_<%= property.id %>" name="product_property_values[<%= property.id %>][property_id]" value="<%= property.id %>" />
                 </div>
                 <div class="col-md-9 property-value-select">
                     <%= erp_form_control("dataselect", {
@@ -22,7 +20,7 @@
                             name: 'product_property_values[' + property.id.to_s + '][names][]'
                         },
                         parent_control: '#property_' + property.id.to_s,
-                        parent_id: "property_id" # +GET: parent_id with value
+                        parent_id: "property_id"
                     }) %>
                 </div>
             </div>
