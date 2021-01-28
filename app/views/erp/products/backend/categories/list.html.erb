@@ -100,14 +100,14 @@
                             <% if !category.archived %>
                                 <li>
                                     <%= link_to '<i class="fa fa-eye-slash"></i> '.html_safe + t('archive'), 
-                                        erp_products.archive_backend_categories_path(category),
+                                        erp_products.archive_backend_categories_path(id: category),
                                         method: 'PUT', data: {confirm: t('.archive_confirm')}, class: 'ajax-link' %>
                                 </li>
                             <% end %>
                             <% if category.archived %>
                                 <li>
                                     <%= link_to '<i class="fa fa-eye"></i> '.html_safe + t('unarchive'), 
-                                        erp_products.unarchive_backend_categories_path(category),
+                                        erp_products.unarchive_backend_categories_path(id: category),
                                         method: 'PUT', data: {confirm: t('.unarchive_confirm')}, class: 'ajax-link' %>
                                 </li>
                             <% end %>
