@@ -33,21 +33,33 @@
                         <% if str1 == str2 %><br><span style="color: #999; font-weight: 500"><%= erp_product.name %></span>
                         <% else %><br><span style="color: #d91e18; font-weight: 500"><%= erp_product.name %></span><% end %>
                         <% if erp_product.short_name.present? %>
-                            <% str3 = erp_product.short_name %>
-                            <% if (str2 == str3) || (str3.length > 70) || (str3.length < 35) %>
-                                <br><em style="color: #d91e18"><strong>Tên rút gọn (<%= erp_product.short_name.length %>): </strong><%= erp_product.short_name %></em>
-                            <% else %>
+                            <% if product["suspended"] %>
                                 <br><em style="color: #999"><strong>Tên rút gọn (<%= erp_product.short_name.length %>): </strong><%= erp_product.short_name %></em>
+                            <% else %>
+                                <% str3 = erp_product.short_name %>
+                                <% if (str2 == str3) || (str3.length > 70) || (str3.length < 35) %>
+                                    <br><em style="color: #d91e18"><strong>Tên rút gọn (<%= erp_product.short_name.length %>): </strong><%= erp_product.short_name %></em>
+                                <% else %>
+                                    <br><em style="color: #999"><strong>Tên rút gọn (<%= erp_product.short_name.length %>): </strong><%= erp_product.short_name %></em>
+                                <% end %>
                             <% end %>
+                        <% end %>
+                        <% if product["fixed_name"].present? %><br><em style="color: #999"><strong>Tên mới: </strong><%= product["fixed_name"] %></em><% end %>
+                        <% if erp_product.category.present? %>
+                            <br><em style="color: #999"><strong>Chuyên mục: </strong><%= erp_product.category_name %></em>
+                        <% end %>
+                        <% if erp_product.brand.present? %>
+                            <br><em style="color: #999"><strong>Thương hiệu: </strong><%= erp_product.brand_name %></em>
                         <% end %>
                         <% if erp_product.product_intro_link.present? %>
                             <br><em style="color: #009688"><strong>Video giới thiệu: </strong><%= link_to 'Xem video', erp_product.product_intro_link, target: '_blank' %></em>
                         <% end %>
                     <% else %>
-                    <span style="font-weight: 500"><%= product["display_name"] %></span>
-                    <br><em><%= link_to 'Import sản phẩm',
-                                erp_products.new_backend_product_path(hkerp_id: product["id"]),
-                                target: '_blank', style: 'color: #1ba39c; font-weight: 500;' %></em>
+                        <span style="font-weight: 500"><%= product["display_name"] %></span>
+                        <% if product["fixed_name"].present? %><br><em style="color: #999"><strong>Tên mới: </strong><%= product["fixed_name"] %></em><% end %>
+                        <br><em><%= link_to 'Import sản phẩm',
+                                    erp_products.new_backend_product_path(hkerp_id: product["id"]),
+                                    target: '_blank', style: 'color: #1ba39c; font-weight: 500;' %></em>
                     <% end %>
                 </td>
                 <td class="text-nowrap text-center">
@@ -95,7 +107,7 @@
                         <% else %>
                             <br><span class="label label-sm label-warning">Price Oudated</span>
                         <% end %>
-                        <% if erp_product.is_sold_out %>
+                        <% if erp_product.is_sold_out? %>
                             <br><span class="label label-sm label-warning">Sold Out</span>
                         <% end %>
                     <% end %>
