@@ -5,7 +5,7 @@ module Erp
         before_action :set_product, only: [:check_is_business_choices, :uncheck_is_business_choices, :check_is_top_business_choices, :uncheck_is_top_business_choices,
                                            :check_is_sold_out, :uncheck_is_sold_out, :check_is_bestseller, :uncheck_is_bestseller, :check_is_call, :uncheck_is_call,
                                            :check_is_stock_inventory, :uncheck_is_stock_inventory, :check_is_bestseller, :uncheck_is_bestseller,
-                                           :import_export_table, :product_details, :archive, :unarchive, :show, :edit, :update]
+                                           :import_export_table, :product_details, :archive, :unarchive, :show, :edit, :update, :copy]
         before_action :set_products, only: [:hkerp_update_price, :delete_all, :archive_all, :unarchive_all, :check_is_bestseller_all, :uncheck_is_bestseller_all, :check_is_call_all, :uncheck_is_call_all,
                                             :check_is_sold_out_all, :uncheck_is_sold_out_all, :check_is_stock_inventory_all, :uncheck_is_stock_inventory_all,
                                             :check_is_business_choices_all, :uncheck_is_business_choices_all, :check_is_top_business_choices_all, :uncheck_is_top_business_choices_all]
@@ -57,6 +57,20 @@ module Erp
           # default product images
           (15 - @product.product_images.count).times do
             @product.product_images.build
+          end
+        end
+
+        # PUT /products/1/copy
+        def copy
+          @copied_product = @product.copy(creator: current_user)
+
+          if request.xhr?
+            render json: {
+              status: 'product_copied_success',
+              text: @copied_product.name,
+              value: @copied_product.id,
+              url: erp_products.edit_backend_product_path(@copied_product)
+            }
           end
         end
 
@@ -112,9 +126,9 @@ module Erp
           @product.assign_attributes(product_params)
 
           #@todo HK-ERP connector
-            if params.to_unsafe_hash[:hkerp_id].present?
-              @product.updateHkerpInfo(params.to_unsafe_hash[:hkerp_id])
-            end
+          if params.to_unsafe_hash[:hkerp_id].present?
+            @product.updateHkerpInfo(params.to_unsafe_hash[:hkerp_id])
+          end
 
           if @product.save
             @product.update_products_values
@@ -126,6 +140,16 @@ module Erp
 
             if Erp::Core.available?('online_store')
               @product.hkerp_set_cache_thcn_properties
+
+              if params.to_unsafe_hash[:hkerp_id].present?
+                if @product.hkerp_product.present?
+                  @product.hkerp_product.update(hkerp_product_id: params.to_unsafe_hash[:hkerp_id])
+                else
+                  @product.hkerp_product.create({hkerp_product_id: params.to_unsafe_hash[:hkerp_id]})
+                end
+              else
+                @product.hkerp_product.destroy if @product.hkerp_product.present?
+              end
             end
 
             if request.xhr?

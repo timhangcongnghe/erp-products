@@ -9,11 +9,21 @@
 <% end %>
 
 <% content_for :page_toolbar do %>
-    <%= erp_component('button/create', {
-        text: t('.create'),
-        href: erp_products.new_backend_product_path,
-        class: 'btn-noborder'
-    }) %>
+    <%= erp_datalist_row_actions(
+        [
+            {
+                text: '<i class="fa fa-plus"></i> '+t('.create'),
+                href: erp_products.new_backend_product_path
+            },
+            {
+                text: '<i class="fa fa-copy"></i> '+t('.copy'),
+                url: erp_products.copy_backend_products_path(id: @product),
+                data_method: 'PUT',
+                class: 'ajax-link',
+                data_confirm: t('.copy_confirm')
+            },
+        ]
+    ) %>
 <% end %>
 
 <div class="row">

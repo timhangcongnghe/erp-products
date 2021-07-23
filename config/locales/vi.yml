@@ -363,6 +363,8 @@ vi:
             uncheck_is_top_business_choices_confirm: "Bạn muốn hủy sản phẩm khỏi danh sách lựa chọn hàng đầu?"
             combine: "Ghép thành phần"
             split: "Tách thành phần"
+            copy: "Nhân bản (copy)"
+            copy_confirm: "Bạn đang muốn tạo một bản sao của sản phẩm này?"
           new:
             products: "Tất cả sản phẩm"
             create: "Thêm sản phẩm"
@@ -370,6 +372,8 @@ vi:
             products: "Tất cả sản phẩm"
             edit: "Cập nhật sản phẩm"
             create: "Thêm sản phẩm"
+            copy: "Nhân bản sản phẩm"
+            copy_confirm: "Bạn đang muốn tạo một bản sao của sản phẩm này?"
           form:
             name: "Tên sản phẩm"
             images: "Hình ảnh sản phẩm"
