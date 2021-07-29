@@ -76,6 +76,7 @@ Erp::Products::Engine.routes.draw do
           get 'form_property'
           get 'property_form'
           put 'copy'
+          put 'update_alias'
 
 					#@todo HK-ERP connector
           get 'hkerp_products'

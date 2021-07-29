@@ -5,7 +5,7 @@ module Erp
         before_action :set_product, only: [:check_is_business_choices, :uncheck_is_business_choices, :check_is_top_business_choices, :uncheck_is_top_business_choices,
                                            :check_is_sold_out, :uncheck_is_sold_out, :check_is_bestseller, :uncheck_is_bestseller, :check_is_call, :uncheck_is_call,
                                            :check_is_stock_inventory, :uncheck_is_stock_inventory, :check_is_bestseller, :uncheck_is_bestseller,
-                                           :import_export_table, :product_details, :archive, :unarchive, :show, :edit, :update, :copy]
+                                           :import_export_table, :product_details, :archive, :unarchive, :show, :edit, :update, :copy, :update_alias]
         before_action :set_products, only: [:hkerp_update_price, :delete_all, :archive_all, :unarchive_all, :check_is_bestseller_all, :uncheck_is_bestseller_all, :check_is_call_all, :uncheck_is_call_all,
                                             :check_is_sold_out_all, :uncheck_is_sold_out_all, :check_is_stock_inventory_all, :uncheck_is_stock_inventory_all,
                                             :check_is_business_choices_all, :uncheck_is_business_choices_all, :check_is_top_business_choices_all, :uncheck_is_top_business_choices_all]
@@ -181,6 +181,30 @@ module Erp
         #  end
         #end
 
+        # Update alias /products/update_alias?id=1
+        def update_alias
+          @product.create_alias
+
+          # if request.xhr?
+          #   render json: {
+          #     status: 'product_copied_success',
+          #     text: @copied_product.name,
+          #     value: @copied_product.id,
+          #     url: erp_products.edit_backend_product_path(@copied_product)
+          #   }
+          # end
+
+          respond_to do |format|
+            format.json {
+              render json: {
+                'status': 'product_alias_updated_success',
+                'message': t('.success'),
+                'type': 'success'
+              }
+            }
+          end
+        end
+
         # Archive /products/archive?id=1
         def archive
           authorize! :archive, @product
@@ -188,12 +212,12 @@ module Erp
           @product.archive
 
           respond_to do |format|
-          format.json {
-            render json: {
-            'message': t('.success'),
-            'type': 'success'
+            format.json {
+              render json: {
+              'message': t('.success'),
+              'type': 'success'
+              }
             }
-          }
           end
         end
 
@@ -204,12 +228,12 @@ module Erp
           @product.unarchive
 
           respond_to do |format|
-          format.json {
-            render json: {
-            'message': t('.success'),
-            'type': 'success'
+            format.json {
+              render json: {
+              'message': t('.success'),
+              'type': 'success'
+              }
             }
-          }
           end
         end
 
@@ -739,7 +763,7 @@ module Erp
               # frontend
               :specs, :is_deal, :is_stock_inventory, :deal_price, :deal_percent, :brand_id, :is_new, :accessory_id, :short_name, :product_intro_link,
               :deal_from_date, :deal_to_date, :meta_keywords, :is_bestseller, :is_business_choices, :is_top_business_choices, :is_sold_out, :is_call,
-              :dimentions, :weights, :warranty, :datasheet,
+              :dimentions, :weights, :warranty, :datasheet, :alias,
               # end frontend
               :stock_min, :stock_max, :description, :internal_note, :point_enabled, :category_id,
               customer_tax_ids: [], vendor_tax_ids: [],

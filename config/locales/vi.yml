@@ -261,6 +261,8 @@ vi:
             success: "Sản phẩm đã được tách thành công."
           do_combine:
             success: "Sản phẩm đã được ghép thành công."
+          update_alias:
+            success: "Alias sản phẩm đã cập nhật thành công."
           index:
             brand: "Thương hiệu"
             seo_success: "Đã SEO với"
@@ -365,6 +367,8 @@ vi:
             split: "Tách thành phần"
             copy: "Nhân bản (copy)"
             copy_confirm: "Bạn đang muốn tạo một bản sao của sản phẩm này?"
+            update_alias: "Cập nhật Alias"
+            update_alias_confirm: "Bạn đang chọn cập nhật alias (link). Hãy chắc chắn rằng bạn hiểu rõ về nó trước khi muốn cập nhật. Tiếp tục?"
           new:
             products: "Tất cả sản phẩm"
             create: "Thêm sản phẩm"
