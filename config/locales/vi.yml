@@ -1641,6 +1641,10 @@ vi:
           attributes:
             name:
               blank: "không được để trống."
+            short_name:
+              blank: "không được để trống."
+            custom_title:
+              blank: "không được để trống."
         erp/products/property:
           attributes:
             name:
@@ -1739,6 +1743,7 @@ vi:
         deal_to_date: "Ngày kết thúc"
         name: "Tên sản phẩm"
         short_name: "Tên rút gọn"
+        custom_title: "Title Tag & Custom Alias"
         category_id: "Chuyên mục sản phẩm"
         brand_id: "Thương hiệu"
       erp/products/brand:

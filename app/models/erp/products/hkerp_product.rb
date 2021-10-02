@@ -11,6 +11,7 @@ module Erp::Products
       
       return hkp.nil? ? nil : hkp.product
     end
+    
     def self.get_status_by_hkerp_product_id(pid)
       hkerp_product = self.get_product_by_hkerp_product_id(pid)
 

@@ -763,7 +763,7 @@ module Erp
               # frontend
               :specs, :is_deal, :is_stock_inventory, :deal_price, :deal_percent, :brand_id, :is_new, :accessory_id, :short_name, :product_intro_link,
               :deal_from_date, :deal_to_date, :meta_keywords, :is_bestseller, :is_business_choices, :is_top_business_choices, :is_sold_out, :is_call,
-              :dimentions, :weights, :warranty, :datasheet, :alias,
+              :dimentions, :weights, :warranty, :datasheet, :alias, :custom_title, :listed_price,
               # end frontend
               :stock_min, :stock_max, :description, :internal_note, :point_enabled, :category_id,
               customer_tax_ids: [], vendor_tax_ids: [],
