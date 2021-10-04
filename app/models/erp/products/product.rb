@@ -5,6 +5,7 @@ module Erp::Products
 	validates :name, :presence => true
 	validates :short_name, :presence => true
 	# validates :custom_title, :presence => true
+	# validates :custom_alias, :presence => true
     validates :category_id, :presence => true
     validate :deal_to_date_cannot_be_in_the_past, :deal_price_cannot_blank
 

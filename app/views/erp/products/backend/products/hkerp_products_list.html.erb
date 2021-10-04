@@ -23,76 +23,104 @@
                 </td>
                 <td class="text-left">
                     <% if !erp_product.nil? %>
-                        <span style="font-weight: 500">
-                            <%= link_to product["display_name"],
-                                erp_products.edit_backend_product_path(erp_product),
-                                target: '_blank' %>
-                        </span>
                         <% str1 = product["display_name"] %>
                         <% str2 = erp_product.name %>
-                        <% if str1 == str2 %><br><span style="color:#999;font-weight:500"><%= erp_product.name %></span>
-                        <% else %><br><span style="color:#d91e18;font-weight:500"><%= erp_product.name %></span><% end %>
-                        <% if erp_product.short_name.present? %>
-                            <% str3 = erp_product.short_name %>
-                            <% if (str2 == str3) %>
-                                <br><em style="color:#d91e18"><strong>Tên rút gọn (<%= erp_product.short_name.length %>): </strong><%= erp_product.short_name %></em>
+
+                        <% str3 = erp_product.short_name %>
+                        <% str4 = product["fixed_name"] %>
+                        
+                        <% if str2.present? %>
+                            <% if str1 == str2 %>
+                                <%= link_to str2, erp_products.edit_backend_product_path(erp_product), target: '_blank', style: 'font-weight:500;color:#1bc5bd' %>
                             <% else %>
-                                <br><em style="color:#999"><strong>Tên rút gọn (<%= erp_product.short_name.length %>): </strong><%= erp_product.short_name %></em>
+                                <%= link_to product["display_name"], erp_products.edit_backend_product_path(erp_product), target: '_blank', style: 'font-weight:500;color:#f64e60' %>
+                            <% end %>
+                        <% else %>
+                            <span style="font-weight:500"><%= product["display_name"] %></span>
+                        <% end %>
+
+                        <% if str4.present? %>
+                            <% if (str3 == str4) %>
+                                <br><em style="color:#b5b5c3"><%= str3 %></em>
+                            <% else %>
+                                <br><em style="color:#f64e60"><%= product["fixed_name"] %></em>
                             <% end %>
                         <% end %>
-                        <% if product["fixed_name"].present? %><br><em style="color:#999"><strong>Tên mới: </strong><%= product["fixed_name"] %></em><% end %>
-                        <% if erp_product.category.present? %>
-                            <br><em style="color: #999"><strong>Chuyên mục: </strong><%= erp_product.category_name %></em>
+
+                        <% if erp_product.category.present? && erp_product.brand.present? %>
+                            <br>
+                            <em style="color:#b5b5c3">
+                                <strong>Chuyên mục: </strong><%= erp_product.category_name %> | <strong>Thương hiệu: </strong><%= erp_product.brand_name %>
+                            </em>
                         <% end %>
-                        <% if erp_product.brand.present? %>
-                            <br><em style="color: #999"><strong>Thương hiệu: </strong><%= erp_product.brand_name %></em>
-                        <% end %>
+
                         <% if erp_product.product_intro_link.present? %>
-                            <br><em style="color: #009688"><strong>Video giới thiệu: </strong><%= link_to 'Xem video', erp_product.product_intro_link, target: '_blank' %></em>
+                            <br><em style="color:#b5b5c3"><strong>Video giới thiệu: </strong><%= link_to 'Xem video', erp_product.product_intro_link, target: '_blank' %></em>
                         <% end %>
                     <% else %>
-                        <span style="font-weight: 500"><%= product["display_name"] %></span>
-                        <% if product["fixed_name"].present? %><br><em style="color: #999"><strong>Tên mới: </strong><%= product["fixed_name"] %></em><% end %>
-                        <br><em><%= link_to 'Import sản phẩm',
-                                    erp_products.new_backend_product_path(hkerp_id: product["id"]),
-                                    target: '_blank', style: 'color: #1ba39c; font-weight: 500;' %></em>
+                        <span style="font-weight:500"><%= product["display_name"] %></span>
+                        <% if product["fixed_name"].present? %>
+                            <br><em style="color:#b5b5c3"><strong>Tên tùy chỉnh: </strong><%= product["fixed_name"] %></em>
+                        <% end %>
+                        <br><em><%= link_to 'Import sản phẩm', erp_products.new_backend_product_path(hkerp_id: product["id"]), target: '_blank', style: 'color:#3699ff' %></em>
                     <% end %>
                 </td>
                 <td class="text-nowrap text-center">
                     <%= format_price(product["price"]) %>
+                    <% if !erp_product.nil? %>
+                        <% if product["listed_price"].present? %>
+                            <% if erp_product.listed_price.to_f == product["listed_price"].to_f %>
+                                <br><span style="color:#b5b5c3;font-size:10px"><del><%= format_price(erp_product.listed_price) %></del></span>
+                            <% else %>
+                                <br><span style="color:#f64e60;font-size:10px">Cập nhật <del>(<%= format_price(product["listed_price"]) %>)</del></span>
+                            <% end %>
+                        <% end %>
+
+                        <% if (!product["listed_price"].present?) && (erp_product.listed_price.present?) %>
+                            <br><span style="color:#f64e60;font-size:10px">Giá cố định cần xóa</span>
+                        <% end %>
+                    <% else %>
+                        <br><span style="color:#b5b5c3;font-size:10px"><del><%= format_price(product["listed_price"]) %></del></span>
+                    <% end %>
                 </td>
                 <td class="text-nowrap text-center">
                     <%= format_price(erp_product.price) if erp_product.present? %>
-                    <% if product["listed_price"].present? %>
-                        <del><%= format_price(erp_product.listed_price) if erp_product.present? %></del>
-                    <% end %>
                 </td>
                 <td class="text-center">
                     <%= product["stock"] %>
                 </td>
                 <td class="text-center">
-                    <%= product["warranty"] %>
                     <% if !erp_product.nil? %>
                         <% if erp_product.warranty.present? %>
                             <% if product["warranty"] == erp_product.warranty %>
-                            <br><span style="color: #1ba39c; font-size: 12px;">Warranty (<%= erp_product.warranty %>)</span>
+                                <%= erp_product.warranty %>
                             <% else %>
-                            <br><span style="color: #d91e18; font-size: 12px;">Warranty (<%= erp_product.warranty %>)</span>
+                                <span style="color:#f64e60"><%= product["warranty"] %></span>
                             <% end %>
                         <% else %>
-                            <br><span style="color: #d91e18; font-size: 12px;">Warranty Non-OK</span>
+                            <%= product["warranty"] %>
+                            <br><span style="color:#f64e60;font-size:10px">Bổ sung bảo hành</span>
                         <% end %>
-                        <% if (erp_product.meta_description.present?) && (erp_product.meta_description.length > 120) %>
-                            <br><span style="color: #1ba39c; font-size: 12px;">Meta Description (<%= erp_product.meta_description.length %>)</span>
+
+                        <% if erp_product.products_values.present? %>
+                            <br><span style="color:#1bc5bd;font-size:10px">Có <%= erp_product.products_values.count %> thuộc tính</span>
                         <% else %>
-                            <br><span style="color: #d91e18; font-size: 12px;">Meta Description (<%= erp_product.meta_description.length %>)</span>
+                            <br><span style="color:#f64e60;font-size:10px">Chưa có thuộc tính</span>
                         <% end %>
+
+                        <% if erp_product.meta_description.present? %>
+                            <br><span style="color:#1bc5bd;font-size:10px">SEO mô tả (<%= erp_product.meta_description.length %>)</span>
+                        <% end %>
+
                         <% if erp_product.description.present? %>
-                            <br><span style="color: #1ba39c; font-size: 12px;">Có bài mô tả</span>
+                            <br><span style="color:#1bc5bd;font-size:10px">Có bài giới thiệu</span>
                         <% end %>
+
                         <% if erp_product.product_images.count == 0 %>
-                            <br><span style="color: #d91e18; font-size: 12px;">Chưa có hình ảnh</span>
+                            <br><span style="color:#f64e60;font-size:10px">Chưa có hình ảnh</span>
                         <% end %>
+                    <% else %>
+                        <%= product["warranty"] %>
                     <% end %>
                 </td>
                 <td class="text-right">
