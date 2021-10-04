@@ -63,6 +63,9 @@
                 </td>
                 <td class="text-nowrap text-center">
                     <%= format_price(erp_product.price) if erp_product.present? %>
+                    <% if product["listed_price"].present? %>
+                        <del><%= format_price(erp_product.listed_price) if erp_product.present? %></del>
+                    <% end %>
                 </td>
                 <td class="text-center">
                     <%= product["stock"] %>
