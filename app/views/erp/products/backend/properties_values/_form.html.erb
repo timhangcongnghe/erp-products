@@ -1,4 +1,21 @@
 <%= form_for([erp_products, :backend, properties_value]) do |f| %>
+    <div class="row">
+        <div class="col-md-6">
+            <%= erp_form_control("text", {
+                name: 'properties_value[id_sort]',
+                value: properties_value.id_sort,
+                label: t('.id_sort')
+            }) %>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group ">
+                <label><%= t('.custom_sort') %></label>
+                <div class="text-bold text-right">
+                    <strong><%= properties_value.custom_sort %></strong>
+                </div>
+            </div>
+        </div>
+    </div>
     <%= erp_form_control("text", {
         name: 'properties_value[value]',
         value: properties_value.value,

@@ -11,6 +11,12 @@ module Erp::Products
     validates :property_id, :presence => true
     validate :value_check
 
+    after_save :update_custom_sort
+
+    def update_custom_sort
+      self.update_column(:custom_sort, self.property_id.to_s + self.id_sort.to_s)
+    end
+
     def value_check
 			exist = PropertiesValue.where.not(id: self.id).where(property_id: self.property_id).where('value = ?', self.value).first
 			if exist.present?

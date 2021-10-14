@@ -19,6 +19,9 @@
                         <%= link_to properties_value.property_group_name,
                             erp_products.edit_backend_property_group_path(properties_value.property.property_group) %>
                     </em>
+                    <% if properties_value.custom_sort.present? %>
+                        <br><strong>Vị trí sắp xếp: </strong><%= properties_value.custom_sort %>
+                    <% end %>
                 </td>
                 <td class="text-center"><%= link_to properties_value.value, erp_products.edit_backend_properties_value_path(properties_value) %></td>
                 <td class="text-center">

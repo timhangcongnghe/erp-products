@@ -7,6 +7,18 @@
         errors: property.errors.full_messages_for(:name)
     }) %>
     <div class="row">
+        <div class="col-md-12">
+            <%= erp_form_control('checkbox', {
+                name: 'property[use_custom_sort]',
+                id: 'property_use_custom_sort',
+                value: property.use_custom_sort,
+                not_selected_value: 'false',
+                label: t('.property_use_custom_sort'),
+                options: [{value: 'true', text: t('.use_custom_sort')}]
+            }) %>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <%= erp_form_control('checkbox', {
                 name: 'property[is_meta_description]',

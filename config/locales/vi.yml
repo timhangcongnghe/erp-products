@@ -67,6 +67,8 @@ vi:
             properties_values: "Giá trị thuộc tính"
             create: "Thêm giá trị thuộc tính"
           form:
+            id_sort: "Vị trí sắp xếp"
+            custom_sort: "Custom vị trí"
             value: "Giá trị thuộc tính"
             property: "Nhóm giá trị"
             choose_property: "Chọn nhóm giá trị"
@@ -183,6 +185,8 @@ vi:
             is_show_list: "Cho phép hiển thị"
             is_show_detail: "Cho phép hiển thị"
             is_show_website: "Cho phép"
+            property_use_custom_sort: "Sắp xếp vị trí lọc"
+            use_custom_sort: "Cho phép sử dụng"
             name: "Tên thuộc tính"
             property_group: "Nhóm thuộc tính"
             help_property_group: "Thuộc tính sản phẩm thuộc nhóm nào?"

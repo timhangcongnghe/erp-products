@@ -89,7 +89,7 @@ module Erp
           end
 
           def properties_value_params
-            params.fetch(:properties_value, {}).permit(:value, :property_id)
+            params.fetch(:properties_value, {}).permit(:value, :property_id, :id_sort)
           end
       end
     end
