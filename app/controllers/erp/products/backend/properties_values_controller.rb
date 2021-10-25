@@ -50,6 +50,12 @@ module Erp
           end
         end
 
+        def dataselect_for_menu
+          respond_to do |format|
+            format.json { render json: PropertiesValue.dataselect_for_menu(params[:keyword], params) }
+          end
+        end
+
         def destroy
           @properties_value.destroy
           respond_to do |format|

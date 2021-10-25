@@ -6,6 +6,7 @@ module Erp::Products
     has_many  :products_values, dependent: :destroy
     has_many :products, through: :products_values, class_name: 'Erp::Products::Product'
     has_many :products, through: :products_values
+    has_and_belongs_to_many :menus, class_name: 'Erp::Menus::Menu', :join_table => 'erp_menus_menus_properties_values'
 
     validates :value, :presence => true
     validates :property_id, :presence => true
@@ -60,6 +61,36 @@ module Erp::Products
 			end
 
       query = query.order(:value).map{|properties_value| {value: properties_value.id, text: properties_value.value} }
+    end
+
+    # data for dataselect ajax
+    def self.dataselect_for_menu(keyword='', params={})
+      query = self.all
+
+      if keyword.present?
+        keyword = keyword.strip.downcase
+        query = query.where('LOWER(value) LIKE ?', "%#{keyword}%")
+      end
+
+      if params[:current_value].present?
+        query = query.where.not(id: params[:current_value].split(','))
+      end
+
+      # filter by parent
+      if params[:parent_value].present?
+				query = query.where(params[:parent_id] => params[:parent_value])
+			end
+
+      if params[:property_id].present?
+				query = query.where(property_id: params[:property_id])
+			end
+
+			if params[:group_by_property].present?
+				query = query.where(property_id: params[:group_by_property])
+			end
+
+      query = query.order(:value).limit(10).map{|properties_value| {value: properties_value.id, 
+                                                                    text: (properties_value.property.nil? ? '' : "#{properties_value.property.property_group_name} / " + "#{properties_value.property_name} / ") + properties_value.value} }
     end
 
     def self.create_if_not_exists(prop_id, name)

@@ -155,6 +155,7 @@ Erp::Products::Engine.routes.draw do
         collection do
           post 'list'
           get 'dataselect'
+          get 'dataselect_for_menu'
           get 'export_products'
           put 'move_up'
           put 'move_down'
