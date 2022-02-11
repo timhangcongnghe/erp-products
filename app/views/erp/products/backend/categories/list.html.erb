@@ -1,116 +1,54 @@
 <table class="table table-advance table-hover table-striped table-checkable order-column">
     <thead>
         <tr>
-            <th width='1%'><%= erp_datalist_check_all %></th>
-            <% if get_columns(params).include?("name") %><th class="sortable" sort-by='erp_products_categories.name'><%= t('.name') %></th><% end %>
-            <% if get_columns(params).include?("product_count") %>
-                <th><%= t('.product_count') %></th>
-            <% end %>
-            <% if get_columns(params).include?("status") %>
-                <th class="text-center"><%= t('status') %></th>
-            <% end %>
-            <% if get_columns(params).include?("creator") %>
-                <th><%= t('creator') %></th>
-            <% end %>
-            <% if get_columns(params).include?("created_at") %>
-                <th class="sortable" sort-by='erp_products_categories.created_at'><%= t('created_at') %></th>
-            <% end %>
-            <th width="7%" class="sortable text-nowrap" sort-by='erp_products_categories.custom_order'><%= t('custom_order') %></th>
-            <th width="7%"><%= t('actions') %></th>
+            <th width="1%" class="text-left"><%= erp_datalist_check_all %></th>
+            <% if get_columns(params).include?('name') %><th width="40%" class="text-center">Tên chuyên mục</th><% end %>
+            <% if get_columns(params).include?('product_count') %><th class="text-center">Số sản phẩm</th><% end %>
+            <% if get_columns(params).include?('status') %><th class="text-center">Trạng thái</th><% end %>
+            <% if get_columns(params).include?('creator') %><th class="text-center">Người tạo</th><% end %>
+            <% if get_columns(params).include?('created_at') %><th class="text-center" sort-by='erp_products_categories.created_at'>Ngày tạo</th><% end %>
+            <th width="8%" class="sortable text-nowrap text-center" sort-by='erp_products_categories.custom_order'>Vị trí sắp xếp</th>
+            <th width="8%" class="text-right">Thao tác</th>
         </tr>
     </thead>
     <tbody>
         <% @categories.each do |category| %>
             <tr class="odd gradeX">
-                <td><%= erp_datalist_check_row(id: category.id) %></td>
-                <% if get_columns(params).include?("name") %>
-                    <td>
-                        <% if can? :create, category %>
-                            <%= link_to category.full_name, erp_products.edit_backend_category_path(category), class: 'title' %>
-                        <% else %>
-                            <strong><%= category.full_name %></strong>
-                        <% end %>
+                <td class="text-left"><%= erp_datalist_check_row(id: category.id) %></td>
+                <% if get_columns(params).include?('name') %>
+                    <td class="text-left">
+                        <%= link_to category.get_full_name, erp_products.edit_backend_category_path(category), class: 'title' %>
                         <% if category.menus.count > 0 %>
                             <% count = category.menus.count %>
-                            <br><em><strong>Menus: </strong>
-                                <% category.menus.each_with_index do |menu,index| %>
-                                    <% if count == (index+1) %>
-                                        <%= menu.name %>
-                                    <% else %>
-                                        <%= menu.name %>,
-                                    <% end %>
-                                <% end %>
-                            </em>
+                            <br><em><strong>Menu: </strong><% category.menus.each_with_index do |menu,index| %><% if count == (index+1) %><%= link_to menu.get_name, erp_menus.edit_backend_menu_path(menu), target: '_blank' %><% else %><%= link_to menu.get_name, erp_menus.edit_backend_menu_path(menu), target: '_blank' %>, <% end %><% end %></em>
                         <% end %>
-                        <% if category.short_meta_description.present? %><br><em><strong>Meta Description (<%= category.short_meta_description.length %>): </strong><%= category.short_meta_description %><% end %>
+                        <% if category.short_meta_description.present? %><br><em><strong>SEO Meta Description (<%= category.short_meta_description.length %>): </strong><%= category.short_meta_description %><% end %>
                     </td>
                 <% end %>
-                <% if get_columns(params).include?("product_count") %>
-                    <td><%= category.product_count %></td>
-                <% end %>
-                <% if get_columns(params).include?("status") %>
-                <td class="text-center">
-                    <% if category.archived == true %>
-                        <span class="label label-danger"><%= t('archived') %></span>
-                    <% else %>
-                        <span class="label label-success"><%= t('active') %></span>
-                    <% end %>
-                    <% if category.unique_specs == true %>
-                        <br><span class="label label-success"><%= t('.specs_OK') %></span>
-                    <% else %>
-                        <br><span class="label label-danger"><%= t('.specs_nonOK') %></span>
-                    <% end %>
-                    <% if category.is_new_specs == true %>
-                        <br><span class="label label-success"><%= t('.is_new_specs_OK') %></span>
-                    <% else %>
-                        <br><span class="label label-danger"><%= t('.is_new_specs_nonOK') %></span>
-                    <% end %>
-                </td>
-                <% end %>
-                <% if get_columns(params).include?("creator") %>
-                    <td>
-                        <%= erp_component('avatar', {
-                            user: category.creator
-                        }) %>
+                <% if get_columns(params).include?('product_count') %><td class="text-center"><%= category.get_product_count %></td><% end %>
+                <% if get_columns(params).include?('status') %>
+                    <td class="text-center">
+                        <% if category.archived? %><span class="label label-danger">Đang bị ẩn</span><% else %><span class="label label-success">Đang hiển thị</span><% end %>
+                        <% if !category.unique_specs? %><br><span class="label label-danger">Chưa có bộ thuộc tính</span><% end %>
+                        <% if !category.is_new_specs? %><br><span class="label label-danger">Chưa có bộ thuộc tính mới</span><% end %>
                     </td>
                 <% end %>
-                <% if get_columns(params).include?("created_at") %>
-                    <td><%= category.created_at.strftime("%d/%m/%Y") %></td>
-                <% end %>
+                <% if get_columns(params).include?('creator') %><td class="text-center"><%= erp_component('avatar', {user: category.creator}) %></td><% end %>
+                <% if get_columns(params).include?('created_at') %><td class="text-center"><%= category.created_at.strftime('%d-%m-%Y') %></td><% end %>
                 <td class="text-center text-semibold">
-                    <%= category.custom_order %><br>
+                    <%= category.custom_order %>
                     <% if params[:sort_by] == 'erp_products_categories.custom_order' %>
-                        <%= link_to '<i class="fa fa-caret-square-o-up icon-big"></i>'.html_safe, 
-                            erp_products.move_up_backend_categories_path(id: category), method: 'PUT', class: 'ajax-link' %>
-                        <%= link_to '<i class="fa fa-caret-square-o-down icon-big"></i>'.html_safe, 
-                            erp_products.move_down_backend_categories_path(id: category), method: 'PUT', class: 'ajax-link' %>
+                        <br>
+                        <%= link_to '<i class="fa fa-caret-square-o-up icon-big"></i>'.html_safe, erp_products.move_up_backend_categories_path(id: category), method: 'PUT', class: 'ajax-link' %>
+                        <%= link_to '<i class="fa fa-caret-square-o-down icon-big"></i>'.html_safe, erp_products.move_down_backend_categories_path(id: category), method: 'PUT', class: 'ajax-link' %>
                     <% end %>
                 </td>
                 <td class="text-right">
                     <div class="btn-group">
-                        <a class="btn btn-default btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <i class="fa fa-cog"></i><%= t('core.options') %><i class="fa fa-angle-down"></i>
-                        </a>
+                        <a class="btn btn-default btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true"><i class="fa fa-cog"></i>Lựa chọn<i class="fa fa-angle-down"></i></a>
                         <ul class="dropdown-menu pull-right">
-                            <li>
-                                <%= link_to '<i class="fa fa-edit"></i> '.html_safe + t('.edit'), 
-                                    erp_products.edit_backend_category_path(category) %>
-                            </li>
-                            <li class="divider"></li>
-                            <% if !category.archived %>
-                                <li>
-                                    <%= link_to '<i class="fa fa-eye-slash"></i> '.html_safe + t('archive'), 
-                                        erp_products.archive_backend_categories_path(id: category),
-                                        method: 'PUT', data: {confirm: t('.archive_confirm')}, class: 'ajax-link' %>
-                                </li>
-                            <% end %>
-                            <% if category.archived %>
-                                <li>
-                                    <%= link_to '<i class="fa fa-eye"></i> '.html_safe + t('unarchive'), 
-                                        erp_products.unarchive_backend_categories_path(id: category),
-                                        method: 'PUT', data: {confirm: t('.unarchive_confirm')}, class: 'ajax-link' %>
-                                </li>
-                            <% end %>
+                            <% if !category.archived %><li><%= link_to '<i class="fa fa-eye-slash"></i> Ẩn chuyên mục'.html_safe, erp_products.archive_backend_categories_path(id: category),method: 'PUT', data: {confirm: 'Bạn có chắc chắn muốn ẩn chuyên mục này không?'}, class: 'ajax-link' %></li><% end %>
+                            <% if category.archived %><li><%= link_to '<i class="fa fa-eye"></i> Hiện chuyên mục'.html_safe, erp_products.unarchive_backend_categories_path(id: category), method: 'PUT', data: {confirm: 'Bạn có chắc chắn muốn hiện chuyên mục này không?'}, class: 'ajax-link' %></li><% end %>
                         </ul>
                     </div>
                 </td>
@@ -118,5 +56,5 @@
         <% end %>
     </tbody>
 </table>
-<% if @categories.empty? %><div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div><% end %>
+<% if @categories.empty? %><div class="datalist-empty-line">Danh Sách Chuyên Mục Hiện Chưa Có Lựa Chọn Phù Hợp</div><% end %>
 <%= erp_datalist_pagination(@categories) %>

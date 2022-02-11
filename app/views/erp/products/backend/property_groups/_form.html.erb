@@ -1,42 +1,37 @@
 <%= form_for([erp_products, :backend, property_group], html: {multipart: true}) do |f| %>
     <div class="form-body">
-        <div class="portlet light bordered">
-            <div class="portlet-body form">
-                <div class="row">
-                    <div class="col-md-4">
-                        <%= erp_form_control("text", {
+        <div class="row">
+            <div class="col-md-6">
+                <div class="portlet light bordered">
+                    <div class="portlet-body form">
+                        <%= erp_form_control('text', {
                             name: 'property_group[name]',
                             value: property_group.name,                   
-                            label: t('.name'),
-                            placeholder: t('.enter_name'),
+                            label: 'Tên nhóm thuộc tính',
+                            placeholder: 'Nhập tên nhóm thuộc tính...',
                             required: true,
                             errors: property_group.errors.full_messages_for(:name)
                         }) %>
-                    </div>
-                    <div class="col-md-4">
-                        <%= erp_form_control("text", {
+                        <%= erp_form_control('text', {
                             name: 'property_group[show_name]',
                             value: property_group.show_name,                   
-                            label: t('.show_name'),
-                            placeholder: t('.enter_show_name'),
+                            label: 'Tên nhóm thuộc tính hiển thị',
+                            placeholder: 'Nhập tên nhóm thuộc tính hiển thị...',
                             required: true,
                             errors: property_group.errors.full_messages_for(:show_name)
                         }) %>
-                    </div>
-                    <div class="col-md-4">
                         <%= erp_form_control('checkbox', {
                             name: 'property_group[is_filter_specs]',
                             id: 'property_group_is_filter_specs',
                             value: property_group.is_filter_specs,
                             not_selected_value: 'false',
-                            options: [{value: 'true', text: t('.is_filter_specs')}],
-                            label: t('.filter_specs')
+                            label: 'Làm bộ lọc sản phẩm',
+                            options: [{value: 'true', text: 'Lựa chọn'}]
                         }) %>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <%= erp_component('button/save', { text: t('submit') }) %>
-    <%= erp_component('button/cancel', { text: t('cancel'), href: erp_products.backend_property_groups_path }) %>
+    <%= erp_component('button/save', {text: 'LƯU THÔNG TIN'}) %><%= erp_component('button/cancel', {text: 'HỦY LƯU THÔNG TIN', href: erp_products.backend_property_groups_path}) %>
 <% end %>

@@ -1,122 +1,36 @@
-<% content_for :title do %>
-    HKErp products
-<% end %>
-
-<% content_for :page_title do %>
-    <i class="fa fa-archive"></i> HKErp products
-<% end %>
-
+<% content_for :title do %>Danh Sách Sản Phẩm Liên Kết HK-ERP<% end %>
+<% content_for :page_title do %><i class="fa fa-th"></i> Danh Sách Sản Phẩm Liên Kết HK-ERP<% end %>
 <%= erp_datalist(
     url: erp_products.hkerp_products_list_backend_products_path,
     sortable: true,
     keywords: [
-        {
-            text: 'Name', name: 'products.cache_search'
-        },
-        {
-            text: 'Category',
-            name: 'categories.name',
-            select: {
-                name: 'categories.id',
-                data_url: erp_products.hkerp_categories_dataselect_backend_products_path
-            }
-        },
-        {
-            text: 'Manufacturer',
-            name: 'manufacturers.name',
-            select: {
-                name: 'manufacturers.id',
-                data_url: erp_products.hkerp_manufacturers_dataselect_backend_products_path
-            }
-        }
+        {text: 'Tên sản phẩm', name: 'products.cache_search'},
+        {text: 'Chuyên mục', name: 'categories.name', select: {name: 'categories.id', data_url: erp_products.hkerp_categories_dataselect_backend_products_path}},
+        {text: 'Thương hiệu', name: 'manufacturers.name', select: {name: 'manufacturers.id', data_url: erp_products.hkerp_manufacturers_dataselect_backend_products_path}}
     ],
-    actions: [
-        {
-            text: '<i class="fa fa-dollar"></i> Update price',
-            url: erp_products.hkerp_update_price_backend_products_path,
-            data_method: 'PUT',
-            data_confirm: 'Update all price'
-        },
-        {
-            text: '<i class="fa fa-plus"></i> Check sold-out',
-            url: erp_products.check_is_sold_out_all_backend_products_path,
-            data_method: 'PUT',
-            data_confirm: 'Update all'
-        },
-        {
-            text: '<i class="fa fa-remove"></i> Un-Check sold-out',
-            url: erp_products.uncheck_is_sold_out_all_backend_products_path,
-            data_method: 'PUT',
-            data_confirm: 'Update all'
-        },
-    ],
+    actions: [{text: '<i class="fa fa-refresh"></i> Cập nhật giá', url: erp_products.hkerp_update_price_backend_products_path, data_method: 'PUT', data_confirm: 'Bạn có chắc chắn muốn cập nhật giá những sản phẩm này không?'},],
     filters: [
-        {
-            text: 'Imported', name: 'products.erp_imported', value: 'true', checked: false
-        },
-        {
-            text: 'New', name: 'products.erp_imported', value: 'false', checked: false
-        },
-        {
-            divider: true
-        },
-        {
-            text: 'Used', name: 'products.in_use', value: 'true', checked: true
-        },
-        {
-            text: 'Unused', name: 'products.in_use', value: 'false', checked: false
-        },
-        {
-            divider: true
-        },
-        {
-            text: 'Price updated', name: 'products.erp_price_updated', value: 'true', checked: false
-        },
-        {
-            text: 'Price oudated', name: 'products.erp_price_updated', value: 'false', checked: false
-        },
-        {
-            divider: true
-        },
-        {
-            text: 'Suspended', name: 'products.suspended', value: 'true', checked: false
-        },
-        {
-            text: 'Not suspended', name: 'products.suspended', value: 'false', checked: false
-        },
-        {
-            text: 'Trashed', name: 'products.status', value: '0', checked: false
-        },
-        {
-            divider: true
-        },
-        {
-            text: 'Stock', name: 'stock', value: 'true', checked: false
-        },
-        {
-            divider: true
-        },
-        {
-            text: 'Trashed', name: 'products.status', value: 0, checked: false
-        },
-        {
-            divider: true
-        },
-        {
-            text: 'Outdated', name: 'out_of_date', value: 'true', checked: false
-        },
-        {
-            text: 'Not-outdated', name: 'not_out_of_date', value: 'true', checked: false
-        },
-        {
-            divider: true
-        },
-        {
-            text: 'Sold-out', name: 'products.erp_sold_out', value: 'true', checked: false
-        },
-        {
-            text: 'Not-sold-out', name: 'products.erp_sold_out', value: 'false', checked: false
-        }
+        {text: 'Đã import', name: 'products.erp_imported', value: 'true', checked: false},
+        {text: 'Chưa import', name: 'products.erp_imported', value: 'false', checked: false},
+        {divider: true},
+        {text: 'Hiển thị công khai', name: 'products.in_use', value: 'true', checked: true},
+        {text: 'Hiển thị nội bộ', name: 'products.in_use', value: 'false', checked: false},
+        {divider: true},
+        {text: 'Giá đã cập nhật', name: 'products.erp_price_updated', value: 'true', checked: false},
+        {text: 'Giá đã thay đổi', name: 'products.erp_price_updated', value: 'false', checked: false},
+        {divider: true},
+        {text: 'Ngưng kinh doanh', name: 'products.suspended', value: 'true', checked: false},
+        {text: 'Đang kinh doanh', name: 'products.suspended', value: 'false', checked: false},
+        {divider: true},
+        {text: 'THCN - Ngưng kinh doanh', name: 'products.erp_sold_out', value: 'true', checked: false},
+        {text: 'THCN - Đang kinh doanh', name: 'products.erp_sold_out', value: 'false', checked: false},
+        {divider: true},
+        {text: 'Đang sẵn trong kho', name: 'stock', value: 'true', checked: false},
+        {divider: true},
+        {text: 'Đã lâu chưa cập nhật', name: 'out_of_date', value: 'true', checked: false},
+        {text: 'Đã cập nhật gần đây', name: 'not_out_of_date', value: 'true', checked: false},
+        {divider: true},
+        {text: 'Đã bị xóa', name: 'products.status', value: '0', checked: false}  
     ],
-    sort: { sort_by: 'products.created_at', sort_direction: 'desc' }
+    sort: {sort_by: 'products.created_at', sort_direction: 'desc'}
 ) %>

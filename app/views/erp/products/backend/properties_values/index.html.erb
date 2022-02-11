@@ -1,26 +1,11 @@
-<% content_for :title do %> <%= t('.properties_values') %><% end %>
-
-<% content_for :page_title do %>
-    <a href="<%= erp.backend_path %>"><i class="fa fa-th"></i> <%= t('.products') %></a> / <%= t('.properties_values') %>
-<% end %>
-
-<% content_for :page_toolbar do %>
-    <%= erp_component('button/create', {
-        text: t('.create'),
-        href: erp_products.new_backend_properties_value_path,
-        class: 'btn-noborder'
-    }) %>
-<% end %>
-
+<% content_for :title do %>Danh Sách Giá Trị Thuộc Tính<% end %>
+<% content_for :page_title do %><i class="fa fa-gg"></i> Danh Sách Giá Trị Thuộc Tính<% end %>
+<% content_for :page_toolbar do %><%= erp_component('button/create', {text: 'Tạo giá trị thuộc tính mới', href: erp_products.new_backend_properties_value_path, class: 'btn-noborder'}) %><% end %>
 <%= erp_datalist(
     url: erp_products.list_backend_properties_values_path,
     keywords: [
-        { text: t('.name'), name: 'erp_products_properties_values.value' },
-        {
-            text: t('.name'),
-            name: 'erp_products_properties.name',
-            select: { name: 'erp_products_properties.id', data_url: erp_products.dataselect_backend_properties_path }
-        }
+        {text: 'Giá trị', name: 'erp_products_properties_values.value'},
+        {text: 'Tên thuộc tính', name: 'erp_products_properties.name', select: {name: 'erp_products_properties.id', data_url: erp_products.dataselect_backend_properties_path}}
     ],
-    sort: { sort_by: 'erp_products_properties_values.id', sort_direction: 'desc' }
+    sort: {sort_by: 'erp_products_properties_values.value', sort_direction: 'asc'}
 ) %>

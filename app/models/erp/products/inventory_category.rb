@@ -4,11 +4,6 @@ module Erp::Products
 		validates :name, :hot_name, :presence => true
 		belongs_to :creator, class_name: "Erp::User"
 		has_many :inventory_products
-		
-		# init custom order
-    def init_custom_order
-			self.update_column(:custom_order, self.class.maximum("custom_order").to_i + 1)
-		end
     
     def self.get_active
 			self.where(archived: false).order("custom_order ASC")

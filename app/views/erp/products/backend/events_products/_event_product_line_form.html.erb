@@ -5,7 +5,7 @@
 <td><%= events_product.product_code %></td>
 <td><%= events_product.product_name %></td>
 <td>
-    <%= events_product.product_price %>
+    <%= events_product.get_show_price %>
 </td>
 <td>
     <%= erp_form_control("addableform_remove_button", {

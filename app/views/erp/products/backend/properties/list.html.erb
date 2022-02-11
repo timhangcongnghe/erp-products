@@ -1,88 +1,45 @@
 <table class="table table-advance table-hover table-striped table-checkable order-column">
     <thead>
         <tr>
-            <% if get_columns(params).include?("name") %>
-                <th width='30%' class="text-left"><%= t('.name') %></th>
-            <% end %>
-            <% if get_columns(params).include?("status") %>
-                <th class="text-center"><%= t('status') %></th>
-            <% end %>
-            <% if get_columns(params).include?("creator") %>
-                <th class="text-center"><%= t('creator') %></th>
-            <% end %>
-            <% if get_columns(params).include?("created_at") %>
-                <th class="text-center"><%= t('created_at') %></th>
-            <% end %>
-            <th width="7%" class="sortable text-nowrap text-center" sort-by='erp_products_properties.custom_order'><%= t('custom_order') %></th>
-            <th width="7%" class="text-right"><%= t('actions') %></th>
+            <% if get_columns(params).include?('name') %><th width="30%" class="text-left">Tên thuộc tính</th><% end %>
+            <% if get_columns(params).include?('status') %><th class="text-center">Trạng thái</th><% end %>
+            <% if get_columns(params).include?('creator') %><th class="text-center">Người tạo</th><% end %>
+            <% if get_columns(params).include?('created_at') %><th class="text-center">Ngày tạo</th><% end %>
+            <th width="15%" class="sortable text-nowrap text-center" sort-by='erp_products_properties.custom_order'>Vị trí sắp xếp</th>
+            <th width="8%" class="text-right">Thao tác</th>
         </tr>
     </thead>
     <tbody>
         <% @properties.each do |property| %>
             <tr class="odd gradeX">
-                <% if get_columns(params).include?("name") %>
+                <% if get_columns(params).include?('name') %>
                     <td width='30%' class="text-left">
-                        <%= link_to property.name, erp_products.edit_backend_property_path(property), class: 'title' %><br>
-                        <em>
-                            <strong>Nhóm thuộc tính: </strong>
-                            <%= link_to property.property_group_name, erp_products.edit_backend_property_group_path(property.property_group) %>
-                        </em>
+                        <%= link_to property.get_name, erp_products.edit_backend_property_path(property), class: 'title' %><br>
+                        <em><strong>Nhóm: </strong><%= link_to property.get_property_group_name, erp_products.edit_backend_property_group_path(property.property_group) %></em>
                     </td>
                 <% end %>
-                <% if get_columns(params).include?("status") %>
+                <% if get_columns(params).include?('status') %>
                     <td class="text-center">
-                        <% if property.archived == true %>
-                            <span class="label label-sm label-danger"><%= t('archived') %></span>
-                        <% else %>
-                            <span class="label label-sm label-success"><%= t('active') %></span>
-                        <% end %>
-                        <% if property.is_show_detail == true %>
-                            <br><span class="label label-sm label-info">Hiển thị trong trang sản phẩm</span>
-                        <% end %>
-                        <% if property.is_show_list == true %>
-                            <br><span class="label label-sm label-info">Hiển thị trong trang chuyên mục</span>
-                        <% end %>
-                        <% if property.is_show_website == true %>
-                            <br><span class="label label-sm label-info">Chọn vào bộ lọc</span>
-                        <% end %>
-                        <% if property.is_meta_description == true %>
-                            <br><span class="label label-sm label-info">Thêm vào meta description</span>
-                        <% end %>
-                        <% if property.is_short_description == true %>
-                            <br><span class="label label-sm label-info">Thêm vào mô tả ngắn sản phẩm</span>
-                        <% end %>
+                        <% if property.is_show_detail == true %><span class="label label-sm label-info">Hiện trong trang chi tiết sản phẩm</span><br><% end %>
+                        <% if property.is_meta_description == true %><span class="label label-sm label-info">Thêm trong SEO Meta Description</span><br><% end %>
+                        <% if property.is_short_description == true %><span class="label label-sm label-info">Thêm trong mô tả ngắn</span><% end %>
                     </td>
                 <% end %>
-                <% if get_columns(params).include?("creator") %>
-                    <td class="text-center"><%= erp_component('avatar', { user: property.creator }) %></td>
-                <% end %>
-                <% if get_columns(params).include?("created_at") %>
-                    <td class="text-center"><%= property.created_at.strftime("%d/%m/%Y") %></td>
-                <% end %>
+                <% if get_columns(params).include?('creator') %><td class="text-center"><%= erp_component('avatar', { user: property.creator }) %></td><% end %>
+                <% if get_columns(params).include?('created_at') %><td class="text-center"><%= property.created_at.strftime('%d-%m-%Y') %></td><% end %>
                 <td class="text-center text-semibold">
-                    <%= property.custom_order %><br>
+                    <%= property.custom_order %>
                     <% if params[:sort_by] == 'erp_products_properties.custom_order' %>
-                        <%= link_to '<i class="fa fa-caret-square-o-up icon-big"></i>'.html_safe, 
-                            erp_products.move_up_backend_properties_path(id: property), method: 'PUT', class: 'ajax-link' %>
-                        <%= link_to '<i class="fa fa-caret-square-o-down icon-big"></i>'.html_safe, 
-                            erp_products.move_down_backend_properties_path(id: property), method: 'PUT', class: 'ajax-link' %>
+                        <br>
+                        <%= link_to '<i class="fa fa-caret-square-o-up icon-big"></i>'.html_safe, erp_products.move_up_backend_properties_path(id: property), method: 'PUT', class: 'ajax-link' %>
+                        <%= link_to '<i class="fa fa-caret-square-o-down icon-big"></i>'.html_safe, erp_products.move_down_backend_properties_path(id: property), method: 'PUT', class: 'ajax-link' %>
                     <% end %>
                 </td>
                 <td class="text-right">
                     <div class="btn-group">
-                        <a class="btn btn-default btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <i class="fa fa-cog"></i><%= t('core.options') %><i class="fa fa-angle-down"></i>
-                        </a>
+                        <a class="btn btn-default btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true"><i class="fa fa-cog"></i>Lựa chọn<i class="fa fa-angle-down"></i></a>
                         <ul class="dropdown-menu pull-right">
-                            <li>
-                                <%= link_to '<i class="fa fa-edit"></i>'.html_safe + t('.edit'), 
-                                    erp_products.edit_backend_property_path(property) %>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <%= link_to '<i class="fa fa-trash"></i>'.html_safe + t('.delete'), 
-                                    erp_products.backend_property_path(property), method: 'DELETE', data: {confirm: t('delete_confirm')}, class: 'ajax-link' %>
-                            </li>
+                            <li><%= link_to '<i class="fa fa-trash"></i> Xóa thuộc tính'.html_safe, erp_products.backend_property_path(property), method: 'DELETE', data: {confirm: 'Bạn có chắc chắn muốn xóa thuộc tính này không?'}, class: 'ajax-link' %></li>
                         </ul>
                     </div>
                 </td>
@@ -90,6 +47,5 @@
         <% end %>
     </tbody>
 </table>
-
-<% if @properties.empty? %><div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div><% end %>
+<% if @properties.empty? %><div class="datalist-empty-line">Danh Sách Thuộc Tính Hiện Chưa Có Lựa Chọn Phù Hợp</div><% end %>
 <%= erp_datalist_pagination(@properties) %>

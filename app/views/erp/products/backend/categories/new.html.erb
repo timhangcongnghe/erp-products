@@ -1,28 +1,4 @@
-<% content_for :title do %>
-    <%= t('.create') %>
-<% end %>
-
-<% content_for :page_title do %>    
-    <a href="<%= erp_products.backend_categories_path %>">
-    <i class="fa fa-folder"></i> <%= t('.categories') %>
-    </a> / <%= t('.create') %>
-<% end %>
-
-<% content_for :page_toolbar do %>
-    <div class="btn-group">
-        <div class="clearfix">
-        </div>
-    </div>
-<% end %>
-
-<div class="row">
-    <div class="col-md-12">
-        <% if @category.errors.any? %>
-            <%= erp_form_control("form_error_message") %>
-        <% end %>
-        
-        <!-- BEGIN SAMPLE FORM PORTLET-->
-        <%= render 'form', category: @category %>
-        <!-- END SAMPLE FORM PORTLET-->
-    </div>
-</div>
+<% content_for :title do %>Tạo Chuyên Mục Mới<% end %>
+<% content_for :page_title do %><%= link_to '<i class="fa fa-th"></i> Danh Sách Chuyên Mục'.html_safe, erp_products.backend_categories_path %> / Tạo Chuyên Mục Mới<% end %>
+<% content_for :page_toolbar do %><div class="btn-group"><div class="clearfix"></div></div><% end %>
+<div class="row"><div class="col-md-12"><% if @category.errors.any? %><%= erp_form_control('form_error_message') %><% end %><%= render 'form', category: @category %></div></div>

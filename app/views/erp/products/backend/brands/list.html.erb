@@ -1,102 +1,31 @@
 <table class="table table-advance table-hover table-striped table-checkable order-column">
     <thead>
         <tr>
-            <th width='1%'>
-                <%= erp_datalist_check_all %>
-            </th>
-            <% if get_columns(params).include?("image") %>
-                <th width='15%'><%= t('image') %></th>
-            <% end %>
-            <% if get_columns(params).include?("name") %>
-                <th class="sortable" sort-by='erp_products_brands.name'>
-                    <%= t('.name') %>
-                </th>
-            <% end %>
-            <% if get_columns(params).include?("status") %>
-                <th><%= t('status') %></th>
-            <% end %>
-            <% if get_columns(params).include?("creator") %>
-                <th><%= t('creator') %></th>
-            <% end %>
-            <% if get_columns(params).include?("created_at") %>
-                <th class="sortable" sort-by='erp_products_brands.created_at'>
-                    <%= t('created_at') %>
-                </th>
-            <% end %>
-            <th width="7%"><%= t('actions') %></th>
+            <% if get_columns(params).include?('image') %><th width="20%" class="text-left">Logo thương hiệu</th><% end %>
+            <% if get_columns(params).include?('name') %><th width="40%" class="text-center">Tên thương hiệu</th><% end %>
+            <% if get_columns(params).include?("status") %><th class="text-center">Trạng thái</th><% end %>
+            <% if get_columns(params).include?('creator') %><th class="text-center">Người tạo</th><% end %>
+            <% if get_columns(params).include?('created_at') %><th class="text-center">Ngày tạo</th><% end %>
+            <th width="8%" class="text-right">Thao tác</th>
         </tr>
     </thead>
     <tbody>
         <% @brands.each do |brand| %>
             <tr class="odd gradeX">
-                <td>
-                    <%= erp_datalist_check_row(id: brand.id) %>
-                </td>
-                <% if get_columns(params).include?("image") %>
-                    <td>
-                        <% if !brand.image_url.nil? %>
-                            <img class="image-datalist" src="<%= brand.image_url.system_logo %>">
-                        <% else %>
-                            <img class="image-datalist" src="/backend/img/image-coming-soon.jpg">
-                        <% end %>
-                    </td>
-                <% end %>
-                <% if get_columns(params).include?("name") %>
-                    <td>
-                        <% if can? :create, brand %>
-                            <%= link_to brand.name, erp_products.edit_backend_brand_path(brand), class: 'title' %>
-                        <% else %>
-                            <span class="title"><%= brand.name %></span>
-                        <% end %>
-                    </td>
-                <% end %>
-                <% if get_columns(params).include?("status") %>
-                    <td>
-                        <% if brand.archived == true %>
-                            <span class="label label-sm label-danger"><%= t('.archived') %></span>
-                        <% else %>
-                            <span class="label label-sm label-success"><%= t('active') %></span>
-                        <% end %>
-                        <% if brand.is_main.present? %>
-                            <br><span class="label label-sm label-orange">Hiển thị ngoài website</span>
-                        <% end %>
-                    </td>
-                <% end %>
-                <% if get_columns(params).include?("creator") %>
-                    <td>
-                        <%= erp_component('avatar', {
-                            user: brand.creator
-                        }) %>
-                    </td>
-                <% end %>
-                <% if get_columns(params).include?("created_at") %>
-                    <td><%= brand.created_at.strftime("%d/%m/%Y") %></td>
-                <% end %>
+                <% if get_columns(params).include?('image') %><td width="20%" class="text-left"><% if !brand.image_url.nil? %><%= link_to image_tag(brand.image_url.system_logo, class: 'image-datalist'), erp_products.edit_backend_brand_path(brand) %><% end %></td><% end %>
+                <% if get_columns(params).include?('name') %><td width="40%" class="text-center"><%= link_to brand.get_name, erp_products.edit_backend_brand_path(brand), class: 'title' %></td><% end %>
+                <% if get_columns(params).include?('status') %><td class="text-center"><% if brand.is_main? %><span class="label label-sm label-info">Hiển thị ngoài website</span><% end %></td><% end %>
+                <% if get_columns(params).include?('creator') %><td><%= erp_component('avatar', {user: brand.creator}) %></td><% end %>
+                <% if get_columns(params).include?('created_at') %><td><%= brand.created_at.strftime('%d/%m/%Y') %></td><% end %>
                 <td class="text-right">
                     <div class="btn-group">
-                        <a class="btn btn-default btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <i class="fa fa-cog"></i><%= t('core.options') %><i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="dropdown-menu pull-right">
-                            <li>
-                                <%= link_to '<i class="fa fa-edit"></i>'.html_safe + t('.edit'), 
-                                    erp_products.edit_backend_brand_path(brand) %>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <%= link_to '<i class="fa fa-trash"></i>'.html_safe + t('.delete'), 
-                                    erp_products.backend_brand_path(brand), method: 'DELETE', data: {confirm: t('delete_confirm')}, class: 'ajax-link' %>
-                            </li>
-                        </ul>
+                        <a class="btn btn-default btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true"><i class="fa fa-cog"></i>Lựa chọn<i class="fa fa-angle-down"></i></a>
+                        <ul class="dropdown-menu pull-right"><li><%= link_to '<i class="fa fa-trash"></i> Xóa thương hiệu'.html_safe, erp_products.backend_brand_path(brand), method: 'DELETE', data: {confirm: 'Bạn có chắc chắn muốn xóa thương hiệu này không?'}, class: 'ajax-link' %></li></ul>
                     </div>
                 </td>
             </tr>
         <% end %>
     </tbody>
 </table>
-
-<% if @brands.empty? %>
-    <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
-<% end %>
-        
+<% if @brands.empty? %><div class="datalist-empty-line">Danh Sách Thương Hiệu Hiện Chưa Có Lựa Chọn Phù Hợp</div><% end %>     
 <%= erp_datalist_pagination(@brands) %>

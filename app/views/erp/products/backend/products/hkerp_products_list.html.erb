@@ -1,184 +1,100 @@
 <table class="table table-advance table-hover table-striped table-checkable order-column">
     <thead>
         <tr>
-            <th class="text-left" width='1%'><%= erp_datalist_check_all %></th>
-            <th class="text-center" width='5%'>ID</th>
-            <th class="text-center" width='40%'>Tên Sản Phẩm</th>
-            <th class="text-center">Giá HK-Erp</th>
+            <th width="1%" class="text-left"><%= erp_datalist_check_all %></th>
+            <th width="5%" class="text-center">ID</th>
+            <th width="35%" class="text-center">Tên sản phẩm</th>
+            <th class="text-center">Giá HK-ERP</th>
             <th class="text-center">Giá THCN</th>
             <th class="sortable text-center" sort-by='products.stock'>Tồn kho</th>
-            <th class="text-center" width="15%">Bảo hành</th>
-            <th class="text-right" width="7%">Trạng thái</th>
+            <th width="15%" class="text-center">Bảo hành</th>
+            <th width="15%" class="text-right">Trạng thái</th>
         </tr>
     </thead>
     <tbody>
         <% @products["products"].each do |product| %>
-            <% erp_product = Erp::Products::HkerpProduct.get_product_by_hkerp_product_id(product["id"]) %>
+            <% erp_product = Erp::Products::HkerpProduct.get_product_by_hkerp_product_id(product['id']) %>
             <tr class="odd gradeX">
-                <td class="text-left">
-                    <%= erp_datalist_check_row(id: erp_product.id) if erp_product.present? %>
-                </td>
-                <td class="text-center">
-                    <%= product["id"] %>
-                </td>
+                <td class="text-left"><%= erp_datalist_check_row(id: erp_product.id) if erp_product.present? %></td>
+                <td class="text-center"><%= product['id'] %></td>
                 <td class="text-left">
                     <% if !erp_product.nil? %>
-                        <% str1 = product["display_name"] %>
-                        <% str2 = erp_product.name %>
+                        <% str1 = product['display_name'] %>
+                        <% str2 = erp_product.get_name %>
+                        <% str3 = erp_product.get_short_name %>
+                        <% str4 = product['fixed_name'] %>
 
-                        <% str3 = erp_product.short_name %>
-                        <% str4 = product["fixed_name"] %>
-                        
-                        <% if str2.present? %>
-                            <% if str1 == str2 %>
-                                <%= link_to str2, erp_products.edit_backend_product_path(erp_product), target: '_blank', style: 'font-weight:500;color:#1bc5bd' %>
-                            <% else %>
-                                <%= link_to product["display_name"], erp_products.edit_backend_product_path(erp_product), target: '_blank', style: 'font-weight:500;color:#f64e60' %>
-                            <% end %>
+                        <% if str1 == str2 %>
+                            <%= link_to str1, erp_products.edit_backend_product_path(erp_product), target: '_blank', style: 'font-weight:500;color:#3699ff' %>
                         <% else %>
-                            <span style="font-weight:500"><%= product["display_name"] %></span>
+                            <%= link_to str1, erp_products.edit_backend_product_path(erp_product), target: '_blank', style: 'font-weight:500;color:#f64e60' %>
                         <% end %>
-
-                        <% if str4.present? %>
-                            <% if (str3 == str4) %>
-                                <br><em style="color:#b5b5c3"><%= str3 %></em>
-                            <% else %>
-                                <br><em style="color:#f64e60"><%= product["fixed_name"] %></em>
-                            <% end %>
-                        <% end %>
-
+                        <% if str4.present? %><% if str3 == str4 %><br><em style="color:#3f4254"><%= str4 %></em><% else %><br><em style="color:#f64e60"><%= str4 %></em><% end %><% end %>
                         <br><em style="color:#b5b5c3"><%= erp_product.alias %> (<%= erp_product.alias.length %>)</em>
-
-                        <% if erp_product.category.present? && erp_product.brand.present? %>
-                            <br>
-                            <em style="color:#b5b5c3">
-                                <strong>Chuyên mục: </strong><%= erp_product.category_name %> | <strong>Thương hiệu: </strong><%= erp_product.brand_name %>
-                            </em>
-                        <% end %>
-
-                        <% if erp_product.product_intro_link.present? %>
-                            <br><em style="color:#b5b5c3"><strong>Video giới thiệu: </strong><%= link_to 'Xem video', erp_product.product_intro_link, target: '_blank' %></em>
-                        <% end %>
+                        <% if erp_product.category.present? && erp_product.brand.present? %><br><em style="color:#b5b5c3"><strong>Chuyên mục: </strong><%= erp_product.get_category_name %> | <strong>Thương hiệu: </strong><%= erp_product.get_brand_name %></em><% end %>
                     <% else %>
-                        <span style="font-weight:500"><%= product["display_name"] %></span>
-                        <% if product["fixed_name"].present? %>
-                            <br><em style="color:#b5b5c3"><%= product["fixed_name"] %></em>
-                        <% end %>
-                        <br><em><%= link_to 'Import sản phẩm', erp_products.new_backend_product_path(hkerp_id: product["id"]), target: '_blank', style: 'color:#3699ff' %></em>
+                        <%= link_to product['display_name'], erp_products.new_backend_product_path(hkerp_id: product["id"]), target: '_blank', style: 'font-weight:500;color:#3f4254' %>
+                        <% if product['fixed_name'].present? %><br><em style="color:#b5b5c3"><%= product['fixed_name'] %></em><% end %>
+                        <br><em><%= link_to 'Import sản phẩm...', erp_products.new_backend_product_path(hkerp_id: product["id"]), target: '_blank', style: 'color:#3699ff' %></em>
                     <% end %>
                 </td>
                 <td class="text-nowrap text-center">
-                    <%= format_price(product["price"]) %>
+                    <%= format_price(product['price']) %>
                     <% if !erp_product.nil? %>
-                        <% if product["listed_price"].present? %>
-                            <% if erp_product.listed_price.to_f == product["listed_price"].to_f %>
-                                <br><span style="color:#b5b5c3;font-size:10px"><del><%= format_price(erp_product.listed_price) %></del></span>
+                        <% if product['listed_price'].present? %>
+                            <% if erp_product.listed_price.to_i == product['listed_price'].to_i %>
+                                <br><span style="color:#3f4254;font-size:12px"><del><%= format_price(product['listed_price']) %></del></span>
                             <% else %>
-                                <br><span style="color:#f64e60;font-size:10px">Cập nhật <del>(<%= format_price(product["listed_price"]) %>)</del></span>
+                                <br><span style="color:#f64e60;font-size:12px"><del>(<%= format_price(product['listed_price']) %>)</del></span>
                             <% end %>
                         <% end %>
-
-                        <% if (!product["listed_price"].to_f == 0) && (erp_product.listed_price.to_f > 0) %>
-                            <br><span style="color:#f64e60;font-size:10px">Giá cố định cần xóa</span>
-                        <% end %>
+                        <% if (!product['listed_price'].to_i == 0) && (erp_product.listed_price..to_i > 0) %><br><span style="color:#f64e60;font-size:12px">Cần xóa giá niêm yết</span><% end %>
                     <% else %>
-                        <% if product["listed_price"].to_f > 0 %>
-                            <br><span style="color:#b5b5c3;font-size:10px"><del><%= format_price(product["listed_price"]) %></del></span>
-                        <% end %>
+                        <% if product['listed_price'].to_i > 0 %><br><span style="color:#3f4254;font-size:12px"><del><%= format_price(product['listed_price']) %></del></span><% end %>
                     <% end %>
                 </td>
-                <td class="text-nowrap text-center">
-                    <%= format_price(erp_product.price) if erp_product.present? %>
-                </td>
-                <td class="text-center">
-                    <%= product["stock"] %>
-                </td>
+                <td class="text-nowrap text-center"><%= format_price(erp_product.price) if erp_product.present? %></td>
+                <td class="text-center"><%= product['stock'] %></td>
                 <td class="text-center">
                     <% if !erp_product.nil? %>
                         <% if erp_product.warranty.present? %>
-                            <% if product["warranty"] == erp_product.warranty %>
-                                <%= erp_product.warranty %>
-                            <% else %>
-                                <span style="color:#f64e60"><%= product["warranty"] %></span>
-                            <% end %>
+                            <% if product['warranty'] == erp_product.warranty %><%= product['warranty'] %> tháng<% else %><span style="color:#f64e60"><%= product['warranty'] %> tháng</span><% end %>
                         <% else %>
-                            <%= product["warranty"] %>
-                            <br><span style="color:#f64e60;font-size:10px">Bổ sung bảo hành</span>
+                            <%= product['warranty'] %> tháng
+                            <br><span style="color:#f64e60;font-size:12px">Thêm thời gian bảo hành</span>
                         <% end %>
-
-                        <% if !product["suspended"] %>
-                            <% if !erp_product.products_values.present? %>
-                                <br><span style="color:#f64e60;font-size:10px">Chưa có thuộc tính</span>
-                            <% end %>
-                            
-                            <% if !product["fixed_name"].present? %>
-                                <br><span style="color:#f64e60;font-size:10px">Tên chưa rút gọn</span>
-                            <% end %>
-
-                            <% if !erp_product.custom_alias.present? %>
-                                <br><span style="color:#f64e60;font-size:10px">Chưa custom_alias</span>
-                            <% end %>
-
-                            <% if !erp_product.custom_title.present? %>
-                                <br><span style="color:#f64e60;font-size:10px">Chưa custom_title</span>
-                            <% end %>
+                        <% if !product['suspended'] %>
+                            <% if !erp_product.products_values.present? %><br><span style="color:#f64e60;font-size:10px">Chưa có thuộc tính</span><% end %>
+                            <% if !product['fixed_name'].present? %><br><span style="color:#f64e60;font-size:10px">Chưa có tên rút gọn</span><% end %>
+                            <% if !erp_product.custom_alias.present? %><br><span style="color:#f64e60;font-size:10px">Chưa tùy chỉnh thẻ title</span><% end %>
+                            <% if !erp_product.custom_title.present? %><br><span style="color:#f64e60;font-size:10px">Chưa tùy chỉnh tạo alias</span><% end %>
                         <% end %>
-
-                        <% if !erp_product.meta_description.present? %>
-                            <br><span style="color:#f64e60;font-size:10px">Chưa có SEO mô tả</span>
-                        <% end %>
-
-                        <% if erp_product.description.present? %>
-                            <br><span style="color:#1bc5bd;font-size:10px">Có bài giới thiệu</span>
-                        <% end %>
-
-                        <% if erp_product.product_images.count == 0 %>
-                            <br><span style="color:#f64e60;font-size:10px">Chưa có hình ảnh</span>
-                        <% end %>
-                    <% else %>
-                        <%= product["warranty"] %>
-                    <% end %>
+                        <% if !erp_product.meta_description.present? %><br><span style="color:#f64e60;font-size:10px">Chưa có SEO Meta Description</span><% end %>
+                        <% if erp_product.description.present? %><br><span style="color:#1bc5bd;font-size:10px">Có bài giới thiệu</span><% end %>
+                        <% if erp_product.product_images.count == 0 %><br><span style="color:#f64e60;font-size:10px">Chưa có hình ảnh</span><% end %>
+                    <% else %><%= product['warranty'] %> tháng<% end %>
                 </td>
                 <td class="text-right">
                     <% if erp_product.nil? %>
-                        <% Erp::Products::Product.check_hkerp_product_imported(product["id"]) %>
+                        <% Erp::Products::Product.check_hkerp_product_imported(product['id']) %>
                         <span style="font-size:10px" class="label label-sm bg-info">Mới</span>
                     <% else %>
-                        <% if erp_product.price.to_f == product["price"].to_f %>
-                            <br><span style="font-size:10px" class="label label-sm label-success">Giá mới cập nhật</span>
-                        <% else %>
-                            <br><span style="font-size:10px" class="label label-sm label-warning">Giá đã cũ</span>
-                        <% end %>
-                        <% if erp_product.is_sold_out? %>
-                            <br><span style="font-size:10px" class="label label-sm label-warning">THCN (Không kinh doanh)</span>
-                        <% end %>
-                        <% if erp_product.check_for_duplicate_alias.count > 0 %>
-                            <br><span style="font-size:10px" class="label label-sm label-danger">Trùng <%= erp_product.check_for_duplicate_alias.count %> alias</span>
-                        <% end %>
+                        <% if erp_product.price.to_i == product['price'].to_i %><br><span style="font-size:10px" class="label label-sm label-success">Giá đã cập nhật</span><% else %><br><span style="font-size:10px" class="label label-sm label-danger">Giá đã thay đổi</span><% end %>
+                        <% if erp_product.is_sold_out? %><br><span style="font-size:10px" class="label label-sm label-warning">THCN - Ngưng kinh doanh</span><% end %>
+                        <% if erp_product.check_for_duplicate_alias.count > 0 %><br><span style="font-size:10px" class="label label-sm label-danger">Trùng <%= erp_product.check_for_duplicate_alias.count %> alias</span><% end %>
                     <% end %>
-                    <% if product["suspended"] %>
-                        <br><span style="font-size:10px" class="label label-sm label-danger">HK-ERP (Không kinh doanh)</span>
-                    <% end %>
-                    <% if product["out_of_date"] && !product["suspended"] %>
-                        <br><span style="font-size:10px" class="label label-sm bg-dark">Lâu chưa cập nhật</span>
-                    <% end %>
-                    <% if product["status"].to_i == 0 %>
-                        <br><span style="font-size:10px" class="label label-sm bg-dark">Đã bị xóa</span>
-                    <% end %>
+                    <% if product['suspended'] %><br><span style="font-size:10px" class="label label-sm label-warning">Ngưng kinh doanh</span><% end %>
+                    <% if product['out_of_date'] && !product['suspended'] %><br><span style="font-size:10px" class="label label-sm label-warning">Đã lâu chưa cập nhật</span><% end %>
+                    <% if product['status'].to_i == 0 %><br><span style="font-size:10px" class="label label-sm bg-dark">Đã bị xóa</span><% end %>
                 </td>
             </tr>
         <% end %>
     </tbody>
 </table>
-
 <ul class="pagination">
     <li class="prev disabled"><span><i class="fa fa-angle-left"></i></span></li>
     <% (1..(@products['total'].to_i/@products['per_page'].to_i + 0.5).round(0)).each do |number| %>
-        <% if params[:page].to_i == number.to_i %>
-            <li class="active"><span><%= number %></span></li>
-        <% else %>
-            <li><a rel="next" href="list?page=<%= number %>"><%= number %></a></li>
-        <% end %>
+        <% if params[:page].to_i == number.to_i %><li class="active"><span><%= number %></span></li><% else %><li><a rel="next" href="list?page=<%= number %>"><%= number %></a></li><% end %>
     <% end %>
-    <li class="next"><a rel="next" href="/vi/backend/products/categories/list?page=2"><i class="fa fa-angle-right"></i></a></li>
+    <li class="next"><a rel="next" href="/vi/backend/products/categories/list?page=<%= params[:page].to_i + 1 %>"><i class="fa fa-angle-right"></i></a></li>
 </ul>

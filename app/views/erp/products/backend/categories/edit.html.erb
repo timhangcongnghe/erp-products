@@ -1,31 +1,4 @@
-<% content_for :title do %>
-    <%= @category.name %>
-<% end %>
-
-<% content_for :page_title do %>    
-    <a href="<%= erp_products.backend_categories_path %>">
-    <i class="fa fa-folder"></i> <%= t('.categories') %>
-    </a> / <%= @category.name %>
-<% end %>
-
-<% content_for :page_toolbar do %>
-    <% if can? :create, @category %>
-        <%= erp_component('button/create', {
-            text: t('.create'),
-            href: erp_products.new_backend_category_path,
-            class: 'btn-noborder'
-        }) %>
-    <% end %>
-<% end %>
-
-<div class="row">
-    <div class="col-md-12">
-        <% if @category.errors.any? %>
-            <%= erp_form_control("form_error_message") %>
-        <% end %>
-        
-        <!-- BEGIN SAMPLE FORM PORTLET-->
-        <%= render 'form', category: @category %>
-        <!-- END SAMPLE FORM PORTLET-->
-    </div>
-</div>
+<% content_for :title do %>Cập Nhật Chuyên Mục: <%= @category.get_name %><% end %>
+<% content_for :page_title do %><%= link_to '<i class="fa fa-th"></i> Danh Sách Chuyên Mục'.html_safe, erp_products.backend_categories_path %> / Cập Nhật Chuyên Mục: <%= @category.get_name %><% end %>
+<% content_for :page_toolbar do %><%= erp_component('button/create', {text: 'Tạo chuyên mục mới', href: erp_products.new_backend_category_path, class: 'btn-noborder'}) %><% end %>
+<div class="row"><div class="col-md-12"><% if @category.errors.any? %><%= erp_form_control('form_error_message') %><% end %><%= render 'form', category: @category %></div></div>

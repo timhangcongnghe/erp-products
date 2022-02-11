@@ -1,20 +1,17 @@
 module Erp::Products
   class HkerpProduct < ApplicationRecord
-    belongs_to :product
+    belongs_to :product, class_name: 'Erp::Products::Product'
 
     def self.get_product_by_hkerp_product_id(pid)
       hkp = self.where(hkerp_product_id: pid).first
-      
       if hkp.present? and !hkp.product.present?
         hkp.destroy
       end
-      
       return hkp.nil? ? nil : hkp.product
     end
     
     def self.get_status_by_hkerp_product_id(pid)
       hkerp_product = self.get_product_by_hkerp_product_id(pid)
-
       if hkerp_product.nil?
         '<span class="label label-sm label-danger">new</span>'.html_safe
       else

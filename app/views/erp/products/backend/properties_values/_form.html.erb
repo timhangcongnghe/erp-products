@@ -1,39 +1,40 @@
 <%= form_for([erp_products, :backend, properties_value]) do |f| %>
-    <div class="row">
-        <div class="col-md-6">
-            <%= erp_form_control("text", {
-                name: 'properties_value[id_sort]',
-                value: properties_value.id_sort,
-                label: t('.id_sort')
-            }) %>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group ">
-                <label><%= t('.custom_sort') %></label>
-                <div class="text-bold text-right">
-                    <strong><%= properties_value.custom_sort %></strong>
+    <div class="portlet light bordered">
+        <div class="portlet-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <%= erp_form_control('text', {
+                        name: 'properties_value[id_sort]',
+                        value: properties_value.id_sort,
+                        label: 'Vị trí tùy chỉnh',
+                        placeholder: 'Nhập vị trí tùy chỉnh'
+                    }) %>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label>Giá trị tùy chỉnh</label>
+                        <div class="text-bold text-right"><strong><%= properties_value.custom_sort %></strong></div>
+                    </div>
                 </div>
             </div>
+            <%= erp_form_control('text', {
+                name: 'properties_value[value]',
+                value: properties_value.get_value,
+                label: 'Giá trị thuộc tính',
+                required: true,
+                errors: properties_value.errors.full_messages_for(:value)
+            }) %>
+            <%= erp_form_control('dataselect', {
+                name: 'properties_value[property_id]',
+                value: properties_value.property_id,
+                text: properties_value.get_property_name,
+                placeholder: 'Chọn thuộc tính phù hợp',
+                label: 'Thuộc tính',
+                url: erp_products.dataselect_backend_properties_path(format: 'json'),
+                required: true,
+                errors: properties_value.errors.full_messages_for(:property_id)
+            }) %>
         </div>
     </div>
-    <%= erp_form_control("text", {
-        name: 'properties_value[value]',
-        value: properties_value.value,
-        label: t('.value'),
-        required: true,
-        errors: properties_value.errors.full_messages_for(:value)
-    }) %>
-    <%= erp_form_control("dataselect", {
-        name: 'properties_value[property_id]',
-        value: properties_value.property_id,
-        text: ("#{properties_value.property_group_name} / ") + properties_value.property_name,
-        placeholder: t('.choose_property'),
-        label: t('.property'),
-        url: erp_products.dataselect_backend_properties_path(format: 'json'),
-        required: true,
-        errors: properties_value.errors.full_messages_for(:property_id)
-    }) %>
-    <hr>
-    <%= erp_component('button/save', { text: t('submit') }) %>
-    <%= erp_component('button/cancel', { text: t('cancel'), href: erp_products.backend_properties_path }) %>
+    <%= erp_component('button/save', {text: 'LƯU THÔNG TIN'}) %><%= erp_component('button/cancel', {text: 'HỦY LƯU THÔNG TIN', href: erp_products.backend_properties_values_path}) %>
 <% end %>

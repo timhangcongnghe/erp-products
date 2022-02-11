@@ -8,7 +8,7 @@ module Erp
         end
 
         def list
-          @properties_values = PropertiesValue.search(params).paginate(:page => params[:page], :per_page => 20)
+          @properties_values = PropertiesValue.search(params).paginate(page: params[:page], per_page: 20)
           render layout: nil
         end
 
@@ -23,9 +23,9 @@ module Erp
           @properties_value = PropertiesValue.new(properties_value_params)
           if @properties_value.save
             if request.xhr?
-              render json: { status: 'success', text: @properties_value.name, value: @properties_value.id }
+              render json: {status: 'success', text: @properties_value.get_value, value: @properties_value.id}
             else
-              redirect_to erp_products.edit_backend_properties_value_path(@properties_value), notice: t('.success')
+              redirect_to erp_products.edit_backend_properties_value_path(@properties_value), notice: 'Tạo giá trị thuộc tính mới thành công!'
             end
           else
             render :new
@@ -35,9 +35,9 @@ module Erp
         def update
           if @properties_value.update(properties_value_params)
             if request.xhr?
-              render json: { status: 'success', text: @properties_value.name, value: @properties_value.id }
+              render json: {status: 'success', text: @properties_value.get_value, value: @properties_value.id}
             else
-              redirect_to erp_products.edit_backend_properties_value_path(@properties_value), notice: t('.success')
+              redirect_to erp_products.edit_backend_properties_value_path(@properties_value), notice: 'Cập nhật giá trị thuộc tính thành công!'
             end
           else
             render :edit
@@ -46,47 +46,41 @@ module Erp
 
         def dataselect
           respond_to do |format|
-            format.json { render json: PropertiesValue.dataselect(params[:keyword], params) }
+            format.json {render json: PropertiesValue.dataselect(params[:keyword], params)}
           end
         end
 
         def dataselect_for_menu
           respond_to do |format|
-            format.json { render json: PropertiesValue.dataselect_for_menu(params[:keyword], params) }
+            format.json {render json: PropertiesValue.dataselect_for_menu(params[:keyword], params)}
           end
         end
 
         def destroy
           @properties_value.destroy
           respond_to do |format|
-            format.html { redirect_to erp_products.backend_properties_values_path, notice: t('.success') }
-            format.json {
-              render json: { 'message': t('.success'), 'type': 'success' }
-            }
+            format.html {redirect_to erp_products.backend_properties_values_path, notice: 'Xóa giá trị thuộc tính thành công!'}
+            format.json {render json: {'message': 'Xóa giá trị thuộc tính thành công!', 'type': 'success'}}
           end
         end
 
         def move_up
           @properties_value.move_up
           respond_to do |format|
-          format.json { render json: {} }
+            format.json {render json: {}}
           end
         end
 
         def move_down
           @properties_value.move_down
           respond_to do |format|
-          format.json { render json: {} }
+            format.json {render json: {}}
           end
         end
 
         def export_products
           @products = @properties_value.products
-          render helpers.export_partial,
-            locals: {
-              header: ["ID", "Part Number", "Name", "Property"],
-              rows: (@products.map {|product| [product.id, product.code, product.name, @properties_value.value] })
-            }
+          render helpers.export_partial, locals: {header: ['ID', 'PartNumber', 'Name', 'PropertyValue'], rows: (@products.map {|product| [product.id, product.code, product.name, @properties_value.value]})}
         end
 
         private

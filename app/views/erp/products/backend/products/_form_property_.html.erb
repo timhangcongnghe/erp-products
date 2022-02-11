@@ -1,44 +1,26 @@
 <div class="row">
     <div class="col-md-3">
-        <%= erp_form_control("dataselect", {
+        <%= erp_form_control('dataselect',{
             name: 'products_values_attributes[' + uid +'][property_id]',
             id: 'pp-' + uid,
             value: products_values_attribute[1][:property_id],
-            text: products_values_attribute[1][:property_id].present? ? Erp::Products::Property.find(products_values_attribute[1][:property_id]).name : '',
-            placeholder: t('erp.products.choose_property'),
-            label: '',
-            url: erp_products.dataselect_backend_properties_path(format: 'json'),
-            create: {
-                url: erp_products.new_backend_property_path,
-                title: t('erp.products.create_property'),
-                container_selector: '.new_property',
-                input_selector: 'input[name="property[name]"]'
-            },
-            edit: {
-                url: erp_products.edit_backend_property_path(id: ':value'),
-                title: "Edit Property",
-                container_selector: '.edit_property',
-            }
+            text: products_values_attribute[1][:property_id].present? ? Erp::Products::Property.find(products_values_attribute[1][:property_id]).get_name : '',
+            placeholder: 'Chọn thuộc tính phù hợp...',
+            url: erp_products.dataselect_backend_properties_path(format: 'json')
         }) %>
     </div>
     <div class="col-md-7">
-        <%= erp_form_control("dataselect", {
+        <%= erp_form_control('dataselect',{
             name: 'products_values_attributes[' + uid +'][ids][]',
-            values: Erp::Products::PropertiesValue.where(id: products_values_attribute[1][:ids]).map {|pv| {text: pv.value, value: pv.id}},
+            values: Erp::Products::PropertiesValue.where(id: products_values_attribute[1][:ids]).map {|pv| {text: pv.get_value, value: pv.id}},
             tags: products_values_attribute[1][:names],
-            placeholder: t('erp.products.values_of_property'),
-            label: '',
+            placeholder: 'Chọn giá trị thuộc tính phù hợp...',
             multiple: true,
             url: erp_products.dataselect_backend_properties_values_path(format: 'json'),
-            inline_insert: {
-                name: 'products_values_attributes[' + uid +'][names][]'
-            },
+            inline_insert: {name: 'products_values_attributes[' + uid +'][names][]'},
             parent_control: '#pp-' + uid,
-            parent_id: "property_id" # +GET: parent_id with value
+            parent_id: 'property_id'
         }) %>
     </div>
-    <div class="col-md-2">        
-        <%= erp_form_control("addableform_remove_button", {
-        }) %>
-    </div>
+    <div class="col-md-2"><%= erp_form_control('addableform_remove_button',{}) %></div>
 </div>

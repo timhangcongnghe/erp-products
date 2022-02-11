@@ -1,28 +1,4 @@
-<% content_for :title do %>
-    <%= t('.create') %>
-<% end %>
-
-<% content_for :page_title do %>    
-    <a href="<%= erp_products.backend_property_groups_path %>">
-    <i class="fa fa-gg"></i> <%= t('.property_groups') %>
-    </a> / <%= t('.create') %>
-<% end %>
-
-<% content_for :page_toolbar do %>
-    <div class="btn-group">
-        <div class="clearfix">
-        </div>
-    </div>
-<% end %>
-
-<div class="row">
-    <div class="col-md-12">
-        <% if @property_group.errors.any? %>
-            <%= erp_form_control("form_error_message") %>
-        <% end %>
-        
-        <!-- BEGIN SAMPLE FORM PORTLET-->
-        <%= render 'form', property_group: @property_group %>
-        <!-- END SAMPLE FORM PORTLET-->
-    </div>
-</div>
+<% content_for :title do %>Tạo Nhóm Thuộc Tính Mới<% end %>
+<% content_for :page_title do %><a href="<%= erp_products.backend_property_groups_path %>"><i class="fa fa-gg"></i> Danh Sách Nhóm Thuộc Tính</a> / Tạo Nhóm Thuộc Tính Mới<% end %>
+<% content_for :page_toolbar do %><div class="btn-group"><div class="clearfix"></div></div><% end %>
+<div class="row"><div class="col-md-12"><% if @property_group.errors.any? %><%= erp_form_control('form_error_message') %><% end %><%= render 'form', property_group: @property_group %></div></div>

@@ -1,79 +1,69 @@
 <%= form_for([erp_products, :backend, property]) do |f| %>
-    <%= erp_form_control("text", {
-        name: 'property[name]',
-        value: property.name,
-        label: t('.name'),
-        required: true,
-        errors: property.errors.full_messages_for(:name)
-    }) %>
-    <div class="row">
-        <div class="col-md-12">
-            <%= erp_form_control('checkbox', {
-                name: 'property[use_custom_sort]',
-                id: 'property_use_custom_sort',
-                value: property.use_custom_sort,
-                not_selected_value: 'false',
-                label: t('.property_use_custom_sort'),
-                options: [{value: 'true', text: t('.use_custom_sort')}]
+    <div class="portlet light bordered">
+        <div class="portlet-body">
+            <%= erp_form_control('text', {
+                name: 'property[name]',
+                value: property.get_name,
+                label: 'Tên thuộc tính',
+                placeholder: 'Nhập tên thuộc tính...',
+                required: true,
+                errors: property.errors.full_messages_for(:name)
+            }) %>
+            <div class="row">
+                <div class="col-md-6">
+                    <%= erp_form_control('checkbox', {
+                        name: 'property[use_custom_sort]',
+                        id: 'property_use_custom_sort',
+                        value: property.use_custom_sort,
+                        not_selected_value: 'false',
+                        label: 'Sắp xếp giá trị thuộc tính',
+                        options: [{value: 'true', text: 'Lựa chọn'}]
+                    }) %>
+                </div>
+                <div class="col-md-6">
+                    <%= erp_form_control('checkbox', {
+                        name: 'property[is_short_description]',
+                        id: 'property_is_short_description',
+                        value: property.is_short_description,
+                        not_selected_value: 'false',
+                        label: 'Thêm trong mô tả ngắn',
+                        options: [{value: 'true', text: 'Lựa chọn'}]
+                    }) %>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <%= erp_form_control('checkbox', {
+                        name: 'property[is_meta_description]',
+                        id: 'property_is_meta_description',
+                        value: property.is_meta_description,
+                        not_selected_value: 'false',
+                        label: 'Thêm trong SEO Meta Description',
+                        options: [{value: 'true', text: 'Lựa chọn'}]
+                    }) %>
+                </div>
+                <div class="col-md-6">
+                    <%= erp_form_control('checkbox', {
+                        name: 'property[is_show_detail]',
+                        id: 'property_is_show_detail',
+                        value: property.is_show_detail,
+                        not_selected_value: 'false',
+                        label: 'Hiện trong trang chi tiết sản phẩm',
+                        options: [{value: 'true', text: 'Lựa chọn'}]
+                    }) %>
+                </div>
+            </div>
+            <%= erp_form_control('dataselect', {
+                name: 'property[property_group_id]',
+                value: property.property_group_id,
+                text: property.get_property_group_name,
+                placeholder: 'Chọn nhóm thuộc tính phù hợp',
+                label: 'Nhóm thuộc tính',
+                url: erp_products.dataselect_backend_property_groups_path(format:'json'),
+                required: true,
+                errors: property.errors.full_messages_for(:property_group_id)
             }) %>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <%= erp_form_control('checkbox', {
-                name: 'property[is_meta_description]',
-                id: 'property_is_meta_description',
-                value: property.is_meta_description,
-                not_selected_value: 'false',
-                label: t('.property_is_meta_description'),
-                options: [{value: 'true', text: t('.is_meta_description')}]
-            }) %>
-        </div>
-        <div class="col-md-6">
-            <%= erp_form_control('checkbox', {
-                name: 'property[is_show_detail]',
-                id: 'property_is_show_detail',
-                value: property.is_show_detail,
-                not_selected_value: 'false',
-                label: t('.property_is_show_detail'),
-                options: [{value: 'true', text: t('.is_show_detail')}]
-            }) %>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <%= erp_form_control('checkbox', {
-                name: 'property[is_short_description]',
-                id: 'property_is_short_description',
-                value: property.is_short_description,
-                not_selected_value: 'false',
-                label: t('.property_is_short_description'),
-                options: [{value: 'true', text: t('.is_short_description')}]
-            }) %>
-        </div>
-        <div class="col-md-6">
-            <%= erp_form_control('checkbox', {
-                name: 'property[is_show_website]',
-                id: 'property_is_show_website',
-                value: property.is_show_website,
-                not_selected_value: 'false',
-                label: t('.property_is_show_website'),
-                options: [{value: 'true', text: t('.is_show_website')}]
-            }) %>
-        </div>
-    </div>
-    <%= erp_form_control("dataselect", {
-        name: 'property[property_group_id]',
-        value: property.property_group_id,
-        text: property.property_group_name,
-        placeholder: t('.choose_property_group'),
-        label: t('.property_group'),
-        help: t('.help_property_group'),
-        url: erp_products.dataselect_backend_property_groups_path(format: 'json'),
-        required: true,
-        errors: property.errors.full_messages_for(:property_group_id)
-    }) %>
-    <hr>
-    <%= erp_component('button/save', { text: t('submit') }) %>
-    <%= erp_component('button/cancel', { text: t('cancel'), href: erp_products.backend_properties_path }) %>
+    <%= erp_component('button/save', {text: 'LƯU THÔNG TIN'}) %><%= erp_component('button/cancel', { text: 'HỦY LƯU THÔNG TIN', href: erp_products.backend_properties_path }) %>
 <% end %>

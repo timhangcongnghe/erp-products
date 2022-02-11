@@ -1,44 +1,23 @@
-<% content_for :title do %><%= t('.properties') %><% end %>
-
-<% content_for :page_title do %>
-    <a href="<%= erp.backend_path %>"><i class="fa fa-th"></i> <%= t('.products') %></a> / <%= t('.properties') %>
-<% end %>
-
-<% content_for :page_toolbar do %>
-    <%= erp_component('button/create', {
-        text: t('.create'),
-        href: erp_products.new_backend_property_path,
-        class: 'btn-noborder'
-    }) %>
-<% end %>
-
+<% content_for :title do %>Danh Sách Thuộc Tính<% end %>
+<% content_for :page_title do %><i class="fa fa-gg"></i> Danh Sách Thuộc Tính<% end %>
+<% content_for :page_toolbar do %><%= erp_component('button/create', {text: 'Tạo thuộc tính mới', href: erp_products.new_backend_property_path, class: 'btn-noborder'}) %><% end %>
 <%= erp_datalist(
     url: erp_products.list_backend_properties_path,
     keywords: [
-        { text: t('.name'), name: 'erp_products_properties.name' },
-        {
-            text: t('creator'),
-            name: 'erp_users.name',
-            select: { name: 'erp_users.id', data_url: erp.dataselect_backend_users_path }
-        },
-        {
-            text: t('property_group'),
-            name: 'erp_products_property_groups.name',
-            select: { name: 'erp_products_property_groups.id', data_url: erp_products.dataselect_backend_property_groups_path }
-        }
+        {text: 'Tên thuộc tính', name: 'erp_products_properties.name'},
+        {text: 'Nhóm thuộc tính', name: 'erp_products_property_groups.name', select: {name: 'erp_products_property_groups.id', data_url: erp_products.dataselect_backend_property_groups_path}}
     ],
-    actions: [],
     filters: [
-        { text: t('.is_show_list'), name: 'erp_products_properties.is_show_list', value: true, checked: false },
-        { text: t('.is_show_detail'), name: 'erp_products_properties.is_show_detail', value: true, checked: false },
-        { text: t('.is_show_website'), name: 'erp_products_properties.is_show_website', value: true, checked: false },
-        { text: t('.is_meta_description'), name: 'erp_products_properties.is_meta_description', value: true, checked: false },
+        {text: 'Sắp xếp vị trí giá trị thuộc tính', name: 'erp_products_properties.use_custom_sort', value: true, checked: false},
+        {text: 'Hiện trong trang chi tiết sản phẩm', name: 'erp_products_properties.is_show_detail', value: true, checked: false},
+        {text: 'Thêm trong SEO Meta Description', name: 'erp_products_properties.is_meta_description', value: true, checked: false},
+        {text: 'Thêm trong mô tả ngắn', name: 'erp_products_properties.is_short_description', value: true, checked: false}
     ],
     columns: [
-        { text: t('.name'), name: 'name', value: true, checked: true },
-        { text: t('status'), name: 'status', value: true, checked: true },
-        { text: t('creator'), name: 'creator', value: true, checked: false },
-        { text: t('created_at'), name: 'created_at', value: true, checked: false }
+        {text: 'Tên thuộc tính', name: 'name', value: true, checked: true},
+        {text: 'Trạng thái', name: 'status', value: true, checked: true},
+        {text: 'Người tạo', name: 'creator', value: true, checked: false},
+        {text: 'Ngày tạo', name: 'created_at', value: true, checked: false}
     ],
-    sort: { sort_by: 'erp_products_properties.created_at', sort_direction: 'desc' }
+    sort: {sort_by: 'erp_products_properties.created_at', sort_direction: 'desc'}
 ) %>

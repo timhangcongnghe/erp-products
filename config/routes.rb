@@ -1,6 +1,103 @@
 Erp::Products::Engine.routes.draw do
-  scope "(:locale)", locale: /en|vi/ do
-		namespace :backend, module: "backend", path: "backend/products" do
+  scope '(:locale)', locale: /en|vi/ do
+		namespace :backend, module: 'backend', path: 'backend/products' do
+      resources :brands do
+        collection do
+          post 'list'
+          get 'dataselect'
+        end
+      end
+      
+      resources :categories do
+        collection do
+          post 'list'
+          get 'dataselect'
+          put 'archive'
+          put 'unarchive'
+          put 'archive_all'
+          put 'unarchive_all'
+          put 'move_up'
+          put 'move_down'
+        end
+      end
+
+      resources :products do
+        collection do
+          post 'list'
+          get 'dataselect'
+          delete 'delete_all'
+          put 'archive'
+          put 'unarchive'
+          put 'check_is_bestseller'
+          put 'uncheck_is_bestseller'
+          put 'check_is_call'
+          put 'uncheck_is_call'
+          put 'check_is_sold_out'
+          put 'uncheck_is_sold_out'
+          get 'property_form'
+          put 'copy'
+          put 'update_alias'
+          get 'form_property'
+
+					#HK-ERP CONNECTOR
+          get 'hkerp_products'
+          post 'hkerp_products_list'
+          get 'hkerp_categories_dataselect'
+          put 'hkerp_update_price'
+          get 'hkerp_manufacturers_dataselect'
+        end
+      end
+
+      resources :products_gifts do
+				collection do
+          get 'gift_form'
+				end
+			end
+
+      resources :accessories do
+        collection do
+          get 'dataselect'
+          post 'list'
+          put 'archive'
+          put 'unarchive'
+        end
+      end
+
+      resources :accessory_details do
+				collection do
+          get 'accessory_detail_line_form'
+				end
+			end
+
+      resources :property_groups do
+        collection do
+          post 'list'
+          get 'dataselect'
+          put 'move_up'
+          put 'move_down'
+        end
+      end
+
+      resources :properties do
+        collection do
+          post 'list'
+          get 'dataselect'
+          put 'move_up'
+          put 'move_down'
+        end
+      end
+
+      resources :properties_values do
+        collection do
+          post 'list'
+          get 'dataselect'
+          get 'dataselect_for_menu'
+          put 'move_up'
+          put 'move_down'
+          get 'export_products'
+        end
+      end
+
 			resources :inventory_products do
 				collection do
 					post 'list'
@@ -27,71 +124,7 @@ Erp::Products::Engine.routes.draw do
 					put 'move_down'
 				end
 			end
-      resources :categories do
-        collection do
-          post 'list'
-          get 'dataselect'
-          delete 'delete_all'
-          put 'archive_all'
-          put 'unarchive_all'
-          put 'archive'
-          put 'unarchive'
-          put 'move_up'
-          put 'move_down'
-        end
-      end
-      resources :products do
-        collection do
-          post 'list'
-          get 'dataselect'
-          delete 'delete_all'
-          put 'archive_all'
-          put 'unarchive_all'
-          put 'archive'
-          put 'unarchive'
-          put 'check_is_bestseller'
-          put 'uncheck_is_bestseller'
-          put 'check_is_bestseller_all'
-          put 'uncheck_is_bestseller_all'
-          put 'check_is_call'
-          put 'uncheck_is_call'
-          put 'check_is_call_all'
-          put 'uncheck_is_call_all'
-          put 'check_is_sold_out'
-          put 'uncheck_is_sold_out'
-          put 'check_is_sold_out_all'
-          put 'uncheck_is_sold_out_all'
-          put 'check_is_stock_inventory'
-          put 'uncheck_is_stock_inventory'
-          put 'check_is_stock_inventory_all'
-          put 'uncheck_is_stock_inventory_all'
-          put 'check_is_business_choices'
-          put 'uncheck_is_business_choices'
-          put 'check_is_business_choices_all'
-          put 'uncheck_is_business_choices_all'
-          put 'check_is_top_business_choices'
-          put 'uncheck_is_top_business_choices'
-          put 'check_is_top_business_choices_all'
-          put 'uncheck_is_top_business_choices_all'
-          get 'form_property'
-          get 'property_form'
-          put 'copy'
-          put 'update_alias'
-
-					#@todo HK-ERP connector
-          get 'hkerp_products'
-          post 'hkerp_products_list'
-          get 'hkerp_categories_dataselect'
-          put 'hkerp_update_price'
-          get 'hkerp_manufacturers_dataselect'
-
-          get 'dataselect_code'
-
-          post 'import_export_table' # @todo if qdeliveries available
-          get 'product_details'
-          get 'xlsx'
-        end
-      end
+      
       resources :states do
 				collection do
 					post 'list'
@@ -136,31 +169,6 @@ Erp::Products::Engine.routes.draw do
           get 'state_check_detail_line_form'
 				end
 			end
-      resources :properties do
-        collection do
-          get 'dataselect'
-          post 'list'
-          delete 'delete_all'
-          put 'archive_all'
-          put 'unarchive_all'
-          put 'archive'
-          put 'unarchive'
-
-          put 'move_up'
-          put 'move_down'
-        end
-      end
-
-      resources :properties_values do
-        collection do
-          post 'list'
-          get 'dataselect'
-          get 'dataselect_for_menu'
-          get 'export_products'
-          put 'move_up'
-          put 'move_down'
-        end
-      end
 
       resources :manufacturings do
 				collection do
@@ -258,17 +266,7 @@ Erp::Products::Engine.routes.draw do
           delete 'delete'
 				end
 			end
-      resources :brands do
-        collection do
-          get 'dataselect'
-          post 'list'
-          delete 'delete_all'
-          put 'archive_all'
-          put 'unarchive_all'
-          put 'archive'
-          put 'unarchive'
-        end
-      end
+      
       resources :brand_groups do
         collection do
           get 'dataselect'
@@ -285,37 +283,12 @@ Erp::Products::Engine.routes.draw do
           get 'brand_group_detail_line_form'
 				end
 			end
-      resources :property_groups do
-        collection do
-          get 'dataselect'
-          post 'list'
-          delete 'delete_all'
-          put 'archive_all'
-          put 'unarchive_all'
-          put 'archive'
-          put 'unarchive'
 
-          put 'move_up'
-          put 'move_down'
-          get 'dataselect'
-        end
-      end
-      resources :accessories do
-        collection do
-          get 'dataselect'
-          post 'list'
-          put 'archive'
-          put 'unarchive'
-          delete 'delete_all'
-          put 'archive_all'
-          put 'unarchive_all'
-        end
-      end
-      resources :accessory_details do
-				collection do
-          get 'accessory_detail_line_form'
-				end
-			end
+      
+
+      
+
+      
       resources :comments do
         collection do
           post 'list'
@@ -351,11 +324,6 @@ Erp::Products::Engine.routes.draw do
       resources :events_products do
 				collection do
           get 'event_product_line_form'
-				end
-			end
-      resources :products_gifts do
-				collection do
-          get 'gift_form'
 				end
 			end
     end

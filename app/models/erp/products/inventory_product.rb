@@ -5,11 +5,6 @@ module Erp::Products
 		belongs_to :creator, class_name: "Erp::User"
 		mount_uploader :image_url, Erp::Products::InventoryProductImageUploader
 		belongs_to :inventory_category, class_name: "Erp::Products::InventoryCategory"
-		
-		# init custom order
-    def init_custom_order
-			self.update_column(:custom_order, self.class.maximum("custom_order").to_i + 1)
-		end
     
     def self.get_active
 			self.where(archived: false).order("custom_order ASC")

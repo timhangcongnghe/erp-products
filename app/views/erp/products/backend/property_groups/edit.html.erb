@@ -1,29 +1,4 @@
-<% content_for :title do %>
-    <%= @property_group.name %>
-<% end %>
-
-<% content_for :page_title do %>    
-    <a href="<%= erp_products.backend_property_groups_path %>">
-    <i class="fa fa-gg"></i> <%= t('.property_groups') %>
-    </a> / <%= @property_group.name %>
-<% end %>
-
-<% content_for :page_toolbar do %>
-    <%= erp_component('button/create', {
-        text: t('.create'),
-        href: erp_products.new_backend_property_group_path,
-        class: 'btn-noborder'
-    }) %>
-<% end %>
-
-<div class="row">
-    <div class="col-md-12">
-        <% if @property_group.errors.any? %>
-            <%= erp_form_control("form_error_message") %>
-        <% end %>
-        
-        <!-- BEGIN SAMPLE FORM PORTLET-->
-        <%= render 'form', property_group: @property_group %>
-        <!-- END SAMPLE FORM PORTLET-->
-    </div>
-</div>
+<% content_for :title do %>Cập Nhật Nhóm Thuộc Tính: <%= @property_group.get_name %><% end %>
+<% content_for :page_title do %><a href="<%= erp_products.backend_property_groups_path %>"><i class="fa fa-gg"></i> Danh Sách Nhóm Thuộc Tính</a> / Cập Nhật Nhóm Thuộc Tính: <%= @property_group.get_name %><% end %>
+<% content_for :page_toolbar do %><%= erp_component('button/create', {text: 'Tạo nhóm thuộc tính mới', href: erp_products.new_backend_property_group_path, class: 'btn-noborder'}) %><% end %>
+<div class="row"><div class="col-md-12"><% if @property_group.errors.any? %><%= erp_form_control('form_error_message') %><% end %><%= render 'form', property_group: @property_group %></div></div>

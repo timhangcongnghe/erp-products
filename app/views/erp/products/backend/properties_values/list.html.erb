@@ -1,59 +1,39 @@
 <table class="table table-advance table-hover table-striped table-checkable order-column">
     <thead>
         <tr>
-            <th width='30%' class="text-left"><%= t('.name') %></th>
-            <th class="text-center"><%= t('.value') %></th>
-            <th class="text-center"><%= t('.product_count') %></th>
-            <th width="7%" class="sortable text-nowrap text-center" sort-by='erp_products_properties_values.custom_order'><%= t('.order') %></th>
-            <th width="7%" class="text-right"><%= t('actions') %></th>
+            <th width='30%' class="text-left">Nhóm thuộc tính</th>
+            <th class="text-center">Giá trị</th>
+            <th class="text-center">Số sản phẩm</th>
+            <th width="8%" class="sortable text-nowrap text-center" sort-by='erp_products_properties_values.custom_order'>Vị trí sắp xếp</th>
+            <th width="8%" class="text-right">Thao tác</th>
         </tr>
     </thead>
     <tbody>
         <% @properties_values.each do |properties_value| %>
             <tr class="odd gradeX">
                 <td class="text-left">
-                    <strong>Nhóm giá trị: </strong>
-                    <%= link_to properties_value.property_name, erp_products.edit_backend_property_path(properties_value.property) %><br>
-                    <em>
-                        <strong>Nhóm thuộc tính: </strong>
-                        <%= link_to properties_value.property_group_name,
-                            erp_products.edit_backend_property_group_path(properties_value.property.property_group) %>
-                    </em>
-                    <% if properties_value.custom_sort.present? %>
-                        <br><strong>Vị trí sắp xếp: </strong><%= properties_value.custom_sort %>
-                    <% end %>
+                    <strong>Nhóm thuộc tính: </strong><%= link_to properties_value.get_property_name, erp_products.edit_backend_property_path(properties_value.property) %><br>
+                    <em><strong>Thuộc tính: </strong><%= link_to properties_value.get_property_group_name, erp_products.edit_backend_property_group_path(properties_value.property.property_group) %></em>
+                    <% if properties_value.custom_sort.present? %><br><strong>Vị trí sắp xếp: </strong><%= properties_value.custom_sort %><% end %>
                 </td>
-                <td class="text-center"><%= link_to properties_value.value, erp_products.edit_backend_properties_value_path(properties_value) %></td>
+                <td class="text-center"><%= link_to properties_value.get_value, erp_products.edit_backend_properties_value_path(properties_value) %></td>
                 <td class="text-center">
-                    <%= properties_value.products.count %><br>
-                    <a target="_blank" href="<%= erp_products.export_products_backend_properties_values_path(id: properties_value.id) %>">
-                        <em><%= t('.export') %></em>
-                    </a>
+                    <%= properties_value.products.count %>
+                    <br><%= link_to '<em>Xuất file sản phẩm</em>'.html_safe, erp_products.export_products_backend_properties_values_path(id: properties_value.id), target: '_blank' %>
                 </td>
                 <td class="text-center text-semibold">
-                    <%= properties_value.custom_order %><br>
+                    <%= properties_value.custom_order %>
                     <% if params[:sort_by] == 'erp_products_properties_values.custom_order' %>
-                        <%= link_to '<i class="fa fa-caret-square-o-up icon-big"></i>'.html_safe, 
-                            erp_products.move_up_backend_properties_values_path(id: properties_value), method: 'PUT', class: 'ajax-link' %>
-                        <%= link_to '<i class="fa fa-caret-square-o-down icon-big"></i>'.html_safe, 
-                            erp_products.move_down_backend_properties_values_path(id: properties_value), method: 'PUT', class: 'ajax-link' %>
+                        <br>
+                        <%= link_to '<i class="fa fa-caret-square-o-up icon-big"></i>'.html_safe, erp_products.move_up_backend_properties_values_path(id: properties_value), method: 'PUT', class: 'ajax-link' %>
+                        <%= link_to '<i class="fa fa-caret-square-o-down icon-big"></i>'.html_safe, erp_products.move_down_backend_properties_values_path(id: properties_value), method: 'PUT', class: 'ajax-link' %>
                     <% end %>
                 </td>
                 <td class="text-right">
                     <div class="btn-group">
-                        <a class="btn btn-default btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <i class="fa fa-cog"></i><%= t('core.options') %><i class="fa fa-angle-down"></i>
-                        </a>
+                        <a class="btn btn-default btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true"><i class="fa fa-cog"></i>Lựa chọn<i class="fa fa-angle-down"></i></a>
                         <ul class="dropdown-menu pull-right">
-                            <li>
-                                <%= link_to '<i class="fa fa-edit"></i>'.html_safe + t('.edit'), 
-                                    erp_products.edit_backend_properties_value_path(properties_value) %>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <%= link_to '<i class="fa fa-trash"></i>'.html_safe + t('.delete'), 
-                                    erp_products.backend_properties_value_path(properties_value), method: 'DELETE', data: {confirm: t('delete_confirm')}, class: 'ajax-link' %>
-                            </li>
+                            <li><%= link_to '<i class="fa fa-trash"></i> Xóa giá trị'.html_safe, erp_products.backend_properties_value_path(properties_value), method: 'DELETE', data: {confirm: 'Bạn có chắc chắn muốn xóa giá trị này không?'}, class: 'ajax-link' %></li>
                         </ul>
                     </div>
                 </td>
@@ -61,6 +41,5 @@
         <% end %>
     </tbody>
 </table>
-
-<% if @properties_values.empty? %><div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div><% end %>
+<% if @properties_values.empty? %><div class="datalist-empty-line">Danh Sách Giá Trị Thuộc Tính Hiện Chưa Có Lựa Chọn Phù Hợp</div><% end %>
 <%= erp_datalist_pagination(@properties_values) %>

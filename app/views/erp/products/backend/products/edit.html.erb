@@ -1,39 +1,9 @@
-<% content_for :title do %>
-    <%= t('.edit') %>
-<% end %>
-
-<% content_for :page_title do %>    
-    <a href="<%= erp_products.backend_products_path %>">
-    <i class="fa fa-archive"></i> <%= t('.products') %>
-    </a> / <%= t('.edit') %>
-<% end %>
-
+<% content_for :title do %>Cập Nhật Sản Phẩm: <%= @product.get_name.truncate(30) %><% end %>
+<% content_for :page_title do %><%= link_to '<i class="fa fa-th"></i> Danh Sách Sản Phẩm'.html_safe, erp_products.backend_products_path %> / Cập Nhật Sản Phẩm: <%= @product.get_name.truncate(30) %><% end %>
 <% content_for :page_toolbar do %>
-    <%= erp_datalist_row_actions(
-        [
-            {
-                text: '<i class="fa fa-plus"></i> '+t('.create'),
-                href: erp_products.new_backend_product_path
-            },
-            {
-                text: '<i class="fa fa-copy"></i> '+t('.copy'),
-                url: erp_products.copy_backend_products_path(id: @product),
-                data_method: 'PUT',
-                class: 'ajax-link',
-                data_confirm: t('.copy_confirm')
-            },
-        ]
-    ) %>
+    <%= erp_datalist_row_actions([
+        {text: '<i class="fa fa-plus"></i> Tạo Sản Phẩm Mới'.html_safe, href: erp_products.new_backend_product_path},
+        {text: '<i class="fa fa-files-o"></i> Nhân Bản Sản Phẩm'.html_safe, url: erp_products.copy_backend_products_path(id: @product), data_method: 'PUT', class: 'ajax-link', data_confirm: 'Bạn có chắc chắn muốn thực hiện thao tác "Nhân Bản" này không?'}
+    ]) %>
 <% end %>
-
-<div class="row">
-    <div class="col-md-12">
-        <% if @product.errors.any? %>
-            <%= erp_form_control("form_error_message") %>
-        <% end %>
-        
-        <!-- BEGIN SAMPLE FORM PORTLET-->
-        <%= render 'form', product: @product %>
-        <!-- END SAMPLE FORM PORTLET-->
-    </div>
-</div>
+<div class="row"><div class="col-md-12"><% if @product.errors.any? %><%= erp_form_control('form_error_message') %><% end %><%= render 'form', product: @product %></div></div>

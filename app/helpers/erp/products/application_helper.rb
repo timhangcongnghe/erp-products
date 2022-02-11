@@ -1,8 +1,6 @@
 module Erp
   module Products
     module ApplicationHelper
-
-      # Product dropdown actions
       def product_dropdown_actions(product)
         actions = []
         actions << {
@@ -40,13 +38,11 @@ module Erp
         )
       end
 
-      # product link helper
       def backend_product_link(product, text=nil)
         text = text.nil? ? product.name : text
         raw "<a href='#{erp_products.backend_product_path(product)}' class='modal-link'>#{text}</a>"
       end
 
-      # Damage records
       def damage_record_dropdown_actions(damage_record)
         actions = []
         actions << {
@@ -91,7 +87,6 @@ module Erp
         )
       end
 
-      # Stock check
       def stock_check_dropdown_actions(stock_check)
         actions = []
         actions << {
@@ -141,7 +136,6 @@ module Erp
         )
       end
 
-      # State check
       def state_check_dropdown_actions(state_check)
         actions = []
         actions << {
@@ -191,7 +185,6 @@ module Erp
         )
       end
 
-      # Product state dropdown actions
       def state_dropdown_actions(state)
         actions = []
         actions << {
@@ -229,7 +222,6 @@ module Erp
         )
       end
 
-      # Product category dropdown actions
       def category_dropdown_actions(category)
         actions = []
         actions << {
@@ -240,7 +232,6 @@ module Erp
           text: '<i class="fa fa-eye-slash"></i> '+t('archive'),
           url: erp_products.archive_backend_categories_path(id: category),
           data_method: 'PUT',
-          #hide: category.archived,
           class: 'ajax-link',
           data_confirm: t('.archive_confirm')
         } if can? :archive, category
@@ -248,11 +239,9 @@ module Erp
           text: '<i class="fa fa-eye"></i> '+t('unarchive'),
           url: erp_products.unarchive_backend_categories_path(id: category),
           data_method: 'PUT',
-          #hide: !category.archived,
           class: 'ajax-link',
           data_confirm: t('.unarchive_confirm')
         } if can? :unarchive, category
-
         erp_datalist_row_actions(actions)
       end
     end

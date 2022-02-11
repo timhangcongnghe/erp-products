@@ -1,257 +1,67 @@
-<% if can? :inventory_products_products_export_to_excel, nil %>
-    <div class="text-right mb-10">
-        <a target="_blank"
-            href="<%= erp_products.xlsx_backend_products_path(params.to_unsafe_hash.merge({format: 'xlsx'})) %>"
-            target="_blank"
-            class="btn btn-primary"
-        >Xuất excel</a>
-    </div>
-<% end %>
-
-<h3>Danh sách Sản phẩm</h3>
-<table class="table table-advance table-hover table-striped table-checkable order-column" id="">
+<table class="table table-advance table-hover table-striped table-checkable order-column">
     <thead>
         <tr>
-            <th width='1%'>
-                <%= erp_datalist_check_all %>
-            </th>
-            <% if get_columns(params).include?("code") %>
-                <th>
-                    <%= t('.code') %>
-                </th>
-            <% end %>
-            <% if get_columns(params).include?("name") %>
-                <th class="sortable" sort-by='erp_products_products.name'>
-                    <%= t('.name') %>
-                </th>
-            <% end %>
-            <% if get_columns(params).include?("category") %>
-                <th>
-                    <%= t('.category') %>
-                </th>
-            <% end %>
-            <% if get_columns(params).include?("price") %>
-                <th>
-                    <%= t('.price') %>
-                </th>
-            <% end %>
-            <% if get_columns(params).include?("cost") %>
-                <th>
-                    <%= t('.cost') %>
-                </th>
-            <% end %>
-            <% if get_columns(params).include?("on_hand") %>
-                <th>
-                    <%= t('.on_hand') %>
-                </th>
-            <% end %>
-            <% if get_columns(params).include?("status") %>
-                <th>
-                    <%= t('status') %>
-                </th>
-            <% end %>
-            <% if get_columns(params).include?("creator") %>
-                <th>
-                    <%= t('creator') %>
-                </th>
-            <% end %>
-            <% if get_columns(params).include?("created_at") %>
-                <th class="sortable" sort-by='erp_products_products.created_at'>
-                    <%= t('created_at') %>
-                </th>
-            <% end %>
-            <th width="7%"><%= t('actions') %></th>
+            <th width="1%" class="text-left"><%= erp_datalist_check_all %></th>
+            <% if get_columns(params).include?('category') %><th width="10%" class="text-center">Chuyên mục</th><% end %>
+            <% if get_columns(params).include?('brand') %><th width="10%" class="text-center">Thương hiệu</th><% end %>
+            <% if get_columns(params).include?('code') %><th width="10%" class="text-center">Mã sản phẩm</th><% end %>
+            <% if get_columns(params).include?('name') %><th width="35%" class="text-center">Tên sản phẩm</th><% end %>
+            <% if get_columns(params).include?('price') %><th width="10%" class="text-center">Giá</th><% end %>
+            <% if get_columns(params).include?('status') %><th width="10%" class="text-center">Trạng thái</th><% end %>
+            <% if get_columns(params).include?('creator') %><th class="text-center">Người tạo</th><% end %>
+            <% if get_columns(params).include?('created') %><th class="text-center">Ngày tạo</th><% end %>
+            <th width="8%" class="text-right">Thao tác</th>
         </tr>
     </thead>
     <tbody>
         <% @products.each do |product| %>
-            <tr class="<%= 'blurred' if product.archived? %> odd gradeX has-child-table" data-url="<%= erp_products.product_details_backend_products_path(id: product.id) %>">
-                <td>
-                    <%= erp_datalist_check_row(id: product.id) %>
-                </td>
-                <% if get_columns(params).include?("code") %>
-                    <td><%= product.code %></td>
-                <% end %>
-                <% if get_columns(params).include?("name") %>
-                    <td>
-                        <i class="fa fa-plus expand tr-expand-button"></i>
-                        <%= link_to product.name, erp_products.edit_backend_product_path(product) %>
+            <tr class="odd gradeX">
+                <td class="text-left"><%= erp_datalist_check_row(id: product.id) %></td>
+                <% if get_columns(params).include?('category') %><td class="text-center"><%= link_to product.get_category_name, erp_products.edit_backend_category_path(product.category), target: '_blank' %></td><% end %>
+                <% if get_columns(params).include?('brand') %><td class="text-center"><%= link_to product.get_brand_name, erp_products.edit_backend_brand_path(product.brand), target: '_blank' %></td><% end %>
+                <% if get_columns(params).include?('code') %><td class="text-center"><%= product.get_code %></td><% end %>
+                <% if get_columns(params).include?('name') %>
+                    <td class="text-left">
+                        <strong><%= link_to product.get_name, erp_products.edit_backend_product_path(product) %></strong>
+                        <% if product.short_name.present? %><br><em><strong>Tên rút gọn: </strong><%= product.get_short_name %></em><% end %>
+                        <% if product.custom_title.present? %><br><em><strong>Title/Alias: </strong><%= product.get_custom_title %></em><% end %>
+                        <% if product.weights.present? %><br><em><strong>Vận chuyển: </strong><%= product.weights %> kg</em><% end %>
+                        <% if product.warranty.present? %><br><em><strong>Bảo hành: </strong><%= product.warranty %> tháng</em><% end %>
                     </td>
                 <% end %>
-                <% if get_columns(params).include?("category") %>
-                    <td><%= product.category_name %></td>
-                <% end %>
-                <% if get_columns(params).include?("price") %>
-                    <td><%= format_number(product.price) %></td>
-                <% end %>
-                <% if get_columns(params).include?("cost") %>
-                    <td><%= format_number(product.cost) %></td>
-                <% end %>
-                <% if Erp::Core.available?("qdeliveries") %>
-                    <% if get_columns(params).include?("on_hand") %>
-                        <td><%= product.get_stock(params) %></td>
-                    <% end %>
-                <% else %>
-                    <% if get_columns(params).include?("on_hand") %>
-                        <td><%= product.on_hand %></td>
-                    <% end %>
-                <% end %>
-                <% if get_columns(params).include?("status") %>
-                <td>
-                    <% if product.archived? %>
-                    <span class="label label-sm label-archived"><%= t('.archived') %></span>
-                    <% else %>
-                    <span class="label label-sm label-unarchived"><%= t('.unarchived') %></span>
-                    <% end %>
-                </td>
-                <% end %>
-                <% if get_columns(params).include?("creator") %>
-                    <td>
-                        <%= erp_component('avatar', {
-                            user: product.creator
-                        }) %>
+                <% if get_columns(params).include?('price') %>
+                    <td class="text-center">
+                        <% if product.price.to_i > 0 %><%= format_price(product.price) %><% end %>
                     </td>
                 <% end %>
-                <% if get_columns(params).include?("created_at") %>
-                    <td><%= format_date(product.created_at) %></td>
+                <% if get_columns(params).include?('status') %>
+                    <td class="text-center">
+                        <% if product.is_new? %><br><span class="label label-sm label-info">Sản Phẩm Mới</span><% end %>
+                        <% if product.is_bestseller? %><br><span class="label label-sm label-info">Sản Phẩm Bán Chạy</span><% end %>
+                        <% if product.is_sold_out? %><br><span class="label label-sm label-warning">Sản Phẩm Hết Hàng</span><% end %>
+                        <% if product.is_call? %><br><span class="label label-sm label-warning">Sản Phẩm Gọi Hỏi Hàng</span><% end %>
+                        <% if product.description.present? %><br><span class="label label-sm label-info">Có Bài Viết Giới Thiệu</span><% end %>
+                        <% if product.short_description? %><br><span class="label label-sm label-info">Có Mô Tả Ngắn</span><% end %>
+                        <% if product.product_images.count == 0 %><br><span class="label label-sm label-danger">Chưa Có Hình Ảnh</span><% end %>
+                        <% if product.meta_description.present? %><br><span class="label label-sm label-info">SEO Description (<%= product.meta_description.length %> ký tự)</span><% end %>
+                    </td>
                 <% end %>
-                <td>
-                    <%= product_dropdown_actions(product) %>
+                <% if get_columns(params).include?('creator') %><td class="text-center"><%= erp_component('avatar', {user: product.creator}) %></td><% end %>
+                <% if get_columns(params).include?('created') %><td class="text-center"><%= product.created_at.strftime('%d-%m-%Y') %></td><% end %>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <a class="btn btn-default btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true"><i class="fa fa-cog"></i>Lựa chọn<i class="fa fa-angle-down"></i></a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><%= link_to '<i class="fa fa-refresh"></i> Cập nhật Alias'.html_safe, erp_products.update_alias_backend_products_path(id: product), method: 'PUT', data: {confirm: 'Bạn có chắc chắn muốn thực hiện thao tác "Cập Nhật Alias" này không?'}, class: 'ajax-link' %></li>
+                            <li><%= link_to '<i class="fa fa-files-o"></i> Nhân bản'.html_safe, erp_products.copy_backend_products_path(id: product), method: 'PUT', data: {confirm: 'Bạn có chắc chắn muốn thực hiện thao tác "Nhân Bản" này không?'}, class: 'ajax-link' %></li>
+                            <li class="divider"></li>
+                            <li><%= link_to '<i class="fa fa-trash"></i> Xóa sản phẩm'.html_safe, erp_products.backend_product_path(product), method: 'DELETE', data: {confirm: 'Bạn có chắc chắn muốn thực hiện thao tác "Xóa Sản Phẩm" này không?'}, class: 'ajax-link' %></li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
         <% end %>
     </tbody>
 </table>
-<% if @products.empty? %>
-    <div class="datalist-empty-line"><%= t('.no_matching_records_found') %></div>
-<% end %>
-
+<% if @products.empty? %><div class="datalist-empty-line">Danh Sách Sản Phẩm Hiện Chưa Có Lựa Chọn Phù Hợp</div><% end %>
 <%= erp_datalist_pagination(@products) %>
-
-
-<% if Erp::Core.available?("ortho_k") and !@products.empty? and false %>
-    <hr />
-    <% p = @products.first %>
-
-    <% if p.get_letter.present? and p.get_number.present? %>
-        <h3>Bảng LEN thay thế: <%= p.code %> - <%= p.category_name %></h3>
-
-
-        <table class="table table-advance table-hover table-striped table-checkable order-column" id="">
-            <thead>
-                <tr>
-                    <th width='1%'>
-                        <%= erp_datalist_check_all %>
-                    </th>
-                    <% if get_columns(params).include?("code") %>
-                        <th>
-                            <%= t('.code') %>
-                        </th>
-                    <% end %>
-                    <% if get_columns(params).include?("name") %>
-                        <th class="sortable" sort-by='erp_products_products.name'>
-                            <%= t('.name') %>
-                        </th>
-                    <% end %>
-                    <% if get_columns(params).include?("category") %>
-                        <th>
-                            <%= t('.category') %>
-                        </th>
-                    <% end %>
-                    <th>Thứ tự TT</th>
-                    <% if get_columns(params).include?("price") %>
-                        <th>
-                            <%= t('.price') %>
-                        </th>
-                    <% end %>
-                    <% if get_columns(params).include?("cost") %>
-                        <th>
-                            <%= t('.cost') %>
-                        </th>
-                    <% end %>
-                    <% if get_columns(params).include?("on_hand") %>
-                        <th>
-                            <%= t('.on_hand') %>
-                        </th>
-                    <% end %>
-                    <% if get_columns(params).include?("status") %>
-                        <th>
-                            <%= t('status') %>
-                        </th>
-                    <% end %>
-                    <% if get_columns(params).include?("creator") %>
-                        <th>
-                            <%= t('creator') %>
-                        </th>
-                    <% end %>
-                    <% if get_columns(params).include?("created_at") %>
-                        <th class="sortable" sort-by='erp_products_products.created_at'>
-                            <%= t('created_at') %>
-                        </th>
-                    <% end %>
-                    <th width="7%"><%= t('actions') %></th>
-                </tr>
-            </thead>
-            <tbody>
-                <% p.get_alternative_products.each do |pp| %>
-                    <% product = pp[:product] %>
-                    <tr class="<%= 'blurred' if product.archived? %> odd gradeX has-child-table" data-url="<%= erp_products.product_details_backend_products_path(id: product.id) %>">
-                        <td>
-                            <%= erp_datalist_check_row(id: product.id) %>
-                        </td>
-                        <% if get_columns(params).include?("code") %>
-                            <td><%= product.code %></td>
-                        <% end %>
-                        <% if get_columns(params).include?("name") %>
-                            <td>
-                                <i class="fa fa-plus expand tr-expand-button"></i>
-                                <%= link_to product.name, erp_products.edit_backend_product_path(product) %>
-                            </td>
-                        <% end %>
-                        <% if get_columns(params).include?("category") %>
-                            <td><%= product.category_name %></td>
-                        <% end %>
-                        <td><span class="badge badge-info"><%= pp[:index] %></span></td>
-                        <% if get_columns(params).include?("price") %>
-                            <td><%= format_number(product.price) %></td>
-                        <% end %>
-                        <% if get_columns(params).include?("cost") %>
-                            <td><%= format_number(product.cost) %></td>
-                        <% end %>
-                        <% if Erp::Core.available?("qdeliveries") %>
-                            <% if get_columns(params).include?("on_hand") %>
-                                <td><%= product.get_stock(params) %></td>
-                            <% end %>
-                        <% else %>
-                            <% if get_columns(params).include?("on_hand") %>
-                                <td><%= product.on_hand %></td>
-                            <% end %>
-                        <% end %>
-                        <% if get_columns(params).include?("status") %>
-                        <td>
-                            <% if product.archived? %>
-                            <span class="label label-sm label-archived"><%= t('.archived') %></span>
-                            <% else %>
-                            <span class="label label-sm label-unarchived"><%= t('.unarchived') %></span>
-                            <% end %>
-                        </td>
-                        <% end %>
-                        <% if get_columns(params).include?("creator") %>
-                            <td>
-                                <%= erp_component('avatar', {
-                                    user: product.creator
-                                }) %>
-                            </td>
-                        <% end %>
-                        <% if get_columns(params).include?("created_at") %>
-                            <td><%= format_date(product.created_at) %></td>
-                        <% end %>
-                        <td>
-                            <%= product_dropdown_actions(product) %>
-                        </td>
-                    </tr>
-                <% end %>
-            </tbody>
-        </table>
-    <% end %>
-<% end %>

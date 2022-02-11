@@ -1,15 +1,3 @@
-<% content_for :title do %><%= t('.create') %><% end %>
-
-<% content_for :page_title do %>
-    <a href="<%= erp.backend_path %>"><i class="fa fa-th"></i> <%= t('.products') %></a> /
-    <a href="<%= erp_products.backend_properties_values_path %>"><%= t('.properties_values') %></a> /
-    <%= t('.create') %>
-<% end %>
-
-<div class="row">
-    <div class="col-md-6">
-        <div class="portlet light bordered">
-            <div class="portlet-body"><%= render 'form', properties_value: @properties_value %></div>
-        </div>
-    </div>
-</div>
+<% content_for :title do %>Tạo Giá Trị Thuộc Tính Mới<% end %>
+<% content_for :page_title do %><%= link_to '<i class="fa fa-gg"></i> Danh Sách Giá Trị Thuộc Tính'.html_safe, erp_products.backend_properties_values_path %> / Tạo Giá Trị Thuộc Tính Mới<% end %>
+<div class="row"><div class="col-md-6"><% if @properties_value.errors.any? %><%= erp_form_control('form_error_message') %><% end %><%= render 'form', properties_value: @properties_value %></div></div>

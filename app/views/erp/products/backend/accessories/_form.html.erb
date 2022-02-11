@@ -4,74 +4,37 @@
             <div class="col-md-6">
                 <div class="portlet light bordered">
                     <div class="portlet-body form">
-                        <%= erp_form_control("text", {
+                        <%= erp_form_control('text', {
                             name: 'accessory[name]',
                             value: accessory.name,                   
-                            label: t('.name'),
-                            placeholder: t('.enter_name'),
+                            label: 'Tên nhóm phụ kiện',
+                            placeholder: 'Nhập tên nhóm phụ kiện...',
                             required: true,
                             errors: accessory.errors.full_messages_for(:name)
                         }) %>
-                        <%= erp_form_control("textarea", {
+                        <%= erp_form_control('textarea', {
                             name: 'accessory[description]',
                             value: accessory.description,                   
-                            label: t('.description'),
-                            placeholder: t('.enter_description')
+                            label: 'Mô tả nhóm',
+                            placeholder: 'Nhập mô tả nhóm...'
                         }) %>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="tabbable-custom ">
-                    <ul class="nav nav-tabs ">
-                        <li class="active">
-                            <a href="#tab_product" data-toggle="tab"> <%= t('.add_products') %> </a>
-                        </li>
-                    </ul>
-                    <div class="tab-content order-details">
-                        <div class="tab-pane addableform-table active" id="tab_product">
-                            <%= erp_form_control("addableform", {
-                                type: 'table',
-                                add_button: t('.add'),
-                                partial: 'erp/products/backend/accessory_details/accessory_detail_line_form',
-                                partial_url: erp_products.accessory_detail_line_form_backend_accessory_details_path,
-                                items: @accessory.accessory_details,
-                                item: :accessory_detail,
-                                add_control_selector: "input[name='product_id']",
-                                add_control: erp_form_control("dataselect", {
-                                    name: 'product_id',
-                                    placeholder: t('.choose_product'),
-                                    label: t('.product'),
-                                    help: t('.help_product'),
-                                    url: erp_products.dataselect_backend_products_path(format: 'json'),
-                                    create: {
-                                        url: erp_products.new_backend_brand_path,
-                                        title: t('.create_brand'),
-                                        container_selector: '.new_brand',
-                                        input_selector: 'input[name="product[name]"]'
-                                    },
-                                    edit: {
-                                        url: erp_products.edit_backend_product_path(id: ':value'),
-                                        title: t('.edit_brand'),
-                                        container_selector: '.edit_product',
-                                    }
-                                }),
-                                thead: "<th>#{t('.name')}</th>
-                                        <th class='text-right'>#{t('.action')}</th>"
-                            }) %>
-                        </div>
-                    </div>
-                </div>
-            </div>
+       <div class="portlet light bordered">
+            <%= erp_form_control('addableform', {
+                type: 'table',
+                add_button: 'Thêm',
+                partial: 'erp/products/backend/accessory_details/accessory_detail_line_form',
+                partial_url: erp_products.accessory_detail_line_form_backend_accessory_details_path,
+                items: @accessory.accessory_details,
+                item: :accessory_detail,
+                add_control_selector: "input[name='product_id']",
+                add_control: erp_form_control('dataselect', {name: 'product_id', label: 'Sản phẩm', placeholder: 'Chọn sản phẩm phù hợp...', url: erp_products.dataselect_backend_products_path(format: 'json')}),
+                thead: "<th class='text-left'>Tên</th><th class='text-right'>Thao tác</th>"
+            }) %>
         </div>
     </div>
-    <%= erp_component('button/save', {
-        text: t('submit')
-    }) %>
-    <%= erp_component('button/cancel', {
-        text: t('cancel'),
-        href: erp_products.backend_accessories_path
-    }) %>
+    <%= erp_component('button/save', {text: 'LƯU THÔNG TIN'}) %><%= erp_component('button/cancel', {text: 'HỦY LƯU THÔNG TIN', href: erp_products.backend_accessories_path}) %>
 <% end %>
